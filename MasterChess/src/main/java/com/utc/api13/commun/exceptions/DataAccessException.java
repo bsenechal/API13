@@ -4,7 +4,10 @@ package com.utc.api13.commun.exceptions;
  * Description de la classe : Exception spécifique à la couche DAO, elle "herite" de l'exception technique TechniqueException().
  */
 public class DataAccessException extends TechniqueException {
-	/**
+
+    private static final long serialVersionUID = 701744806577552453L;
+
+    /**
      * Constructeur de la classe : ApplicationException()
      */
     public DataAccessException() {

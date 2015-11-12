@@ -12,7 +12,9 @@ import com.utc.api13.commun.common.Erreur;
 
 public class FonctionnelleException extends Exception {
 
-	/**
+    private static final long serialVersionUID = -1133994271218706723L;
+   
+    /**
      * Object erreurs listant les erreurs levée pour l'exception
      */
     private final List<Erreur> erreurs;

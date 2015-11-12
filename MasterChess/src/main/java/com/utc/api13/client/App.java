@@ -1,4 +1,4 @@
-package com.utc.api13;
+package com.utc.api13.client;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
