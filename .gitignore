@@ -1,2 +1,6 @@
 .metadata
-/MasterChess/
+/target/
+/bin/
+.settings
+.project
+.classpath
