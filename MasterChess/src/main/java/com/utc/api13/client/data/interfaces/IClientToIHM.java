@@ -4,6 +4,12 @@ import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.commun.*;
+import com.utc.api13.commun.entities.GameEntity;
+import com.utc.api13.commun.entities.PieceEntity;
+import com.utc.api13.commun.entities.PositionEntity;
+import com.utc.api13.commun.entities.PrivateUserEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.entities.UserEntity;
 
 
 public interface IClientToIHM {

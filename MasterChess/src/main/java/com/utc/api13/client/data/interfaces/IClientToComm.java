@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.commun.*;
+import com.utc.api13.commun.entities.GameEntity;
+import com.utc.api13.commun.entities.MessageEntity;
+import com.utc.api13.commun.entities.MoveEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
 
 /**
  * 

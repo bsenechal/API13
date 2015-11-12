@@ -3,9 +3,9 @@ package com.utc.api13.server.data.interfaces;
 import java.util.List;
 import java.util.UUID;
 
-import com.utc.api13.commun.GameEntity;
-import com.utc.api13.commun.MoveEntity;
-import com.utc.api13.commun.UserEntity;
+import com.utc.api13.commun.entities.GameEntity;
+import com.utc.api13.commun.entities.MoveEntity;
+import com.utc.api13.commun.entities.UserEntity;
 
 public interface IServerToComm {
     public List<UserEntity> getUsers();

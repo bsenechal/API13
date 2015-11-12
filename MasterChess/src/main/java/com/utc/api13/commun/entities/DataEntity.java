@@ -1,4 +1,4 @@
-package com.utc.api13.commun;
+package com.utc.api13.commun.entities;
 
 import java.io.Serializable;
 import java.util.UUID;
