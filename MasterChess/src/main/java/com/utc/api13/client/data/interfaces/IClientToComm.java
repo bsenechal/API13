@@ -21,7 +21,7 @@ public interface IClientToComm {
      * 
      * @param user
      */
-    void displayProfile(final IPublicUserEntity user);
+    void displayProfile(final PublicUserEntity user);
 
     void print_error(final String error);
 

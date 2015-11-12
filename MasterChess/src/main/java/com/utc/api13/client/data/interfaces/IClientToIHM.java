@@ -3,11 +3,8 @@ package com.utc.api13.client.data.interfaces;
 import java.util.List;
 import java.util.UUID;
 
-import com.utc.api13.commun.GameEntity;
-import com.utc.api13.commun.MoveEntity;
-import com.utc.api13.commun.PieceEntity;
-import com.utc.api13.commun.PositionEntity;
-import com.utc.api13.commun.UserEntity;
+import com.utc.api13.commun.*;
+
 
 public interface IClientToIHM {
     
@@ -29,9 +26,9 @@ public interface IClientToIHM {
     
     public void sendAnserForLeaving(boolean answer);
     
-    public void updateProfile(IPrivateUserEntity user);
+    public void updateProfile(PrivateUserEntity user);
     
-    public void sendUserUpdates(IPublicUserEntity user);
+    public void sendUserUpdates(PublicUserEntity user);
     
     public void notify (String message);
     
