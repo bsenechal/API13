@@ -47,7 +47,7 @@ public interface IClientToIHM {
     
     public IGameEntity getCurrentGame();
     
-    public void createProposition(String uidReciever, boolean chattable, boolean observable);
+    public void createProposition(UUID uidReciever, boolean chattable, boolean observable);
     
     public void surrender();
     
