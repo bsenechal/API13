@@ -3,17 +3,17 @@ package com.utc.api13.client.data.interfaces;
 import java.util.List;
 import java.util.UUID;
 
-import com.utc.api13.commun.IGameEntity;
-import com.utc.api13.commun.IMoveEntity;
-import com.utc.api13.commun.IPieceEntity;
-import com.utc.api13.commun.IPositionEntity;
-import com.utc.api13.commun.IUserEntity;
+import com.utc.api13.commun.GameEntity;
+import com.utc.api13.commun.MoveEntity;
+import com.utc.api13.commun.PieceEntity;
+import com.utc.api13.commun.PositionEntity;
+import com.utc.api13.commun.UserEntity;
 
 public interface IClientToIHM {
     
-    public void getUsers(List <IUserEntity> users);
+    public void getUsers(List <UserEntity> users);
     
-    public IUserEntity getUserInfo(UUID iduser);
+    public UserEntity getUserInfo(UUID iduser);
     
     public void getAllGames();
     
@@ -21,7 +21,7 @@ public interface IClientToIHM {
     
     public void disconnect();
     
-    public void move(IPieceEntity piece, IPositionEntity position);
+    public void move(PieceEntity piece, PositionEntity position);
     
     public void observerLeave();
     
@@ -35,7 +35,7 @@ public interface IClientToIHM {
     
     public void notify (String message);
     
-    public void updateProfil (IUserEntity user);
+    public void updateProfil (UserEntity user);
     
     public void watchGame (String idGame);
     
@@ -45,7 +45,7 @@ public interface IClientToIHM {
     
     public void saveGame();
     
-    public IGameEntity getCurrentGame();
+    public GameEntity getCurrentGame();
     
     public void createProposition(UUID uidReciever, boolean chattable, boolean observable);
     

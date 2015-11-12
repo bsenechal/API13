@@ -1,5 +1,5 @@
 package com.utc.api13.commun;
 
-public class IPositionEntity {
+public enum PieceColorEnum {
 
 }
