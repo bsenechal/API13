@@ -2,23 +2,27 @@ package com.utc.api13.commun.entities;
 
 import java.util.Date;
 
-public interface MessageEntity extends DataEntity {
-    String getUid();
+import com.utc.api13.client.ihm.interfaces.IDataEntity;
 
-    Date getDate();
-
-    String getText();
-
-    void setUid(final String uid);
-
-    void setDate(final Date date);
-
-    void setText(final String text);
-
-    void setGame(final GameEntity game);
-
-    GameEntity getGame();
-
-    void IMessageEntity();
+public class MessageEntity extends IDataEntity {
+    private Date d
+    
+    public String getUid();
+    
+    public Date getDate();
+    
+    public String getText();
+    
+    public void setUid(final String uid);
+    
+    public void setDate(final Date date);
+    
+    public void setText(final String text);
+    
+    public void setGame(final GameEntity game);
+    
+    public GameEntity getGame();
+    
+    public void IMessageEntity();
 
 }

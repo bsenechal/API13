@@ -1,8 +1,10 @@
 package com.utc.api13.commun.entities;
 
-public interface PieceEntity extends DataEntity {
-    PieceColorEnum getColor();
+import com.utc.api13.client.ihm.interfaces.IDataEntity;
 
-    void setColor(final PieceColorEnum color);
+public class PieceEntity extends DataEntity {
+    public PieceColorEnum getColor();
+
+    public void setColor(final PieceColorEnum color);
 
 }

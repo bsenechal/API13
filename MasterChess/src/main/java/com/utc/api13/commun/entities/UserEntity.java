@@ -1,5 +1,7 @@
 package com.utc.api13.commun.entities;
 
+import com.utc.api13.client.ihm.interfaces.IDataEntity;
+
 public interface UserEntity extends DataEntity {
     String getLogin();
 

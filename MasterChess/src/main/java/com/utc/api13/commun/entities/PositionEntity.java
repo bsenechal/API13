@@ -1,12 +1,14 @@
 package com.utc.api13.commun.entities;
 
+import com.utc.api13.client.ihm.interfaces.IDataEntity;
+
 public interface PositionEntity extends DataEntity {
-    String getX();
+    public String getX();
 
-    String getY();
+    public String getY();
 
-    void setY(final String y);
+    public void setY(final String y);
 
-    void setX(final String x);
+    public void setX(final String x);
 
 }
