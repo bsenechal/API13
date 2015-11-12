@@ -1,5 +1,6 @@
-package com.utc.api13.client.ihm; 
+package com.utc.api13.client.ihm;
 
+import com.utc.api13.client.ihm.interfaces.IIHMFromData;
 
 public class IHMFromDataImpl implements IIHMFromData {
 	
