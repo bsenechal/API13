@@ -1,4 +1,4 @@
-package com.utc.api13; 
+package com.utc.api13.client.ihm; 
 
 public interface IIHMFromData {
 	//corriger les types de retour et les paramètres au fur et à mesure .. !

@@ -1,4 +1,4 @@
-package com.utc.api13; 
+package com.utc.api13.client.ihm; 
 
 public class AppIHMController {
 	//ajouter référence sur le model
