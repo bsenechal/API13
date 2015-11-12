@@ -1,10 +1,19 @@
 package com.utc.api13.client.data.interfaces;
 
+import java.util.List;
+import java.util.UUID;
+
+import com.utc.api13.IGameEntity;
+import com.utc.api13.IMoveEntity;
+import com.utc.api13.IUserEntity;
+import com.utc.api13.IPieceEntity;
+import com.utc.api13.IPositionEntity;
+
 public interface IClientToIHM {
     
     public void getUsers(List <IUserEntity> users);
     
-    public IUserEntity getUserInfo(UID iduser);
+    public IUserEntity getUserInfo(UUID iduser);
     
     public void getAllGames();
     
@@ -36,9 +45,9 @@ public interface IClientToIHM {
     
     public void saveGame();
     
-    public IGameEntity getCurrentGame()
+    public IGameEntity getCurrentGame();
     
-    public void createProposition(String uidReciever, boolean chattable, boolean observable)
+    public void createProposition(String uidReciever, boolean chattable, boolean observable);
     
     public void surrender();
     
