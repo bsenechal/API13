@@ -1,10 +1,9 @@
 package com.utc.api13.commun.entities;
 
-import java.util.List;
-
 public class PublicUserEntity extends UserEntity {
-	
-	private byte Image;
+
+    private static final long serialVersionUID = 7421076183167325143L;
+    private byte Image;
 	private GameEntity ObservedGames;
 	
 	/**

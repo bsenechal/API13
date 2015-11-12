@@ -2,7 +2,8 @@ package com.utc.api13.commun.entities;
 
 public class PrivateUserEntity extends UserEntity {
 	
-	private String Password;
+    private static final long serialVersionUID = -5408789931031693916L;
+    private String Password;
 	private String ImagePath;
 	private GameEntity ObservedGame;
 	private GameEntity Game;

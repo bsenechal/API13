@@ -2,7 +2,8 @@ package com.utc.api13.commun.entities;
 
 public class UserEntity extends DataEntity {
 	
-	private String Login;
+    private static final long serialVersionUID = 5601063024006338259L;
+    private String Login;
 	private String FirstName;
 	private String LastName;
 	private int NbPlayed;
