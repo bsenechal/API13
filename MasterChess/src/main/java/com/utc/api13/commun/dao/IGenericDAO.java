@@ -2,10 +2,10 @@ package com.utc.api13.commun.dao;
 
 import java.util.List;
 
-import com.utc.api13.commun.bo.IDataEntity;
+import com.utc.api13.commun.entities.DataEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
 
-public interface IGenericDAO<T extends IDataEntity> {
+public interface IGenericDAO<T extends DataEntity> {
 
     /**
      * Renvoie tous les objets existants pour la base associÃ©e au generic
