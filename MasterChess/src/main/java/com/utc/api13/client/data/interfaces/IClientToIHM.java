@@ -3,11 +3,11 @@ package com.utc.api13.client.data.interfaces;
 import java.util.List;
 import java.util.UUID;
 
-import com.utc.api13.IGameEntity;
-import com.utc.api13.IMoveEntity;
-import com.utc.api13.IUserEntity;
-import com.utc.api13.IPieceEntity;
-import com.utc.api13.IPositionEntity;
+import com.utc.api13.commun.IGameEntity;
+import com.utc.api13.commun.IMoveEntity;
+import com.utc.api13.commun.IPieceEntity;
+import com.utc.api13.commun.IPositionEntity;
+import com.utc.api13.commun.IUserEntity;
 
 public interface IClientToIHM {
     
