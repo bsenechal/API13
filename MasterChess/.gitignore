@@ -1,15 +1,15 @@
-<<<<<<< HEAD
-/bin/
-/target/
-.classpath
-.project
-.metadata
-=======
-/target/
 
 /bin/
+
+/target/
+
+.classpath
+
+.project
+
+.metadata
+
 .settings
 .project
 .classpath
 .project
->>>>>>> refs/remotes/origin/master
