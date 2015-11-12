@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 /bin/
 /target/
 .classpath
 .project
 .metadata
+=======
+.metadata
+>>>>>>> refs/remotes/origin/master
