@@ -1,4 +1,4 @@
-package com.utc.api13.client.data.interfaces;
+package com.utc.api13.client.ihm;
 
 import java.util.List;
 import java.util.UUID;
