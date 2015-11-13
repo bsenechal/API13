@@ -17,7 +17,7 @@ public MoveMessage(UUID sender, UUID receiver, MoveEntity move) {
 	this.move = move;
 }
 	@Override
-	void proceed() {
+	public void proceed() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -6,7 +6,7 @@ public class ErrorMessage extends Message {
 	Exception exception;
 
 	@Override
-	void proceed() {
+	public void proceed() {
 		// TODO Auto-generated method stub
 
 	}

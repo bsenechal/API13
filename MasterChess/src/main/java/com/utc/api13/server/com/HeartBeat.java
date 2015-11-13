@@ -17,7 +17,7 @@ public class HeartBeat extends Message {
 		this.ping = ping;
 	}
 	@Override
-	void proceed() {
+	public void proceed() {
 		// TODO Auto-generated method stub
 
 	}

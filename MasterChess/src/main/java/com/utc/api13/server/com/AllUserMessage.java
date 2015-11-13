@@ -10,7 +10,7 @@ public class AllUserMessage extends Message {
 	}
 
 	@Override
-	void proceed() {
+	public void proceed() {
 		// TODO Auto-generated method stub
 
 	}

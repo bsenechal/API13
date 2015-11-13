@@ -15,7 +15,7 @@ public class ObserverAnswerMessage extends Message {
 	}
 
 	@Override
-	void proceed() {
+	public void proceed() {
 		// TODO Auto-generated method stub
 
 	}

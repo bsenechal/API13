@@ -1,10 +1,13 @@
 package com.utc.api13.server.com;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public abstract class Message {
+public abstract class Message implements Serializable{
+	
+	private static final long serialVersionUID = -7165675510182836034L;
 	UUID sender;
-	UUID receiver;
+	UUID receiver; 
 	
 	/**
 	 * @param sender
@@ -37,6 +40,6 @@ public abstract class Message {
 	}
 
 
-	abstract void proceed();
+	public abstract void proceed();
 
 }

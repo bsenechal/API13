@@ -16,7 +16,7 @@ public class RequestAnswerMessage extends Message {
 		this.gameId = gameId;
 	}
 	@Override
-	void proceed() {
+	public void proceed() {
 		// TODO Auto-generated method stub
 
 	}

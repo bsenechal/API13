@@ -4,6 +4,10 @@ import java.util.UUID;
 
 public class ChatMessage extends Message {
 
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = -55526017055065873L;
 		String message;
 		
 	/**
@@ -28,7 +32,7 @@ public class ChatMessage extends Message {
 
 
 	@Override
-	void proceed() {
+	public void proceed() {
 		// TODO Auto-generated method stub
 
 	}
