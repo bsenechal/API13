@@ -1,8 +1,16 @@
 
-/target/
 /bin/
+
+/target/
+
+.classpath
+
+.project
+
+.metadata
+
+.settings
+.project
 .classpath
 .project
-.metadata
-.settings
-
+.recommenders
