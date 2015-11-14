@@ -53,7 +53,7 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
 		}
 		
 		((Message) arg1).proceed();
-		
+
 		this.ping_lost = 0;	// message received => host is alive
 	}
 	
@@ -77,4 +77,18 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
         cause.printStackTrace();
         ctx.close();
     }
+	
+	public void reply(Channel incoming, Message msg) throws Exception{
+		incoming.writeAndFlush(msg);			
+	}
+	
+	public void replyAll(ChannelHandlerContext arg0, Message message) throws Exception {
+		Channel incoming = arg0.channel();
+		for(Channel channel : channels){
+			if(channel != incoming){
+				channel.writeAndFlush(message);
+				
+			}
+		}
+	}
 }

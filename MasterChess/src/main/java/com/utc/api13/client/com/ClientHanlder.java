@@ -3,6 +3,7 @@ package com.utc.api13.client.com;
 import java.io.IOException;
 import java.util.UUID;
 
+import com.utc.api13.server.com.ChatMessage;
 import com.utc.api13.server.com.HeartBeat;
 import com.utc.api13.server.com.Message;
 
@@ -33,6 +34,7 @@ public class ClientHanlder extends SimpleChannelInboundHandler<Message>{
 		
 		arg1.proceed();
 		ping_lost = 0; // message received => host is alive
+		
 	}
 
 	@Override
