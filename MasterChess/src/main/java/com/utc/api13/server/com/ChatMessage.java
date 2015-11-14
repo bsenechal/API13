@@ -34,7 +34,8 @@ public class ChatMessage extends Message {
 	@Override
 	public void proceed() {
 		// TODO Auto-generated method stub
-
+		System.out.println(this.getMessage());
+		
 	}
 
 }

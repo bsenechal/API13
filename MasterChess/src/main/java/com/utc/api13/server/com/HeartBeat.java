@@ -19,7 +19,7 @@ public class HeartBeat extends Message {
 	@Override
 	public void proceed() {
 		// TODO Auto-generated method stub
-
+//		System.out.println("==> ping !");
 	}
 	public InetAddress getPing() {
 		return ping;

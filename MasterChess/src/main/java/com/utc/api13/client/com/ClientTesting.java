@@ -18,7 +18,7 @@ public class ClientTesting {
 		
 		ChatMessage msg = new ChatMessage(new UUID(0, 0),new UUID(0, 0),"Hello World");
 		manager.sendMessage(msg);
-		manager.close();
+//		manager.close();
 	}
 
 }
