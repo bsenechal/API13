@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.UserEntity;
 
 public interface IServerToComm {
@@ -16,7 +17,7 @@ public interface IServerToComm {
     public boolean isFinished (String idGame);
     public void observerLeave(int idUser);
     public List<UserEntity> getListObservers();
-    public void saveUserData(UserEntity User);
+    public void saveUserData(PublicUserEntity User);
     public void newObserver(int idGame, UUID idUser);
     public void createReplay(GameEntity game, UserEntity user);
     public List<UserEntity> getConnectedUsers();

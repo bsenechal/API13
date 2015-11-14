@@ -1,5 +1,6 @@
 package com.utc.api13.commun.common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +21,12 @@ public class Erreur {
      * niveau de criticité
      */
     private Level level;
+    
+    public Erreur(final ErrorType errorType) {
+    	this.errorType = errorType;
+    	this.params = new ArrayList<>();
+    	this.level = Level.ERROR;
+    }
     
     /**
      * Constructeur

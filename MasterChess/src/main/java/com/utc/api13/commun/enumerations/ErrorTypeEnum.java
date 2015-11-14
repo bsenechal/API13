@@ -3,13 +3,18 @@
  */
 package com.utc.api13.commun.enumerations;
 
+import com.utc.api13.commun.common.ErrorType;
+
 /**
  * @author Amstrong
  *
  */
-public enum ErrorTypeEnum {
+public enum ErrorTypeEnum implements ErrorType{
 
-	Exemple("exp");
+	/**
+	 * functional for code for login failure
+	 */
+	LOGIN_FAILED("data.login.failed");
     private final String code;
     private ErrorTypeEnum(String code){
         this.code = code;

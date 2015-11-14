@@ -3,12 +3,12 @@ package com.utc.api13.commun.exceptions;
 /**
  * Exception technique, elle représente les exceptions techniques: à écrire dans les Logs
  */
-public class TechniqueException extends Exception {
+public class TechnicalException extends Exception {
 
 	/**
      * Constructeur de la classe. : ApplicationException()
      */
-    public TechniqueException() {
+    public TechnicalException() {
         super();
     }
 
@@ -16,7 +16,7 @@ public class TechniqueException extends Exception {
      * Constructeur de la classe avec un message.
      * @param message Message l'exception
      */
-    public TechniqueException(final String message) {
+    public TechnicalException(final String message) {
         super(message);
     }
 
@@ -25,7 +25,7 @@ public class TechniqueException extends Exception {
      * @param message le message de l'exception
      * @param ex Exception source
      */
-    public TechniqueException(final String message, final Throwable ex) {
+    public TechnicalException(final String message, final Throwable ex) {
         super(message, ex);
     }
 
@@ -33,7 +33,7 @@ public class TechniqueException extends Exception {
      * Constructeur avec un message et une exception
      * @param ex Exception source
      */
-    public TechniqueException(final Throwable ex) {
+    public TechnicalException(final Throwable ex) {
         super(ex.getMessage(), ex);
     }
 }

@@ -1,9 +1,9 @@
 package com.utc.api13.commun.exceptions;
 
 /**
- * Description de la classe : Exception spécifique à la couche DAO, elle "herite" de l'exception technique TechniqueException().
+ * Description de la classe : Exception spécifique à la couche DAO, elle "herite" de l'exception technique TechnicalException().
  */
-public class DataAccessException extends TechniqueException {
+public class DataAccessException extends TechnicalException {
 	/**
      * Constructeur de la classe : ApplicationException()
      */

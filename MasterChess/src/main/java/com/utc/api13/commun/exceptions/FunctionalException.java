@@ -10,7 +10,7 @@ import com.utc.api13.commun.common.Erreur;
  *
  */
 
-public class FonctionnelleException extends Exception {
+public class FunctionalException extends Exception {
 
 	/**
      * Object erreurs listant les erreurs levée pour l'exception
@@ -20,12 +20,17 @@ public class FonctionnelleException extends Exception {
     /**
      * Constructeur
      */
-    public FonctionnelleException() {
+    public FunctionalException() {
         super();
         erreurs = new ArrayList<Erreur>();
     }
 
-    /**
+    public FunctionalException(List<Erreur> erreurs) {
+		super();
+		this.erreurs = erreurs;
+	}
+
+	/**
      * Retourne la liste des erreurs
      * @return la liste des erreurs
      */

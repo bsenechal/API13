@@ -1,11 +1,13 @@
 package com.utc.api13.commun.entities;
 
+import java.util.List;
+
 public class PrivateUserEntity extends UserEntity {
 	
     private static final long serialVersionUID = -5408789931031693916L;
     private String Password;
 	private String ImagePath;
-	private GameEntity ObservedGame;
+	private List<GameEntity> ObservedGames;
 	private GameEntity Game;
 	
 	/**
@@ -35,14 +37,14 @@ public class PrivateUserEntity extends UserEntity {
 	/**
 	 * @return the observedGame
 	 */
-	public GameEntity getObservedGame() {
-		return ObservedGame;
+	public List<GameEntity> getObservedGames() {
+		return ObservedGames;
 	}
 	/**
 	 * @param observedGame the observedGame to set
 	 */
-	public void setObservedGame(GameEntity observedGame) {
-		ObservedGame = observedGame;
+	public void setObservedGames(List<GameEntity> observedGames) {
+		ObservedGames = observedGames;
 	}
 	/**
 	 * @return the game

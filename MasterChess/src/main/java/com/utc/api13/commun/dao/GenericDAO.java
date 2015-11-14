@@ -2,10 +2,10 @@ package com.utc.api13.commun.dao;
 
 import java.util.List;
 
-import com.utc.api13.commun.bo.IDataEntity;
+import com.utc.api13.commun.entities.DataEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
 
-public interface IGenericDAO<T extends IDataEntity> {
+public interface GenericDAO<T extends DataEntity> {
 
     /**
      * Renvoie tous les objets existants pour la base associÃ©e au generic
@@ -16,12 +16,11 @@ public interface IGenericDAO<T extends IDataEntity> {
 
     /**
      * Creation d'un objet
-     * @param bo objet à créer
+     * @param entity objet à créer
      * @return l'objet créé
      * @throws DataAccessException Exception DAO
      */
-    T save(T bo) throws DataAccessException;
-
+    T save(T entity) throws DataAccessException;
     /**
      * Vide toutes les données stockées de la classe Entity
      * @throws DataAccessException Exception DAO
@@ -35,4 +34,6 @@ public interface IGenericDAO<T extends IDataEntity> {
      * @throws DataAccessException exception d'accès aux données
      */
     T merge(T entity) throws DataAccessException;
+
+	void updateAll(List<T> entities) throws DataAccessException;
 }

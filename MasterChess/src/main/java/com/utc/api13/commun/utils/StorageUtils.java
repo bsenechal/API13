@@ -12,10 +12,10 @@ import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.utc.api13.commun.bo.IDataEntity;
+import com.utc.api13.commun.entities.DataEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
 
-public class StorageUtils<T extends IDataEntity>{
+public class StorageUtils<T extends DataEntity>{
 	private ObjectOutputStream oos;
     private ObjectInputStream ois;
     private String file;
