@@ -19,9 +19,9 @@ public class App extends Application
 		this.stage = stage;
 		//ici, loader tous les fichiers FXML
 		//on utilise un FXML par écran 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ressourcesIHM/FXML/mainScene.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ressourcesIHM/FXML/welcomePage.fxml"));
 		Pane root = (Pane) fxmlLoader.load();
-		Scene scene = new Scene(root, 800, 600);
+		Scene scene = new Scene(root, 800, 600); 
 		scene.getStylesheets().add(getClass().getResource("ressourcesIHM/CSS/masterCSS.css").toExternalForm());
 		stage.setTitle("MasterChess Welcome Page");
 		stage.setResizable(false);

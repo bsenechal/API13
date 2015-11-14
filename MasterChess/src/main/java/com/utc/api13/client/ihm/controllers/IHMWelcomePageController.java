@@ -1,4 +1,6 @@
-package com.utc.api13.client.ihm; 
+package com.utc.api13.client.ihm.controllers; 
+
+import com.utc.api13.client.ihm.ClientToIHMImpl;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
@@ -42,6 +44,7 @@ public class IHMWelcomePageController {
 	public IHMWelcomePageController() { 
 		clientToIHM = new ClientToIHMImpl(); 
 		//+ listeners
+		initialize(); 
 	}
 	
 	public void initialize() {
