@@ -1,5 +1,6 @@
 package com.utc.api13.client.ihm.controllers;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -25,30 +26,31 @@ public class IHMConnexionPageController {
 	TextField loginTextView, passwordTextView, serverAddressTextView; 
 	@FXML
 	Hyperlink importLink, exportLink, signUpLink; 
+	@FXML
+	private void onSignInClicked(Event event) {
+	 // TODO Demande des infos sur le user
+	 //IClientToIHM.getUserInfo();
+	}
+	@FXML
+	private void onImportClicked(Event event) {
+	    
+	}
+	@FXML
+	private void onExportClicked(Event event) {
+	    
+	}
+	@FXML
+	private void onSignUpClicked(Event event) {
+	    
+	}
 	
 	public IHMConnexionPageController() { 
 		clientToIHM = new ClientToIHMImpl(); 
-		//+ listeners
 		initialize(); 
 	}
 	
 	public void initialize() {
 		//bindings
 	}
-	
-	public void onSignInClicked() {
-		
-	}
-	
-	public void onSignUpClicked() {
-		
-	}
-	
-	public void onImportClicked() {
-		
-	}
-	
-	public void onExportClicked() {
-		
-	}
+		 
 }

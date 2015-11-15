@@ -1,7 +1,8 @@
 package com.utc.api13.client.ihm.controllers; 
 
+import com.utc.api13.client.data.interfaces.IClientToIHM;
 import com.utc.api13.client.ihm.ClientToIHMImpl;
-
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -12,7 +13,6 @@ import javafx.scene.control.ScrollBar;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.ToolBar;
 
 public class IHMWelcomePageController {
 	
@@ -40,15 +40,27 @@ public class IHMWelcomePageController {
 	TableColumn connectedUserLogin, connectedUserStatus, connectedUserStat, connectedUserActionIcon;
 	@FXML
 	ScrollBar currentGamesScrollbar, savedGamesScrollbar, connectedUserScrollbar; 
+	@FXML
+	private void onHelpClicked(Event event) {
+	}
+	@FXML
+	private void onParamClicked(Event event) {
+	}
+	@FXML
+	private void onNotifClicked(Event event) {
+	}
 	
 	public IHMWelcomePageController() { 
 		clientToIHM = new ClientToIHMImpl(); 
-		//+ listeners
 		initialize(); 
 	}
 	
 	public void initialize() {
 		//bindings
+		// TODO Demande de la liste des users connectés
+		//IClientToIHM.getUsers();
+		// TODO Demande de la liste des jeux
+		//getAllGames();
 	}
 	
 	public void onHelpClicked() {
@@ -74,4 +86,5 @@ public class IHMWelcomePageController {
 	public void setListSavedGames() {
 		
 	}
+
 }
