@@ -1,6 +1,7 @@
 package com.utc.api13.client.com;
 
-import com.utc.api13.server.com.Message;
+
+import com.utc.api13.commun.messages.Message;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;

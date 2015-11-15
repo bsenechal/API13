@@ -1,4 +1,4 @@
-package com.utc.api13.client.com;
+package com.utc.api13.client.com.interfaces;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,15 +16,9 @@ public interface InterfaceFromData {
 
 	public boolean validateMove(UUID idPlayer, MoveEntity move);
 
-	public void multicastMove(UserEntity users, UUID idPlayer, MoveEntity move);
-
-	public void multicastFinished(UserEntity users);
-
 	public void sendUserUpdates(PublicUserEntity user);
 
 	public boolean pushReplayToServer(UserEntity user, GameEntity game);
-
-	public void multicastNewPlayer(UUID idPlayer);
 
 	public void sendProposition(UserEntity player);
 

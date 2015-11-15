@@ -1,16 +1,15 @@
-package com.utc.api13.server.com;
+package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
-import com.utc.api13.commun.messages.Message;
-
-public class ObserverRequestMessage extends Message {
+public class OneUserMessage extends Message {
+	
 
 	/**
 	 * @param sender
 	 * @param receiver
 	 */
-	public ObserverRequestMessage(UUID sender, UUID receiver) {
+	public OneUserMessage(UUID sender, UUID receiver) {
 		super(sender, receiver);
 		// TODO Auto-generated constructor stub
 	}

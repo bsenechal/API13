@@ -2,6 +2,8 @@ package com.utc.api13.server.com;
 
 import java.util.UUID;
 
+import com.utc.api13.commun.messages.Message;
+
 public class UserUpdateMessage extends Message {
 
 	

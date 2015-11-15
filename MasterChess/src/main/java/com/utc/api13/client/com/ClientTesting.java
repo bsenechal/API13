@@ -2,7 +2,8 @@ package com.utc.api13.client.com;
 
 import java.util.UUID;
 
-import com.utc.api13.server.com.ChatMessage;
+import com.utc.api13.commun.messages.ChatMessage;
+
 
 /**
  * 

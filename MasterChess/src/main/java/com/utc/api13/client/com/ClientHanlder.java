@@ -3,9 +3,8 @@ package com.utc.api13.client.com;
 import java.io.IOException;
 import java.util.UUID;
 
-import com.utc.api13.server.com.ChatMessage;
-import com.utc.api13.server.com.HeartBeat;
-import com.utc.api13.server.com.Message;
+import com.utc.api13.commun.messages.HeartBeat;
+import com.utc.api13.commun.messages.Message;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
