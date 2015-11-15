@@ -8,7 +8,11 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 public class ServerManager {
 	
 	public static void main(String args[]) throws InterruptedException{
-		new ServerManager(8000).run();
+		try{
+			new ServerManager(8000).run();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	private final int port;

@@ -2,7 +2,7 @@
  * 
  */
 /**
- * @author Beno�t
+ * @author Benoît
  *
  */
 package com.utc.api13.server.data.interfaces;

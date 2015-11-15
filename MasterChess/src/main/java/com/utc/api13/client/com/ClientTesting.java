@@ -13,12 +13,17 @@ import com.utc.api13.server.com.ChatMessage;
 
 public class ClientTesting {
 	
-	public static void main(String args[]) throws InterruptedException{
-		MessageManager manager = new MessageManager("localhost",8000);
-		
-		ChatMessage msg = new ChatMessage(new UUID(0, 0),new UUID(0, 0),"Hello World");
-		manager.sendMessage(msg);
-//		manager.close();
+	public static void main(String args[]){
+		MessageManager manager =null;
+		try{
+			manager = new MessageManager("localhost",8000);
+			ChatMessage msg = new ChatMessage(new UUID(0, 0),new UUID(0, 0),"Hello World");
+			manager.sendMessage(msg);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			manager.close();
+		}
 	}
 
 }
