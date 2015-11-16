@@ -1,8 +1,9 @@
 package com.utc.api13.client.com;
 
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import com.utc.api13.commun.messages.Message;
-
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
@@ -22,6 +23,8 @@ public class MessageManager {
 	private Channel channel;
 	private EventLoopGroup group;
 	
+	private static final Logger logger = Logger.getLogger(MessageManager.class);
+	
 	public MessageManager(String host, int port) throws InterruptedException{
 		
 		group = new NioEventLoopGroup();
@@ -32,12 +35,15 @@ public class MessageManager {
 		.handler(new ClientInitializer());	
 		
 		this.channel = boostrap.connect(host,port).sync().channel();
+		
+		logger.log(Level.DEBUG, "Message Manager is initialize for : " + host + ":" + port);
 	}
 	
 	public void sendMessage(Message msg) throws ExceptionInInitializerError{
 		
 		if(channel != null){	
 			channel.writeAndFlush(msg);
+			logger.debug("A message has been sent to : " + msg.getReceiver());
 		}else throw new ExceptionInInitializerError();
 	}
 	

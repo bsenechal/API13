@@ -1,5 +1,8 @@
 package com.utc.api13.server.com;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import com.utc.api13.server.com.ServerInitializer;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -18,6 +21,7 @@ public class ServerManager {
 	}
 
 	private final int port;
+	private static final Logger logger = Logger.getLogger(ServerManager.class);
 
 	public ServerManager(int port){
 		this.port = port;
@@ -29,16 +33,22 @@ public class ServerManager {
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		
 		try{
+			
 			ServerBootstrap boostrap = new ServerBootstrap()
 				.group(bossGroup, workerGroup)
 				.channel(NioServerSocketChannel.class)
 				.childHandler(new ServerInitializer());
+			
+			if(logger.isDebugEnabled()){
+			    logger.debug("Starting server on : " + port);
+			}
 			
 			boostrap.bind(port).sync().channel().closeFuture().sync();
 			
 		}finally{
 			bossGroup.shutdownGracefully();
 			workerGroup.shutdownGracefully();
+			logger.debug("Server closed");
 		}
 		
 	}
