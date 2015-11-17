@@ -30,7 +30,7 @@ public class DataServerManager {
 	/**
 	 * @param interfaceToClient the interfaceToClient to set
 	 */
-	public void setInterfaceToClient(InterfaceToClient interfaceToClient) {
+	public void setInterfaceToClient(final InterfaceToClient interfaceToClient) {
 		this.interfaceToClient = interfaceToClient;
 	}
 	/**
@@ -42,7 +42,7 @@ public class DataServerManager {
 	/**
 	 * @param serverToComm the serverToComm to set
 	 */
-	public void setServerToComm(IServerToComm serverToComm) {
+	public void setServerToComm(final IServerToComm serverToComm) {
 		this.serverToComm = serverToComm;
 	}
 	/**
@@ -54,7 +54,7 @@ public class DataServerManager {
 	/**
 	 * @param currentUsers the currentUsers to set
 	 */
-	public void setCurrentUsers(List<UserEntity> currentUsers) {
+	public void setCurrentUsers(final List<UserEntity> currentUsers) {
 		this.currentUsers = currentUsers;
 	}
 	/**
@@ -66,14 +66,14 @@ public class DataServerManager {
 	/**
 	 * @param currentGames the currentGames to set
 	 */
-	public void setCurrentGames(List<GameEntity> currentGames) {
+	public void setCurrentGames(final List<GameEntity> currentGames) {
 		this.currentGames = currentGames;
 	}
 	/**
 	 * @param interfaceToClient
 	 * @param serverToComm
 	 */
-	public DataServerManager(InterfaceToClient interfaceToClient, IServerToComm serverToComm) {
+	public DataServerManager(final InterfaceToClient interfaceToClient, final IServerToComm serverToComm) {
 		super();
 		this.interfaceToClient = interfaceToClient;
 		this.serverToComm = serverToComm;
@@ -81,5 +81,20 @@ public class DataServerManager {
 		this.currentUsers = new ArrayList<UserEntity>();
 	}
 	
+	// TODO : Supprimer cette méthode une fois la connexion implémentée
+	public void addUsers(){
+		
+		for (int i = 0 ; i < 10 ; i++){
+			UserEntity userEntity = new UserEntity();
+			userEntity.setFirstName("firstName" + i);
+			userEntity.setLastName("lastName" + i);
+			userEntity.setLogin("login" + i);
+			userEntity.setNbLost((int) Math.random());
+			userEntity.setNbPlayed((int) Math.random());
+			userEntity.setNbWon((int) Math.random());
+			userEntity.setStatus((i % 2 == 0) ? true : false);
+			this.currentUsers.add(userEntity);
+		}
+	}
 	
 }

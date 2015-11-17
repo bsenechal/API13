@@ -17,71 +17,80 @@ public class DataClientManager {
 	private IClientToIHM clientToIHM;
 	private InterfaceFromData interfaceFromData;
 	private UserEntity userLocal;
-	
+
 	/**
 	 * @return the clientToComm
 	 */
 	public IClientToComm getClientToComm() {
 		return clientToComm;
 	}
+
 	/**
-	 * @param clientToComm the clientToComm to set
+	 * @param clientToComm
+	 *            the clientToComm to set
 	 */
-	public void setClientToComm(IClientToComm clientToComm) {
+	public void setClientToComm(final IClientToComm clientToComm) {
 		this.clientToComm = clientToComm;
 	}
+
 	/**
 	 * @return the clientToIHM
 	 */
 	public IClientToIHM getClientToIHM() {
 		return clientToIHM;
 	}
+
 	/**
-	 * @param clientToIHM the clientToIHM to set
+	 * @param clientToIHM
+	 *            the clientToIHM to set
 	 */
-	public void setClientToIHM(IClientToIHM clientToIHM) {
+	public void setClientToIHM(final IClientToIHM clientToIHM) {
 		this.clientToIHM = clientToIHM;
 	}
+
 	/**
 	 * @return the interfaceFromData
 	 */
 	public InterfaceFromData getInterfaceFromData() {
 		return interfaceFromData;
 	}
+
 	/**
-	 * @param interfaceFromData the interfaceFromData to set
+	 * @param interfaceFromData
+	 *            the interfaceFromData to set
 	 */
-	public void setInterfaceFromData(InterfaceFromData interfaceFromData) {
+	public void setInterfaceFromData(final InterfaceFromData interfaceFromData) {
 		this.interfaceFromData = interfaceFromData;
 	}
+
 	/**
 	 * @return the userLocal
 	 */
 	public UserEntity getUserLocal() {
 		return userLocal;
 	}
+
 	/**
-	 * @param userLocal the userLocal to set
+	 * @param userLocal
+	 *            the userLocal to set
 	 */
-	public void setUserLocal(UserEntity userLocal) {
+	public void setUserLocal(final UserEntity userLocal) {
 		this.userLocal = userLocal;
 	}
-	
+
 	/**
 	 * @param clientToComm
 	 * @param clientToIHM
 	 * @param interfaceFromData
 	 * @param userLocal
 	 */
-	public DataClientManager(IClientToComm clientToComm, IClientToIHM clientToIHM, InterfaceFromData interfaceFromData,
-			UserEntity userLocal) {
+	public DataClientManager(final IClientToComm clientToComm, final IClientToIHM clientToIHM,
+			final InterfaceFromData interfaceFromData, final UserEntity userLocal) {
 		super();
 		this.clientToComm = clientToComm;
 		this.clientToIHM = clientToIHM;
 		this.interfaceFromData = interfaceFromData;
 		this.userLocal = userLocal;
 	}
-	
-	
-	
+
 }
