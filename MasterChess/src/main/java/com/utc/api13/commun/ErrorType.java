@@ -1,4 +1,4 @@
-package com.utc.api13.commun.common;
+package com.utc.api13.commun;
 
 /**
 *

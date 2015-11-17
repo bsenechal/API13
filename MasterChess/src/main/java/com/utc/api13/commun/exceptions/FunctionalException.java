@@ -3,7 +3,7 @@ package com.utc.api13.commun.exceptions;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.utc.api13.commun.common.Erreur;
+import com.utc.api13.commun.Erreur;
 
 /**
  * Exception fonctionnelle, elle représente les exceptions fonctionnelles à montrer à l'utilisateur
