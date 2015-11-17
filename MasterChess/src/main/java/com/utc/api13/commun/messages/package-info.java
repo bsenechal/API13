@@ -5,4 +5,4 @@
  * @author API13
  *
  */
-package com.utc.api13.commun.entities;
+package com.utc.api13.commun.messages;

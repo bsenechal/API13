@@ -9,16 +9,16 @@ import com.utc.api13.commun.entities.UserEntity;
 
 public interface IServerToComm {
     public List<UserEntity> getUsers();
-    public UserEntity getUserInfo(UUID idUser);
+    public UserEntity getUserInfo(final UUID idUser);
     public List<GameEntity> getAllGames();
-    public void notifyConnections (UserEntity Player);
-    public boolean computerResult(int idPlayer, MoveEntity  move);
-    public boolean isFinished (String idGame);
-    public void observerLeave(int idUser);
+    public void notifyConnections (final UserEntity Player);
+    public boolean computerResult(final int idPlayer, final MoveEntity  move);
+    public boolean isFinished (final String idGame);
+    public void observerLeave(final UUID idUser);
     public List<UserEntity> getListObservers();
-    public void saveUserData(UserEntity User);
-    public void newObserver(int idGame, UUID idUser);
-    public void createReplay(GameEntity game, UserEntity user);
+    public void saveUserData(final UserEntity User);
+    public void newObserver(final int idGame, final UUID idUser);
+    public void createReplay(final GameEntity game, final UserEntity user);
     public List<UserEntity> getConnectedUsers();
-    public void surrender(UUID idPlayer);
+    public void surrender(final UUID idPlayer);
 }

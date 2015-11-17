@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc.api13.client.ihm.controllers.IHMWelcomePageController">
+   <top>
+      <SplitPane fx:id="splitPane" maxHeight="60.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane fx:id="anchorPane" maxHeight="100.0" minHeight="0.0" minWidth="0.0" prefHeight="76.0" prefWidth="1598.0">
+               <children>
+                  <Label fx:id="title" layoutX="24.0" layoutY="11.0" text="Chess Game">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="iconHelp" fitHeight="42.0" fitWidth="60.0" layoutX="721.0" layoutY="8.0" onMouseClicked="#onHelpClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/Icone-aide.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <ImageView fx:id="iconParam" fitHeight="37.0" fitWidth="36.0" layoutX="664.0" layoutY="11.0" onMouseClicked="#onParamClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/Icone-param.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <ImageView fx:id="iconNotif" fitHeight="34.0" fitWidth="35.0" layoutX="605.0" layoutY="12.0" onMouseClicked="#onNotifClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/Icone-cloche.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Text fx:id="userLabel" layoutX="424.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ConnectedPlayerLogin">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <ImageView fx:id="iconProfile" fitHeight="34.0" fitWidth="65.0" layoutX="334.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </top>
+   <left>
+      <SplitPane fx:id="centralSplitPane" dividerPositions="0.5864661654135338" prefHeight="540.0" prefWidth="806.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane fx:id="leftAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <SplitPane fx:id="rightSplitPane" dividerPositions="0.5" layoutX="-2.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="540.0" prefWidth="473.0">
+                    <items>
+                      <AnchorPane fx:id="topLeftAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="191.0" prefWidth="471.0">
+                           <children>
+                              <TableView fx:id="currentGamesTable" layoutX="27.0" layoutY="52.0" prefHeight="200.0" prefWidth="418.0">
+                                <columns>
+                                  <TableColumn fx:id="currentGamesId" prefWidth="57.0" resizable="false" text="Game ID" />
+                                  <TableColumn fx:id="currentGamesPlayer1" prefWidth="130.0" resizable="false" text="Player 1" />
+                                    <TableColumn fx:id="currentGamesPlayer2" prefWidth="130.0" resizable="false" text="Player 2" />
+                                    <TableColumn fx:id="currentGamesTime" prefWidth="61.0" resizable="false" text="Time" />
+                                    <TableColumn fx:id="currentGamesObs" prefWidth="39.0" resizable="false" />
+                                </columns>
+                              </TableView>
+                              <Label fx:id="currentGamesLabel" layoutX="35.0" layoutY="14.0" text="Current Games">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <ScrollBar fx:id="currentGamesScrollbar" layoutX="450.0" layoutY="2.0" orientation="VERTICAL" prefHeight="262.0" prefWidth="14.0" />
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane fx:id="bottomLeftAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="207.0" prefWidth="471.0">
+                           <children>
+                              <Label fx:id="savedGamesLabel" layoutX="27.0" layoutY="14.0" text="Saved Games">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <TableView fx:id="savedGamesTable" layoutX="27.0" layoutY="52.0" prefHeight="200.0" prefWidth="418.0">
+                                 <columns>
+                                    <TableColumn fx:id="savedGamesId" prefWidth="57.0" resizable="false" text="Game ID" />
+                                    <TableColumn fx:id="savedGamesPlayer1" prefWidth="130.0" resizable="false" text="Player 1" />
+                                    <TableColumn fx:id="savedGamesPlayer2" prefWidth="130.0" resizable="false" text="Player 2" />
+                                    <TableColumn fx:id="savedGamesDate" prefWidth="61.0" resizable="false" text="Date" />
+                                    <TableColumn fx:id="savedGamesReplay" prefWidth="39.0" resizable="false" />
+                                 </columns>
+                              </TableView>
+                              <ScrollBar fx:id="savedGamesScrollbar" layoutX="447.0" layoutY="2.0" orientation="VERTICAL" prefHeight="264.0" prefWidth="14.0" />
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane fx:id="rightAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="connectedUserLabel" layoutX="29.0" layoutY="14.0" text="Connected Users">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="connectedUserTable" layoutX="8.0" layoutY="41.0" prefHeight="490.0" prefWidth="297.0">
+                     <columns>
+                        <TableColumn fx:id="connectedUserLogin" prefWidth="94.0" resizable="false" text="Login" />
+                        <TableColumn fx:id="connectedUserStatus" prefWidth="92.0" resizable="false" text="Status" />
+                        <TableColumn fx:id="connectedUserStat" prefWidth="82.0" resizable="false" text="Won/Lost" />
+                        <TableColumn fx:id="connectedUserActionIcon" prefWidth="28.0" resizable="false" />
+                     </columns>
+                  </TableView>
+                  <ScrollBar fx:id="connectedUserScrollbar" layoutX="313.0" layoutY="6.0" orientation="VERTICAL" prefHeight="527.0" prefWidth="14.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </left>
+</BorderPane>
