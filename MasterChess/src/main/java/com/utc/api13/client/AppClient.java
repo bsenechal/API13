@@ -27,18 +27,18 @@ public class AppClient extends Application {
 
 		// ici, loader tous les fichiers FXML
 		// on utilise un FXML par écran
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ressourcesIHM/FXML/????.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
 
 		Pane root = (Pane) fxmlLoader.load();
 
 		Scene scene = new Scene(root, 800, 600);
-		scene.getStylesheets().add(getClass().getResource("joli2.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/css/masterCSS.css").toExternalForm());
 		stage.setTitle("Traduction");
 		stage.setScene(scene);
 		stage.show();
 	}
 
 	public static void main(String[] args) {
-		System.out.println("Hello World!");
+		launch(args);
 	}
 }

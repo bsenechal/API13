@@ -8,6 +8,7 @@ import com.utc.api13.commun.entities.PieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+
 import com.utc.api13.commun.entities.UserEntity;
 
 
