@@ -6,9 +6,9 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.utc.api13.commun.dao.GenericDAO;
+import com.utc.api13.commun.dao.IGenericDAO;
 import com.utc.api13.commun.dao.impl.GenericDAOImpl;
-import com.utc.api13.commun.entities.DataEntity;
+import com.utc.api13.commun.entities.ADataEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
@@ -19,13 +19,13 @@ import com.utc.api13.commun.exceptions.TechnicalException;
  *
  * @param <T> un entity
  */
-public abstract class DataService<T extends DataEntity> {
+public abstract class ADataService<T extends ADataEntity> {
 
 	/**
 	 * 
 	 * @return the data access object of the Service
 	 */
-	protected GenericDAO<T> getDao(){
+	protected IGenericDAO<T> getDao(){
 		return new GenericDAOImpl<T>();
 	}
 	/**

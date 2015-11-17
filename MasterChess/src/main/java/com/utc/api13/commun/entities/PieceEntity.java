@@ -2,7 +2,7 @@ package com.utc.api13.commun.entities;
 
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
-public class PieceEntity extends DataEntity {
+public class PieceEntity extends ADataEntity {
     
     private static final long serialVersionUID = 6842864968035495956L;
     private PieceColorEnum color;

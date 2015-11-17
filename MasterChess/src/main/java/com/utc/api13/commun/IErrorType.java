@@ -6,6 +6,6 @@ package com.utc.api13.commun;
 * interface des types d'erreurs<br/>
 * À surcharger par une énumération
 */
-public interface ErrorType {
+public interface IErrorType {
 
 }

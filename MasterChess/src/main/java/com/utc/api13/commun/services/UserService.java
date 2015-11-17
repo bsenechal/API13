@@ -13,7 +13,7 @@ import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 import com.utc.api13.commun.utils.ImageUtils;
 
-public class UserService extends DataService<UserEntity> {
+public class UserService extends ADataService<UserEntity> {
 	
 	private List<PublicUserEntity> connectedUsers;
 

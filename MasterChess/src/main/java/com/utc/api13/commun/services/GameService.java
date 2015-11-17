@@ -9,7 +9,7 @@ import com.utc.api13.commun.exceptions.DataAccessException;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
-public class GameService extends DataService<GameEntity> {
+public class GameService extends ADataService<GameEntity> {
 
 	/**
 	 * 

@@ -12,7 +12,7 @@ public class Erreur {
 	/**
      * type d'erreur: code fonctionnel correspindant à l'erreur
      */
-    private ErrorType errorType;
+    private IErrorType errorType;
     /**
      * les paramètres du message
      */
@@ -22,7 +22,7 @@ public class Erreur {
      */
     private Level level;
     
-    public Erreur(final ErrorType errorType) {
+    public Erreur(final IErrorType errorType) {
     	this.errorType = errorType;
     	this.params = new ArrayList<>();
     	this.level = Level.ERROR;
@@ -33,7 +33,7 @@ public class Erreur {
      * @param errorType code fonctionnel du message d'erreur
      * @param params paramètres du message d'erreur
      */
-    public Erreur(final ErrorType errorType, final List<String> params) {
+    public Erreur(final IErrorType errorType, final List<String> params) {
             this.errorType = errorType;
             this.params = params;
             this.level = Level.ERROR;
@@ -45,16 +45,16 @@ public class Erreur {
      * @param level le niveau de criticité
      * @param params paramètres du message d'erreur
      */
-    public Erreur(final ErrorType errorType, Level level, final List<String> params) {
+    public Erreur(final IErrorType errorType, Level level, final List<String> params) {
             this(errorType, params);
             this.level = level;
     }
 
-    public ErrorType getErrorType() {
+    public IErrorType getErrorType() {
         return errorType;
     }
 
-    public void setErrorType(ErrorType errorType) {
+    public void setErrorType(IErrorType errorType) {
         this.errorType = errorType;
     }
 
