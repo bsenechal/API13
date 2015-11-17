@@ -2,6 +2,8 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
+import io.netty.channel.ChannelHandlerContext;
+
 public class AllUserMessage extends Message {
 
 	public AllUserMessage(UUID sender, UUID receiver) {
@@ -10,9 +12,15 @@ public class AllUserMessage extends Message {
 	}
 
 	@Override
-	public void proceed() {
+	public void proceed(ChannelHandlerContext ctx) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void proceedServer(ChannelHandlerContext ctx) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

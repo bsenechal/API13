@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import com.utc.api13.commun.entities.MoveEntity;
 
+import io.netty.channel.ChannelHandlerContext;
+
 public class MoveMessage extends Message {
  MoveEntity move;
 	
@@ -17,7 +19,7 @@ public MoveMessage(UUID sender, UUID receiver, MoveEntity move) {
 	this.move = move;
 }
 	@Override
-	public void proceed() {
+	public void proceed(ChannelHandlerContext ctx) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -26,6 +28,11 @@ public MoveMessage(UUID sender, UUID receiver, MoveEntity move) {
 	}
 	public void setMove(MoveEntity move) {
 		this.move = move;
+	}
+	@Override
+	public void proceedServer(ChannelHandlerContext ctx) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

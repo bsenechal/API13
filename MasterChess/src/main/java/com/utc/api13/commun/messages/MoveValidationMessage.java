@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import com.utc.api13.commun.entities.MoveEntity;
 
+import io.netty.channel.ChannelHandlerContext;
+
 public class MoveValidationMessage extends Message {
 
 	MoveEntity  move;
@@ -28,9 +30,15 @@ public class MoveValidationMessage extends Message {
 	}
 
 	@Override
-	public void proceed() {
+	public void proceed(ChannelHandlerContext ctx) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void proceedServer(ChannelHandlerContext ctx) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

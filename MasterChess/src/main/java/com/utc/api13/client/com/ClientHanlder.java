@@ -29,13 +29,7 @@ public class ClientHanlder extends SimpleChannelInboundHandler<Message>{
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Message arg1)
 			throws Exception {	
-		
-		if(arg1.getClass().equals(HeartBeat.class)){
-        	logger.info("Hello message received from server, answering Hello");
-        	ctx.writeAndFlush(new HeartBeat(new UUID(0, 0), new UUID(0, 0), null));
-        }
-		
-		arg1.proceed();
+		arg1.proceed(ctx);
 		ping_lost = 0; // message received => host is alive
 		
 	}

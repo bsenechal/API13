@@ -61,11 +61,7 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
 		
 		Channel incoming = arg0.channel();
 		
-		if(arg1.getClass().equals(HeartBeat.class)){
-			logger.info("Hello message received, peer is alive !");
-		}
-		
-		((Message) arg1).proceed();
+		((Message) arg1).proceedServer(arg0);
 
 		ping_lost_map.get(incoming).set(0); // message received => host is alive
 	}
