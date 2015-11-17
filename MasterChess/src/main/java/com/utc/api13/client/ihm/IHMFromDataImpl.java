@@ -110,5 +110,4 @@ public class IHMFromDataImpl implements IIHMFromData {
 	public void didReceiveErrorInChatMessage() {
 		
 	}
-	
 }
