@@ -13,6 +13,7 @@ import com.utc.api13.server.data.interfaces.IServerToComm;
 public class ServerToCommImpl implements IServerToComm {
 
 	private UserService userService = new UserService();
+	
 	@Override
 	public List<UserEntity> getUsers() {
 		// TODO Auto-generated method stub

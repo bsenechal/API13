@@ -2,7 +2,7 @@
  * 
  */
 /**
- * @author Benoît
+ * @author BenoÃ®t
  *
  */
 package com.utc.api13.client.ihm;
