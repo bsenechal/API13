@@ -39,7 +39,7 @@ public class MessageManager {
 		
 		this.channel = boostrap.connect(host,port).sync().channel();
 		
-		logger.log(Level.DEBUG, "Message Manager is initialize for : " + host + ":" + port);
+		logger.log(Level.DEBUG, "Message Manager is initialized for : " + host + ":" + port);
 	}
 	
 	public void sendMessage(Message msg) throws ExceptionInInitializerError{

@@ -2,7 +2,9 @@ package com.utc.api13.server.com;
 
 
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.log4j.Logger;
 
@@ -30,12 +32,16 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
 	private static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 	private static final Logger logger = Logger.getLogger(ServerHanlder.class);
 	
-	private int ping_lost;
+	// ping_lost_map stores ping lost count for each channel -> unique attribute ping_lost may cause unexpected channel closure
+	private static final Hashtable<Channel, AtomicInteger> ping_lost_map = new Hashtable<Channel, AtomicInteger>() ;
 	
 	@Override
 	public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
 		Channel incoming = ctx.channel();
 		channels.add(incoming);
+		
+		// initializing the ping map with incoming channel key and 0 value
+		ping_lost_map.put(incoming, new AtomicInteger());
 		
 		//TODO Notify new user connection
 	}
@@ -45,6 +51,7 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
 		Channel incoming = ctx.channel();
 		channels.remove(incoming);
 		
+		ping_lost_map.remove(incoming);
 		//TODO Notify user disconnection
 	}
 
@@ -55,12 +62,12 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
 		Channel incoming = arg0.channel();
 		
 		if(arg1.getClass().equals(HeartBeat.class)){
-//			System.out.println("Hello message received, peer is alive !");
+			logger.info("Hello message received, peer is alive !");
 		}
 		
 		((Message) arg1).proceed();
 
-		this.ping_lost = 0;	// message received => host is alive
+		ping_lost_map.get(incoming).set(0); // message received => host is alive
 	}
 	
 	@Override
@@ -69,9 +76,13 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
 			IdleStateEvent e = (IdleStateEvent) evt;
 			if (e.state() == IdleState.WRITER_IDLE) {
 				logger.info("Channel IDLE : sending Hello");
-				ctx.writeAndFlush(new HeartBeat(new UUID(0, 0), new UUID(0, 0), null));	
-				ping_lost++;
-				if(ping_lost > 2){ // If x pings lost in a row, considering that host is down
+				ctx.writeAndFlush(new HeartBeat(new UUID(0, 0), new UUID(0, 0), null));
+				
+				//incrementing concerned channel's counter
+				ping_lost_map.get(ctx.channel()).incrementAndGet();
+				
+				// If x pings lost in a row, assuming that host is down
+				if(ping_lost_map.get(ctx.channel()).get() > 2){ 
 					throw(new IOException("Connection timeout"));
 				}
 			}

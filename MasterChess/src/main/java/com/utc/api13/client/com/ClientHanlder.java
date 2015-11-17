@@ -47,7 +47,7 @@ public class ClientHanlder extends SimpleChannelInboundHandler<Message>{
 			if (e.state() == IdleState.WRITER_IDLE) {
 				logger.info("No message from server, waiting ...");
 				ping_lost++;
-				if(ping_lost > 2){ // If x pings lost in a row.
+				if(ping_lost > 2){ // If x pings lost in a row, assuming that server is down
 					throw(new IOException("Connection timeout"));
 				}
 			}
