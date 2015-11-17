@@ -4,6 +4,8 @@ package com.utc.api13.server.com;
 import java.io.IOException;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import com.utc.api13.commun.messages.HeartBeat;
 import com.utc.api13.commun.messages.Message;
 
@@ -26,6 +28,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
 
 	private static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+	private static final Logger logger = Logger.getLogger(ServerHanlder.class);
 	
 	private int ping_lost;
 	
@@ -65,7 +68,7 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
 		if (evt instanceof IdleStateEvent) { // IdleStateEvent fired when no inbound messages
 			IdleStateEvent e = (IdleStateEvent) evt;
 			if (e.state() == IdleState.WRITER_IDLE) {
-//				System.out.println("Channel IDLE : sending Hello");
+				logger.info("Channel IDLE : sending Hello");
 				ctx.writeAndFlush(new HeartBeat(new UUID(0, 0), new UUID(0, 0), null));	
 				ping_lost++;
 				if(ping_lost > 2){ // If x pings lost in a row, considering that host is down

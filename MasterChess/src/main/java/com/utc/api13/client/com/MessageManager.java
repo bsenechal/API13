@@ -4,8 +4,6 @@ package com.utc.api13.client.com;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.utc.api13.client.com.interfaces.ClientCommToDataImpl;
-import com.utc.api13.client.data.interfaces.ClientDataToCommImpl;
 import com.utc.api13.commun.messages.Message;
 
 import io.netty.bootstrap.Bootstrap;
@@ -27,8 +25,6 @@ public class MessageManager {
 	private Channel channel;
 	private EventLoopGroup group;
 	
-	private ClientCommToDataImpl commtodata;
-	private ClientDataToCommImpl datatocomm;
 	
 	private static final Logger logger = Logger.getLogger(MessageManager.class);
 	
