@@ -2,9 +2,12 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import io.netty.channel.ChannelHandlerContext;
 
 public class RequestAnswerMessage extends Message {
+	private static final Logger logger = Logger.getLogger(RequestAnswerMessage.class);
 	UUID gameId;
 
 	

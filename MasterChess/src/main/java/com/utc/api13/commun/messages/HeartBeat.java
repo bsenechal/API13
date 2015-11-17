@@ -11,7 +11,7 @@ import io.netty.channel.ChannelHandlerContext;
 
 public class HeartBeat extends Message {
 	private static final Logger logger = Logger.getLogger(HeartBeat.class);
-	InetAddress ping;
+	private InetAddress ping;
 	
 	/**
 	 * @param sender

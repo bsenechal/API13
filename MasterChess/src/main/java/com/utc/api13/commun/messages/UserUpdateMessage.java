@@ -2,12 +2,14 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import com.utc.api13.commun.messages.Message;
 
 import io.netty.channel.ChannelHandlerContext;
 
 public class UserUpdateMessage extends Message {
-
+	private static final Logger logger = Logger.getLogger(UserUpdateMessage.class);
 	
 	/**
 	 * @param sender

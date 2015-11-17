@@ -2,6 +2,7 @@ package com.utc.api13.server.com;
 
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -27,13 +28,33 @@ import io.netty.util.concurrent.GlobalEventExecutor;
  *
  */
 
-public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
+public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 
 	private static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+	private static HashMap<UUID, ChannelHandlerContext> channelHandlerContextMap= new HashMap<UUID, ChannelHandlerContext>();
 	private static final Logger logger = Logger.getLogger(ServerHanlder.class);
 	
 	// ping_lost_map stores ping lost count for each channel -> unique attribute ping_lost may cause unexpected channel closure
 	private static final Hashtable<Channel, AtomicInteger> ping_lost_map = new Hashtable<Channel, AtomicInteger>() ;
+	private static ServerHanlder instance =null;
+	
+	
+	/** Constructeur privé */	
+	private ServerHanlder(){
+		
+	}
+
+	public static ServerHanlder getInstance()
+	{	
+		if (instance == null){ 	
+			synchronized(ServerHanlder.class){
+				if (instance == null){	
+					instance = new ServerHanlder();
+				}
+			}
+		}
+		return instance;
+	}
 	
 	@Override
 	public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
@@ -56,12 +77,14 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
 	}
 
 	@Override
-	protected void channelRead0(ChannelHandlerContext arg0, Object arg1)
+	protected void channelRead0(ChannelHandlerContext arg0, Message arg1)
 			throws Exception {
-		
+		if (channelHandlerContextMap.get(arg1.getSender()) !=null){
+			channelHandlerContextMap.put(arg1.getSender(), arg0);
+		}
 		Channel incoming = arg0.channel();
 		
-		((Message) arg1).proceedServer(arg0);
+		arg1.proceedServer(arg0);
 
 		ping_lost_map.get(incoming).set(0); // message received => host is alive
 	}
@@ -96,7 +119,10 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
 	}
 	
 	public void replyAll(ChannelHandlerContext arg0, Message message) throws Exception {
-		Channel incoming = arg0.channel();
+		Channel incoming =null;
+		if (arg0!=null){
+			incoming = arg0.channel();
+		}
 		for(Channel channel : channels){
 			if(channel != incoming){
 				channel.writeAndFlush(message);

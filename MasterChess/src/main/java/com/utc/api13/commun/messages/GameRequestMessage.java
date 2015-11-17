@@ -2,10 +2,13 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import io.netty.channel.ChannelHandlerContext;
 
 public class GameRequestMessage extends Message {
-	UUID gameId;
+	private static final Logger logger = Logger.getLogger(GameRequestMessage.class);
+	private UUID gameId;
 	
 	/**
 	 * @param sender

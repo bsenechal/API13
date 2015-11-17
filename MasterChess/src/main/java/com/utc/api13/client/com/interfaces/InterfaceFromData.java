@@ -13,7 +13,7 @@ public interface InterfaceFromData {
 	public boolean connectAsObserver(UUID game_id);
 
 	public List<UserEntity> getUsers();
-
+	
 	public boolean validateMove(UUID idPlayer, MoveEntity move);
 
 	public void sendUserUpdates(PublicUserEntity user);

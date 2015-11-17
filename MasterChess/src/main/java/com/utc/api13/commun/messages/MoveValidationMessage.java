@@ -2,12 +2,14 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import com.utc.api13.commun.entities.MoveEntity;
 
 import io.netty.channel.ChannelHandlerContext;
 
 public class MoveValidationMessage extends Message {
-
+	private static final Logger logger = Logger.getLogger(MoveValidationMessage.class);
 	MoveEntity  move;
 	
 
