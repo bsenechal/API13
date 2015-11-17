@@ -2,20 +2,21 @@ package com.utc.api13.client.data.interfaces;
 
 import java.util.List;
 import java.util.UUID;
-/*
+
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.UserEntity; */
 
-//FICHIER A SUPPRIMER AVANT LINTEGRATION
+import com.utc.api13.commun.entities.UserEntity;
+
+
 public interface IClientToIHM {
     
-    //public void getUsers(List <UserEntity> users);
+    public void getUsers(List <UserEntity> users);
     
-    //public UserEntity getUserInfo(UUID iduser);
+    public UserEntity getUserInfo(UUID iduser);
     
     public void getAllGames();
     
@@ -23,7 +24,7 @@ public interface IClientToIHM {
     
     public void disconnect();
     
-    //public void move(PieceEntity piece, PositionEntity position);
+    public void move(PieceEntity piece, PositionEntity position);
     
     public void observerLeave();
     
@@ -31,13 +32,13 @@ public interface IClientToIHM {
     
     public void sendAnserForLeaving(boolean answer);
     
-    //public void updateProfile(PrivateUserEntity user);
+    public void updateProfile(PrivateUserEntity user);
     
-    //public void sendUserUpdates(PublicUserEntity user);
+    public void sendUserUpdates(PublicUserEntity user);
     
     public void notify (String message);
     
-    //public void updateProfil (UserEntity user);
+    public void updateProfil (UserEntity user);
     
     public void watchGame (String idGame);
     
@@ -47,7 +48,7 @@ public interface IClientToIHM {
     
     public void saveGame();
     
-    //public GameEntity getCurrentGame();
+    public GameEntity getCurrentGame();
     
     public void createProposition(UUID uidReciever, boolean chattable, boolean observable);
     
