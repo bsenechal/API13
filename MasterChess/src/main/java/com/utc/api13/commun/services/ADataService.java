@@ -12,6 +12,7 @@ import com.utc.api13.commun.entities.ADataEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
+import com.utc.api13.commun.utils.StorageUtils;
 
 /**
  * Classe abstraite qui définit les méthodes de base des services

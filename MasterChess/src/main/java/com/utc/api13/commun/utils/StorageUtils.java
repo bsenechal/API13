@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.utc.api13.commun.entities.ADataEntity;
@@ -18,6 +19,7 @@ import com.utc.api13.commun.exceptions.DataAccessException;
 public class StorageUtils<T extends ADataEntity>{
 	private ObjectOutputStream oos;
     private ObjectInputStream ois;
+    private NoHeaderObjectOutputStream noHeaderOos;
     private String file;
     
     /**
@@ -36,19 +38,28 @@ public class StorageUtils<T extends ADataEntity>{
      */
     public void write(T entity)throws DataAccessException{
         try {
-            oos = new ObjectOutputStream(new FileOutputStream(file, true));
-            oos.writeObject(entity);
+        	if(readAll().size() == 0) {
+	            oos = new ObjectOutputStream(new FileOutputStream(file));
+	            oos.writeObject(entity);
+        	} else {
+        		noHeaderOos = new NoHeaderObjectOutputStream(new FileOutputStream(file, true));
+        		noHeaderOos.writeObject(entity);
+        	}
         } catch (IOException ex) {
             throw new DataAccessException("Error while writing entity", ex);
         } finally{
-            if(oos != null){
+           
                 try {
-                    oos.flush();
-                    oos.close();
+	            	 if(oos != null){
+	            		 oos.flush();
+	            		 oos.close();
+	            	 } else if(noHeaderOos != null) {
+	            		 noHeaderOos.flush();
+	            		 noHeaderOos.close();
+                    }
                 } catch (IOException ex) {
                     throw new DataAccessException("Error while closing output stream", ex);
                 }
-            }
         }
     }
     
@@ -58,22 +69,33 @@ public class StorageUtils<T extends ADataEntity>{
      * @throws DataAccessException erreur d'accès aux données
      */
     public void writeAll(List<T> entities) throws DataAccessException {
-        try{
-            oos = new ObjectOutputStream(new FileOutputStream(file, true));
-            for (T entity : entities){
-                oos.writeObject(entity);
+    	NoHeaderObjectOutputStream noHeaderOs = null;
+    	try{
+            oos = new ObjectOutputStream(new FileOutputStream(file));
+            noHeaderOos = new NoHeaderObjectOutputStream(new FileOutputStream(file, true));
+            Iterator<T> iterator = entities.iterator();
+            oos.writeObject(iterator.next());
+            oos.close();
+            
+            while(iterator.hasNext()){
+             noHeaderOos.writeObject(iterator.next());   
             }
         } catch (IOException ex) {
             throw new DataAccessException("Error while writing entity", ex);
         } finally{
-            if(oos != null){
-                try {
-                    oos.flush();
-                    oos.close();
-                } catch (IOException ex) {
-                    throw new DataAccessException("Error while closing output stream", ex);
+            
+            try {
+            	if(oos != null){
+	                oos.flush();
+	                oos.close();
+            	} else if(noHeaderOs != null){
+                	noHeaderOs.flush();
+                	noHeaderOs.close();
                 }
+            } catch (IOException ex) {
+                throw new DataAccessException("Error while closing output stream", ex);
             }
+            
         }
     }
     /**
@@ -117,7 +139,7 @@ public class StorageUtils<T extends ADataEntity>{
             throw new DataAccessException("Error while reading object from the file " + file, iox);
         } catch (ClassNotFoundException cnx) {
             throw new DataAccessException("The entity you are trying to deserialize doest not have a valid class", cnx);
-        }finally {
+        } finally {
             try {
                 ois.close();
             } catch (IOException ex) {

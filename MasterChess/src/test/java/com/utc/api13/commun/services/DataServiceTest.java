@@ -1,5 +1,7 @@
 package com.utc.api13.commun.services;
 
+import java.util.Optional;
+
 import com.utc.api13.commun.entities.ADataEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
@@ -15,9 +17,13 @@ public abstract class DataServiceTest<T extends ADataEntity> extends TestCase{
 	public void testSave() {
 		T newEntity = getEntityWithoutId();
 		try {
-			getService().save(newEntity);
+			newEntity = getService().save(newEntity);
 			assertNotNull(newEntity);
 			assertNotNull(newEntity.getId());
+			Optional<T> foundEntity = getService().getById(newEntity.getId());
+			assertNotNull(foundEntity);
+			assertNotNull(foundEntity.get());
+			assertEquals(foundEntity.get().getId(), newEntity.getId());
 		} catch (TechnicalException e) {
 			e.printStackTrace();
 		} catch (FunctionalException e) {

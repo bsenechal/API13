@@ -13,14 +13,18 @@ import com.utc.api13.commun.dao.IGenericDAO;
 import com.utc.api13.commun.entities.ADataEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
 import com.utc.api13.commun.exceptions.TechnicalException;
+import com.utc.api13.commun.utils.ConfigFileReader;
 import com.utc.api13.commun.utils.StorageUtils;
 
 public class GenericDAOImpl<T extends ADataEntity> implements IGenericDAO<T>{
 
     private StorageUtils<T> storageUtils;
+    private ConfigFileReader configFile;
     
     public GenericDAOImpl(String fileName) throws TechnicalException{
-        storageUtils = new StorageUtils("files/" + fileName + ".ser");
+    	configFile = new ConfigFileReader("config/config.properties");
+    	
+        storageUtils = new StorageUtils("files/" + configFile.getPropValue(fileName) + ".ser");
     }
     
     public List<T> findAll() throws DataAccessException {
