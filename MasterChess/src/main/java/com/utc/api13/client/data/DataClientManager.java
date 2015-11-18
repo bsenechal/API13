@@ -3,6 +3,8 @@
  */
 package com.utc.api13.client.data;
 
+import javafx.collections.ObservableSet;
+
 import com.utc.api13.client.com.interfaces.InterfaceFromData;
 import com.utc.api13.client.data.interfaces.IClientToComm;
 import com.utc.api13.client.data.interfaces.IClientToIHM;
@@ -17,6 +19,7 @@ public class DataClientManager {
 	private IClientToIHM clientToIHM;
 	private InterfaceFromData interfaceFromData;
 	private UserEntity userLocal;
+	private ObservableSet<UserEntity> userList;
 
 	/**
 	 * @return the clientToComm
@@ -77,6 +80,21 @@ public class DataClientManager {
 	public void setUserLocal(final UserEntity userLocal) {
 		this.userLocal = userLocal;
 	}
+	
+	/**
+     * @return the userList
+     */
+    public ObservableSet<UserEntity> getUserList() {
+        return userList;
+    }
+
+    /**
+     * @param userLocal
+     *            the userLocal to set
+     */
+    public void setUserList(final ObservableSet<UserEntity> userList) {
+        this.userList = userList;
+    }
 
 	/**
 	 * @param clientToComm
