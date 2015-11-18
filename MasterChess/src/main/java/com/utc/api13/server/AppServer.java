@@ -15,9 +15,9 @@ public class AppServer {
 		ServerManager serverManager = new ServerManager(80);
 			
 		DataServerManager dataServerManager = new DataServerManager();
-		dataServerManager.setInterfaceToClient(serverManager.getToClientImpl());
-				
-		serverManager.setIServerToComm(dataServerManager.getServerToCommImpl());
+//		dataServerManager.setInterfaceToClient(serverManager.getToClientImpl());
+//				
+//		serverManager.setIServerToComm(dataServerManager.getServerToCommImpl());
 	}
 
 }
