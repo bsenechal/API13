@@ -20,15 +20,15 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  * When the connection is ready you can use the method sendMessage
  * Don't forget to close the connection.
  */
-public class MessageManager {	
+public class ComClientManager {	
 	
 	private Channel channel;
 	private EventLoopGroup group;
 	
 	
-	private static final Logger logger = Logger.getLogger(MessageManager.class);
+	private static final Logger logger = Logger.getLogger(ComClientManager.class);
 	
-	public MessageManager(String host, int port) throws InterruptedException{
+	public ComClientManager(String host, int port) throws InterruptedException{
 		
 		group = new NioEventLoopGroup();
 		

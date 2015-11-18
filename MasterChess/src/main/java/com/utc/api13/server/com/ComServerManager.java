@@ -10,21 +10,21 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-public class ServerManager {
+public class ComServerManager {
 	
 	
 	public static void main(String args[]) throws InterruptedException{
 		try{
-			new ServerManager(8000).run();
+			new ComServerManager(8000).run();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 
 	private final int port;
-	private static final Logger logger = Logger.getLogger(ServerManager.class);
+	private static final Logger logger = Logger.getLogger(ComServerManager.class);
 
-	public ServerManager(int port){
+	public ComServerManager(int port){
 		this.port = port;
 		
 	}
