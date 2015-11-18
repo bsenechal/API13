@@ -4,8 +4,10 @@ import com.utc.api13.client.ihm.interfaces.IIHMFromData;
 
 public class IHMFromDataImpl implements IIHMFromData {
 	
-	public IHMFromDataImpl() {
-		
+	private IHMManager myIHMManager;
+	
+	public IHMFromDataImpl(IHMManager pIHMManager) {
+		myIHMManager = pIHMManager;
 	}
 	
 	public void didReceiveBoard() {
