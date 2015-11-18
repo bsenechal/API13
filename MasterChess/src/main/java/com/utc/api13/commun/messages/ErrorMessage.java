@@ -11,9 +11,8 @@ public class ErrorMessage extends Message {
 	private Exception exception;
 
 	@Override
-	public void proceed(ChannelHandlerContext ctx) {
-		// TODO Auto-generated method stub
-
+	public void proceed(ChannelHandlerContext ctx) throws Exception {
+		throw this.exception;
 	}
 
 	public Exception getException() {

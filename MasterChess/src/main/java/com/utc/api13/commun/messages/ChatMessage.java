@@ -37,14 +37,13 @@ public class ChatMessage extends Message {
 
 	@Override
 	public void proceed(ChannelHandlerContext ctx) {
-		// TODO Auto-generated method stub
 		System.out.println(this.getMessage());
+		//Trouver le game et ajouter le message
 
 	}
 
 	@Override
 	public void proceedServer(ChannelHandlerContext ctx) {
-		// TODO Auto-generated method stub
 		try {
 			ServerHanlder.getInstance().replyAll(ctx,new ChatMessage(new UUID(0, 0), new UUID(0, 0), message ));
 		} catch (Exception e) {

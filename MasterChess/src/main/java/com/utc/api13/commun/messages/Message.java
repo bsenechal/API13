@@ -42,7 +42,7 @@ public abstract class Message implements Serializable{
 	}
 
 
-	public abstract void proceed(ChannelHandlerContext ctx);
+	public abstract void proceed(ChannelHandlerContext ctx) throws Exception;
 	
 	public abstract void proceedServer(ChannelHandlerContext ctx);
 
