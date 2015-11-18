@@ -8,7 +8,7 @@ import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.UserEntity;
 
-public interface InterfaceFromData {
+public interface IClientToData {
 
 	public boolean connectAsObserver(UUID game_id);
 

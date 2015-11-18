@@ -3,7 +3,7 @@
  */
 package com.utc.api13.client.data;
 
-import com.utc.api13.client.com.interfaces.InterfaceFromData;
+import com.utc.api13.client.com.interfaces.IClientToDataImpl;
 import com.utc.api13.client.data.interfaces.IClientToComm;
 import com.utc.api13.client.data.interfaces.IClientToIHM;
 import com.utc.api13.commun.entities.UserEntity;
@@ -15,9 +15,10 @@ import com.utc.api13.commun.entities.UserEntity;
 public class DataClientManager {
 	private IClientToComm clientToComm;
 	private IClientToIHM clientToIHM;
-	private InterfaceFromData interfaceFromData;
+	private IClientToDataImpl iClientToDataImpl;
 	private UserEntity userLocal;
 
+	
 	/**
 	 * @return the clientToComm
 	 */
@@ -48,20 +49,7 @@ public class DataClientManager {
 		this.clientToIHM = clientToIHM;
 	}
 
-	/**
-	 * @return the interfaceFromData
-	 */
-	public InterfaceFromData getInterfaceFromData() {
-		return interfaceFromData;
-	}
 
-	/**
-	 * @param interfaceFromData
-	 *            the interfaceFromData to set
-	 */
-	public void setInterfaceFromData(final InterfaceFromData interfaceFromData) {
-		this.interfaceFromData = interfaceFromData;
-	}
 
 	/**
 	 * @return the userLocal
@@ -85,12 +73,26 @@ public class DataClientManager {
 	 * @param userLocal
 	 */
 	public DataClientManager(final IClientToComm clientToComm, final IClientToIHM clientToIHM,
-			final InterfaceFromData interfaceFromData, final UserEntity userLocal) {
+			final IClientToDataImpl iClientToDataImpl, final UserEntity userLocal) {
 		super();
 		this.clientToComm = clientToComm;
 		this.clientToIHM = clientToIHM;
-		this.interfaceFromData = interfaceFromData;
+		this.iClientToDataImpl = iClientToDataImpl;
 		this.userLocal = userLocal;
+	}
+
+	/**
+	 * @return the iClientToDataImpl
+	 */
+	public IClientToDataImpl getiClientToDataImpl() {
+		return iClientToDataImpl;
+	}
+
+	/**
+	 * @param iClientToDataImpl the iClientToDataImpl to set
+	 */
+	public void setiClientToDataImpl(IClientToDataImpl iClientToDataImpl) {
+		this.iClientToDataImpl = iClientToDataImpl;
 	}
 
 }

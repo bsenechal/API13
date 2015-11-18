@@ -1,6 +1,6 @@
 package com.utc.api13.client;
 
-import com.utc.api13.client.com.interfaces.InterfaceFromDataImpl;
+import com.utc.api13.client.com.interfaces.IClientToDataImpl;
 import com.utc.api13.client.data.ClientToCommImpl;
 import com.utc.api13.client.data.ClientToIHMImpl;
 import com.utc.api13.client.data.DataClientManager;
@@ -23,7 +23,7 @@ public class AppClient extends Application {
 	public void start(Stage stage) throws Exception {
 		this.stage = stage;
 		DataClientManager dataClientManager = new DataClientManager(new ClientToCommImpl(), new ClientToIHMImpl(),
-				new InterfaceFromDataImpl(), new UserEntity());
+				new IClientToDataImpl(), new UserEntity());
 
 		// ici, loader tous les fichiers FXML
 		// on utilise un FXML par écran
