@@ -1,6 +1,19 @@
+/bin/
+
 /target/
+
+.classpath
+
+.project
+
+.metadata
 
 .settings
 .project
 .classpath
 .project
+.recommenders
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'DATA' of https://github.com/bsenechal/API13.git

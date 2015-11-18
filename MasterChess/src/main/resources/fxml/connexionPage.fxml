@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane fx:id="connexionBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc.api13.client.ihm.controllers.IHMConnexionPageController">
+   <center>
+      <AnchorPane fx:id="connexionAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="loginLabel" layoutX="182.0" layoutY="77.0" text="Login" />
+            <Label fx:id="passwordLabel" layoutX="182.0" layoutY="111.0" text="Password" />
+            <Label fx:id="serverAddressLabel" layoutX="182.0" layoutY="151.0" text="Server Address" />
+            <Button fx:id="connexionButton" layoutX="248.0" layoutY="213.0" mnemonicParsing="false" onAction="#onSignInClicked" text="Sign in" />
+            <TextField fx:id="loginTextView" layoutX="274.0" layoutY="73.0" />
+            <TextField fx:id="passwordTextView" layoutX="274.0" layoutY="107.0" />
+            <TextField fx:id="serverAddressTextView" layoutX="274.0" layoutY="147.0" />
+            <Hyperlink fx:id="importLink" layoutX="123.0" layoutY="272.0" onAction="#onImportClicked" text="Import a profile" />
+            <Hyperlink fx:id="exportLink" layoutX="123.0" layoutY="302.0" onAction="#onExportClicked" text="Export a profile" />
+            <Hyperlink fx:id="signUpLink" layoutX="318.0" layoutY="214.0" onAction="#onSignUpClicked" text="Sign up" />
+            <Label fx:id="connexionLabel" layoutX="248.0" layoutY="14.0" text="Connexion">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
