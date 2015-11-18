@@ -22,9 +22,8 @@ public class AppClient {
 
 		ihmManager.setClientToIHM(dataClientManager.getClientToIHMImpl());
 		comClientManager.setIClientToComm(dataClientManager.getClientToCommImpl());
-
-		ihmManager.launchAppIHM(args);
 		comClientManager.launchAppCom("localhost", 8000);
+		ihmManager.launchAppIHM(args);
 		// TODO : Faire une vrai gestion d'erreur
 		comClientManager.close();
 
