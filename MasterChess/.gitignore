@@ -1,4 +1,3 @@
-
 /bin/
 
 /target/
@@ -14,3 +13,7 @@
 .classpath
 .project
 .recommenders
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'DATA' of https://github.com/bsenechal/API13.git
