@@ -9,15 +9,17 @@ import java.util.List;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.UserEntity;
 import com.utc.api13.server.com.interfaces.InterfaceToClient;
-import com.utc.api13.server.data.interfaces.IServerToComm;
 
 /**
  * @author Benoît
  *
  */
 public class DataServerManager {
+	// Interface COM
 	private InterfaceToClient interfaceToClient;
-	private IServerToComm serverToComm;
+	
+	// Interface DATA
+	private ServerToCommImpl serverToCommImpl;
 	private List<UserEntity> currentUsers;
 	private List<GameEntity> currentGames;
 	
@@ -33,18 +35,7 @@ public class DataServerManager {
 	public void setInterfaceToClient(final InterfaceToClient interfaceToClient) {
 		this.interfaceToClient = interfaceToClient;
 	}
-	/**
-	 * @return the serverToComm
-	 */
-	public IServerToComm getServerToComm() {
-		return serverToComm;
-	}
-	/**
-	 * @param serverToComm the serverToComm to set
-	 */
-	public void setServerToComm(final IServerToComm serverToComm) {
-		this.serverToComm = serverToComm;
-	}
+
 	/**
 	 * @return the currentUsers
 	 */
@@ -69,14 +60,29 @@ public class DataServerManager {
 	public void setCurrentGames(final List<GameEntity> currentGames) {
 		this.currentGames = currentGames;
 	}
+	
+	
+	/**
+	 * @return the serverToCommImpl
+	 */
+	public ServerToCommImpl getServerToCommImpl() {
+		return serverToCommImpl;
+	}
+	/**
+	 * @param serverToCommImpl the serverToCommImpl to set
+	 */
+	public void setServerToCommImpl(ServerToCommImpl serverToCommImpl) {
+		this.serverToCommImpl = serverToCommImpl;
+	}
+	
 	/**
 	 * @param interfaceToClient
 	 * @param serverToComm
 	 */
-	public DataServerManager(final InterfaceToClient interfaceToClient, final IServerToComm serverToComm) {
+	public DataServerManager() {
 		super();
-		this.interfaceToClient = interfaceToClient;
-		this.serverToComm = serverToComm;
+		this.interfaceToClient = null;
+		this.serverToCommImpl = new ServerToCommImpl();
 		this.currentGames = new ArrayList<GameEntity>();
 		this.currentUsers = new ArrayList<UserEntity>();
 	}
