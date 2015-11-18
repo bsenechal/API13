@@ -19,6 +19,7 @@ import com.utc.api13.server.data.interfaces.IServerToComm;
  *
  */
 public class ServerToCommImpl implements IServerToComm {
+	private DataServerManager dataServerManager;
 
 	/* (non-Javadoc)
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#getUsers()
@@ -139,5 +140,13 @@ public class ServerToCommImpl implements IServerToComm {
 
 	private UserService getUserService() {
 		return new UserService();
+	}
+
+	/**
+	 * @param dataServerManager
+	 */
+	public ServerToCommImpl(DataServerManager dataServerManager) {
+		super();
+		this.dataServerManager = dataServerManager;
 	}
 }
