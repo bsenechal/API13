@@ -6,6 +6,8 @@ package com.utc.api13.client.data;
 import java.util.List;
 import java.util.UUID;
 
+import javafx.collections.ObservableSet;
+
 import com.utc.api13.client.data.interfaces.IClientToIHM;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
@@ -19,6 +21,22 @@ import com.utc.api13.commun.entities.UserEntity;
  *
  */
 public class ClientToIHMImpl implements IClientToIHM {
+    DataClientManager instanceDataClientManager;
+    
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.utc.api13.client.data.interfaces.IClientToIHM#getUserList(java.util.
+     * List)
+     */
+    @Override
+    public ObservableSet<UserEntity> getUserList() {
+//        return instanceDataClientManager.getUserList();
+    	return null;
+    }
+
 
 	/*
 	 * (non-Javadoc)
@@ -277,5 +295,11 @@ public class ClientToIHMImpl implements IClientToIHM {
 		// TODO Auto-generated method stub
 
 	}
+
+
+    public ClientToIHMImpl(DataClientManager instanceDataClientManager) {
+        super();
+        this.instanceDataClientManager = instanceDataClientManager;
+    }
 
 }

@@ -54,7 +54,7 @@ public class DataClientManager {
 	 * @param iClientToData the iClientToData to set
 	 */
 	public void setIClientToData(IClientToData iClientToData) {
-		this.iClientToData = iClientToData;
+		iClientToData = iClientToData;
 	}
 	/**
 	 * @return the userLocal
@@ -102,8 +102,8 @@ public class DataClientManager {
 	 */
 	public DataClientManager() {
 		super();
-		this.clientToCommImpl = new ClientToCommImpl();
-		this.clientToIHMImpl = new ClientToIHMImpl();
+		this.clientToCommImpl = new ClientToCommImpl(this);
+		this.clientToIHMImpl = new ClientToIHMImpl(this);
 		this.iClientToData = null;
 		this.userLocal = new UserEntity();
 	}
