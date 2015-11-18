@@ -20,6 +20,8 @@ public class AppServer {
 		
 		comServerManager.setIServerToComm(dataServerManager.getServerToCommImpl());
 		
+		// TODO : Lancer le serveur de com
+		
 		// TODO : a rajouter
 //		comServerManager.close();
 	}
