@@ -2,11 +2,16 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
+import io.netty.channel.ChannelHandlerContext;
+
 public class ErrorMessage extends Message {
-	Exception exception;
+	private static final Logger logger = Logger.getLogger(ErrorMessage.class);
+	private Exception exception;
 
 	@Override
-	public void proceed() {
+	public void proceed(ChannelHandlerContext ctx) {
 		// TODO Auto-generated method stub
 
 	}
@@ -27,6 +32,12 @@ public class ErrorMessage extends Message {
 	public ErrorMessage(UUID sender, UUID receiver, Exception exception) {
 		super(sender, receiver);
 		this.exception = exception;
+	}
+
+	@Override
+	public void proceedServer(ChannelHandlerContext ctx) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

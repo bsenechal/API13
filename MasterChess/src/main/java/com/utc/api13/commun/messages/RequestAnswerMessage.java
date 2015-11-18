@@ -2,7 +2,12 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
+import io.netty.channel.ChannelHandlerContext;
+
 public class RequestAnswerMessage extends Message {
+	private static final Logger logger = Logger.getLogger(RequestAnswerMessage.class);
 	UUID gameId;
 
 	
@@ -16,7 +21,7 @@ public class RequestAnswerMessage extends Message {
 		this.gameId = gameId;
 	}
 	@Override
-	public void proceed() {
+	public void proceed(ChannelHandlerContext ctx) {
 		// TODO Auto-generated method stub
 
 	}
@@ -25,6 +30,11 @@ public class RequestAnswerMessage extends Message {
 	}
 	public void setGameId(UUID gameId) {
 		this.gameId = gameId;
+	}
+	@Override
+	public void proceedServer(ChannelHandlerContext ctx) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

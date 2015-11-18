@@ -3,6 +3,8 @@ package com.utc.api13.commun.messages;
 import java.io.Serializable;
 import java.util.UUID;
 
+import io.netty.channel.ChannelHandlerContext;
+
 public abstract class Message implements Serializable{
 	
 	private static final long serialVersionUID = -7165675510182836034L;
@@ -40,6 +42,8 @@ public abstract class Message implements Serializable{
 	}
 
 
-	public abstract void proceed();
+	public abstract void proceed(ChannelHandlerContext ctx);
+	
+	public abstract void proceedServer(ChannelHandlerContext ctx);
 
 }

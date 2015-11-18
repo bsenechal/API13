@@ -4,31 +4,20 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
-import com.utc.api13.commun.entities.MoveEntity;
+import com.utc.api13.commun.messages.Message;
 
 import io.netty.channel.ChannelHandlerContext;
 
-public class MoveValidationMessage extends Message {
-	private static final Logger logger = Logger.getLogger(MoveValidationMessage.class);
-	MoveEntity  move;
-	
+public class ObserverAnswerMessage extends Message {
+	private static final Logger logger = Logger.getLogger(ObserverAnswerMessage.class);
 
 	/**
 	 * @param sender
 	 * @param receiver
-	 * @param move
 	 */
-	public MoveValidationMessage(UUID sender, UUID receiver, MoveEntity move) {
+	public ObserverAnswerMessage(UUID sender, UUID receiver) {
 		super(sender, receiver);
-		this.move = move;
-	}
-
-	public MoveEntity getMove() {
-		return move;
-	}
-
-	public void setMove(MoveEntity move) {
-		this.move = move;
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -42,5 +31,7 @@ public class MoveValidationMessage extends Message {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 
 }
