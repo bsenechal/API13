@@ -78,7 +78,7 @@ public class DataServerManager {
 	public DataServerManager() {
 		super();
 		this.iServeurToData = null;
-		this.serverToCommImpl = new ServerToCommImpl();
+		this.serverToCommImpl = new ServerToCommImpl(this);
 		this.currentGames = new ArrayList<GameEntity>();
 		this.currentUsers = new ArrayList<UserEntity>();
 	}
