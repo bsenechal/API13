@@ -3,7 +3,7 @@
  */
 package com.utc.api13.server;
 
-import com.utc.api13.server.com.ToClientImpl;
+import com.utc.api13.server.com.interfaces.ToClientImpl;
 import com.utc.api13.server.data.DataServerManager;
 import com.utc.api13.server.data.ServerToCommImpl;
 
