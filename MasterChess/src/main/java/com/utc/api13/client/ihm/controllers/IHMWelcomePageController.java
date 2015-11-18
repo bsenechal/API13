@@ -2,6 +2,7 @@ package com.utc.api13.client.ihm.controllers;
 
 import com.utc.api13.client.data.interfaces.IClientToIHM;
 import com.utc.api13.client.ihm.ClientToIHMImpl;
+
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
@@ -10,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
