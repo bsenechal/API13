@@ -4,6 +4,8 @@ package com.utc.api13.client.com;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+import com.utc.api13.client.com.interfaces.IClientToDataImpl;
+import com.utc.api13.client.data.interfaces.IClientToComm;
 import com.utc.api13.commun.messages.Message;
 
 import io.netty.bootstrap.Bootstrap;
@@ -25,6 +27,9 @@ public class ComClientManager {
 	private Channel channel;
 	private EventLoopGroup group;
 	
+	// TODO : Modifier le nom de la classe Impl
+	private IClientToDataImpl clientToDataImpl;
+	private IClientToComm IClientToComm;
 	
 	private static final Logger logger = Logger.getLogger(ComClientManager.class);
 	
@@ -52,6 +57,34 @@ public class ComClientManager {
 	
 	public void close(){
 		group.shutdownGracefully();
+	}
+
+	/**
+	 * @return the clientToDataImpl
+	 */
+	public IClientToDataImpl getClientToDataImpl() {
+		return clientToDataImpl;
+	}
+
+	/**
+	 * @param clientToDataImpl the clientToDataImpl to set
+	 */
+	public void setClientToDataImpl(IClientToDataImpl clientToDataImpl) {
+		this.clientToDataImpl = clientToDataImpl;
+	}
+
+	/**
+	 * @return the iClientToComm
+	 */
+	public IClientToComm getIClientToComm() {
+		return IClientToComm;
+	}
+
+	/**
+	 * @param iClientToComm the iClientToComm to set
+	 */
+	public void setIClientToComm(IClientToComm iClientToComm) {
+		IClientToComm = iClientToComm;
 	}
 
 }
