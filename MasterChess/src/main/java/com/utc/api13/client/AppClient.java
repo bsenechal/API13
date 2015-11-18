@@ -22,11 +22,10 @@ public class AppClient {
 
 		ihmManager.setClientToIHM(dataClientManager.getClientToIHMImpl());
 		comClientManager.setIClientToComm(dataClientManager.getClientToCommImpl());
-
+		comClientManager.launchAppCom("localhost", 8000);
 		ihmManager.launchAppIHM(args);
-		comClientManager.launchAppCom("localhost", 80);
+		
 		// TODO : Faire une vrai gestion d'erreur
-		System.out.println("erreur");
 		comClientManager.close();
 
 	}
