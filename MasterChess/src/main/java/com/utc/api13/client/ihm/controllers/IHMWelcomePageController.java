@@ -65,17 +65,6 @@ public class IHMWelcomePageController {
 		//getAllGames();
 	}
 	
-	public void onHelpClicked() {
-
-	}
-	
-	public void onParamClicked() {
-		
-	}
-	
-	public void onNotifClicked() {
-		
-	}
 	
 	public void setListConnectedUser() {
 		
