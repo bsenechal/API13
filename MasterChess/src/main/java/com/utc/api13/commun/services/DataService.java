@@ -19,13 +19,14 @@ import com.utc.api13.commun.exceptions.TechnicalException;
  *
  * @param <T> un entity
  */
-public abstract class DataService<T extends DataEntity> {
+public class DataService<T extends DataEntity> {
 
 	/**
 	 * 
 	 * @return the data access object of the Service
+	 * @throws TechnicalException 
 	 */
-	protected GenericDAO<T> getDao(){
+	protected GenericDAO<T> getDao() throws TechnicalException{
 		return new GenericDAOImpl<T>();
 	}
 	/**
@@ -68,7 +69,9 @@ public abstract class DataService<T extends DataEntity> {
 	 * @throws TechnicalException technical exception
 	 * @throws FunctionalException functional exception
 	 */
-	protected abstract void validateInstance(final T entity) throws TechnicalException, FunctionalException;
+	protected void validateInstance(final T entity) throws TechnicalException, FunctionalException {
+		//Override when needed
+	}
 	
 	/**
 	 * Needed validations to do before creation
@@ -96,16 +99,16 @@ public abstract class DataService<T extends DataEntity> {
 	 * @return found UID or null if not found
 	 * @throws DataAccessException error when accessing to data
 	 */
-	public Optional<T> getById(UUID id) throws DataAccessException {
+	public Optional<T> getById(UUID id) throws TechnicalException {
 		return getAll().stream().filter(entity -> entity.getId().equals(id)).findFirst();
 	}
 	
 	/**
 	 * Delte the given entity in file
 	 * @param entity entity to destroy
-	 * @throws DataAccessException error when accessing to data
+	 * @throws TechnicalException 
 	 */
-	public void delete(T entity) throws DataAccessException{
+	public void delete(T entity) throws TechnicalException{
 		//TODO: Do we erase the entity from all files???
 		List<T> entities = getAll();
 		entities.removeIf(e -> e.getId().equals(entity.getId()));
@@ -116,7 +119,7 @@ public abstract class DataService<T extends DataEntity> {
 	 * Delete all instances in file
 	 * @throws DataAccessException error when accessing to data
 	 */
-	public void deleteAll() throws DataAccessException {
+	public void deleteAll() throws TechnicalException {
 		getDao().deleteAll();
 	}
 	
@@ -125,7 +128,7 @@ public abstract class DataService<T extends DataEntity> {
 	 * @return List of found objects
 	 * @throws DataAccessException error when accessing to data
 	 */
-	public List<T> getAll() throws DataAccessException{
+	public List<T> getAll() throws TechnicalException{
 		return getDao().findAll();
 	}
 }

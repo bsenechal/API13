@@ -17,7 +17,7 @@ public class GameService extends DataService<GameEntity> {
 	 * @return Returns the list of games observed by a user 
 	 * @throws DataAccessException data access exception
 	 */
-	public List<GameEntity> getByUser(UserEntity user) throws DataAccessException{
+	public List<GameEntity> getByUser(UserEntity user) throws TechnicalException{
 		return getAll().stream().filter(game -> game.getObservers().contains(user)).collect(Collectors.toList());
 	}
 
