@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
-import com.utc.api13.commun.common.Erreur;
+import com.utc.api13.commun.Erreur;
 import com.utc.api13.commun.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.UserEntity;
@@ -14,7 +13,7 @@ import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 import com.utc.api13.commun.utils.ImageUtils;
 
-public class UserService extends DataService<UserEntity> {
+public class UserService extends ADataService<UserEntity> {
 	
 	private List<PublicUserEntity> connectedUsers;
 

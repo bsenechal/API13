@@ -8,13 +8,13 @@ import java.util.UUID;
 
 import javax.annotation.Generated;
 
-import com.utc.api13.commun.dao.GenericDAO;
-import com.utc.api13.commun.entities.DataEntity;
+import com.utc.api13.commun.dao.IGenericDAO;
+import com.utc.api13.commun.entities.ADataEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 import com.utc.api13.commun.utils.StorageUtils;
 
-public class GenericDAOImpl<T extends DataEntity> implements GenericDAO<T>{
+public class GenericDAOImpl<T extends ADataEntity> implements IGenericDAO<T>{
 
     private StorageUtils<T> storageUtils;
     

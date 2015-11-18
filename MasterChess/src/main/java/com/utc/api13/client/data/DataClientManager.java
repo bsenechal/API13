@@ -3,9 +3,9 @@
  */
 package com.utc.api13.client.data;
 
+import com.utc.api13.client.com.interfaces.InterfaceFromData;
 import com.utc.api13.client.data.interfaces.IClientToComm;
 import com.utc.api13.client.data.interfaces.IClientToIHM;
-import com.utc.api13.client.ihm.interfaces.IIHMFromData;
 import com.utc.api13.commun.entities.UserEntity;
 
 /**
@@ -13,71 +13,84 @@ import com.utc.api13.commun.entities.UserEntity;
  *
  */
 public class DataClientManager {
-    private IClientToComm clientToComm;
-    private IClientToIHM clientToIHM;
-    private IIHMFromData ihmFromData;
-    private UserEntity userLocal;
-    
-    /**
-     * @return the clientToComm
-     */
-    public IClientToComm getClientToComm() {
-        return clientToComm;
-    }
-    /**
-     * @param clientToComm the clientToComm to set
-     */
-    public void setClientToComm(IClientToComm clientToComm) {
-        this.clientToComm = clientToComm;
-    }
-    /**
-     * @return the clientToIHM
-     */
-    public IClientToIHM getClientToIHM() {
-        return clientToIHM;
-    }
-    /**
-     * @param clientToIHM the clientToIHM to set
-     */
-    public void setClientToIHM(IClientToIHM clientToIHM) {
-        this.clientToIHM = clientToIHM;
-    }
-    /**
-     * @return the ihmFromData
-     */
-    public IIHMFromData getIhmFromData() {
-        return ihmFromData;
-    }
-    /**
-     * @param ihmFromData the ihmFromData to set
-     */
-    public void setIhmFromData(IIHMFromData ihmFromData) {
-        this.ihmFromData = ihmFromData;
-    }
-    /**
-     * @return the userLocal
-     */
-    public UserEntity getUserLocal() {
-        return userLocal;
-    }
-    /**
-     * @param userLocal the userLocal to set
-     */
-    public void setUserLocal(UserEntity userLocal) {
-        this.userLocal = userLocal;
-    }
-    /**
-     * @param clientToComm
-     * @param clientToIHM
-     * @param ihmFromData
-     * @param userLocal
-     */
-    public DataClientManager(IClientToComm clientToComm, IClientToIHM clientToIHM, IIHMFromData ihmFromData,
-            UserEntity userLocal) {
-        super();
-        this.clientToComm = clientToComm;
-        this.clientToIHM = clientToIHM;
-        this.ihmFromData = ihmFromData;
-        this.userLocal = userLocal;
-    }
+	private IClientToComm clientToComm;
+	private IClientToIHM clientToIHM;
+	private InterfaceFromData interfaceFromData;
+	private UserEntity userLocal;
+
+	/**
+	 * @return the clientToComm
+	 */
+	public IClientToComm getClientToComm() {
+		return clientToComm;
+	}
+
+	/**
+	 * @param clientToComm
+	 *            the clientToComm to set
+	 */
+	public void setClientToComm(final IClientToComm clientToComm) {
+		this.clientToComm = clientToComm;
+	}
+
+	/**
+	 * @return the clientToIHM
+	 */
+	public IClientToIHM getClientToIHM() {
+		return clientToIHM;
+	}
+
+	/**
+	 * @param clientToIHM
+	 *            the clientToIHM to set
+	 */
+	public void setClientToIHM(final IClientToIHM clientToIHM) {
+		this.clientToIHM = clientToIHM;
+	}
+
+	/**
+	 * @return the interfaceFromData
+	 */
+	public InterfaceFromData getInterfaceFromData() {
+		return interfaceFromData;
+	}
+
+	/**
+	 * @param interfaceFromData
+	 *            the interfaceFromData to set
+	 */
+	public void setInterfaceFromData(final InterfaceFromData interfaceFromData) {
+		this.interfaceFromData = interfaceFromData;
+	}
+
+	/**
+	 * @return the userLocal
+	 */
+	public UserEntity getUserLocal() {
+		return userLocal;
+	}
+
+	/**
+	 * @param userLocal
+	 *            the userLocal to set
+	 */
+	public void setUserLocal(final UserEntity userLocal) {
+		this.userLocal = userLocal;
+	}
+
+	/**
+	 * @param clientToComm
+	 * @param clientToIHM
+	 * @param interfaceFromData
+	 * @param userLocal
+	 */
+	public DataClientManager(final IClientToComm clientToComm, final IClientToIHM clientToIHM,
+			final InterfaceFromData interfaceFromData, final UserEntity userLocal) {
+		super();
+		this.clientToComm = clientToComm;
+		this.clientToIHM = clientToIHM;
+		this.interfaceFromData = interfaceFromData;
+		this.userLocal = userLocal;
+	}
+
 }

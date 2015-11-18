@@ -3,13 +3,13 @@
  */
 package com.utc.api13.commun.enumerations;
 
-import com.utc.api13.commun.common.ErrorType;
+import com.utc.api13.commun.IErrorType;
 
 /**
  * @author Amstrong
  *
  */
-public enum ErrorTypeEnum implements ErrorType{
+public enum ErrorTypeEnum implements IErrorType{
 
 	/**
 	 * functional for code for login failure

@@ -1,6 +1,6 @@
 package com.utc.api13.commun.entities;
 
-public class PositionEntity extends DataEntity {
+public class PositionEntity extends ADataEntity {
 
     private static final long serialVersionUID = -9132052141494726494L;
     private String positionX;

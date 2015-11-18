@@ -2,7 +2,7 @@
  * 
  */
 /**
- * @author Benoît
+ * @author API13
  *
  */
 package com.utc.api13.commun;

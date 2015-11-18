@@ -2,6 +2,8 @@ package com.utc.api13.server.com;
 
 import java.util.UUID;
 
+import com.utc.api13.commun.messages.Message;
+
 public class ObserverAnswerMessage extends Message {
 	
 
@@ -15,7 +17,7 @@ public class ObserverAnswerMessage extends Message {
 	}
 
 	@Override
-	void proceed() {
+	public void proceed() {
 		// TODO Auto-generated method stub
 
 	}

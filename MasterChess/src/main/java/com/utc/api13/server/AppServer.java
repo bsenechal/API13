@@ -3,16 +3,20 @@
  */
 package com.utc.api13.server;
 
-/**
- * @author Benoît
- *
- */
+import com.utc.api13.server.com.ToClientImpl;
+import com.utc.api13.server.data.DataServerManager;
+import com.utc.api13.server.data.ServerToCommImpl;
+
 public class AppServer {
 
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-//        DataManagerServer dataManagerServer = new DataManagerServer( *** ServerToCommImpl ****, *** CommToServerImpl ***, new ArrayList<UserEntity>(), new ArrayList<GameEntity>);
-    }
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		DataServerManager dataServerManager = new DataServerManager(new ToClientImpl(), new ServerToCommImpl());
+		dataServerManager.addUsers();
+		
+		
+	}
+
 }
