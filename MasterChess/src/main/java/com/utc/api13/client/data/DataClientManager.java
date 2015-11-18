@@ -106,6 +106,27 @@ public class DataClientManager {
 		this.clientToIHMImpl = new ClientToIHMImpl(this);
 		this.iClientToData = null;
 		this.userLocal = new UserEntity();
+		this.setBouchonPierre();
+	}
+	
+	/*********************************************************
+	 * *****************  WARNING  ***************************
+	 * *******************************************************
+	 * 
+	 * To delete asap
+	 */
+	private void setBouchonPierre(){
+	    for (int i = 0 ; i < 10 ; i++){
+            UserEntity userEntity = new UserEntity();
+            userEntity.setFirstName("firstName" + i);
+            userEntity.setLastName("lastName" + i);
+            userEntity.setLogin("login" + i);
+            userEntity.setNbLost((int) Math.random());
+            userEntity.setNbPlayed((int) Math.random());
+            userEntity.setNbWon((int) Math.random());
+            userEntity.setStatus((i % 2 == 0) ? true : false);
+            this.currentUsers.add(userEntity);
+        }
 	}
 
 	
