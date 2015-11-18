@@ -32,8 +32,10 @@ public class ComClientManager {
 	private IClientToComm IClientToComm;
 	
 	private static final Logger logger = Logger.getLogger(ComClientManager.class);
-	
-	public ComClientManager(String host, int port) throws InterruptedException{
+	public ComClientManager(){
+		
+	}
+	public void launchAppCom(String host, int port) {
 		
 		group = new NioEventLoopGroup();
 		
@@ -42,7 +44,12 @@ public class ComClientManager {
 		.channel(NioSocketChannel.class)
 		.handler(new ClientInitializer());	
 		
-		this.channel = boostrap.connect(host,port).sync().channel();
+		try {
+			this.channel = boostrap.connect(host,port).sync().channel();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		logger.log(Level.DEBUG, "Message Manager is initialized for : " + host + ":" + port);
 	}

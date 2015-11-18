@@ -14,9 +14,9 @@ public class ComServerManager {
 	private IServerToComm iServerToComm;
 	private IServeurToDataImpl iServerToDataImpl;
 	
-	public static void main(String args[]) throws InterruptedException{
+	public void launchAppCom(){
 		try{
-			new ComServerManager(8000).run();
+			this.run();
 		}catch(Exception e){
 			e.printStackTrace();
 		}

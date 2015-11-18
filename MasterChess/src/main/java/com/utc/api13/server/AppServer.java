@@ -12,7 +12,7 @@ public class AppServer {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ComServerManager comServerManager = new ComServerManager(80);
+		ComServerManager comServerManager = new ComServerManager(8000);
 			
 		DataServerManager dataServerManager = new DataServerManager();
 		
@@ -20,6 +20,7 @@ public class AppServer {
 		
 		comServerManager.setIServerToComm(dataServerManager.getServerToCommImpl());
 		
+		comServerManager.launchAppCom();
 		// TODO : Lancer le serveur de com
 		
 		// TODO : a rajouter
