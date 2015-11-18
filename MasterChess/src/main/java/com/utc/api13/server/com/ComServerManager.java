@@ -1,30 +1,31 @@
 package com.utc.api13.server.com;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.utc.api13.server.com.ServerInitializer;
+import com.utc.api13.server.com.interfaces.IServeurToDataImpl;
+import com.utc.api13.server.data.interfaces.IServerToComm;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-public class ServerManager {
-	
+public class ComServerManager {
+	private IServerToComm iServerToComm;
+	private IServeurToDataImpl iServerToDataImpl;
 	
 	public static void main(String args[]) throws InterruptedException{
 		try{
-			new ServerManager(8000).run();
+			new ComServerManager(8000).run();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 
 	private final int port;
-	private static final Logger logger = Logger.getLogger(ServerManager.class);
+	private static final Logger logger = Logger.getLogger(ComServerManager.class);
 
-	public ServerManager(int port){
+	public ComServerManager(int port){
 		this.port = port;
 		
 	}
@@ -52,6 +53,34 @@ public class ServerManager {
 			logger.debug("Server closed");
 		}
 		
+	}
+
+	/**
+	 * @return the iServerToComm
+	 */
+	public IServerToComm getIServerToComm() {
+		return iServerToComm;
+	}
+
+	/**
+	 * @param iServerToComm the iServerToComm to set
+	 */
+	public void setIServerToComm(IServerToComm iServerToComm) {
+		iServerToComm = iServerToComm;
+	}
+
+	/**
+	 * @return the iServerToDataImpl
+	 */
+	public IServeurToDataImpl getIServerToDataImpl() {
+		return iServerToDataImpl;
+	}
+
+	/**
+	 * @param iServerToDataImpl the iServerToDataImpl to set
+	 */
+	public void setIServerToDataImpl(IServeurToDataImpl iServerToDataImpl) {
+		iServerToDataImpl = iServerToDataImpl;
 	}
 
 }

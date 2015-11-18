@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.UserEntity;
-import com.utc.api13.server.com.interfaces.InterfaceToClient;
+import com.utc.api13.server.com.interfaces.IServeurToData;
 
 /**
  * @author Benoît
@@ -16,26 +16,26 @@ import com.utc.api13.server.com.interfaces.InterfaceToClient;
  */
 public class DataServerManager {
 	// Interface COM
-	private InterfaceToClient interfaceToClient;
+	private IServeurToData iServeurToData;
 	
 	// Interface DATA
 	private ServerToCommImpl serverToCommImpl;
 	private List<UserEntity> currentUsers;
 	private List<GameEntity> currentGames;
 	
-	/**
-	 * @return the interfaceToClient
-	 */
-	public InterfaceToClient getInterfaceToClient() {
-		return interfaceToClient;
-	}
-	/**
-	 * @param interfaceToClient the interfaceToClient to set
-	 */
-	public void setInterfaceToClient(final InterfaceToClient interfaceToClient) {
-		this.interfaceToClient = interfaceToClient;
-	}
 
+	/**
+	 * @return the IServeurToData
+	 */
+	public IServeurToData getIServeurToData() {
+		return iServeurToData;
+	}
+	/**
+	 * @param IServeurToData the IServeurToData to set
+	 */
+	public void setIServeurToData(IServeurToData IServeurToData) {
+		this.iServeurToData = IServeurToData;
+	}
 	/**
 	 * @return the currentUsers
 	 */
@@ -75,13 +75,9 @@ public class DataServerManager {
 		this.serverToCommImpl = serverToCommImpl;
 	}
 	
-	/**
-	 * @param interfaceToClient
-	 * @param serverToComm
-	 */
 	public DataServerManager() {
 		super();
-		this.interfaceToClient = null;
+		this.iServeurToData = null;
 		this.serverToCommImpl = new ServerToCommImpl();
 		this.currentGames = new ArrayList<GameEntity>();
 		this.currentUsers = new ArrayList<UserEntity>();

@@ -9,9 +9,8 @@ import com.utc.api13.commun.entities.UserEntity;
 import com.utc.api13.commun.messages.ConnectMessage;
 import com.utc.api13.commun.messages.GameFinishedMessage;
 import com.utc.api13.commun.messages.MoveMessage;
-import com.utc.api13.server.com.interfaces.InterfaceToClient;
 
-public class ToClientImpl implements InterfaceToClient {
+public class IServeurToDataImpl implements IServeurToData {
 
 	public void multicastMove(UserEntity users, UUID idPlayer, MoveEntity move) {
 		new MoveMessage(users.getId(), null, move).proceedServer(null);

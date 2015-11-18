@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
+import com.utc.api13.commun.entities.GameEntity;
+
 import io.netty.channel.ChannelHandlerContext;
 
 public class RequestAnswerMessage extends Message {
@@ -33,8 +35,9 @@ public class RequestAnswerMessage extends Message {
 	}
 	@Override
 	public void proceedServer(ChannelHandlerContext ctx) {
-		// TODO Auto-generated method stub
-		
+		GameEntity game=new GameEntity();
+		game.setId(gameId);
+		//TODO ajouter les 2 players dans game.setWhitePlayer();
 	}
 	
 

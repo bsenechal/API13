@@ -3,8 +3,7 @@
  */
 package com.utc.api13.server;
 
-import com.utc.api13.server.com.ServerManager;
-//import com.utc.api13.server.com.interfaces.ToClientImpl;
+import com.utc.api13.server.com.ComServerManager;
 import com.utc.api13.server.data.DataServerManager;
 
 public class AppServer {
@@ -13,12 +12,16 @@ public class AppServer {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ServerManager serverManager = new ServerManager(80);
+		ComServerManager comServerManager = new ComServerManager(80);
 			
 		DataServerManager dataServerManager = new DataServerManager();
-//		dataServerManager.setInterfaceToClient(serverManager.getToClientImpl());
-//				
-//		serverManager.setIServerToComm(dataServerManager.getServerToCommImpl());
+		
+		dataServerManager.setIServeurToData(comServerManager.getIServerToDataImpl());
+		
+		comServerManager.setIServerToComm(dataServerManager.getServerToCommImpl());
+		
+		// TODO : a rajouter
+//		comServerManager.close();
 	}
 
 }

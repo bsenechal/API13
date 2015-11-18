@@ -7,7 +7,7 @@ import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.UserEntity;
 
-public interface InterfaceToClient {
+public interface IServeurToData {
 
 	public void multicastMove(UserEntity users, UUID idPlayer, MoveEntity move);
 
