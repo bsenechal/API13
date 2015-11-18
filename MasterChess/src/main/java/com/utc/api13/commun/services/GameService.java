@@ -3,6 +3,9 @@ package com.utc.api13.commun.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.utc.api13.commun.dao.IGenericDAO;
+import com.utc.api13.commun.dao.impl.GameDAO;
+import com.utc.api13.commun.dao.impl.UserDAO;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.UserEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
@@ -25,5 +28,10 @@ public class GameService extends ADataService<GameEntity> {
 	protected void validateInstance(GameEntity entity) throws TechnicalException, FunctionalException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	protected IGenericDAO<GameEntity> getDao() throws TechnicalException {
+		return new GameDAO();
 	}
 }

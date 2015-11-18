@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.utc.api13.commun.Erreur;
+import com.utc.api13.commun.dao.IGenericDAO;
+import com.utc.api13.commun.dao.impl.UserDAO;
 import com.utc.api13.commun.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.UserEntity;
@@ -57,5 +59,10 @@ public class UserService extends ADataService<UserEntity> {
 	 */
 	public List<PublicUserEntity> getConnectedUsers() {
 		return connectedUsers;
+	}
+
+	@Override
+	protected IGenericDAO<UserEntity> getDao() throws TechnicalException {
+		return new UserDAO();
 	}
 }

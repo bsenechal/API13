@@ -6,7 +6,7 @@ import com.utc.api13.commun.exceptions.TechnicalException;
 public class UserDAO extends GenericDAOImpl<UserEntity> {
 
 	public UserDAO() throws TechnicalException {
-		super();
+		super("user");
 	}
 
 }

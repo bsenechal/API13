@@ -1,28 +1,27 @@
 package com.utc.api13.commun.services;
 
-
-
 import com.utc.api13.commun.entities.ADataEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
-public abstract class DataServiceTest<T extends ADataEntity> {
+import junit.framework.TestCase;
+
+public abstract class DataServiceTest<T extends ADataEntity> extends TestCase{
 
 	protected abstract T getEntityWithoutId();
 	
-//	protected ADataService<T> getService() {
-//		return new ADataService<T>();
-//	}
+	protected abstract ADataService<T> getService();
 	
-	
-//	public void testSave() {
-//		T newEntity = getEntityWithoutId();
-//		try {
-//			getService().save(newEntity);
-//		} catch (TechnicalException e) {
-//			e.printStackTrace();
-//		} catch (FunctionalException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	public void testSave() {
+		T newEntity = getEntityWithoutId();
+		try {
+			getService().save(newEntity);
+			assertNotNull(newEntity);
+			assertNotNull(newEntity.getId());
+		} catch (TechnicalException e) {
+			e.printStackTrace();
+		} catch (FunctionalException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -1,5 +1,6 @@
 package com.utc.api13.commun.dao.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -18,8 +19,8 @@ public class GenericDAOImpl<T extends ADataEntity> implements IGenericDAO<T>{
 
     private StorageUtils<T> storageUtils;
     
-    public GenericDAOImpl() throws TechnicalException{
-        storageUtils = new StorageUtils(getFileName());
+    public GenericDAOImpl(String fileName) throws TechnicalException{
+        storageUtils = new StorageUtils("files/" + fileName + ".ser");
     }
     
     public List<T> findAll() throws DataAccessException {
@@ -47,37 +48,6 @@ public class GenericDAOImpl<T extends ADataEntity> implements IGenericDAO<T>{
 	public void updateAll(List<T> entities) throws DataAccessException {
 		storageUtils.writeAll(entities);
 		
-	}
-	
-	private String getFileName() throws TechnicalException{
-		InputStream inputStream;
-		String fileName = "";
-		Properties prop = new Properties();
-		String propFileName = "config.properties";
-
-		inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
-
-		
-			try {
-				if (inputStream != null) {
-				prop.load(inputStream);
-				} else {
-					throw new TechnicalException("property file '" + propFileName + "' not found in the classpath");
-				}
-				String className = getClass().getName();
-				className = className.split("DAO")[0].toLowerCase();	
-				fileName = prop.getProperty(className);
-				fileName = "files/" + fileName + ".ser";
-			} catch (Exception e) {
-				throw new TechnicalException(e);
-			} finally {
-				try {
-					inputStream.close();
-				} catch (IOException e) {
-					throw new TechnicalException("Error while closing stream", e);
-				}
-			}
-		return fileName;
 	}
     
 }

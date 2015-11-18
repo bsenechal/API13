@@ -16,6 +16,11 @@ public class UserServiceTest extends DataServiceTest<UserEntity> {
 		user.setStatus(true);
 		return user;
 	}
+
+	@Override
+	protected ADataService<UserEntity> getService() {
+		return new UserService();
+	}
 	
 //	@Test
 //	public void testGetByLoginAndPassword(){

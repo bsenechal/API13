@@ -26,9 +26,7 @@ public abstract class ADataService<T extends ADataEntity> {
 	 * @return the data access object of the Service
 	 * @throws TechnicalException 
 	 */
-	protected IGenericDAO<T> getDao() throws TechnicalException{
-		return new GenericDAOImpl<T>();
-	}
+	protected abstract IGenericDAO<T> getDao() throws TechnicalException;
 	/**
 	 * Create a new entity
 	 * @param entity entity to create

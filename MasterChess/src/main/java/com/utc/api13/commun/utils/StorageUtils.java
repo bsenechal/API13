@@ -25,7 +25,7 @@ public class StorageUtils<T extends ADataEntity>{
      * @param file fichier à parser
      */
     public StorageUtils(String file){
-        this.file = file;
+        this.file = getClass().getClassLoader().getResource(file).getFile();
     }
     
     
