@@ -6,17 +6,45 @@ package com.utc.api13.client.data;
 import java.util.List;
 import java.util.UUID;
 
+import javafx.collections.ObservableSet;
+
 import com.utc.api13.client.data.interfaces.IClientToComm;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.entities.UserEntity;
 
 /**
  * @author Benoît
  *
  */
 public class ClientToCommImpl implements IClientToComm {
+    
+    private DataClientManager instanceDataClientManager;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.utc.api13.client.data.interfaces.IClientToComm#getInstanceDataClientManager()
+     */
+    @Override
+    public DataClientManager getInstanceDataClientManager() {
+        return this.instanceDataClientManager;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.utc.api13.client.data.interfaces.IClientToComm#setInstanceDataClientManager()
+     */
+    @Override
+    public void setInstanceDataClientManager(DataClientManager instanceDataClientManager) {
+        this.instanceDataClientManager = instanceDataClientManager;
+    }
+    
 
 	/*
 	 * (non-Javadoc)
@@ -25,9 +53,8 @@ public class ClientToCommImpl implements IClientToComm {
 	 * com.utc.api13.client.data.interfaces.IClientToComm#displayUsersList()
 	 */
 	@Override
-	public void displayUsersList() {
-		// TODO Auto-generated method stub
-
+	public void displayUsersList(List<UserEntity> connectedUserList) {
+	    // TODO Auto-generated method stub
 	}
 
 	/*
@@ -258,5 +285,10 @@ public class ClientToCommImpl implements IClientToComm {
 		// TODO Auto-generated method stub
 
 	}
+
+    public ClientToCommImpl(DataClientManager instanceDataClientManager) {
+        super();
+        this.instanceDataClientManager = instanceDataClientManager;
+    }
 
 }

@@ -8,7 +8,7 @@ import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.UserEntity;
 
-public class InterfaceFromDataImpl implements InterfaceFromData {
+public class IClientToDataImpl implements IClientToData {
 
 	public boolean connectAsObserver(UUID game_id) {
 		// TODO Auto-generated method stub

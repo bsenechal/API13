@@ -3,7 +3,7 @@ package com.utc.api13.commun.entities;
 import java.util.Date;
 import java.util.List;
 
-public class GameEntity extends DataEntity {
+public class GameEntity extends ADataEntity {
 
     private static final long serialVersionUID = -959030856925179648L;
     private Date creationDate;
