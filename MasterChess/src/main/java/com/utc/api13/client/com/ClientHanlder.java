@@ -1,14 +1,8 @@
 package com.utc.api13.client.com;
 
 import java.io.IOException;
-import java.util.UUID;
-
 import org.apache.log4j.Logger;
-
-import com.utc.api13.commun.messages.HeartBeat;
 import com.utc.api13.commun.messages.Message;
-import com.utc.api13.server.com.ServerManager;
-
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleState;
