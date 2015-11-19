@@ -2,7 +2,6 @@ package com.utc.api13.server.com;
 
 import org.apache.log4j.Logger;
 
-import com.utc.api13.server.com.interfaces.IServeurToDataImpl;
 import com.utc.api13.server.data.interfaces.IServerToComm;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -11,9 +10,13 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class ComServerManager {
+	private final int port;
+	private static final Logger logger = Logger.getLogger(ComServerManager.class);
 	private IServerToComm iServerToComm;
-	private IServeurToDataImpl iServerToDataImpl;
+	private ServeurToDataImpl serverToDataImpl;
 	
+	
+
 	public void launchAppCom(){
 		try{
 			this.run();
@@ -22,12 +25,11 @@ public class ComServerManager {
 		}
 	}
 
-	private final int port;
-	private static final Logger logger = Logger.getLogger(ComServerManager.class);
+	
 
 	public ComServerManager(int port){
 		this.port = port;
-		
+		this.serverToDataImpl = new ServeurToDataImpl(this);
 	}
 	
 	public void run() throws InterruptedException{
@@ -39,7 +41,7 @@ public class ComServerManager {
 			ServerBootstrap boostrap = new ServerBootstrap()
 				.group(bossGroup, workerGroup)
 				.channel(NioServerSocketChannel.class)
-				.childHandler(new ServerInitializer());
+				.childHandler(new ServerInitializer(this));
 			
 			if(logger.isDebugEnabled()){
 			    logger.debug("Starting server on : " + port);
@@ -72,15 +74,15 @@ public class ComServerManager {
 	/**
 	 * @return the iServerToDataImpl
 	 */
-	public IServeurToDataImpl getIServerToDataImpl() {
-		return iServerToDataImpl;
+	public ServeurToDataImpl getServerToDataImpl() {
+		return serverToDataImpl;
 	}
 
 	/**
 	 * @param iServerToDataImpl the iServerToDataImpl to set
 	 */
-	public void setIServerToDataImpl(IServeurToDataImpl iServerToDataImpl) {
-		iServerToDataImpl = iServerToDataImpl;
+	public void setIServerToDataImpl(ServeurToDataImpl serverToDataImpl) {
+		serverToDataImpl = serverToDataImpl;
 	}
 
 }

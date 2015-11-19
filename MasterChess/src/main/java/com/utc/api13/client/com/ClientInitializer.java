@@ -17,7 +17,10 @@ import io.netty.handler.timeout.IdleStateHandler;
  *
  */
 public class ClientInitializer extends ChannelInitializer<SocketChannel> {
-
+	ComClientManager comClientManager = null;
+	public ClientInitializer(ComClientManager comClientManager){
+		this.comClientManager = comClientManager;
+	}
 	@Override
 	protected void initChannel(SocketChannel arg0) throws Exception {
 		ChannelPipeline pipeline = arg0.pipeline();
@@ -25,7 +28,7 @@ public class ClientInitializer extends ChannelInitializer<SocketChannel> {
 		pipeline.addLast("idlestatehandler", new IdleStateHandler(0, 5, 0));
 		pipeline.addLast("decoder", new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
 		pipeline.addLast("encoder", new ObjectEncoder());		
-		pipeline.addLast("handler", new ClientHanlder());
+		pipeline.addLast("handler", new ClientHanlder(comClientManager));
 		
 	}
 

@@ -16,7 +16,10 @@ import io.netty.handler.timeout.IdleStateHandler;
  */
 
 public class ServerInitializer extends ChannelInitializer<SocketChannel>{
-	
+	private ComServerManager comServerManager;
+	public ServerInitializer(ComServerManager comServerManager){
+		this.comServerManager = comServerManager;
+	}
 	@Override
 	protected void initChannel(SocketChannel  arg0) throws Exception {
 		ChannelPipeline pipeline = arg0.pipeline();
@@ -24,7 +27,7 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel>{
 		pipeline.addLast("idlestatehandler", new IdleStateHandler(0, 5, 0));
 		pipeline.addLast("decoder", new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
 		pipeline.addLast("encoder", new ObjectEncoder());
-		pipeline.addLast("handler", ServerHanlder.getInstance());
+		pipeline.addLast("handler", new ServerHanlder(comServerManager));
 
 	}
 

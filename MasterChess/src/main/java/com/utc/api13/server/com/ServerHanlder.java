@@ -36,24 +36,9 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 	
 	// ping_lost_map stores ping lost count for each channel -> unique attribute ping_lost may cause unexpected channel closure
 	private static final Hashtable<Channel, AtomicInteger> ping_lost_map = new Hashtable<Channel, AtomicInteger>() ;
-	private static ServerHanlder instance =null;
-	
-	
-	/** Constructeur privé */	
-	private ServerHanlder(){
-		
-	}
-
-	public static ServerHanlder getInstance()
-	{	
-		if (instance == null){ 	
-			synchronized(ServerHanlder.class){
-				if (instance == null){	
-					instance = new ServerHanlder();
-				}
-			}
-		}
-		return instance;
+	private ComServerManager comServerManager;
+	public ServerHanlder(ComServerManager comServerManager){
+		this.comServerManager = comServerManager;
 	}
 	
 	@Override
@@ -84,7 +69,7 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 		}
 		Channel incoming = arg0.channel();
 		
-		arg1.proceedServer(arg0);
+		arg1.proceedServer(arg0,comServerManager);
 
 		ping_lost_map.get(incoming).set(0); // message received => host is alive
 	}
