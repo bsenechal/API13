@@ -33,6 +33,7 @@ public class ComClientManager {
 	
 	private static final Logger logger = Logger.getLogger(ComClientManager.class);
 	public ComClientManager(){
+		this.clientToDataImpl = new IClientToDataImpl(this);
 		
 	}
 	public void launchAppCom(String host, int port) {
@@ -93,5 +94,6 @@ public class ComClientManager {
 	public void setIClientToComm(IClientToComm iClientToComm) {
 		IClientToComm = iClientToComm;
 	}
+	
 
 }

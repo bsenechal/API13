@@ -9,8 +9,15 @@ import com.utc.api13.commun.entities.UserEntity;
 import com.utc.api13.commun.messages.ConnectMessage;
 import com.utc.api13.commun.messages.GameFinishedMessage;
 import com.utc.api13.commun.messages.MoveMessage;
+import com.utc.api13.server.com.ComServerManager;
 
 public class IServeurToDataImpl implements IServeurToData {
+	
+	private ComServerManager serverManager;
+
+	public IServeurToDataImpl(ComServerManager comServerManager) {
+		this.serverManager = comServerManager;
+	}
 
 	public void multicastMove(UserEntity users, UUID idPlayer, MoveEntity move) {
 		new MoveMessage(users.getId(), null, move).proceedServer(null);
@@ -22,7 +29,7 @@ public class IServeurToDataImpl implements IServeurToData {
 	}
 
 	public void multicastNewPlayer(PublicUserEntity pubPlayer) {
-		new ConnectMessage(pubPlayer.getId(), null, pubPlayer).proceedServer(null);
+		new ConnectMessage(pubPlayer.getId(), null, pubPlayer, "").proceedServer(null);
 		
 	}
 

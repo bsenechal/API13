@@ -2,6 +2,7 @@ package com.utc.api13.server.com;
 
 import org.apache.log4j.Logger;
 
+import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.server.com.interfaces.IServeurToDataImpl;
 import com.utc.api13.server.data.interfaces.IServerToComm;
 
@@ -27,7 +28,7 @@ public class ComServerManager {
 
 	public ComServerManager(int port){
 		this.port = port;
-		
+		this.iServerToDataImpl = new IServeurToDataImpl(this);
 	}
 	
 	public void run() throws InterruptedException{
@@ -81,6 +82,11 @@ public class ComServerManager {
 	 */
 	public void setIServerToDataImpl(IServeurToDataImpl iServerToDataImpl) {
 		iServerToDataImpl = iServerToDataImpl;
+	}
+	
+	public void userConnection(PublicUserEntity pue, String pwd){ // handle user connection request
+		// Quelle interface pour exécuter cette action ??
+//		this.iServerToDataImpl
 	}
 
 }

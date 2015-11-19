@@ -3,12 +3,25 @@ package com.utc.api13.client.com.interfaces;
 import java.util.List;
 import java.util.UUID;
 
+import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.UserEntity;
+import com.utc.api13.commun.messages.ConnectMessage;
 
 public class IClientToDataImpl implements IClientToData {
+	
+	private ComClientManager instanceComClientManager;
+
+	public IClientToDataImpl(ComClientManager comClientManager) {
+		// TODO Auto-generated constructor stub
+		this.instanceComClientManager = comClientManager; 
+	}
+	
+	public void connectToServer(UUID sender, String login, String pwd, PublicUserEntity pue){
+		this.instanceComClientManager.sendMessage(new ConnectMessage(sender, null, pue, pwd));
+	}
 
 	public boolean connectAsObserver(UUID game_id) {
 		// TODO Auto-generated method stub
