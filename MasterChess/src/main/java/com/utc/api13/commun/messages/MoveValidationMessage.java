@@ -2,10 +2,14 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import com.utc.api13.commun.entities.MoveEntity;
 
-public class MoveValidationMessage extends Message {
+import io.netty.channel.ChannelHandlerContext;
 
+public class MoveValidationMessage extends Message {
+	private static final Logger logger = Logger.getLogger(MoveValidationMessage.class);
 	MoveEntity  move;
 	
 
@@ -28,9 +32,15 @@ public class MoveValidationMessage extends Message {
 	}
 
 	@Override
-	public void proceed() {
+	public void proceed(ChannelHandlerContext ctx) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void proceedServer(ChannelHandlerContext ctx) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

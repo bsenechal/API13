@@ -2,7 +2,7 @@ package com.utc.api13.commun.entities;
 
 import java.util.Date;
 
-public class MoveEntity extends DataEntity {
+public class MoveEntity extends ADataEntity {
 
     private static final long serialVersionUID = -2280973208742426855L;
     private Date date;

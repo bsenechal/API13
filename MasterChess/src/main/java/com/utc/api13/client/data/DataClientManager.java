@@ -3,94 +3,126 @@
  */
 package com.utc.api13.client.data;
 
-import com.utc.api13.client.com.interfaces.InterfaceFromData;
-import com.utc.api13.client.data.interfaces.IClientToComm;
-import com.utc.api13.client.data.interfaces.IClientToIHM;
+import com.utc.api13.client.com.interfaces.IClientToData;
+import com.utc.api13.client.ihm.interfaces.IIHMFromData;
+import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.UserEntity;
+
+import javafx.collections.ObservableList;
 
 /**
  * @author Benoît
  *
  */
 public class DataClientManager {
-	private IClientToComm clientToComm;
-	private IClientToIHM clientToIHM;
-	private InterfaceFromData interfaceFromData;
+	private ClientToCommImpl clientToCommImpl;
+	private ClientToIHMImpl clientToIHMImpl;
+	private IClientToData iClientToData;
+	private IIHMFromData iIHMFromData;
 	private UserEntity userLocal;
-
+	private ObservableList<UserEntity> currentUsers;
+	private ObservableList<GameEntity> currentGames;
 	/**
-	 * @return the clientToComm
+	 * @return the clientToCommImpl
 	 */
-	public IClientToComm getClientToComm() {
-		return clientToComm;
+	public ClientToCommImpl getClientToCommImpl() {
+		return clientToCommImpl;
 	}
-
 	/**
-	 * @param clientToComm
-	 *            the clientToComm to set
+	 * @param clientToCommImpl the clientToCommImpl to set
 	 */
-	public void setClientToComm(final IClientToComm clientToComm) {
-		this.clientToComm = clientToComm;
+	public void setClientToCommImpl(ClientToCommImpl clientToCommImpl) {
+		this.clientToCommImpl = clientToCommImpl;
 	}
-
 	/**
-	 * @return the clientToIHM
+	 * @return the clientToIHMImpl
 	 */
-	public IClientToIHM getClientToIHM() {
-		return clientToIHM;
+	public ClientToIHMImpl getClientToIHMImpl() {
+		return clientToIHMImpl;
 	}
-
 	/**
-	 * @param clientToIHM
-	 *            the clientToIHM to set
+	 * @param clientToIHMImpl the clientToIHMImpl to set
 	 */
-	public void setClientToIHM(final IClientToIHM clientToIHM) {
-		this.clientToIHM = clientToIHM;
+	public void setClientToIHMImpl(ClientToIHMImpl clientToIHMImpl) {
+		this.clientToIHMImpl = clientToIHMImpl;
 	}
-
-	/**
-	 * @return the interfaceFromData
-	 */
-	public InterfaceFromData getInterfaceFromData() {
-		return interfaceFromData;
-	}
-
-	/**
-	 * @param interfaceFromData
-	 *            the interfaceFromData to set
-	 */
-	public void setInterfaceFromData(final InterfaceFromData interfaceFromData) {
-		this.interfaceFromData = interfaceFromData;
-	}
-
 	/**
 	 * @return the userLocal
 	 */
 	public UserEntity getUserLocal() {
 		return userLocal;
 	}
-
 	/**
-	 * @param userLocal
-	 *            the userLocal to set
+	 * @param userLocal the userLocal to set
 	 */
-	public void setUserLocal(final UserEntity userLocal) {
+	public void setUserLocal(UserEntity userLocal) {
 		this.userLocal = userLocal;
+	}
+	/**
+	 * @return the currentUsers
+	 */
+	public ObservableList<UserEntity> getCurrentUsers() {
+		return currentUsers;
+	}
+	/**
+	 * @param currentUsers the currentUsers to set
+	 */
+	public void setCurrentUsers(ObservableList<UserEntity> currentUsers) {
+		this.currentUsers = currentUsers;
+	}
+	/**
+	 * @return the currentGames
+	 */
+	public ObservableList<GameEntity> getCurrentGames() {
+		return currentGames;
+	}
+	/**
+	 * @param currentGames the currentGames to set
+	 */
+	public void setCurrentGames(ObservableList<GameEntity> currentGames) {
+		this.currentGames = currentGames;
 	}
 
 	/**
-	 * @param clientToComm
-	 * @param clientToIHM
-	 * @param interfaceFromData
-	 * @param userLocal
+	 * @return the iClientToData
 	 */
-	public DataClientManager(final IClientToComm clientToComm, final IClientToIHM clientToIHM,
-			final InterfaceFromData interfaceFromData, final UserEntity userLocal) {
+	public IClientToData getiClientToData() {
+		return iClientToData;
+	}
+	/**
+	 * @param iClientToData the iClientToData to set
+	 */
+	public void setiClientToData(IClientToData iClientToData) {
+		this.iClientToData = iClientToData;
+	}
+	/**
+	 * @return the iIHMFromData
+	 */
+	public IIHMFromData getiIHMFromData() {
+		return iIHMFromData;
+	}
+	/**
+	 * @param iIHMFromData the iIHMFromData to set
+	 */
+	public void setiIHMFromData(IIHMFromData iIHMFromData) {
+		this.iIHMFromData = iIHMFromData;
+	}
+	/**
+	 * @param clientToCommImpl
+	 * @param clientToIHMImpl
+	 * @param iClientToData
+	 * @param userLocal
+	 * @param currentUsers
+	 * @param currentGames
+	 */
+	public DataClientManager() {
 		super();
-		this.clientToComm = clientToComm;
-		this.clientToIHM = clientToIHM;
-		this.interfaceFromData = interfaceFromData;
-		this.userLocal = userLocal;
+		this.clientToCommImpl = new ClientToCommImpl(this);
+		this.clientToIHMImpl = new ClientToIHMImpl(this);
+		this.iIHMFromData = null;
+		this.iClientToData = null;
+		this.userLocal = new UserEntity();
 	}
 
+	
 }

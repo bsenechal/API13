@@ -8,42 +8,33 @@ import java.util.List;
 
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.UserEntity;
-import com.utc.api13.server.com.interfaces.InterfaceToClient;
-import com.utc.api13.server.data.interfaces.IServerToComm;
+import com.utc.api13.server.com.interfaces.IServeurToData;
 
 /**
  * @author Benoît
  *
  */
 public class DataServerManager {
-	private InterfaceToClient interfaceToClient;
-	private IServerToComm serverToComm;
+	// Interface COM
+	private IServeurToData iServeurToData;
+	
+	// Interface DATA
+	private ServerToCommImpl serverToCommImpl;
 	private List<UserEntity> currentUsers;
 	private List<GameEntity> currentGames;
 	
+
 	/**
-	 * @return the interfaceToClient
+	 * @return the IServeurToData
 	 */
-	public InterfaceToClient getInterfaceToClient() {
-		return interfaceToClient;
+	public IServeurToData getIServeurToData() {
+		return iServeurToData;
 	}
 	/**
-	 * @param interfaceToClient the interfaceToClient to set
+	 * @param IServeurToData the IServeurToData to set
 	 */
-	public void setInterfaceToClient(final InterfaceToClient interfaceToClient) {
-		this.interfaceToClient = interfaceToClient;
-	}
-	/**
-	 * @return the serverToComm
-	 */
-	public IServerToComm getServerToComm() {
-		return serverToComm;
-	}
-	/**
-	 * @param serverToComm the serverToComm to set
-	 */
-	public void setServerToComm(final IServerToComm serverToComm) {
-		this.serverToComm = serverToComm;
+	public void setIServeurToData(IServeurToData IServeurToData) {
+		this.iServeurToData = IServeurToData;
 	}
 	/**
 	 * @return the currentUsers
@@ -69,14 +60,25 @@ public class DataServerManager {
 	public void setCurrentGames(final List<GameEntity> currentGames) {
 		this.currentGames = currentGames;
 	}
+	
+	
 	/**
-	 * @param interfaceToClient
-	 * @param serverToComm
+	 * @return the serverToCommImpl
 	 */
-	public DataServerManager(final InterfaceToClient interfaceToClient, final IServerToComm serverToComm) {
+	public ServerToCommImpl getServerToCommImpl() {
+		return serverToCommImpl;
+	}
+	/**
+	 * @param serverToCommImpl the serverToCommImpl to set
+	 */
+	public void setServerToCommImpl(ServerToCommImpl serverToCommImpl) {
+		this.serverToCommImpl = serverToCommImpl;
+	}
+	
+	public DataServerManager() {
 		super();
-		this.interfaceToClient = interfaceToClient;
-		this.serverToComm = serverToComm;
+		this.iServeurToData = null;
+		this.serverToCommImpl = new ServerToCommImpl(this);
 		this.currentGames = new ArrayList<GameEntity>();
 		this.currentUsers = new ArrayList<UserEntity>();
 	}

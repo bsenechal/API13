@@ -3,12 +3,13 @@ package com.utc.api13.client.data.interfaces;
 import java.util.List;
 import java.util.UUID;
 
+import javafx.collections.ObservableSet;
+
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-
 import com.utc.api13.commun.entities.UserEntity;
 
 
@@ -55,4 +56,6 @@ public interface IClientToIHM {
     public void surrender();
     
     public void sendChatText(String message);
+
+    public ObservableSet<UserEntity> getUserList();
 }
