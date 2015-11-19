@@ -3,9 +3,9 @@ package com.utc.api13.commun.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.utc.api13.commun.dao.IGenericDAO;
-import com.utc.api13.commun.dao.impl.GameDAO;
-import com.utc.api13.commun.dao.impl.UserDAO;
+import com.utc.api13.commun.dao.GameDAO;
+import com.utc.api13.commun.dao.UserDAO;
+import com.utc.api13.commun.dao.interfaces.IGenericDAO;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.UserEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;

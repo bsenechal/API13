@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.utc.api13.commun.Erreur;
-import com.utc.api13.commun.dao.IGenericDAO;
-import com.utc.api13.commun.dao.impl.UserDAO;
+import com.utc.api13.commun.dao.UserDAO;
+import com.utc.api13.commun.dao.interfaces.IGenericDAO;
 import com.utc.api13.commun.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.UserEntity;

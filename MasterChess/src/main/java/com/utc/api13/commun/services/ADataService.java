@@ -6,8 +6,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.utc.api13.commun.dao.IGenericDAO;
-import com.utc.api13.commun.dao.impl.GenericDAOImpl;
+import com.utc.api13.commun.dao.GenericDAOImpl;
+import com.utc.api13.commun.dao.interfaces.IGenericDAO;
 import com.utc.api13.commun.entities.ADataEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
 import com.utc.api13.commun.exceptions.FunctionalException;
