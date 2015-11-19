@@ -8,6 +8,7 @@ import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.UserEntity;
+import com.utc.api13.commun.messages.ConnectMessage;
 
 public class ClientToDataImpl implements IClientToData {
 
@@ -21,6 +22,13 @@ public class ClientToDataImpl implements IClientToData {
 		this.comClientManagerInstance = comClientManagerInstance;
 	}
 	
+
+	@Override
+	public void notifyConnection(PublicUserEntity pubUser) {
+		// TODO Auto-generated method stub
+		comClientManagerInstance.sendMessage(new ConnectMessage(pubUser.getId(), new UUID(0, 0), pubUser));
+	}
+
 	@Override
 	public boolean connectAsObserver(UUID game_id) {
 		// TODO Auto-generated method stub

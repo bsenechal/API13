@@ -15,6 +15,8 @@ public interface IClientToData {
 
 	public List<UserEntity> getUsers();
 	
+	public void notifyConnection(PublicUserEntity pubUser);
+	
 	public boolean validateMove(UUID idPlayer, MoveEntity move);
 
 	public void sendUserUpdates(PublicUserEntity user);

@@ -13,18 +13,15 @@ import io.netty.channel.ChannelHandlerContext;
 public class ConnectMessage extends Message {
 	private static final Logger logger = Logger.getLogger(ConnectMessage.class);
 	private PublicUserEntity pubUser;
-	private String password;
 	
 	/**
 	 * @param sender
 	 * @param receiver
 	 * @param pubUser
-	 * @param pwd
 	 */
-	public ConnectMessage(UUID sender, UUID receiver, PublicUserEntity pubUser, String pwd) {
+	public ConnectMessage(UUID sender, UUID receiver, PublicUserEntity pubUser) {
 		super(sender, receiver);
 		this.pubUser = pubUser;
-		this.password = pwd;
 	}
 	
 	public PublicUserEntity getPubUser() {
@@ -37,15 +34,14 @@ public class ConnectMessage extends Message {
 
 	@Override
 	public void proceed(ChannelHandlerContext ctx,ComClientManager comClientManager) {
-		// TODO 
-		
+		// TODO manque méthide dans interfaceDataToComm
+		//comClientManager.getIClientToComm().
 	}
 
 
 	@Override
 	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
 		//multicast new User
-
 		comServerManager.getIServerToComm().notifyConnections(pubUser);
 
 	}
