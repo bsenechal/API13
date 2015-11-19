@@ -25,7 +25,6 @@ public class ClientToDataImpl implements IClientToData {
 
 	@Override
 	public void notifyConnection(PublicUserEntity pubUser) {
-		// TODO Auto-generated method stub
 		comClientManagerInstance.sendMessage(new ConnectMessage(pubUser.getId(), new UUID(0, 0), pubUser));
 	}
 

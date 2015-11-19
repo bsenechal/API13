@@ -37,7 +37,7 @@ public class ServeurToDataImpl implements IServeurToData {
 	@Override
 	public void multicastNewPlayer(PublicUserEntity pubPlayer) {
 
-		
+		//comServerManagerInstance.sendMessage(channel, msg);
 	}
 
 	/**

@@ -2,15 +2,18 @@ package com.utc.api13.server.com;
 
 import org.apache.log4j.Logger;
 
+import com.utc.api13.commun.messages.Message;
 import com.utc.api13.server.data.interfaces.IServerToComm;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class ComServerManager {
 	private final int port;
+	ServerInitializer serverInitializer = null;
 	private static final Logger logger = Logger.getLogger(ComServerManager.class);
 	private IServerToComm iServerToComm;
 	private ServeurToDataImpl serverToDataImpl;
@@ -38,11 +41,11 @@ public class ComServerManager {
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		
 		try{
-			
+			serverInitializer = new ServerInitializer(this);
 			ServerBootstrap boostrap = new ServerBootstrap()
 				.group(bossGroup, workerGroup)
 				.channel(NioServerSocketChannel.class)
-				.childHandler(new ServerInitializer(this));
+				.childHandler(serverInitializer);
 			
 			if(logger.isDebugEnabled()){
 			    logger.debug("Starting server on : " + port);
@@ -56,6 +59,14 @@ public class ComServerManager {
 			logger.debug("Server closed");
 		}
 		
+	}
+	
+	public void sendMessage(Channel channel, Message msg) throws ExceptionInInitializerError{
+		
+		if(channel != null){	
+			channel.writeAndFlush(msg);
+			logger.debug("A message has been sent to : " + msg.getReceiver());
+		}else throw new ExceptionInInitializerError();
 	}
 
 	/**

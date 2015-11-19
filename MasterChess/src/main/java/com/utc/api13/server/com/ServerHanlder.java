@@ -115,4 +115,47 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 			}
 		}
 	}
+
+	/**
+	 * @return the channelHandlerContextMap
+	 */
+	public static HashMap<UUID, ChannelHandlerContext> getChannelHandlerContextMap() {
+		return channelHandlerContextMap;
+	}
+
+	/**
+	 * @param channelHandlerContextMap the channelHandlerContextMap to set
+	 */
+	public static void setChannelHandlerContextMap(HashMap<UUID, ChannelHandlerContext> channelHandlerContextMap) {
+		ServerHanlder.channelHandlerContextMap = channelHandlerContextMap;
+	}
+
+	/**
+	 * @return the comServerManager
+	 */
+	public ComServerManager getComServerManager() {
+		return comServerManager;
+	}
+
+	/**
+	 * @param comServerManager the comServerManager to set
+	 */
+	public void setComServerManager(ComServerManager comServerManager) {
+		this.comServerManager = comServerManager;
+	}
+
+	/**
+	 * @return the channels
+	 */
+	public static ChannelGroup getChannels() {
+		return channels;
+	}
+
+	/**
+	 * @return the pingLostMap
+	 */
+	public static Hashtable<Channel, AtomicInteger> getPingLostMap() {
+		return ping_lost_map;
+	}
+	
 }
