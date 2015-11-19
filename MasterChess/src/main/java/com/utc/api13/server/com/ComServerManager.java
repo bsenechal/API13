@@ -30,6 +30,7 @@ public class ComServerManager {
 	public ComServerManager(int port){
 		this.port = port;
 		this.serverToDataImpl = new ServeurToDataImpl(this);
+
 	}
 	
 	public void run() throws InterruptedException{
@@ -84,5 +85,6 @@ public class ComServerManager {
 	public void setIServerToDataImpl(ServeurToDataImpl serverToDataImpl) {
 		serverToDataImpl = serverToDataImpl;
 	}
+	
 
 }

@@ -94,5 +94,6 @@ public class ComClientManager {
 	public void setIClientToComm(IClientToComm iClientToComm) {
 		IClientToComm = iClientToComm;
 	}
+	
 
 }
