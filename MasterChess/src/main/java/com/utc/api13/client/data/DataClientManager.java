@@ -145,6 +145,7 @@ public class DataClientManager {
             userEntity.setNbPlayed((int) Math.random());
             userEntity.setNbWon((int) Math.random());
             userEntity.setStatus((i % 2 == 0) ? true : false);
+            //A pierre : NULL POINT EXCEPTION : currentUsers is null man !
             //this.currentUsers.add(userEntity);
         }
 	}
