@@ -141,7 +141,9 @@ public class StorageUtils<T extends ADataEntity>{
             throw new DataAccessException("The entity you are trying to deserialize doest not have a valid class", cnx);
         } finally {
             try {
-                ois.close();
+            	if(ois != null) {
+            		ois.close();
+            	}
             } catch (IOException ex) {
                 throw new DataAccessException("Error while closing output stream", ex);
             }

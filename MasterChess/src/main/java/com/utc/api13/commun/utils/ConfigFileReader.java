@@ -31,10 +31,12 @@ public class ConfigFileReader {
 		} catch (Exception e) {
 			throw new TechnicalException(e);
 		} finally {
-			try {
-				inputStream.close();
-			} catch (IOException e) {
-				throw new TechnicalException(e);
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					throw new TechnicalException(e);
+				}
 			}
 		}
 		return value;

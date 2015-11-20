@@ -6,12 +6,12 @@ package com.utc.api13.server.data;
 import java.util.List;
 import java.util.UUID;
 
+import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.UserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
-import com.utc.api13.commun.services.UserService;
 import com.utc.api13.server.data.interfaces.IServerToComm;
 
 /**

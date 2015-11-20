@@ -16,7 +16,7 @@ public class GenericDAOImpl<T extends ADataEntity> implements IGenericDAO<T>{
     private ConfigFileReader configFile;
     
     public GenericDAOImpl(String fileName) throws TechnicalException{
-    	configFile = new ConfigFileReader("config/config.properties");
+    	configFile = new ConfigFileReader("config/storage.properties");
     	
         storageUtils = new StorageUtils("files/" + configFile.getPropValue(fileName) + ".ser");
     }

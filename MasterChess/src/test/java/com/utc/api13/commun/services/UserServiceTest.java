@@ -1,5 +1,7 @@
 package com.utc.api13.commun.services;
 
+import com.utc.api13.client.data.services.ADataService;
+import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.UserEntity;
 
 public class UserServiceTest extends DataServiceTest<UserEntity> {
