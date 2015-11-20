@@ -8,27 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class IHMManager extends Application {
-	public static Stage stage;
+public class IHMManager {
+
 	private IClientToIHM myIClientToIHM ;
 	private IHMFromDataImpl myIHMFromDataImpl; 
-	
-	@Override
-	public void start(Stage stage) throws Exception {
-		this.stage = stage;
-		
-		// ici, loader tous les fichiers FXML
-		// on utilise un FXML par écran
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
-
-		Pane root = (Pane) fxmlLoader.load();
-
-		Scene scene = new Scene(root, 800, 600);
-		scene.getStylesheets().add(getClass().getResource("/css/masterCSS.css").toExternalForm());
-		stage.setTitle("Traduction");
-		stage.setScene(scene);
-		stage.show();
-	}
 	
 	
 	public IHMManager () 
@@ -36,10 +19,6 @@ public class IHMManager extends Application {
 		myIHMFromDataImpl = new IHMFromDataImpl(this);
 	}
 	
-	public void launchAppIHM(String[] args)
-	{
-		launch(args);
-	}
 	
 	public IClientToIHM getClientToIHM()
 	{
