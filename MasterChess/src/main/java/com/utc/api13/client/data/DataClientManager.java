@@ -3,11 +3,15 @@
  */
 package com.utc.api13.client.data;
 
+import java.util.UUID;
+
 import com.utc.api13.client.com.interfaces.IClientToData;
 import com.utc.api13.client.ihm.interfaces.IIHMFromData;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.UserEntity;
 
+import javafx.collections.FXCollections;
+import javafx.collections.FXCollections.*;
 import javafx.collections.ObservableList;
 
 /**
@@ -141,7 +145,7 @@ public class DataClientManager {
             userEntity.setNbPlayed((int) Math.random());
             userEntity.setNbWon((int) Math.random());
             userEntity.setStatus((i % 2 == 0) ? true : false);
-            this.currentUsers.add(userEntity);
+            //this.currentUsers.add(userEntity);
         }
 	}
 
