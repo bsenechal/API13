@@ -8,7 +8,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc.api13.client.ihm.controllers.IHMWelcomePageController">
    <top>
       <SplitPane fx:id="splitPane" maxHeight="60.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
@@ -20,7 +19,7 @@
                         <Font size="25.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="iconHelp" fitHeight="42.0" fitWidth="60.0" layoutX="721.0" layoutY="8.0" onMouseClicked="#onHelpClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="iconHelp" fitHeight="42.0" fitWidth="60.0" layoutX="734.0" layoutY="8.0" onMouseClicked="#onHelpClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../pictures/Icone-aide.png" />
                      </image>
@@ -28,7 +27,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <ImageView fx:id="iconParam" fitHeight="37.0" fitWidth="36.0" layoutX="664.0" layoutY="11.0" onMouseClicked="#onParamClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="iconParam" fitHeight="37.0" fitWidth="36.0" layoutX="316.0" layoutY="11.0" onMouseClicked="#onParamClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../pictures/Icone-param.png" />
                      </image>
@@ -36,7 +35,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <ImageView fx:id="iconNotif" fitHeight="34.0" fitWidth="35.0" layoutX="605.0" layoutY="12.0" onMouseClicked="#onNotifClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="iconNotif" fitHeight="34.0" fitWidth="35.0" layoutX="585.0" layoutY="12.0" onMouseClicked="#onNotifClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../pictures/Icone-cloche.png" />
                      </image>
@@ -44,12 +43,26 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Text fx:id="userLabel" layoutX="424.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ConnectedPlayerLogin">
+                  <Text fx:id="userLabel" layoutX="409.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ConnectedPlayerLogin">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Text>
                   <ImageView fx:id="iconProfile" fitHeight="34.0" fitWidth="65.0" layoutX="334.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
+                  <SplitMenuButton layoutX="639.0" layoutY="6.0" mnemonicParsing="false">
+                    <graphic>
+                    <ImageView pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../pictures/Icone-param.png" />
+                      </image>
+                    </ImageView>
+                  </graphic>
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#onModifyProfileClicked" text="Modify my profile" />
+                      <MenuItem mnemonicParsing="false" onAction="#onSettingsClicked" text="Settings" />
+                      <MenuItem mnemonicParsing="false" onAction="#onLogOutClicked" text="Log out" />
+                    </items>
+                  </SplitMenuButton>
                </children>
             </AnchorPane>
         </items>

@@ -2,6 +2,7 @@ package com.utc.api13.client.ihm.controllers;
 
 import com.utc.api13.client.data.interfaces.IClientToIHM;
 import com.utc.api13.client.ihm.ClientToIHMImpl;
+
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
@@ -10,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -39,6 +41,8 @@ public class IHMWelcomePageController {
 	@FXML
 	TableColumn connectedUserLogin, connectedUserStatus, connectedUserStat, connectedUserActionIcon;
 	@FXML
+	SplitMenuButton paramSplitMenuButton; 
+	@FXML
 	ScrollBar currentGamesScrollbar, savedGamesScrollbar, connectedUserScrollbar; 
 	@FXML
 	private void onHelpClicked(Event event) {
@@ -49,6 +53,16 @@ public class IHMWelcomePageController {
 	@FXML
 	private void onNotifClicked(Event event) {
 	}
+	@FXML
+	public void onModifyProfileClicked() { //demander à Pierre pourquoi annotation fxml
+	}
+	@FXML
+	public void onLogOutClicked() {
+	}
+	@FXML
+	public void onSettingsClicked() {	
+	}
+	
 	
 	public IHMWelcomePageController() { 
 		clientToIHM = new ClientToIHMImpl(); 
@@ -62,7 +76,6 @@ public class IHMWelcomePageController {
 		// TODO Demande de la liste des jeux
 		//getAllGames();
 	}
-	
 	
 	public void setListConnectedUser() {
 		

@@ -21,6 +21,12 @@ public class IHMCreateProfileController {
     ImageView changeProfilePicture; 
     @FXML
     AnchorPane createProfileAnchorPane; 
+    @FXML
+    public void onSaveProfileClicked() {
+	}
+    @FXML
+    public void onChangePictureClicked() {
+	}
     
     //methodes à relier au FXML 
     

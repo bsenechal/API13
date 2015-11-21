@@ -34,5 +34,11 @@
         <artifactId>javassist</artifactId>
         <version>3.19.0-GA</version>
     </dependency>
+    
+    <dependency>
+        <groupId>org.controlsfx</groupId>
+        <artifactId>controlsfx</artifactId>
+        <version>8.20.9</version>
+    </dependency>
   </dependencies>
 </project>

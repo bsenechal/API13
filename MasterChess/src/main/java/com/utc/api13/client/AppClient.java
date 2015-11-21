@@ -27,7 +27,7 @@ public class AppClient extends Application {
 
 		// ici, loader tous les fichiers FXML
 		// on utilise un FXML par écran
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/createProfilePage.fxml"));
 
 		Pane root = (Pane) fxmlLoader.load();
 
