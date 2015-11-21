@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="userInfoBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="282.0" prefWidth="455.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc.api13.client.ihm.controllers.IHMWelcomePageController">
+   <center>
+      <AnchorPane fx:id="userInfoAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="userInfoLogin" layoutX="229.0" layoutY="79.0" text="Login">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="85.0" fitWidth="80.0" layoutX="117.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/Icone-profil.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="userInfoFirstName" layoutX="229.0" layoutY="121.0" text="firstname" />
+            <Label fx:id="userInfoLastName" layoutX="291.0" layoutY="121.0" text="lastname" />
+            <TableView fx:id="userInfoTableView" layoutX="117.0" layoutY="177.0" prefHeight="67.0" prefWidth="236.0">
+              <columns>
+                <TableColumn fx:id="userInfoWon" prefWidth="78.0" text="Won" />
+                <TableColumn fx:id="userInfoLost" prefWidth="78.0" text="Lost" />
+                  <TableColumn fx:id="userInfoPlayed" minWidth="0.0" text="Played" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
