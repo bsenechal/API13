@@ -8,7 +8,7 @@ import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.UserEntity;
+import com.utc.api13.commun.entities.AUserEntity;
 
 /**
  * 
@@ -20,7 +20,7 @@ public interface IClientToComm {
 	
 
 	
-    void displayUsersList(final List<UserEntity> connectedUserList);
+    void displayUsersList(final List<AUserEntity> connectedUserList);
 
     /**
      * 

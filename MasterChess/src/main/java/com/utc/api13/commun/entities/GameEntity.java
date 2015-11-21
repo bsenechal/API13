@@ -10,11 +10,11 @@ public class GameEntity extends ADataEntity {
     private Boolean idOservable;
     private Boolean isChattable;
     private Date limit;
-    private UserEntity whitePlayer;
-    private UserEntity blackPlayer;
+    private AUserEntity whitePlayer;
+    private AUserEntity blackPlayer;
     private Boolean isFinished;
     private ChessboardEntity chessboardEntity;
-    private List<UserEntity> observers;
+    private List<AUserEntity> observers;
     
     /**
      * @return the creationDate
@@ -67,25 +67,25 @@ public class GameEntity extends ADataEntity {
     /**
      * @return the whitePlayer
      */
-    public UserEntity getWhitePlayer() {
+    public AUserEntity getWhitePlayer() {
         return whitePlayer;
     }
     /**
      * @param whitePlayer the whitePlayer to set
      */
-    public void setWhitePlayer(UserEntity whitePlayer) {
+    public void setWhitePlayer(AUserEntity whitePlayer) {
         this.whitePlayer = whitePlayer;
     }
     /**
      * @return the blackPlayer
      */
-    public UserEntity getBlackPlayer() {
+    public AUserEntity getBlackPlayer() {
         return blackPlayer;
     }
     /**
      * @param blackPlayer the blackPlayer to set
      */
-    public void setBlackPlayer(UserEntity blackPlayer) {
+    public void setBlackPlayer(AUserEntity blackPlayer) {
         this.blackPlayer = blackPlayer;
     }
     /**
@@ -115,13 +115,13 @@ public class GameEntity extends ADataEntity {
     /**
      * @return the observers
      */
-    public List<UserEntity> getObservers() {
+    public List<AUserEntity> getObservers() {
         return observers;
     }
     /**
      * @param observers the observers to set
      */
-    public void setObservers(List<UserEntity> observers) {
+    public void setObservers(List<AUserEntity> observers) {
         this.observers = observers;
     }
 }

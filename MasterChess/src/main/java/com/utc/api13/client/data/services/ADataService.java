@@ -1,4 +1,4 @@
-package com.utc.api13.commun.services;
+package com.utc.api13.client.data.services;
 
 import java.util.List;
 import java.util.Map;
@@ -6,12 +6,13 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.utc.api13.commun.dao.IGenericDAO;
-import com.utc.api13.commun.dao.impl.GenericDAOImpl;
+import com.utc.api13.commun.dao.GenericDAOImpl;
+import com.utc.api13.commun.dao.interfaces.IGenericDAO;
 import com.utc.api13.commun.entities.ADataEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
+import com.utc.api13.commun.utils.StorageUtils;
 
 /**
  * Classe abstraite qui définit les méthodes de base des services
@@ -95,8 +96,8 @@ public abstract class ADataService<T extends ADataEntity> {
 	 * @return found UID or null if not found
 	 * @throws TechnicalException 
 	 */
-	public Optional<T> getById(UUID id) throws TechnicalException {
-		return getAll().stream().filter(entity -> entity.getId().equals(id)).findFirst();
+	public T getById(UUID id) throws TechnicalException {
+		return getAll().stream().filter(entity -> entity.getId().equals(id)).findFirst().orElse(null);
 	}
 	
 	/**
@@ -105,7 +106,6 @@ public abstract class ADataService<T extends ADataEntity> {
 	 * @throws TechnicalException 
 	 */
 	public void delete(T entity) throws TechnicalException{
-		//TODO: Do we erase the entity from all files???
 		List<T> entities = getAll();
 		entities.removeIf(e -> e.getId().equals(entity.getId()));
 		getDao().updateAll(entities);

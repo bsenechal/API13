@@ -6,8 +6,9 @@ package com.utc.api13.server.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
-import com.utc.api13.commun.entities.UserEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.server.com.interfaces.IServeurToData;
 
 /**
@@ -20,7 +21,7 @@ public class DataServerManager {
 	
 	// Interface DATA
 	private ServerToCommImpl serverToCommImpl;
-	private List<UserEntity> currentUsers;
+	private List<AUserEntity> currentUsers;
 	private List<GameEntity> currentGames;
 	
 
@@ -39,13 +40,13 @@ public class DataServerManager {
 	/**
 	 * @return the currentUsers
 	 */
-	public List<UserEntity> getCurrentUsers() {
+	public List<AUserEntity> getCurrentUsers() {
 		return currentUsers;
 	}
 	/**
 	 * @param currentUsers the currentUsers to set
 	 */
-	public void setCurrentUsers(final List<UserEntity> currentUsers) {
+	public void setCurrentUsers(final List<AUserEntity> currentUsers) {
 		this.currentUsers = currentUsers;
 	}
 	/**
@@ -80,14 +81,14 @@ public class DataServerManager {
 		this.iServeurToData = null;
 		this.serverToCommImpl = new ServerToCommImpl(this);
 		this.currentGames = new ArrayList<GameEntity>();
-		this.currentUsers = new ArrayList<UserEntity>();
+		this.currentUsers = new ArrayList<AUserEntity>();
 	}
 	
 	// TODO : Supprimer cette méthode une fois la connexion implémentée
 	public void addUsers(){
 		
 		for (int i = 0 ; i < 10 ; i++){
-			UserEntity userEntity = new UserEntity();
+			PublicUserEntity userEntity = new PublicUserEntity();
 			userEntity.setFirstName("firstName" + i);
 			userEntity.setLastName("lastName" + i);
 			userEntity.setLogin("login" + i);

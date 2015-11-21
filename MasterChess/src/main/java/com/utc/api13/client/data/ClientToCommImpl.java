@@ -6,14 +6,12 @@ package com.utc.api13.client.data;
 import java.util.List;
 import java.util.UUID;
 
-import javafx.collections.ObservableSet;
-
 import com.utc.api13.client.data.interfaces.IClientToComm;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.UserEntity;
+import com.utc.api13.commun.entities.AUserEntity;
 
 /**
  * @author Benoît
@@ -53,7 +51,7 @@ public class ClientToCommImpl implements IClientToComm {
 	 * com.utc.api13.client.data.interfaces.IClientToComm#displayUsersList()
 	 */
 	@Override
-	public void displayUsersList(List<UserEntity> connectedUserList) {
+	public void displayUsersList(List<AUserEntity> connectedUserList) {
 	    // TODO Auto-generated method stub
 	}
 

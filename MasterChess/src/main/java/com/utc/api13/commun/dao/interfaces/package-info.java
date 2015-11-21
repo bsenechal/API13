@@ -5,4 +5,4 @@
  * @author Amstrong
  *
  */
-package com.utc.api13.commun.dao;
+package com.utc.api13.commun.dao.interfaces;

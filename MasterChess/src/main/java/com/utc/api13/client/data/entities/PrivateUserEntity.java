@@ -1,8 +1,11 @@
-package com.utc.api13.commun.entities;
+package com.utc.api13.client.data.entities;
 
 import java.util.List;
 
-public class PrivateUserEntity extends UserEntity {
+import com.utc.api13.commun.entities.AUserEntity;
+import com.utc.api13.commun.entities.GameEntity;
+
+public class PrivateUserEntity extends AUserEntity {
 	
     private static final long serialVersionUID = -5408789931031693916L;
     private String Password;

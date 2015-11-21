@@ -1,26 +1,24 @@
-package com.utc.api13.commun.dao.impl;
+package com.utc.api13.commun.dao;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-import java.util.Properties;
 import java.util.UUID;
 
-import javax.annotation.Generated;
-
-import com.utc.api13.commun.dao.IGenericDAO;
+import com.utc.api13.commun.dao.interfaces.IGenericDAO;
 import com.utc.api13.commun.entities.ADataEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
 import com.utc.api13.commun.exceptions.TechnicalException;
+import com.utc.api13.commun.utils.ConfigFileReader;
 import com.utc.api13.commun.utils.StorageUtils;
 
 public class GenericDAOImpl<T extends ADataEntity> implements IGenericDAO<T>{
 
     private StorageUtils<T> storageUtils;
+    private ConfigFileReader configFile;
     
     public GenericDAOImpl(String fileName) throws TechnicalException{
-        storageUtils = new StorageUtils("files/" + fileName + ".ser");
+    	configFile = new ConfigFileReader("config/storage.properties");
+    	
+        storageUtils = new StorageUtils("files/" + configFile.getPropValue(fileName) + ".ser");
     }
     
     public List<T> findAll() throws DataAccessException {

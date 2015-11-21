@@ -7,7 +7,6 @@ import com.utc.api13.client.com.interfaces.IClientToData;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.UserEntity;
 import com.utc.api13.commun.messages.ConnectMessage;
 
 public class ClientToDataImpl implements IClientToData {
@@ -35,7 +34,7 @@ public class ClientToDataImpl implements IClientToData {
 	}
 	
 	@Override
-	public List<UserEntity> getUsers() {
+	public List<PublicUserEntity> getUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -51,20 +50,20 @@ public class ClientToDataImpl implements IClientToData {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 	@Override
-	public boolean pushReplayToServer(UserEntity user, GameEntity game) {
+	public boolean pushReplayToServer(PublicUserEntity user, GameEntity game) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public void sendProposition(UserEntity player) {
+	public void sendProposition(PublicUserEntity player) {
 		// TODO Auto-generated method stub
 		
 	}
 	@Override
-	public boolean sendAnswer(String answer, UserEntity sender) {
+	public boolean sendAnswer(String answer, PublicUserEntity sender) {
 		// TODO Auto-generated method stub
 		return false;
 	}

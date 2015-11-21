@@ -5,10 +5,6 @@ import java.util.UUID;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.UserEntity;
-import com.utc.api13.commun.messages.ConnectMessage;
-import com.utc.api13.commun.messages.GameFinishedMessage;
-import com.utc.api13.commun.messages.MoveMessage;
 import com.utc.api13.server.com.interfaces.IServeurToData;
 
 public class ServeurToDataImpl implements IServeurToData {
@@ -25,7 +21,7 @@ public class ServeurToDataImpl implements IServeurToData {
 	}
 
 	@Override
-	public void multicastMove(UserEntity users, UUID idPlayer, MoveEntity move) {
+	public void multicastMove(PublicUserEntity users, UUID idPlayer, MoveEntity move) {
 
 	}
 
