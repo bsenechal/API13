@@ -5,12 +5,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 import com.utc.api13.client.data.interfaces.IClientToIHM;
 import com.utc.api13.client.ihm.ClientToIHMImpl;
 
 public class IHMCreateProfileController {
     ClientToIHMImpl clientToIHM ;
+    @FXML
+    BorderPane createProfileBorderPane; 
     @FXML
     Label createProfileLabel, loginLabel, passwordLabel, firstNameLabel, lastNameLabel; 
     @FXML
