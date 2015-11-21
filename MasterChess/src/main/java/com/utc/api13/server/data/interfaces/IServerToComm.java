@@ -5,7 +5,10 @@ import java.util.UUID;
 
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.UserEntity;
+import com.utc.api13.commun.exceptions.FunctionalException;
+import com.utc.api13.commun.exceptions.TechnicalException;
 
 public interface IServerToComm {
     public List<UserEntity> getUsers();
@@ -16,7 +19,7 @@ public interface IServerToComm {
     public boolean isFinished (final String idGame);
     public void observerLeave(final UUID idUser);
     public List<UserEntity> getListObservers();
-    public void saveUserData(final UserEntity User);
+    public void saveUserData(final UserEntity User) throws TechnicalException, FunctionalException;
     public void newObserver(final int idGame, final UUID idUser);
     public void createReplay(final GameEntity game, final UserEntity user);
     public List<UserEntity> getConnectedUsers();

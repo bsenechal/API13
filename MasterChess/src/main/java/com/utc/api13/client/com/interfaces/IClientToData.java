@@ -8,12 +8,12 @@ import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.UserEntity;
 
-public interface InterfaceFromData {
+public interface IClientToData {
 
 	public boolean connectAsObserver(UUID game_id);
 
 	public List<UserEntity> getUsers();
-
+	
 	public boolean validateMove(UUID idPlayer, MoveEntity move);
 
 	public void sendUserUpdates(PublicUserEntity user);

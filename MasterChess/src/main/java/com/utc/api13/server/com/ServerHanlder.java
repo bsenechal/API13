@@ -2,7 +2,12 @@ package com.utc.api13.server.com;
 
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.apache.log4j.Logger;
 
 import com.utc.api13.commun.messages.HeartBeat;
 import com.utc.api13.commun.messages.Message;
@@ -23,16 +28,41 @@ import io.netty.util.concurrent.GlobalEventExecutor;
  *
  */
 
-public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
+public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 
 	private static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+	private static HashMap<UUID, ChannelHandlerContext> channelHandlerContextMap= new HashMap<UUID, ChannelHandlerContext>();
+	private static final Logger logger = Logger.getLogger(ServerHanlder.class);
 	
-	private int ping_lost;
+	// ping_lost_map stores ping lost count for each channel -> unique attribute ping_lost may cause unexpected channel closure
+	private static final Hashtable<Channel, AtomicInteger> ping_lost_map = new Hashtable<Channel, AtomicInteger>() ;
+	private static ServerHanlder instance =null;
+	
+	
+	/** Constructeur privé */	
+	private ServerHanlder(){
+		
+	}
+
+	public static ServerHanlder getInstance()
+	{	
+		if (instance == null){ 	
+			synchronized(ServerHanlder.class){
+				if (instance == null){	
+					instance = new ServerHanlder();
+				}
+			}
+		}
+		return instance;
+	}
 	
 	@Override
 	public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
 		Channel incoming = ctx.channel();
 		channels.add(incoming);
+		
+		// initializing the ping map with incoming channel key and 0 value
+		ping_lost_map.put(incoming, new AtomicInteger());
 		
 		//TODO Notify new user connection
 	}
@@ -42,22 +72,21 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
 		Channel incoming = ctx.channel();
 		channels.remove(incoming);
 		
+		ping_lost_map.remove(incoming);
 		//TODO Notify user disconnection
 	}
 
 	@Override
-	protected void channelRead0(ChannelHandlerContext arg0, Object arg1)
+	protected void channelRead0(ChannelHandlerContext arg0, Message arg1)
 			throws Exception {
-		
+		if (channelHandlerContextMap.get(arg1.getSender()) !=null){
+			channelHandlerContextMap.put(arg1.getSender(), arg0);
+		}
 		Channel incoming = arg0.channel();
 		
-		if(arg1.getClass().equals(HeartBeat.class)){
-//			System.out.println("Hello message received, peer is alive !");
-		}
-		
-		((Message) arg1).proceed();
+		arg1.proceedServer(arg0);
 
-		this.ping_lost = 0;	// message received => host is alive
+		ping_lost_map.get(incoming).set(0); // message received => host is alive
 	}
 	
 	@Override
@@ -65,10 +94,14 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
 		if (evt instanceof IdleStateEvent) { // IdleStateEvent fired when no inbound messages
 			IdleStateEvent e = (IdleStateEvent) evt;
 			if (e.state() == IdleState.WRITER_IDLE) {
-//				System.out.println("Channel IDLE : sending Hello");
-				ctx.writeAndFlush(new HeartBeat(new UUID(0, 0), new UUID(0, 0), null));	
-				ping_lost++;
-				if(ping_lost > 2){ // If x pings lost in a row, considering that host is down
+				logger.info("Channel IDLE : sending Hello");
+				ctx.writeAndFlush(new HeartBeat(new UUID(0, 0), new UUID(0, 0), null));
+				
+				//incrementing concerned channel's counter
+				ping_lost_map.get(ctx.channel()).incrementAndGet();
+				
+				// If x pings lost in a row, assuming that host is down
+				if(ping_lost_map.get(ctx.channel()).get() > 2){ 
 					throw(new IOException("Connection timeout"));
 				}
 			}
@@ -86,7 +119,10 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Object> {
 	}
 	
 	public void replyAll(ChannelHandlerContext arg0, Message message) throws Exception {
-		Channel incoming = arg0.channel();
+		Channel incoming =null;
+		if (arg0!=null){
+			incoming = arg0.channel();
+		}
 		for(Channel channel : channels){
 			if(channel != incoming){
 				channel.writeAndFlush(message);

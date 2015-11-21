@@ -8,7 +8,7 @@ import java.util.UUID;
  * @author Amstrong
  *
  */
-public abstract class DataEntity implements Serializable {
+public abstract class ADataEntity implements Serializable {
 
     private static final long serialVersionUID = 6762511056153784212L;
     private UUID id;
