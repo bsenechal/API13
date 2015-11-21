@@ -45,16 +45,13 @@ public class AppClient extends Application {
 		 * <<<<<<<<<<<<<<<<<<<<<<<
 		 */
 		this.stage = stage;
-		
-		// ici, loader tous les fichiers FXML
 		// on utilise un FXML par écran
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/createProfilePage.fxml"));
-
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
 		Pane root = (Pane) fxmlLoader.load();
 
 		Scene scene = new Scene(root, 800, 600);
 		scene.getStylesheets().add(getClass().getResource("/css/masterCSS.css").toExternalForm());
-		stage.setTitle("Traduction");
+		stage.setTitle("MasterChess");
 		stage.setScene(scene);
 		stage.show();
 		

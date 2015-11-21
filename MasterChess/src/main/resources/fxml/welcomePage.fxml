@@ -27,14 +27,6 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <ImageView fx:id="iconParam" fitHeight="37.0" fitWidth="36.0" layoutX="316.0" layoutY="11.0" onMouseClicked="#onParamClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../pictures/Icone-param.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
                   <ImageView fx:id="iconNotif" fitHeight="34.0" fitWidth="35.0" layoutX="585.0" layoutY="12.0" onMouseClicked="#onNotifClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../pictures/Icone-cloche.png" />
@@ -91,7 +83,15 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <ScrollBar fx:id="currentGamesScrollbar" layoutX="450.0" layoutY="2.0" orientation="VERTICAL" prefHeight="262.0" prefWidth="14.0" />
+                              <ScrollBar fx:id="currentGamesScrollbar" layoutX="450.0" layoutY="2.0" orientation="VERTICAL" prefHeight="262.0" prefWidth="14.0" /> 
+                              <ImageView fx:id="infoTest" fitHeight="33.0" fitWidth="26.0" layoutX="183.0" layoutY="15.0" onMouseClicked="#superTest" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../pictures/Icone-info.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="OPEN_HAND" />
+                                 </cursor>
+                              </ImageView>
                            </children>
                         </AnchorPane>
                       <AnchorPane fx:id="bottomLeftAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="207.0" prefWidth="471.0">
