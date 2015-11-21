@@ -3,19 +3,22 @@ package com.utc.api13.client.data.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.utc.api13.client.com.interfaces.IClientToData;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.Erreur;
 import com.utc.api13.commun.dao.UserDAO;
 import com.utc.api13.commun.dao.interfaces.IGenericDAO;
-import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.enumerations.ErrorTypeEnum;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
-import com.utc.api13.commun.utils.ImageUtils;
 
 public class UserService extends ADataService<PrivateUserEntity> {
 
+	private IClientToData comInterface;
+	public UserService(IClientToData comInterface){
+		this.comInterface = comInterface;
+	}
 	
 	public void connect(String login, String password) throws FunctionalException, TechnicalException{
 		PrivateUserEntity user = getByLoginAndPassword(login, password);
@@ -27,11 +30,9 @@ public class UserService extends ADataService<PrivateUserEntity> {
 		
 		PrivateUserEntity privateUser = (PrivateUserEntity) user;
 		//Create a public user from the private user
-		PublicUserEntity publicUser = (PublicUserEntity) (AUserEntity)user;
-		//extract bytes from image
-		publicUser.setImage(ImageUtils.extractBytes(privateUser.getImagePath()));
+		PublicUserEntity publicUser = new PublicUserEntity(privateUser);
 		//notify the com module
-		//TODO: interfaceFromCom.notifyConnection(userPublic)
+		comInterface.notifyConnection(publicUser);
 	}
 	
 	/**

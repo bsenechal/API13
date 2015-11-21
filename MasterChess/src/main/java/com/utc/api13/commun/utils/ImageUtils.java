@@ -14,11 +14,14 @@ public class ImageUtils {
 	public static byte[] extractBytes(String imagePath) throws TechnicalException {
 		BufferedImage bufferedImage;
 		try {
-			bufferedImage = ImageIO.read(new File(imagePath));
+			if(imagePath != null) {
+				bufferedImage = ImageIO.read(new File(imagePath));
+				DataBufferByte data   = (DataBufferByte) bufferedImage.getRaster().getDataBuffer();
+				return data.getData();
+			}
 		} catch (IOException e) {
 			throw new TechnicalException("Error while reading image", e);
 		}
-		DataBufferByte data   = (DataBufferByte) bufferedImage.getRaster().getDataBuffer();
-		return data.getData();
+		return null;
 	}
 }
