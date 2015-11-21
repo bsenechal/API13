@@ -6,23 +6,23 @@ import java.util.UUID;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.UserEntity;
+import com.utc.api13.commun.entities.AUserEntity;
 
 public interface IClientToData {
 
 	public boolean connectAsObserver(UUID game_id);
 
-	public List<UserEntity> getUsers();
+	public List<AUserEntity> getUsers();
 	
 	public boolean validateMove(UUID idPlayer, MoveEntity move);
 
 	public void sendUserUpdates(PublicUserEntity user);
 
-	public boolean pushReplayToServer(UserEntity user, GameEntity game);
+	public boolean pushReplayToServer(AUserEntity user, GameEntity game);
 
-	public void sendProposition(UserEntity player);
+	public void sendProposition(AUserEntity player);
 
-	public boolean sendAnswer(String answer, UserEntity sender);
+	public boolean sendAnswer(String answer, AUserEntity sender);
 
 	public boolean surrender(UUID uid);
 

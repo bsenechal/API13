@@ -2,13 +2,13 @@ package com.utc.api13.commun.services;
 
 import com.utc.api13.client.data.services.ADataService;
 import com.utc.api13.client.data.services.UserService;
-import com.utc.api13.commun.entities.UserEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
 
-public class UserServiceTest extends DataServiceTest<UserEntity> {
+public class UserServiceTest extends DataServiceTest<PublicUserEntity> {
 
 	@Override
-	protected UserEntity getEntityWithoutId() {
-		UserEntity user = new UserEntity();
+	protected PublicUserEntity getEntityWithoutId() {
+		PublicUserEntity user = new PublicUserEntity();
 		user.setLogin("login");
 		user.setFirstName("first");
 		user.setLastName("Last");
@@ -18,10 +18,11 @@ public class UserServiceTest extends DataServiceTest<UserEntity> {
 		user.setStatus(true);
 		return user;
 	}
-
+//
 	@Override
-	protected ADataService<UserEntity> getService() {
-		return new UserService();
+	protected ADataService<PublicUserEntity> getService() {
+		return null;
+//		return new UserService();
 	}
 	
 //	@Test

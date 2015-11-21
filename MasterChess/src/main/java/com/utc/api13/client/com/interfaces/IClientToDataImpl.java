@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.UserEntity;
+import com.utc.api13.commun.entities.AUserEntity;
 
 public class IClientToDataImpl implements IClientToData {
 
@@ -15,7 +15,7 @@ public class IClientToDataImpl implements IClientToData {
 		return false;
 	}
 
-	public List<UserEntity> getUsers() {
+	public List<AUserEntity> getUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -25,12 +25,12 @@ public class IClientToDataImpl implements IClientToData {
 		return false;
 	}
 
-	public void multicastMove(UserEntity users, UUID idPlayer, MoveEntity move) {
+	public void multicastMove(AUserEntity users, UUID idPlayer, MoveEntity move) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void multicastFinished(UserEntity users) {
+	public void multicastFinished(AUserEntity users) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -40,7 +40,7 @@ public class IClientToDataImpl implements IClientToData {
 		
 	}
 
-	public boolean pushReplayToServer(UserEntity user, GameEntity game) {
+	public boolean pushReplayToServer(AUserEntity user, GameEntity game) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -50,12 +50,12 @@ public class IClientToDataImpl implements IClientToData {
 		
 	}
 
-	public void sendProposition(UserEntity player) {
+	public void sendProposition(AUserEntity player) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public boolean sendAnswer(String answer, UserEntity sender) {
+	public boolean sendAnswer(String answer, AUserEntity sender) {
 		// TODO Auto-generated method stub
 		return false;
 	}
