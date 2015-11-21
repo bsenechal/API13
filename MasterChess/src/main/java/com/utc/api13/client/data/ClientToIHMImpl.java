@@ -21,7 +21,7 @@ import com.utc.api13.commun.entities.AUserEntity;
  *
  */
 public class ClientToIHMImpl implements IClientToIHM {
-    DataClientManager dataClientManager;
+    private DataClientManager dataClientManager;
     
     
     /*
