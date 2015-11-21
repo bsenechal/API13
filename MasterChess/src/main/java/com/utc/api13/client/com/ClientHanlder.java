@@ -19,11 +19,15 @@ public class ClientHanlder extends SimpleChannelInboundHandler<Message>{
 
 	private int ping_lost; // number of HertBeat messages lost in a row
 	private static final Logger logger = Logger.getLogger(ClientHanlder.class);
+	private ComClientManager comClientManager = null;
 
+	public ClientHanlder(ComClientManager comClientManager){
+		this.comClientManager = comClientManager;
+	}
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Message arg1)
 			throws Exception {	
-		arg1.proceed(ctx);
+		arg1.proceed(ctx,comClientManager);
 		ping_lost = 0; // message received => host is alive
 		
 	}

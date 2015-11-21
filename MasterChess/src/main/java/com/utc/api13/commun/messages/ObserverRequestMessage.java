@@ -4,7 +4,9 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
+import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.commun.messages.Message;
+import com.utc.api13.server.com.ComServerManager;
 
 import io.netty.channel.ChannelHandlerContext;
 
@@ -20,13 +22,13 @@ public class ObserverRequestMessage extends Message {
 	}
 
 	@Override
-	public void proceed(ChannelHandlerContext ctx) {
+	public void proceed(ChannelHandlerContext ctx,ComClientManager comClientManager) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void proceedServer(ChannelHandlerContext ctx) {
+	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
 		// TODO Auto-generated method stub
 		
 	}
