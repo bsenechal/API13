@@ -1,4 +1,6 @@
-package com.utc.api13.commun.services;
+package com.utc.api13.client.data.services;
+
+import org.apache.log4j.Logger;
 
 import com.utc.api13.client.data.services.ADataService;
 import com.utc.api13.commun.entities.ADataEntity;
@@ -18,34 +20,34 @@ public abstract class DataServiceTest<T extends ADataEntity> extends TestCase{
 	protected abstract T getEntityWithoutId();
 	
 	protected abstract ADataService<T> getService();
+	private final Logger LOG = Logger.getLogger(getClass());
 	
+	protected Logger getLOG() {
+		return LOG;
+	}
+
 	/**
 	 * Tests the save method
 	 */
 	public void testSave() {
-//		T newEntity = getEntityWithoutId();
-//		try {
-//			//Save into file
-//			newEntity = getService().save(newEntity);
-//			//Check the return value of method
-//			assertNotNull(newEntity);
-//			assertNotNull(newEntity.getId());
-//			//Get from file the stored entity
-//			T foundEntity = getService().getById(newEntity.getId());
-//			//Check values
-//			assertNotNull(foundEntity);
-//			assertEquals(foundEntity.getId(), newEntity.getId());
-//			//Erase from file to prevent problems for the other unit tests
-//			getService().delete(foundEntity);
-//			//Check if the entity has been deleted
-//			foundEntity = getService().getById(newEntity.getId());
-//			assertNull(foundEntity);
-//			
-//		} catch (TechnicalException e) {
-//			e.printStackTrace();
-//		} catch (FunctionalException e) {
-//			e.printStackTrace();
-//		}
+		T newEntity = getEntityWithoutId();
+		try {
+			//Save into file
+			newEntity = getService().save(newEntity);
+			//Check the return value of method
+			assertNotNull(newEntity);
+			assertNotNull(newEntity.getId());
+			//Get from file the stored entity
+			T foundEntity = getService().getById(newEntity.getId());
+			//Check values
+			assertNotNull(foundEntity);
+			assertEquals(foundEntity.getId(), newEntity.getId());
+			//Erase from file to prevent problems for the other unit tests
+			getService().delete(foundEntity);
+			
+		} catch (TechnicalException | FunctionalException e) {
+			LOG.error("Error during save test", e);
+		} 
 	}
 	
 	/**
