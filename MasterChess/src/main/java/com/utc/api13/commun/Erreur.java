@@ -24,7 +24,7 @@ public class Erreur {
     
     public Erreur(final IErrorType errorType) {
     	this.errorType = errorType;
-    	this.params = new ArrayList<>();
+    	this.params = new ArrayList<String>();
     	this.level = Level.ERROR;
     }
     

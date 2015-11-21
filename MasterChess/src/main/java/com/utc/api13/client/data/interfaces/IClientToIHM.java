@@ -8,16 +8,16 @@ import javafx.collections.ObservableSet;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
-import com.utc.api13.commun.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.UserEntity;
+import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.commun.entities.AUserEntity;
 
 
 public interface IClientToIHM {
     
-    public void getUsers(List <UserEntity> users);
+    public void getUsers(List <AUserEntity> users);
     
-    public UserEntity getUserInfo(UUID iduser);
+    public AUserEntity getUserInfo(UUID iduser);
     
     public void getAllGames();
     
@@ -39,7 +39,7 @@ public interface IClientToIHM {
     
     public void notify (String message);
     
-    public void updateProfil (UserEntity user);
+    public void updateProfil (AUserEntity user);
     
     public void watchGame (String idGame);
     
@@ -57,5 +57,5 @@ public interface IClientToIHM {
     
     public void sendChatText(String message);
 
-    public ObservableSet<UserEntity> getUserList();
+    public ObservableSet<AUserEntity> getUserList();
 }

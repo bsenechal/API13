@@ -1,6 +1,6 @@
 package com.utc.api13.commun.entities;
 
-public class PublicUserEntity extends UserEntity {
+public class PublicUserEntity extends AUserEntity {
 
     private static final long serialVersionUID = 7421076183167325143L;
     private byte[] Image;

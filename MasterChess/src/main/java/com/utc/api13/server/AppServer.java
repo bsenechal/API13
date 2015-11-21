@@ -16,13 +16,12 @@ public class AppServer {
 			
 		DataServerManager dataServerManager = new DataServerManager();
 		
-		dataServerManager.setIServeurToData(comServerManager.getIServerToDataImpl());
+		dataServerManager.setIServeurToData(comServerManager.getServerToDataImpl());
 		
 		comServerManager.setIServerToComm(dataServerManager.getServerToCommImpl());
 		
 		comServerManager.launchAppCom();
-		// TODO : Lancer le serveur de com
-		
+
 		// TODO : a rajouter
 //		comServerManager.close();
 	}

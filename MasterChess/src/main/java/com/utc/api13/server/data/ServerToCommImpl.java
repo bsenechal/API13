@@ -6,12 +6,12 @@ package com.utc.api13.server.data;
 import java.util.List;
 import java.util.UUID;
 
+import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
-import com.utc.api13.commun.entities.UserEntity;
+import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
-import com.utc.api13.commun.services.UserService;
 import com.utc.api13.server.data.interfaces.IServerToComm;
 
 /**
@@ -25,7 +25,7 @@ public class ServerToCommImpl implements IServerToComm {
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#getUsers()
 	 */
 	@Override
-	public List<UserEntity> getUsers() {
+	public List<AUserEntity> getUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -34,7 +34,7 @@ public class ServerToCommImpl implements IServerToComm {
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#getUserInfo(java.util.UUID)
 	 */
 	@Override
-	public UserEntity getUserInfo(UUID idUser) {
+	public AUserEntity getUserInfo(UUID idUser) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -52,7 +52,7 @@ public class ServerToCommImpl implements IServerToComm {
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#notifyConnections(com.utc.api13.commun.entities.UserEntity)
 	 */
 	@Override
-	public void notifyConnections(UserEntity Player) {
+	public void notifyConnections(AUserEntity Player) {
 		// TODO Auto-generated method stub
 
 	}
@@ -88,7 +88,7 @@ public class ServerToCommImpl implements IServerToComm {
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#getListObservers()
 	 */
 	@Override
-	public List<UserEntity> getListObservers() {
+	public List<AUserEntity> getListObservers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -97,7 +97,7 @@ public class ServerToCommImpl implements IServerToComm {
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#saveUserData(com.utc.api13.commun.entities.UserEntity)
 	 */
 	@Override
-	public void saveUserData(UserEntity User) throws TechnicalException, FunctionalException {
+	public void saveUserData(AUserEntity User) throws TechnicalException, FunctionalException {
 		getUserService().save(User);
 
 	}
@@ -115,7 +115,7 @@ public class ServerToCommImpl implements IServerToComm {
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#createReplay(com.utc.api13.commun.entities.GameEntity, com.utc.api13.commun.entities.UserEntity)
 	 */
 	@Override
-	public void createReplay(GameEntity game, UserEntity user) {
+	public void createReplay(GameEntity game, AUserEntity user) {
 		// TODO Auto-generated method stub
 
 	}
@@ -124,7 +124,7 @@ public class ServerToCommImpl implements IServerToComm {
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#getConnectedUsers()
 	 */
 	@Override
-	public List<UserEntity> getConnectedUsers() {
+	public List<AUserEntity> getConnectedUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -136,6 +136,15 @@ public class ServerToCommImpl implements IServerToComm {
 	public void surrender(UUID idPlayer) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.utc.api13.server.data.interfaces.IServerToComm#disconnect(java.util.UUID)
+	 */
+	@Override
+	public void disconnect(final UUID idUser){
+		dataServerManager.getCurrentUsers().removeIf(user -> user.getId() == idUser);
 	}
 
 	private UserService getUserService() {

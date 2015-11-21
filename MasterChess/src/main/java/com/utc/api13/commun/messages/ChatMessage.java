@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
+import com.utc.api13.client.com.ComClientManager;
+import com.utc.api13.server.com.ComServerManager;
 import com.utc.api13.server.com.ServerHanlder;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -36,20 +38,21 @@ public class ChatMessage extends Message {
 	}
 
 	@Override
-	public void proceed(ChannelHandlerContext ctx) {
+	public void proceed(ChannelHandlerContext ctx,ComClientManager comClientManager) {
 		System.out.println(this.getMessage());
 		//Trouver le game et ajouter le message
 
 	}
 
 	@Override
-	public void proceedServer(ChannelHandlerContext ctx) {
-		try {
-			ServerHanlder.getInstance().replyAll(ctx,new ChatMessage(new UUID(0, 0), new UUID(0, 0), message ));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
+		
+//		try {
+//			ServerHanlder.getInstance().replyAll(ctx,new ChatMessage(new UUID(0, 0), new UUID(0, 0), message ));
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 }

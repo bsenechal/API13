@@ -4,7 +4,6 @@ package com.utc.api13.client.com;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.utc.api13.client.com.interfaces.IClientToDataImpl;
 import com.utc.api13.client.data.interfaces.IClientToComm;
 import com.utc.api13.commun.messages.Message;
 
@@ -27,14 +26,16 @@ public class ComClientManager {
 	private Channel channel;
 	private EventLoopGroup group;
 	
-	// TODO : Modifier le nom de la classe Impl
-	private IClientToDataImpl clientToDataImpl;
+	private ClientToDataImpl clientToDataImpl;
 	private IClientToComm IClientToComm;
 	
 	private static final Logger logger = Logger.getLogger(ComClientManager.class);
-	public ComClientManager(){
-		
+
+
+	public ComClientManager() {
+		this.clientToDataImpl = new ClientToDataImpl(this);
 	}
+
 	public void launchAppCom(String host, int port) {
 		
 		group = new NioEventLoopGroup();
@@ -42,7 +43,7 @@ public class ComClientManager {
 		Bootstrap boostrap = new Bootstrap()
 		.group(group)
 		.channel(NioSocketChannel.class)
-		.handler(new ClientInitializer());	
+		.handler(new ClientInitializer(this));	
 		
 		try {
 			this.channel = boostrap.connect(host,port).sync().channel();
@@ -69,14 +70,14 @@ public class ComClientManager {
 	/**
 	 * @return the clientToDataImpl
 	 */
-	public IClientToDataImpl getClientToDataImpl() {
+	public ClientToDataImpl getClientToDataImpl() {
 		return clientToDataImpl;
 	}
 
 	/**
 	 * @param clientToDataImpl the clientToDataImpl to set
 	 */
-	public void setClientToDataImpl(IClientToDataImpl clientToDataImpl) {
+	public void setClientToDataImpl(ClientToDataImpl clientToDataImpl) {
 		this.clientToDataImpl = clientToDataImpl;
 	}
 
@@ -93,5 +94,6 @@ public class ComClientManager {
 	public void setIClientToComm(IClientToComm iClientToComm) {
 		IClientToComm = iClientToComm;
 	}
+	
 
 }

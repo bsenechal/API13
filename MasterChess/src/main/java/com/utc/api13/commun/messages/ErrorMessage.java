@@ -4,6 +4,9 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
+import com.utc.api13.client.com.ComClientManager;
+import com.utc.api13.server.com.ComServerManager;
+
 import io.netty.channel.ChannelHandlerContext;
 
 public class ErrorMessage extends Message {
@@ -11,7 +14,7 @@ public class ErrorMessage extends Message {
 	private Exception exception;
 
 	@Override
-	public void proceed(ChannelHandlerContext ctx) throws Exception {
+	public void proceed(ChannelHandlerContext ctx,ComClientManager comClientManager) throws Exception {
 		throw this.exception;
 	}
 
@@ -34,7 +37,7 @@ public class ErrorMessage extends Message {
 	}
 
 	@Override
-	public void proceedServer(ChannelHandlerContext ctx) {
+	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
 		// TODO Auto-generated method stub
 		
 	}

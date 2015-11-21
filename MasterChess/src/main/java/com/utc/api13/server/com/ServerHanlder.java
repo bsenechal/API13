@@ -36,24 +36,9 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 	
 	// ping_lost_map stores ping lost count for each channel -> unique attribute ping_lost may cause unexpected channel closure
 	private static final Hashtable<Channel, AtomicInteger> ping_lost_map = new Hashtable<Channel, AtomicInteger>() ;
-	private static ServerHanlder instance =null;
-	
-	
-	/** Constructeur privé */	
-	private ServerHanlder(){
-		
-	}
-
-	public static ServerHanlder getInstance()
-	{	
-		if (instance == null){ 	
-			synchronized(ServerHanlder.class){
-				if (instance == null){	
-					instance = new ServerHanlder();
-				}
-			}
-		}
-		return instance;
+	private ComServerManager comServerManager;
+	public ServerHanlder(ComServerManager comServerManager){
+		this.comServerManager = comServerManager;
 	}
 	
 	@Override
@@ -84,7 +69,7 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 		}
 		Channel incoming = arg0.channel();
 		
-		arg1.proceedServer(arg0);
+		arg1.proceedServer(arg0,comServerManager);
 
 		ping_lost_map.get(incoming).set(0); // message received => host is alive
 	}
@@ -130,4 +115,47 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 			}
 		}
 	}
+
+	/**
+	 * @return the channelHandlerContextMap
+	 */
+	public static HashMap<UUID, ChannelHandlerContext> getChannelHandlerContextMap() {
+		return channelHandlerContextMap;
+	}
+
+	/**
+	 * @param channelHandlerContextMap the channelHandlerContextMap to set
+	 */
+	public static void setChannelHandlerContextMap(HashMap<UUID, ChannelHandlerContext> channelHandlerContextMap) {
+		ServerHanlder.channelHandlerContextMap = channelHandlerContextMap;
+	}
+
+	/**
+	 * @return the comServerManager
+	 */
+	public ComServerManager getComServerManager() {
+		return comServerManager;
+	}
+
+	/**
+	 * @param comServerManager the comServerManager to set
+	 */
+	public void setComServerManager(ComServerManager comServerManager) {
+		this.comServerManager = comServerManager;
+	}
+
+	/**
+	 * @return the channels
+	 */
+	public static ChannelGroup getChannels() {
+		return channels;
+	}
+
+	/**
+	 * @return the pingLostMap
+	 */
+	public static Hashtable<Channel, AtomicInteger> getPingLostMap() {
+		return ping_lost_map;
+	}
+	
 }

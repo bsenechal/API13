@@ -8,20 +8,20 @@ import java.util.UUID;
 
 import javafx.collections.ObservableSet;
 
+import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientToIHM;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
-import com.utc.api13.commun.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.UserEntity;
+import com.utc.api13.commun.entities.AUserEntity;
 
 /**
  * @author Benoît
  *
  */
 public class ClientToIHMImpl implements IClientToIHM {
-    DataClientManager instanceDataClientManager;
+    DataClientManager dataClientManager;
     
     
     /*
@@ -32,7 +32,7 @@ public class ClientToIHMImpl implements IClientToIHM {
      * List)
      */
     @Override
-    public ObservableSet<UserEntity> getUserList() {
+    public ObservableSet<AUserEntity> getUserList() {
 //        return instanceDataClientManager.getUserList();
     	return null;
     }
@@ -46,7 +46,7 @@ public class ClientToIHMImpl implements IClientToIHM {
 	 * List)
 	 */
 	@Override
-	public void getUsers(List<UserEntity> users) {
+	public void getUsers(List<AUserEntity> users) {
 		// TODO Auto-generated method stub
 
 	}
@@ -59,7 +59,7 @@ public class ClientToIHMImpl implements IClientToIHM {
 	 * UUID)
 	 */
 	@Override
-	public UserEntity getUserInfo(UUID iduser) {
+	public AUserEntity getUserInfo(UUID iduser) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -94,8 +94,7 @@ public class ClientToIHMImpl implements IClientToIHM {
 	 */
 	@Override
 	public void disconnect() {
-		// TODO Auto-generated method stub
-
+		dataClientManager.setUserLocal(null);
 	}
 
 	/*
@@ -195,7 +194,7 @@ public class ClientToIHMImpl implements IClientToIHM {
 	 * api13.commun.entities.UserEntity)
 	 */
 	@Override
-	public void updateProfil(UserEntity user) {
+	public void updateProfil(AUserEntity user) {
 		// TODO Auto-generated method stub
 
 	}
@@ -299,7 +298,7 @@ public class ClientToIHMImpl implements IClientToIHM {
 
     public ClientToIHMImpl(DataClientManager instanceDataClientManager) {
         super();
-        this.instanceDataClientManager = instanceDataClientManager;
+        this.dataClientManager = instanceDataClientManager;
     }
 
 }
