@@ -6,12 +6,12 @@ package com.utc.api13.server.data;
 import java.util.UUID;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.utc.api13.commun.entities.PublicUserEntity;
 
-import junit.framework.Assert;
 
 /**
  * @author DATA
@@ -43,10 +43,12 @@ public class ServerToCommImplTest {
 	@Test
 	public void disconnectTest() {
 		PublicUserEntity user = new PublicUserEntity();
+		final int nbRandomUser = 5;
 		final UUID idUser = UUID.randomUUID(); 
+		
 		user.setId(idUser);
 		
-		for (int i = 0 ; i < 5 ; i++){
+		for (int i = 0 ; i < nbRandomUser ; i++){
 			PublicUserEntity randomUser = new PublicUserEntity();
 			randomUser.setId(UUID.randomUUID());
 			dataServerManager.getCurrentUsers().add(randomUser);
@@ -56,9 +58,10 @@ public class ServerToCommImplTest {
 		
 		dataServerManager.getServerToCommImpl().disconnect(idUser);
 		
-		Assert.assertNotNull(dataServerManager.getCurrentUsers());
-		Assert.assertEquals(5, dataServerManager.getCurrentUsers().size());
-		Assert.assertFalse(dataServerManager.getCurrentUsers().contains(idUser));
+		Assert.assertNotNull("DataServerManager shouldn't be null", dataServerManager);
+		Assert.assertNotNull("CurrentUsers shouldn't be null", dataServerManager.getCurrentUsers());
+		Assert.assertEquals("CurrentUsers should contain " + nbRandomUser + " items", nbRandomUser, dataServerManager.getCurrentUsers().size());
+		Assert.assertFalse("CurrentUsers souldn't contain the user with the id : " + idUser, dataServerManager.getCurrentUsers().contains(idUser));
 	}
 
 }
