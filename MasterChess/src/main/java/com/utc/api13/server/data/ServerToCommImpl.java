@@ -99,7 +99,7 @@ public class ServerToCommImpl implements IServerToComm {
 	 */
 	@Override
 	public void saveUserData(AUserEntity User) throws TechnicalException, FunctionalException {
-		getUserService().save((PrivateUserEntity) User);
+		dataServerManager.getCurrentUsers().add(User);
 
 	}
 
@@ -146,10 +146,6 @@ public class ServerToCommImpl implements IServerToComm {
 	@Override
 	public void disconnect(final UUID idUser){
 		dataServerManager.getCurrentUsers().removeIf(user -> user.getId() == idUser);
-	}
-
-	private UserService getUserService() {
-		return new UserService();
 	}
 
 	/**

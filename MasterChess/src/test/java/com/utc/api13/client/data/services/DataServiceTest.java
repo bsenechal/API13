@@ -1,5 +1,6 @@
 package com.utc.api13.client.data.services;
 
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 import com.utc.api13.client.data.services.ADataService;
@@ -20,8 +21,9 @@ public abstract class DataServiceTest<T extends ADataEntity> extends TestCase{
 	protected abstract T getEntityWithoutId();
 	
 	protected abstract ADataService<T> getService();
-	private final Logger LOG = Logger.getLogger(getClass());
 	
+	private final Logger LOG = Logger.getLogger(getClass());
+    
 	protected Logger getLOG() {
 		return LOG;
 	}

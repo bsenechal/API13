@@ -26,7 +26,7 @@ import com.utc.api13.commun.exceptions.TechnicalException;
  *
  */
 public class ClientToIHMImpl implements IClientToIHM {
-    DataClientManager dataClientManager;
+    private DataClientManager dataClientManager;
     
     
     /*
