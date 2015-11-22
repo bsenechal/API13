@@ -11,6 +11,8 @@ import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.AUserEntity;
+import com.utc.api13.commun.exceptions.FunctionalException;
+import com.utc.api13.commun.exceptions.TechnicalException;
 
 
 public interface IClientToIHM {
@@ -58,4 +60,6 @@ public interface IClientToIHM {
     public void sendChatText(String message);
 
     public ObservableSet<AUserEntity> getUserList();
+    
+    public void createProfil(String login, String firstName, String lastName) throws FunctionalException, TechnicalException;
 }

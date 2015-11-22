@@ -20,50 +20,50 @@ public interface IClientToComm {
 	
 
 	
-    void displayUsersList(final List<AUserEntity> connectedUserList);
+	public void displayUsersList(final List<AUserEntity> connectedUserList);
 
     /**
      * 
      * @param user
      */
-    void displayProfile(final PublicUserEntity user);
+	public void displayProfile(final PublicUserEntity user);
 
-    void print_error(final String error);
+	public void print_error(final String error);
 
-    void displayAllGames(final List<GameEntity> games);
+	public void displayAllGames(final List<GameEntity> games);
 
-    void displayResult(final UUID idPlayer, final MoveEntity move);
+	public void displayResult(final UUID idPlayer, final MoveEntity move);
 
-    void sendMessageToChat(final MessageEntity message);
+	public void sendMessageToChat(final MessageEntity message);
 
-    void sendAnswerForLeaving(final boolean answer);
+	public void sendAnswerForLeaving(final boolean answer);
 
-    void requestPlayerForLeaving(final UUID uid);
+	public void requestPlayerForLeaving(final UUID uid);
 
-    void endGameByLeaving();
+	public void endGameByLeaving();
 
-    void notify(final String message);
+	public void notify(final String message);
 
-    void initGame(final GameEntity game);
+	public void initGame(final GameEntity game);
 
-    void newObserver(final UUID idObserver);
+	public void newObserver(final UUID idObserver);
 
-    void newPlayer(final UUID idPlayer);
+	public void newPlayer(final UUID idPlayer);
 
-    void newReplay(final GameEntity game);
+	public void newReplay(final GameEntity game);
 
-    void sendProposition(final UUID uidSender, final UUID uidReciever, final boolean observable, final boolean chattable);
+	public void sendProposition(final UUID uidSender, final UUID uidReciever, final boolean observable, final boolean chattable);
 
-    void printProposition(final UUID uidSender, final boolean observable, final boolean chattable);
+	public void printProposition(final UUID uidSender, final boolean observable, final boolean chattable);
 
-    void victoryBySurrender();
+	public void victoryBySurrender();
 
-    void endGameBySurrender();
+	public void endGameBySurrender();
 
-    void displayMessage(final String message);
+	public void displayMessage(final String message);
 
-    DataClientManager getInstanceDataClientManager();
+	public DataClientManager getInstanceDataClientManager();
 
-    void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
+	public void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
 	
 }

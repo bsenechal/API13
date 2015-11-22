@@ -74,9 +74,10 @@ public class StorageUtils<T extends ADataEntity>{
             oos = new ObjectOutputStream(new FileOutputStream(file));
             noHeaderOos = new NoHeaderObjectOutputStream(new FileOutputStream(file, true));
             Iterator<T> iterator = entities.iterator();
-            oos.writeObject(iterator.next());
-            oos.close();
-            
+            if(iterator.hasNext()) {
+	            oos.writeObject(iterator.next());
+	            oos.close();
+            }
             while(iterator.hasNext()){
              noHeaderOos.writeObject(iterator.next());   
             }

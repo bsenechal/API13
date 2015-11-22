@@ -6,6 +6,7 @@ package com.utc.api13.server.data;
 import java.util.List;
 import java.util.UUID;
 
+import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
@@ -98,7 +99,7 @@ public class ServerToCommImpl implements IServerToComm {
 	 */
 	@Override
 	public void saveUserData(AUserEntity User) throws TechnicalException, FunctionalException {
-		getUserService().save(User);
+		dataServerManager.getCurrentUsers().add(User);
 
 	}
 
@@ -145,10 +146,6 @@ public class ServerToCommImpl implements IServerToComm {
 	@Override
 	public void disconnect(final UUID idUser){
 		dataServerManager.getCurrentUsers().removeIf(user -> user.getId() == idUser);
-	}
-
-	private UserService getUserService() {
-		return new UserService();
 	}
 
 	/**
