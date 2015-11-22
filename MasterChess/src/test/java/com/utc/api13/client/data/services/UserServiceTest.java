@@ -1,6 +1,6 @@
 package com.utc.api13.client.data.services;
 
-import com.utc.api13.client.com.ClientToDataImpl;
+import com.utc.api13.client.com.ClientComToDataImpl;
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.services.ADataService;
@@ -25,7 +25,7 @@ public class UserServiceTest extends DataServiceTest<PrivateUserEntity> {
 
 	@Override
 	protected ADataService<PrivateUserEntity> getService() {
-		return new UserService(new ClientToDataImpl(new ComClientManager()));
+		return new UserService(new ClientComToDataImpl(new ComClientManager()));
 	}
 	
 	public void testGetByLoginAndPassword() {

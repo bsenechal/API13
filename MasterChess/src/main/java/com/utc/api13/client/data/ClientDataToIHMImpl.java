@@ -323,7 +323,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         
         //TODO: UME ???
         //UserService service= new UserService(); 
-        PrivateUserEntity saved = service.save(newUser);
+        //PrivateUserEntity saved = service.save(newUser);
 
     }
 
