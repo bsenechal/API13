@@ -4,8 +4,9 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
+import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.server.com.ServerHanlder;
+import com.utc.api13.server.com.ComServerManager;
 
 import io.netty.channel.ChannelHandlerContext;
 
@@ -32,20 +33,19 @@ public class ConnectMessage extends Message {
 	}
 
 	@Override
-	public void proceed(ChannelHandlerContext ctx) {
-		// TODO Auto-generated method stub
-		
+	public void proceed(ChannelHandlerContext ctx,ComClientManager comClientManager) {
+		// TODO manque méthide dans interfaceDataToComm
+		//comClientManager.getIClientToComm().
 	}
 
+
 	@Override
-	public void proceedServer(ChannelHandlerContext ctx) {
+	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
 		//multicast new User
-		try {
-			ServerHanlder.getInstance().replyAll(ctx,new ConnectMessage(new UUID(0, 0), new UUID(0, 0), pubUser ));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		comServerManager.getIServerToComm().notifyConnections(pubUser);
+
 	}
+
+
 
 }

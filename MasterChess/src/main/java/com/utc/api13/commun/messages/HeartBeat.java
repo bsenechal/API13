@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 
 import com.utc.api13.client.com.ClientHanlder;
+import com.utc.api13.client.com.ComClientManager;
+import com.utc.api13.server.com.ComServerManager;
 
 import io.netty.channel.ChannelHandlerContext;
 
@@ -23,7 +25,7 @@ public class HeartBeat extends Message {
 		this.ping = ping;
 	}
 	@Override
-	public void proceed(ChannelHandlerContext ctx) {
+	public void proceed(ChannelHandlerContext ctx,ComClientManager comClientManager) {
 		logger.info("Hello message received from server, answering Hello");
     	ctx.writeAndFlush(new HeartBeat(new UUID(0, 0), new UUID(0, 0), null));
 	}
@@ -34,7 +36,7 @@ public class HeartBeat extends Message {
 		this.ping = ping;
 	}
 	@Override
-	public void proceedServer(ChannelHandlerContext ctx) {
+	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
 		// TODO Auto-generated method stub
 		logger.info("Hello message received, peer is alive !");
 	}

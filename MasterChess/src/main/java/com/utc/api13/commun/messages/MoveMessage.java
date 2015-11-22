@@ -4,7 +4,9 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
+import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.commun.entities.MoveEntity;
+import com.utc.api13.server.com.ComServerManager;
 import com.utc.api13.server.com.ServerHanlder;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -24,7 +26,7 @@ public class MoveMessage extends Message {
 	}
 
 	@Override
-	public void proceed(ChannelHandlerContext ctx) {
+	public void proceed(ChannelHandlerContext ctx,ComClientManager comClientManager) {
 		// TODO Auto-generated method stub
 
 	}
@@ -38,13 +40,13 @@ public class MoveMessage extends Message {
 	}
 
 	@Override
-	public void proceedServer(ChannelHandlerContext ctx) {
-		try {
-			ServerHanlder.getInstance().replyAll(ctx,new MoveMessage(new UUID(0, 0), new UUID(0, 0), move ));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
+//		try {
+//			ServerHanlder.getInstance().replyAll(ctx,new MoveMessage(new UUID(0, 0), new UUID(0, 0), move ));
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 	}
 

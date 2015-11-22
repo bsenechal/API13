@@ -3,26 +3,28 @@ package com.utc.api13.client.com.interfaces;
 import java.util.List;
 import java.util.UUID;
 
+import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.UserEntity;
 
 public interface IClientToData {
 
 	public boolean connectAsObserver(UUID game_id);
 
-	public List<UserEntity> getUsers();
+	public List<PublicUserEntity> getUsers();
+	
+	public void notifyConnection(PublicUserEntity pubUser);
 	
 	public boolean validateMove(UUID idPlayer, MoveEntity move);
 
 	public void sendUserUpdates(PublicUserEntity user);
 
-	public boolean pushReplayToServer(UserEntity user, GameEntity game);
+	public boolean pushReplayToServer(PublicUserEntity user, GameEntity game);
 
-	public void sendProposition(UserEntity player);
+	public void sendProposition(PublicUserEntity player);
 
-	public boolean sendAnswer(String answer, UserEntity sender);
+	public boolean sendAnswer(String answer, PublicUserEntity sender);
 
 	public boolean surrender(UUID uid);
 
@@ -41,5 +43,9 @@ public interface IClientToData {
 	public void observerLeave(UUID uid);
 
 	public void sendLeavingMessage(UUID idPartie);
+
+	public ComClientManager getComClientManagerInstance();
+
+	public void setComClientManagerInstance(ComClientManager comClientManagerInstance);
 
 }

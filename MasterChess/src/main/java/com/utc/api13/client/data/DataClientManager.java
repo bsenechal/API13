@@ -6,12 +6,13 @@ package com.utc.api13.client.data;
 import java.util.UUID;
 
 import com.utc.api13.client.com.interfaces.IClientToData;
+import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.ihm.interfaces.IIHMFromData;
+import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
-import com.utc.api13.commun.entities.UserEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
 
 import javafx.collections.FXCollections;
-import javafx.collections.FXCollections.*;
 import javafx.collections.ObservableList;
 
 /**
@@ -23,8 +24,8 @@ public class DataClientManager {
 	private ClientToIHMImpl clientToIHMImpl;
 	private IClientToData iClientToData;
 	private IIHMFromData iIHMFromData;
-	private UserEntity userLocal;
-	private ObservableList<UserEntity> currentUsers;
+	private PrivateUserEntity userLocal;
+	private ObservableList<AUserEntity> currentUsers;
 	private ObservableList<GameEntity> currentGames;
 	/**
 	 * @return the clientToCommImpl
@@ -53,25 +54,25 @@ public class DataClientManager {
 	/**
 	 * @return the userLocal
 	 */
-	public UserEntity getUserLocal() {
+	public AUserEntity getUserLocal() {
 		return userLocal;
 	}
 	/**
-	 * @param userLocal the userLocal to set
+	 * @param PrivateUserEntity the userLocal to set
 	 */
-	public void setUserLocal(UserEntity userLocal) {
+	public void setUserLocal(PrivateUserEntity userLocal) {
 		this.userLocal = userLocal;
 	}
 	/**
 	 * @return the currentUsers
 	 */
-	public ObservableList<UserEntity> getCurrentUsers() {
+	public ObservableList<AUserEntity> getCurrentUsers() {
 		return currentUsers;
 	}
 	/**
 	 * @param currentUsers the currentUsers to set
 	 */
-	public void setCurrentUsers(ObservableList<UserEntity> currentUsers) {
+	public void setCurrentUsers(ObservableList<AUserEntity> currentUsers) {
 		this.currentUsers = currentUsers;
 	}
 	/**
@@ -125,8 +126,11 @@ public class DataClientManager {
 		this.clientToIHMImpl = new ClientToIHMImpl(this);
 		this.iIHMFromData = null;
 		this.iClientToData = null;
-		this.userLocal = new UserEntity();
-		this.setBouchonPierre();
+		this.userLocal = new PrivateUserEntity();
+		this.currentUsers = FXCollections.emptyObservableList();
+		this.currentGames = FXCollections.emptyObservableList();
+		// => Doesn't work :)
+		// this.setBouchonPierre();
 	}
 	
 	/*********************************************************
@@ -137,7 +141,7 @@ public class DataClientManager {
 	 */
 	private void setBouchonPierre(){
 	    for (int i = 0 ; i < 10 ; i++){
-            UserEntity userEntity = new UserEntity();
+	    	PublicUserEntity userEntity = new PublicUserEntity();
             userEntity.setFirstName("firstName" + i);
             userEntity.setLastName("lastName" + i);
             userEntity.setLogin("login" + i);
