@@ -10,11 +10,16 @@ import javafx.collections.ObservableSet;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientToIHM;
+import com.utc.api13.client.data.services.ADataService;
+import com.utc.api13.client.data.services.UserService;
+import com.utc.api13.commun.dao.interfaces.IGenericDAO;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.AUserEntity;
+import com.utc.api13.commun.exceptions.FunctionalException;
+import com.utc.api13.commun.exceptions.TechnicalException;
 
 /**
  * @author Benoît
@@ -299,6 +304,27 @@ public class ClientToIHMImpl implements IClientToIHM {
     public ClientToIHMImpl(DataClientManager instanceDataClientManager) {
         super();
         this.dataClientManager = instanceDataClientManager;
+    }
+    
+    
+    /**
+     * @param the login and the password of the profil to create
+     * @throws FunctionalException 
+     * @throws TechnicalException 
+     */
+    @Override
+    public void createProfil(String login, String firstName, String lastName) throws TechnicalException, FunctionalException{
+        PrivateUserEntity newUser = new PrivateUserEntity();
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        newUser.setLogin(login);
+        newUser.setNbLost(0);
+        newUser.setNbPlayed(0);
+        newUser.setNbWon(0);
+        
+        UserService service= new UserService(); 
+        PrivateUserEntity saved = service.save(newUser);
+
     }
 
 }
