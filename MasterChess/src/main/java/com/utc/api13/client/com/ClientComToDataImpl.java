@@ -3,13 +3,13 @@ package com.utc.api13.client.com;
 import java.util.List;
 import java.util.UUID;
 
-import com.utc.api13.client.com.interfaces.IClientToData;
+import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.messages.ConnectMessage;
 
-public class ClientToDataImpl implements IClientToData {
+public class ClientComToDataImpl implements IClientComToData {
 
 	ComClientManager comClientManagerInstance;
 	
@@ -17,7 +17,7 @@ public class ClientToDataImpl implements IClientToData {
 	/**
 	 * @param comClientManagerInstance
 	 */
-	public ClientToDataImpl(ComClientManager comClientManagerInstance) {
+	public ClientComToDataImpl(ComClientManager comClientManagerInstance) {
 		this.comClientManagerInstance = comClientManagerInstance;
 	}
 	
@@ -122,6 +122,7 @@ public class ClientToDataImpl implements IClientToData {
 		
 	}
 
+	//TODO: UME : Euh why do you want to give access to the manager using the interface ? -> seems wrong !
 	/**
 	 * @return the comClientManagerInstance
 	 */

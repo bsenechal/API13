@@ -7,11 +7,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-import com.utc.api13.client.data.interfaces.IClientToIHM;
-import com.utc.api13.client.ihm.ClientToIHMImpl;
+import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+//TODO: UME : why ?
+//import com.utc.api13.client.ihm.ClientToIHMImpl;
 
 public class IHMCreateProfileController {
-    ClientToIHMImpl clientToIHM ;
+    //ClientToIHMImpl clientToIHM ;
     @FXML
     BorderPane createProfileBorderPane; 
     @FXML
@@ -34,7 +35,8 @@ public class IHMCreateProfileController {
     //methodes à relier au FXML 
     
 	public IHMCreateProfileController() { 
-		clientToIHM = new ClientToIHMImpl(); 
+		//TODO: UME : ??
+		//clientToIHM = new ClientToIHMImpl(); 
 		initialize(); 
 	}
 	

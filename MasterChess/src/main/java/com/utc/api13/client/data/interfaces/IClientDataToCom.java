@@ -16,7 +16,7 @@ import com.utc.api13.commun.entities.AUserEntity;
  * @author ulyss_000
  *
  */
-public interface IClientToComm {
+public interface IClientDataToCom {
 	
 
 	

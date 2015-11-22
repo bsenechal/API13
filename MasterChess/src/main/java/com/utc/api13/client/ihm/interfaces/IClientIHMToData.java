@@ -1,6 +1,6 @@
 package com.utc.api13.client.ihm.interfaces; 
 
-public interface IIHMFromData {
+public interface IClientIHMToData {
 	//corriger les types de retour et les paramètres au fur et à mesure .. !
 	
 	public void didReceiveBoard(); 

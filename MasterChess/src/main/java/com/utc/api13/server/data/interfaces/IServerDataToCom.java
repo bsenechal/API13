@@ -9,7 +9,7 @@ import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
-public interface IServerToComm {
+public interface IServerDataToCom {
     public List<AUserEntity> getUsers();
     public AUserEntity getUserInfo(final UUID idUser);
     public List<GameEntity> getAllGames();

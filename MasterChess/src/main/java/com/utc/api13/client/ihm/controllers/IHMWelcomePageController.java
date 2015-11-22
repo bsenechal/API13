@@ -4,8 +4,9 @@ import java.io.IOException;
 
 import org.controlsfx.control.PopOver;
 
-import com.utc.api13.client.data.interfaces.IClientToIHM;
-import com.utc.api13.client.ihm.ClientToIHMImpl;
+import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+//TODO: UME : Why ?
+//import com.utc.api13.client.ihm.ClientToIHMImpl;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -31,7 +32,7 @@ import javafx.stage.Stage;
 public class IHMWelcomePageController {
 	
 	//+ tous les listeners
-	ClientToIHMImpl clientToIHM ; 
+	//ClientToIHMImpl clientToIHM ; 
 	
 	//popup
 	@FXML
@@ -102,7 +103,8 @@ public class IHMWelcomePageController {
 	}
 	
 	public IHMWelcomePageController() { 
-		clientToIHM = new ClientToIHMImpl(); 
+		//TODO: UME : ??
+		//clientToIHM = new ClientToIHMImpl(); 
 		initialize(); 
 	}
 	
