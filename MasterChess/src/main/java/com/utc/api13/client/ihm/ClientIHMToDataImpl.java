@@ -1,12 +1,12 @@
 package com.utc.api13.client.ihm;
 
-import com.utc.api13.client.ihm.interfaces.IIHMFromData;
+import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
 
-public class IHMFromDataImpl implements IIHMFromData {
+public class ClientIHMToDataImpl implements IClientIHMToData {
 	
 	private IHMManager myIHMManager;
 	
-	public IHMFromDataImpl(IHMManager pIHMManager) {
+	public ClientIHMToDataImpl(IHMManager pIHMManager) {
 		myIHMManager = pIHMManager;
 	}
 	

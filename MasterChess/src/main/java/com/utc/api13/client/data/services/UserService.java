@@ -3,7 +3,7 @@ package com.utc.api13.client.data.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.utc.api13.client.com.interfaces.IClientToData;
+import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.Erreur;
 import com.utc.api13.commun.dao.UserDAO;
@@ -15,8 +15,8 @@ import com.utc.api13.commun.exceptions.TechnicalException;
 
 public class UserService extends ADataService<PrivateUserEntity> {
 
-	private IClientToData comInterface;
-	public UserService(IClientToData comInterface){
+	private IClientComToData comInterface;
+	public UserService(IClientComToData comInterface){
 		this.comInterface = comInterface;
 	}
 	

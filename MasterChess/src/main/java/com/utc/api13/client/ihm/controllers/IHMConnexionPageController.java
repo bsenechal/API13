@@ -9,11 +9,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-import com.utc.api13.client.ihm.ClientToIHMImpl;
+import com.utc.api13.client.data.ClientDataToIHMImpl;
 
 public class IHMConnexionPageController {
 	
-	ClientToIHMImpl clientToIHM ; 
+	ClientDataToIHMImpl clientToIHM ; 
 	@FXML
 	BorderPane connexionBorderPane;
 	@FXML
@@ -44,8 +44,9 @@ public class IHMConnexionPageController {
 	    
 	}
 	
-	public IHMConnexionPageController() { 
-		clientToIHM = new ClientToIHMImpl(); 
+	public IHMConnexionPageController() {
+		//UME : ?? -> mise en commentaire pour le moment
+		//clientToIHM = new ClientDataToIHMImpl(); 
 		initialize(); 
 	}
 	

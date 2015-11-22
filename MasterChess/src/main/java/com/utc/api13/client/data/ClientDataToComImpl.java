@@ -6,7 +6,7 @@ package com.utc.api13.client.data;
 import java.util.List;
 import java.util.UUID;
 
-import com.utc.api13.client.data.interfaces.IClientToComm;
+import com.utc.api13.client.data.interfaces.IClientDataToCom;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
@@ -17,7 +17,7 @@ import com.utc.api13.commun.entities.AUserEntity;
  * @author Benoît
  *
  */
-public class ClientToCommImpl implements IClientToComm {
+public class ClientDataToComImpl implements IClientDataToCom {
     
     private DataClientManager instanceDataClientManager;
     
@@ -284,7 +284,7 @@ public class ClientToCommImpl implements IClientToComm {
 
 	}
 
-    public ClientToCommImpl(DataClientManager instanceDataClientManager) {
+    public ClientDataToComImpl(DataClientManager instanceDataClientManager) {
         super();
         this.instanceDataClientManager = instanceDataClientManager;
     }

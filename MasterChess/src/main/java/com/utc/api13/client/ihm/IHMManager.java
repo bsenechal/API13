@@ -1,6 +1,6 @@
 package com.utc.api13.client.ihm;
 
-import com.utc.api13.client.data.interfaces.IClientToIHM;
+import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,30 +10,30 @@ import javafx.stage.Stage;
 
 public class IHMManager {
 
-	private IClientToIHM myIClientToIHM ;
-	private IHMFromDataImpl myIHMFromDataImpl; 
+	private IClientDataToIHM myIClientToIHM ;
+	private ClientIHMToDataImpl myClientIHMToDataImpl; 
 	
 	
 	public IHMManager () 
 	{
-		myIHMFromDataImpl = new IHMFromDataImpl(this);
+		myClientIHMToDataImpl = new ClientIHMToDataImpl(this);
 	}
 	
 	
-	public IClientToIHM getClientToIHM()
+	public IClientDataToIHM getIClientDataToIHM()
 	{
 		return this.myIClientToIHM;
 	}
 
 	
-	public void setClientToIHM(IClientToIHM dataInterface)
+	public void setIClientDataToIHM(IClientDataToIHM dataInterface)
 	{
 		myIClientToIHM = dataInterface;
 	}
 	
-	public IHMFromDataImpl getIHMFromDataImpl()
+	public ClientIHMToDataImpl getClientIHMToDataImpl()
 	{
-		return myIHMFromDataImpl;
+		return myClientIHMToDataImpl;
 	}
 	
 }

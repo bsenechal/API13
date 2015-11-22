@@ -13,13 +13,13 @@ import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
-import com.utc.api13.server.data.interfaces.IServerToComm;
+import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
 /**
  * @author Benoît
  *
  */
-public class ServerToCommImpl implements IServerToComm {
+public class ServerDataToComImpl implements IServerDataToCom {
 	private DataServerManager dataServerManager;
 
 	/* (non-Javadoc)
@@ -151,7 +151,7 @@ public class ServerToCommImpl implements IServerToComm {
 	/**
 	 * @param dataServerManager
 	 */
-	public ServerToCommImpl(DataServerManager dataServerManager) {
+	public ServerDataToComImpl(DataServerManager dataServerManager) {
 		super();
 		this.dataServerManager = dataServerManager;
 	}

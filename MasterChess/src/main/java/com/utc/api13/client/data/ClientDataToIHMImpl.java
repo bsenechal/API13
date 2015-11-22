@@ -9,10 +9,10 @@ import java.util.UUID;
 import javafx.collections.ObservableSet;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
-import com.utc.api13.client.data.interfaces.IClientToIHM;
 import com.utc.api13.client.data.services.ADataService;
 import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.dao.interfaces.IGenericDAO;
+import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
@@ -25,9 +25,8 @@ import com.utc.api13.commun.exceptions.TechnicalException;
  * @author Benoît
  *
  */
-public class ClientToIHMImpl implements IClientToIHM {
-    private DataClientManager dataClientManager;
-    
+public class ClientDataToIHMImpl implements IClientDataToIHM {
+    private DataClientManager dataClientManager;    
     
     /*
      * (non-Javadoc)
@@ -301,7 +300,7 @@ public class ClientToIHMImpl implements IClientToIHM {
 	}
 
 
-    public ClientToIHMImpl(DataClientManager instanceDataClientManager) {
+    public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
         super();
         this.dataClientManager = instanceDataClientManager;
     }
@@ -322,7 +321,8 @@ public class ClientToIHMImpl implements IClientToIHM {
         newUser.setNbPlayed(0);
         newUser.setNbWon(0);
         
-        UserService service= new UserService(); 
+        //TODO: UME ???
+        //UserService service= new UserService(); 
         PrivateUserEntity saved = service.save(newUser);
 
     }

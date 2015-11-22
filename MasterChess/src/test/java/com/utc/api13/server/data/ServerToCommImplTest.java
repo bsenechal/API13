@@ -56,7 +56,7 @@ public class ServerToCommImplTest {
 		
 		dataServerManager.getCurrentUsers().add(user);
 		
-		dataServerManager.getServerToCommImpl().disconnect(idUser);
+		dataServerManager.getServerDataToComImpl().disconnect(idUser);
 		
 		Assert.assertNotNull("DataServerManager shouldn't be null", dataServerManager);
 		Assert.assertNotNull("CurrentUsers shouldn't be null", dataServerManager.getCurrentUsers());

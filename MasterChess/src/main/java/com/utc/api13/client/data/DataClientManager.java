@@ -3,11 +3,12 @@
  */
 package com.utc.api13.client.data;
 
+
 import java.util.UUID;
 
-import com.utc.api13.client.com.interfaces.IClientToData;
+import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
-import com.utc.api13.client.ihm.interfaces.IIHMFromData;
+import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
 import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -20,36 +21,37 @@ import javafx.collections.ObservableList;
  *
  */
 public class DataClientManager {
-	private ClientToCommImpl clientToCommImpl;
-	private ClientToIHMImpl clientToIHMImpl;
-	private IClientToData iClientToData;
-	private IIHMFromData iIHMFromData;
+	private ClientDataToComImpl clientDataToComImpl;
+	private ClientDataToIHMImpl clientDataToIHMImpl;
+	private IClientComToData iClientComToData;
+	private IClientIHMToData iClientIHMToData;
 	private PrivateUserEntity userLocal;
 	private ObservableList<AUserEntity> currentUsers;
 	private ObservableList<GameEntity> currentGames;
 	/**
-	 * @return the clientToCommImpl
+	 * 
+	 * @return clientDataToComImpl
 	 */
-	public ClientToCommImpl getClientToCommImpl() {
-		return clientToCommImpl;
+	public ClientDataToComImpl getClientDataToComImpl() {
+		return clientDataToComImpl;
 	}
 	/**
-	 * @param clientToCommImpl the clientToCommImpl to set
+	 * @param clientDataToComImpl the clientToCommImpl to set
 	 */
-	public void setClientToCommImpl(ClientToCommImpl clientToCommImpl) {
-		this.clientToCommImpl = clientToCommImpl;
+	public void setClientDataToComImpl(ClientDataToComImpl clientDataToComImpl) {
+		this.clientDataToComImpl = clientDataToComImpl;
 	}
 	/**
 	 * @return the clientToIHMImpl
 	 */
-	public ClientToIHMImpl getClientToIHMImpl() {
-		return clientToIHMImpl;
+	public ClientDataToIHMImpl getClientDataToIHMImpl() {
+		return clientDataToIHMImpl;
 	}
 	/**
-	 * @param clientToIHMImpl the clientToIHMImpl to set
+	 * @param clientDataToIHMImpl the clientToIHMImpl to set
 	 */
-	public void setClientToIHMImpl(ClientToIHMImpl clientToIHMImpl) {
-		this.clientToIHMImpl = clientToIHMImpl;
+	public void setClientDataToIHMImpl(ClientDataToIHMImpl clientDataToIHMImpl) {
+		this.clientDataToIHMImpl = clientDataToIHMImpl;
 	}
 	/**
 	 * @return the userLocal
@@ -91,41 +93,41 @@ public class DataClientManager {
 	/**
 	 * @return the iClientToData
 	 */
-	public IClientToData getiClientToData() {
-		return iClientToData;
+	public IClientComToData getIClientComToData() {
+		return iClientComToData;
 	}
 	/**
 	 * @param iClientToData the iClientToData to set
 	 */
-	public void setiClientToData(IClientToData iClientToData) {
-		this.iClientToData = iClientToData;
+	public void setIClientComToData(IClientComToData iClientToData) {
+		this.iClientComToData = iClientToData;
 	}
 	/**
 	 * @return the iIHMFromData
 	 */
-	public IIHMFromData getiIHMFromData() {
-		return iIHMFromData;
+	public IClientIHMToData getIClientIHMToData() {
+		return iClientIHMToData;
 	}
 	/**
-	 * @param iIHMFromData the iIHMFromData to set
+	 * @param iClientIHMToData the iIHMFromData to set
 	 */
-	public void setiIHMFromData(IIHMFromData iIHMFromData) {
-		this.iIHMFromData = iIHMFromData;
+	public void setIClientIHMToData(IClientIHMToData iClientIHMToData) {
+		this.iClientIHMToData = iClientIHMToData;
 	}
 	/**
-	 * @param clientToCommImpl
-	 * @param clientToIHMImpl
-	 * @param iClientToData
+	 * @param clientDataToComImpl
+	 * @param clientDataToIHMImpl
+	 * @param iClientComToData
 	 * @param userLocal
 	 * @param currentUsers
 	 * @param currentGames
 	 */
 	public DataClientManager() {
 		super();
-		this.clientToCommImpl = new ClientToCommImpl(this);
-		this.clientToIHMImpl = new ClientToIHMImpl(this);
-		this.iIHMFromData = null;
-		this.iClientToData = null;
+		this.clientDataToComImpl = new ClientDataToComImpl(this);
+		this.clientDataToIHMImpl = new ClientDataToIHMImpl(this);
+		this.iClientIHMToData = null;
+		this.iClientComToData = null;
 		this.userLocal = new PrivateUserEntity();
 		this.currentUsers = FXCollections.emptyObservableList();
 		this.currentGames = FXCollections.emptyObservableList();

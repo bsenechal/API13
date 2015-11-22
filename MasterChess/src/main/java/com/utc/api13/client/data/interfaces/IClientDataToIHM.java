@@ -15,7 +15,7 @@ import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 
-public interface IClientToIHM {
+public interface IClientDataToIHM {
     
     public void getUsers(List <AUserEntity> users);
     
