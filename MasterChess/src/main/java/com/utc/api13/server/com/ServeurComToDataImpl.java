@@ -5,9 +5,9 @@ import java.util.UUID;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.server.com.interfaces.IServeurToData;
+import com.utc.api13.server.com.interfaces.IServeurComToData;
 
-public class ServeurToDataImpl implements IServeurToData {
+public class ServeurComToDataImpl implements IServeurComToData {
 
 	ComServerManager comServerManagerInstance;
 	
@@ -16,7 +16,7 @@ public class ServeurToDataImpl implements IServeurToData {
 	/**
 	 * @param comServerManagerInstance
 	 */
-	public ServeurToDataImpl(ComServerManager comServerManagerInstance) {
+	public ServeurComToDataImpl(ComServerManager comServerManagerInstance) {
 		this.comServerManagerInstance = comServerManagerInstance;
 	}
 

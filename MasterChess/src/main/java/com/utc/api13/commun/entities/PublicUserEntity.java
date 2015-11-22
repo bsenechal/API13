@@ -3,32 +3,32 @@ package com.utc.api13.commun.entities;
 public class PublicUserEntity extends AUserEntity {
 
     private static final long serialVersionUID = 7421076183167325143L;
-    private byte[] Image;
-	private GameEntity ObservedGame;
+    private byte[] image;
+	private GameEntity observedGame;
 	
 	/**
 	 * @return the image
 	 */
 	public byte[] getImage() {
-		return Image;
+		return image;
 	}
 	/**
 	 * @param image the image to set
 	 */
 	public void setImage(byte[] image) {
-		Image = image;
+		this.image = image;
 	}
 	/**
 	 * @return the observedGame
 	 */
 	public GameEntity getObservedGame() {
-		return ObservedGame;
+		return observedGame;
 	}
 	/**
 	 * @param observedGame the observedGame to set
 	 */
 	public void setObservedGames(GameEntity observedGame) {
-		ObservedGame = observedGame;
+		this.observedGame = observedGame;
 	}
 	
 

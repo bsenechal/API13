@@ -9,7 +9,7 @@ import java.util.UUID;
 import javafx.collections.ObservableSet;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
-import com.utc.api13.client.data.interfaces.IClientToIHM;
+import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
@@ -20,7 +20,7 @@ import com.utc.api13.commun.entities.AUserEntity;
  * @author Benoît
  *
  */
-public class ClientToIHMImpl implements IClientToIHM {
+public class ClientDataToIHMImpl implements IClientDataToIHM {
     DataClientManager dataClientManager;
     
     
@@ -296,7 +296,7 @@ public class ClientToIHMImpl implements IClientToIHM {
 	}
 
 
-    public ClientToIHMImpl(DataClientManager instanceDataClientManager) {
+    public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
         super();
         this.dataClientManager = instanceDataClientManager;
     }

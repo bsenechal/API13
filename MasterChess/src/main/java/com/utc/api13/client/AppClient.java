@@ -29,11 +29,11 @@ public class AppClient extends Application {
 		ComClientManager comClientManager = new ComClientManager();
 
 		DataClientManager dataClientManager = new DataClientManager();
-		dataClientManager.setiClientToData(comClientManager.getClientToDataImpl());
-		dataClientManager.setiIHMFromData(ihmManager.getIHMFromDataImpl());
+		dataClientManager.setIClientComToData(comClientManager.getClientComToDataImpl());
+		dataClientManager.setIClientIHMToData(ihmManager.getClientIHMToDataImpl());
 
-		ihmManager.setClientToIHM(dataClientManager.getClientToIHMImpl());
-		comClientManager.setIClientToComm(dataClientManager.getClientToCommImpl());
+		ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
+		comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
 		comClientManager.launchAppCom("localhost", 8000);
 		
 		/**

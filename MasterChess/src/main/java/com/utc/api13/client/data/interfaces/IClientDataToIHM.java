@@ -13,7 +13,7 @@ import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.AUserEntity;
 
 
-public interface IClientToIHM {
+public interface IClientDataToIHM {
     
     public void getUsers(List <AUserEntity> users);
     
