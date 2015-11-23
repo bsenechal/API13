@@ -19,7 +19,7 @@ public interface IClientDataToIHM {
     
     public void getUsers(List <AUserEntity> users);
     
-    public AUserEntity getUserInfo(UUID iduser);
+    public PublicUserEntity getUserInfo(UUID iduser);
     
     public void getAllGames();
     
