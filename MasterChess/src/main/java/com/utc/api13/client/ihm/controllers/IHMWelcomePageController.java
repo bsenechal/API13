@@ -66,6 +66,18 @@ public class IHMWelcomePageController {
 	ScrollBar currentGamesScrollbar, savedGamesScrollbar, connectedUserScrollbar; 
 	@FXML
 	private void onHelpClicked(Event event) {
+		SetChangeListener<AUserEntity> connectedUserListListener;
+		connectedUserListListener = change -> 
+		{
+			System.out.println("OK LISTENER");
+			//ObservableSet<AUserEntity> ConnectedUserListToDisplay = myIClientToIHM.getUserList();
+		};
+		myIClientToIHM.getUserList().addListener(connectedUserListListener);
+		/*
+		// TODO Demande de la liste des users connectés
+		//IClientToIHM.getUsers();
+		// TODO Demande de la liste des jeux
+		//getAllGames();*/
 	}
 	@FXML
 	private void onParamClicked(Event event) {
@@ -118,19 +130,6 @@ public class IHMWelcomePageController {
 	}
 	
 	public void initialize() {
-		//bindings
-		/*SetChangeListener<AUserEntity> connectedUserListListener;
-		connectedUserListListener = change -> 
-		{
-			System.out.println("OK LISTENER");
-			//ObservableSet<AUserEntity> ConnectedUserListToDisplay = myIClientToIHM.getUserList();
-		};
-		myIClientToIHM.getUserList().addListener(connectedUserListListener);
-		
-		// TODO Demande de la liste des users connectés
-		//IClientToIHM.getUsers();
-		// TODO Demande de la liste des jeux
-		//getAllGames();*/
 	}
 	
 	public void setMainApp(AppClient app) {
@@ -150,10 +149,26 @@ public class IHMWelcomePageController {
 	public void setListSavedGames() {
 		
 	}
-	public void setManager(IHMManager ihmManager){
+	
+	public void setControllerContext(IHMManager ihmManager){
 		this.IHMManager = ihmManager;
 		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getClientToIHM(); 
+		setListenersOnLoad();
 	}
 	
-
+	public void setListenersOnLoad()
+	{
+		SetChangeListener<AUserEntity> connectedUserListListener;
+		connectedUserListListener = change -> 
+		{
+			System.out.println("OK LISTENER");
+			//ObservableSet<AUserEntity> ConnectedUserListToDisplay = myIClientToIHM.getUserList();
+		};
+		/*myIClientToIHM.getUserList().addListener(connectedUserListListener);
+		
+		// TODO Demande de la liste des users connectés
+		//IClientToIHM.getUsers();
+		// TODO Demande de la liste des jeux
+		//getAllGames();*/
+	}
 }
