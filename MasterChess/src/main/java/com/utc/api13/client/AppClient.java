@@ -47,6 +47,7 @@ public class AppClient extends Application {
 		this.stage = stage;
 		// on utilise un FXML par écran
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+	
 		Pane root = (Pane) fxmlLoader.load();
 
 		Scene scene = new Scene(root, 800, 600);
