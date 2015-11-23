@@ -16,7 +16,7 @@ public class IHMManager {
 	
 	public IHMManager () 
 	{
-		myIHMFromDataImpl = new IHMFromDataImpl(this);
+		this.myIHMFromDataImpl = new IHMFromDataImpl(this);
 	}
 	
 	

@@ -6,7 +6,8 @@ import org.controlsfx.control.PopOver;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientToIHM;
-import com.utc.api13.client.ihm.ClientToIHMImpl;
+import com.utc.api13.client.ihm.IHMFromDataImpl;
+import com.utc.api13.client.ihm.IHMManager;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
@@ -30,23 +32,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class IHMWelcomePageController {
-	
-	//+ tous les listeners
-	private ClientToIHMImpl clientToIHM ; 
+	private IHMManager IHMManager; 
 	private AppClient mainApp;
-	//popup user info
-	@FXML
-	BorderPane userInfoBorderPane;  
-	@FXML
-	AnchorPane userInfoAnchorPane; 
-	@FXML
-	Label userInfoLogin, userInfoFirstName, userInfoLastName; 
-	@FXML
-	TableView userInfoTableView; 
-	@FXML
-	TableColumn userInfoWon, userInfoLost, userInfoPlayed; 
+	private IClientToIHM myIClientToIHM; 
 	
-	//main window
+	//FXML : main window
 	@FXML
 	BorderPane mainBorderPane; 
 	@FXML
@@ -85,7 +75,7 @@ public class IHMWelcomePageController {
 	}
 	@FXML
 	public void onLogOutClicked() {
-		//appeler methode deconnexion
+		myIClientToIHM.disconnect(); //methode a completer dans la classe correspondante 
 	}
 	@FXML
 	public void onSettingsClicked() {
@@ -95,11 +85,13 @@ public class IHMWelcomePageController {
 		Stage stage; 
 		Parent root;
 		stage = new Stage();
-		root = FXMLLoader.load(getClass().getResource("/fxml/userInfoPopUp.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/userInfoPopUp.fxml"));
+		root = (Pane) fxmlLoader.load();
+		UserInfoPopUpController controller = fxmlLoader.getController();
+        controller.setMainApp(this.mainApp);
 		stage.setScene(new Scene(root));
 		stage.setTitle("User Information");
-		stage.initModality(Modality.APPLICATION_MODAL);
-		setPopUp(); 
+		stage.initModality(Modality.APPLICATION_MODAL); 
 		stage.showAndWait();
 	}
 	
@@ -108,16 +100,19 @@ public class IHMWelcomePageController {
 		Stage stage; 
 		Parent root;
 		stage = new Stage();
-		root = FXMLLoader.load(getClass().getResource("/fxml/userInfoPopUp.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/myInfoPopUp.fxml"));
+		root = (Pane) fxmlLoader.load();
+		MyInfoPopUpController controller = fxmlLoader.getController();
+        controller.setMainApp(this.mainApp);
 		stage.setScene(new Scene(root));
-		stage.setTitle("My Profile");
-		stage.initModality(Modality.APPLICATION_MODAL);
-		//setPopUp(); 
+		stage.setTitle("My Information");
+		stage.initModality(Modality.APPLICATION_MODAL); 
 		stage.showAndWait();
 	}
 	
 	public IHMWelcomePageController() { 
-		clientToIHM = new ClientToIHMImpl(); 
+		this.IHMManager = new IHMManager(); 
+		this.myIClientToIHM=IHMManager.getClientToIHM(); 
 		initialize(); 
 	}
 	
@@ -129,13 +124,10 @@ public class IHMWelcomePageController {
 		//getAllGames();
 	}
 	
-	public void setMainApp(AppClient mainApp) {
-        this.mainApp = mainApp;
-        //initialiser avec login de l'user connecté 
-	}
-	
-	public void setPopUp() {
-        //initialiser tous les labels 
+	public void setMainApp(AppClient app) {
+		this.mainApp=app; 
+		//this.currentGamesLabel.setText(""); 
+        //initialiser avec login de l'user connecté : ATTENTE DATA 
 	}
 	
 	public void setListConnectedUser() {
@@ -148,9 +140,6 @@ public class IHMWelcomePageController {
 	
 	public void setListSavedGames() {
 		
-	}
-	
-	public void onTestClicked() {	
 	}
 
 }

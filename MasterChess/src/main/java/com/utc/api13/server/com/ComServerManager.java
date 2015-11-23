@@ -16,7 +16,7 @@ public class ComServerManager {
 	ServerInitializer serverInitializer = null;
 	private static final Logger logger = Logger.getLogger(ComServerManager.class);
 	private IServerToComm iServerToComm;
-	//private ServeurToDataImpl serverToDataImpl;
+	private ServeurToDataImpl serverToDataImpl;
 	
 	
 
@@ -86,16 +86,16 @@ public class ComServerManager {
 	/**
 	 * @return the iServerToDataImpl
 	 */
-	/*public ServeurToDataImpl getServerToDataImpl() {
+	public ServeurToDataImpl getServerToDataImpl() {
 		return serverToDataImpl;
 	}
 
 	/**
 	 * @param iServerToDataImpl the iServerToDataImpl to set
 	 */
-	/*public void setIServerToDataImpl(ServeurToDataImpl serverToDataImpl) {
+	public void setIServerToDataImpl(ServeurToDataImpl serverToDataImpl) {
 		serverToDataImpl = serverToDataImpl;
-	}*/
+	}
 	
 
 }
