@@ -63,7 +63,7 @@ public class ServerToCommImplTest {
         Assert.assertNotNull("DataServerManager shouldn't be null", dataServerManager);
         Assert.assertNotNull("CurrentUsers shouldn't be null", dataServerManager.getCurrentUsers());
         Assert.assertEquals("CurrentUsers should contain " + nbRandomUser + " items", nbRandomUser, dataServerManager.getCurrentUsers().size());
-        Assert.assertFalse("CurrentUsers souldn't contain the user with the id : " + idUser, dataServerManager.getCurrentUsers().contains(idUser));
+        Assert.assertFalse("CurrentUsers shouldn't contain the user with the id : " + idUser, dataServerManager.getCurrentUsers().contains(idUser));
     }
 	
 	@Test
@@ -84,10 +84,11 @@ public class ServerToCommImplTest {
         Assert.assertNotNull("DataServerManager shouldn't be null", dataServerManager);
         Assert.assertNotNull("CurrentUsers shouldn't be null", dataServerManager.getCurrentUsers());
         Assert.assertEquals("CurrentUsers should contain " + (nbRandomUser+1) + " items", (nbRandomUser+1), dataServerManager.getCurrentUsers().size());
-        Assert.assertNotNull("getUserInfo souldn't be null for user : " + idUser, dataServerManager.getServerDataToComImpl().getUserInfo(idUser));
+        Assert.assertNotNull("getUserInfo shouldn't be null for user : " + idUser, dataServerManager.getServerDataToComImpl().getUserInfo(idUser));
         Assert.assertEquals("getUserInfo().Login should be " + login, login, dataServerManager.getServerDataToComImpl().getUserInfo(idUser).getLogin());
         Assert.assertEquals("getUserInfo().LastName should be " + lastname, lastname, dataServerManager.getServerDataToComImpl().getUserInfo(idUser).getLastName());
-    }
+        Assert.assertFalse("CurrentUsers should contain the user with the id : " + idUser, dataServerManager.getCurrentUsers().contains(idUser));
+	}
 	
 
 }
