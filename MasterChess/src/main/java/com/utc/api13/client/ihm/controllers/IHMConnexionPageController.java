@@ -73,10 +73,7 @@ public class IHMConnexionPageController {
 	    
 	}
 	
-	
 	public IHMConnexionPageController() { 
-		IHMManager = new IHMManager(); 
-		myIClientToIHM=IHMManager.getClientToIHM();
 		initialize(); 
 	}
 	
@@ -86,6 +83,11 @@ public class IHMConnexionPageController {
 	
 	public void initialize() {
 		//bindings
+	}
+	
+	public void setManager(IHMManager ihmManager){
+		this.IHMManager = ihmManager;
+		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getClientToIHM(); 
 	}
 		 
 }

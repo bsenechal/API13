@@ -51,9 +51,9 @@ public class AppClient extends Application {
 		Pane root = (Pane) fxmlLoader.load();
 		IHMConnexionPageController controller = fxmlLoader.getController();
         controller.setMainApp(this);
+        controller.setManager(ihmManager);
 		Scene scene = new Scene(root, 800, 600);
 		scene.getStylesheets().add(getClass().getResource("/css/masterCSS.css").toExternalForm());
-		
 		stage.setTitle("Connexion");
 		stage.setScene(scene);
 		stage.show();

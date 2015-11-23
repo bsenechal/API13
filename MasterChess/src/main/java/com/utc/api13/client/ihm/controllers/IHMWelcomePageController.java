@@ -110,8 +110,6 @@ public class IHMWelcomePageController {
 	}
 	
 	public IHMWelcomePageController() { 
-		this.IHMManager = new IHMManager(); 
-		this.myIClientToIHM=IHMManager.getClientToIHM(); 
 		initialize(); 
 	}
 	
@@ -140,5 +138,10 @@ public class IHMWelcomePageController {
 	public void setListSavedGames() {
 		
 	}
+	public void setManager(IHMManager ihmManager){
+		this.IHMManager = ihmManager;
+		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getClientToIHM(); 
+	}
+	
 
 }
