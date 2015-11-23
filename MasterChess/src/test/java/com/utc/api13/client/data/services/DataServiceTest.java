@@ -1,6 +1,5 @@
 package com.utc.api13.client.data.services;
 
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 import com.utc.api13.client.data.services.ADataService;
@@ -66,7 +65,7 @@ public abstract class DataServiceTest<T extends ADataEntity> extends TestCase{
 	public void testDelete() {
 		//Create a new entity
 		//Delete it
-		//Check if the entity has been deleted correctly
+		//Check if the entity has been deleted successfullly
 	}
 	
 	/**

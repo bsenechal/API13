@@ -23,7 +23,7 @@ public interface IClientDataToIHM {
     
     public void getAllGames();
     
-    public void connect(String login, String password);
+    public void connect(String login, String password) throws FunctionalException, TechnicalException;
     
     public void disconnect();
     

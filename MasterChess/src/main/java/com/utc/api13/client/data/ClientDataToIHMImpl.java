@@ -9,9 +9,7 @@ import java.util.UUID;
 import javafx.collections.ObservableSet;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
-import com.utc.api13.client.data.services.ADataService;
 import com.utc.api13.client.data.services.UserService;
-import com.utc.api13.commun.dao.interfaces.IGenericDAO;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
@@ -26,7 +24,11 @@ import com.utc.api13.commun.exceptions.TechnicalException;
  *
  */
 public class ClientDataToIHMImpl implements IClientDataToIHM {
-    private DataClientManager dataClientManager;    
+    private DataClientManager dataClientManager;
+    /**
+     * Service des users
+     */
+    private UserService userService;
     
     /*
      * (non-Javadoc)
@@ -86,8 +88,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * String, java.lang.String)
 	 */
 	@Override
-	public void connect(String login, String password) {
-		// TODO Auto-generated method stub
+	public void connect(String login, String password) throws FunctionalException, TechnicalException {
+		userService.connect(login, password);
+		dataClientManager.setUserLocal(userService.getByLoginAndPassword(login, password));
 
 	}
 
@@ -303,6 +306,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
         super();
         this.dataClientManager = instanceDataClientManager;
+        this.userService = new UserService(dataClientManager.getIClientComToData());
     }
     
     
@@ -320,10 +324,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         newUser.setNbLost(0);
         newUser.setNbPlayed(0);
         newUser.setNbWon(0);
-        
-        //TODO: UME ???
-        //UserService service= new UserService(); 
-//        PrivateUserEntity saved = service.save(newUser);
+        userService.save(newUser);
 
     }
 
