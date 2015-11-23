@@ -39,10 +39,12 @@ public class IHMConnexionPageController {
 	@FXML
 	Hyperlink importLink, exportLink, signUpLink; 
 	@FXML
-	private void onSignInClicked(Event event) throws IOException {
+	private void onSignInClicked(Event event) throws IOException { 
 		String login=loginTextView.getText();  
+		System.out.println(login); 
 		String pw=passwordTextView.getText(); 
-		//myIClientToIHM.connect(login, pw); 
+		System.out.println(pw); 
+		myIClientToIHM.connect(login, pw); //à tester à l'intégration
 		
 		Stage stage; 
 		Parent root;
