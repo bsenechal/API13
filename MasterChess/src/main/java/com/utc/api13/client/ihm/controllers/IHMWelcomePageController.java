@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.controlsfx.control.PopOver;
 
+import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientToIHM;
 import com.utc.api13.client.ihm.ClientToIHMImpl;
 
@@ -31,9 +32,9 @@ import javafx.stage.Stage;
 public class IHMWelcomePageController {
 	
 	//+ tous les listeners
-	ClientToIHMImpl clientToIHM ; 
-	
-	//popup
+	private ClientToIHMImpl clientToIHM ; 
+	private AppClient mainApp;
+	//popup user info
 	@FXML
 	BorderPane userInfoBorderPane;  
 	@FXML
@@ -84,13 +85,13 @@ public class IHMWelcomePageController {
 	}
 	@FXML
 	public void onLogOutClicked() {
+		//appeler methode deconnexion
 	}
 	@FXML
 	public void onSettingsClicked() {
 	}
 	@FXML
-	public void superTest() throws IOException  {
-		System.out.println("hellooooooooohdhdh"); 
+	public void onUserInfoClicked() throws IOException  {
 		Stage stage; 
 		Parent root;
 		stage = new Stage();
@@ -98,6 +99,20 @@ public class IHMWelcomePageController {
 		stage.setScene(new Scene(root));
 		stage.setTitle("User Information");
 		stage.initModality(Modality.APPLICATION_MODAL);
+		setPopUp(); 
+		stage.showAndWait();
+	}
+	
+	@FXML
+	public void onMyInfoClicked() throws IOException  {
+		Stage stage; 
+		Parent root;
+		stage = new Stage();
+		root = FXMLLoader.load(getClass().getResource("/fxml/userInfoPopUp.fxml"));
+		stage.setScene(new Scene(root));
+		stage.setTitle("My Profile");
+		stage.initModality(Modality.APPLICATION_MODAL);
+		//setPopUp(); 
 		stage.showAndWait();
 	}
 	
@@ -112,6 +127,15 @@ public class IHMWelcomePageController {
 		//IClientToIHM.getUsers();
 		// TODO Demande de la liste des jeux
 		//getAllGames();
+	}
+	
+	public void setMainApp(AppClient mainApp) {
+        this.mainApp = mainApp;
+        //initialiser avec login de l'user connecté 
+	}
+	
+	public void setPopUp() {
+        //initialiser tous les labels 
 	}
 	
 	public void setListConnectedUser() {
