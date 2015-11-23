@@ -8,7 +8,11 @@ import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientToIHM;
 import com.utc.api13.client.ihm.IHMFromDataImpl;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.commun.entities.AUserEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
 
+import javafx.collections.ObservableSet;
+import javafx.collections.SetChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -115,10 +119,18 @@ public class IHMWelcomePageController {
 	
 	public void initialize() {
 		//bindings
+		/*SetChangeListener<AUserEntity> connectedUserListListener;
+		connectedUserListListener = change -> 
+		{
+			System.out.println("OK LISTENER");
+			//ObservableSet<AUserEntity> ConnectedUserListToDisplay = myIClientToIHM.getUserList();
+		};
+		myIClientToIHM.getUserList().addListener(connectedUserListListener);
+		
 		// TODO Demande de la liste des users connectés
 		//IClientToIHM.getUsers();
 		// TODO Demande de la liste des jeux
-		//getAllGames();
+		//getAllGames();*/
 	}
 	
 	public void setMainApp(AppClient app) {
