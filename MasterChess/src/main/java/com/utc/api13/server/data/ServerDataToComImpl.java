@@ -37,8 +37,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 */
 	@Override
 	public PublicUserEntity getUserInfo(UUID idUser) {
-		// TODO Auto-generated method stub
-		return null;
+	    return dataServerManager.getCurrentUsers().stream().filter(u -> u.getId().equals(idUser)).findFirst().get();
 	}
 
 	/* (non-Javadoc)
