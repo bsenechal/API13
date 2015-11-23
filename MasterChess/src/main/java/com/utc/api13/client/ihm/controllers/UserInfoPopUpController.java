@@ -17,30 +17,29 @@ public class UserInfoPopUpController {
 	private AppClient mainApp;
 	private IClientToIHM myIClientToIHM; 
 	
-	//FXML : popup user info
-		@FXML
-		BorderPane userInfoBorderPane;  
-		@FXML
-		AnchorPane userInfoAnchorPane; 
-		@FXML
-		Label userInfoLogin, userInfoFirstName, userInfoLastName; 
-		@FXML
-		TableView userInfoTableView; 
-		@FXML
-		TableColumn userInfoWon, userInfoLost, userInfoPlayed; 
+	@FXML
+	BorderPane userInfoBorderPane;  
+	@FXML
+	AnchorPane userInfoAnchorPane; 
+	@FXML
+	Label userInfoLogin, userInfoFirstName, userInfoLastName; 
+	@FXML
+	TableView userInfoTableView; 
+	@FXML
+	TableColumn userInfoWon, userInfoLost, userInfoPlayed; 
 		
-		public UserInfoPopUpController() { 
-			this.IHMManager = new IHMManager(); 
-			this.myIClientToIHM=IHMManager.getClientToIHM(); 
-			initialize(); 
-		}
+	public UserInfoPopUpController() { 
+		this.IHMManager = new IHMManager(); 
+		this.myIClientToIHM=IHMManager.getClientToIHM(); 
+		initialize(); 
+	}
 		
-		public void initialize() {
-		}
+	public void initialize() {
+	}
 		
-		public void setMainApp(AppClient app) {
-			this.mainApp=app; 
-	        //initialiser avec login de l'user connecté : ATTENTE DATA 
-		}
+	public void setMainApp(AppClient app) {
+		this.mainApp=app; 
+		//initialiser avec login de l'user connecté : ATTENTE DATA 
+	}
 }
 	

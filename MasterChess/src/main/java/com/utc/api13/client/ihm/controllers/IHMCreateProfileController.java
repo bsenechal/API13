@@ -34,8 +34,6 @@ public class IHMCreateProfileController {
     public void onChangePictureClicked() {
 	}
     
-    //methodes à relier au FXML 
-    
 	public IHMCreateProfileController() { 
 		IHMManager = new IHMManager(); 
 		myIClientToIHM=IHMManager.getClientToIHM(); 

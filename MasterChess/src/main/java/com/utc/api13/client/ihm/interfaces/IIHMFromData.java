@@ -1,7 +1,6 @@
 package com.utc.api13.client.ihm.interfaces; 
 
 public interface IIHMFromData {
-	//corriger les types de retour et les paramètres au fur et à mesure .. !
 	
 	public void didReceiveBoard(); 
 	public void didReceiveEndOfGameBySurrender(); 

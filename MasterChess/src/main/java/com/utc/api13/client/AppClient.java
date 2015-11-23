@@ -3,6 +3,7 @@ package com.utc.api13.client;
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.client.ihm.controllers.IHMConnexionPageController;
 import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
 
 import javafx.application.Application;
@@ -26,16 +27,16 @@ public class AppClient extends Application {
 		 * <<<<<<<<<<<<<<<<<<<<<<<
 		 */
 		
-		/*IHMManager ihmManager = new IHMManager();
+		IHMManager ihmManager = new IHMManager();
 		ComClientManager comClientManager = new ComClientManager();
 
 		DataClientManager dataClientManager = new DataClientManager();
-		//dataClientManager.setiClientToData(comClientManager.getClientToDataImpl());
+		dataClientManager.setiClientToData(comClientManager.getClientToDataImpl());
 		dataClientManager.setiIHMFromData(ihmManager.getIHMFromDataImpl());
 
 		ihmManager.setClientToIHM(dataClientManager.getClientToIHMImpl());
 		comClientManager.setIClientToComm(dataClientManager.getClientToCommImpl());
-		comClientManager.launchAppCom("localhost", 8000);*/
+		comClientManager.launchAppCom("localhost", 8000);
 		
 		/**
 		 * >>>>>>>>>>>>>>>>>>>>>>>
@@ -46,15 +47,14 @@ public class AppClient extends Application {
 		 * <<<<<<<<<<<<<<<<<<<<<<<
 		 */
 		this.stage = stage;
-		// on utilise un FXML par écran
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
 		Pane root = (Pane) fxmlLoader.load();
-		IHMWelcomePageController controller = fxmlLoader.getController();
+		IHMConnexionPageController controller = fxmlLoader.getController();
         controller.setMainApp(this);
-
 		Scene scene = new Scene(root, 800, 600);
 		scene.getStylesheets().add(getClass().getResource("/css/masterCSS.css").toExternalForm());
-		stage.setTitle("MasterChess");
+		
+		stage.setTitle("Connexion");
 		stage.setScene(scene);
 		stage.show();
 		

@@ -6,6 +6,8 @@ package com.utc.api13.server.data;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import com.utc.api13.commun.entities.AUserEntity;
 //import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -21,7 +23,7 @@ public class DataServerManager {
 	
 	// Interface DATA
 	private ServerToCommImpl serverToCommImpl;
-	//private List<AUserEntity> currentUsers;
+	private List<AUserEntity> currentUsers;
 	private List<GameEntity> currentGames;
 	
 
@@ -40,13 +42,13 @@ public class DataServerManager {
 	/**
 	 * @return the currentUsers
 	 */
-	/*public List<AUserEntity> getCurrentUsers() {
+	public List<AUserEntity> getCurrentUsers() {
 		return currentUsers;
-	}*/
+	}
 	/**
 	 * @param currentUsers the currentUsers to set
 	 */
-	/*public void setCurrentUsers(final List<AUserEntity> currentUsers) {
+	public void setCurrentUsers(final List<AUserEntity> currentUsers) {
 		this.currentUsers = currentUsers;
 	}
 	/**
@@ -88,7 +90,7 @@ public class DataServerManager {
 	public void addUsers(){
 		
 		for (int i = 0 ; i < 10 ; i++){
-			/*PublicUserEntity userEntity = new PublicUserEntity();
+			PublicUserEntity userEntity = new PublicUserEntity();
 			userEntity.setFirstName("firstName" + i);
 			userEntity.setLastName("lastName" + i);
 			userEntity.setLogin("login" + i);
@@ -96,7 +98,7 @@ public class DataServerManager {
 			userEntity.setNbPlayed((int) Math.random());
 			userEntity.setNbWon((int) Math.random());
 			userEntity.setStatus((i % 2 == 0) ? true : false);
-			this.currentUsers.add(userEntity);*/
+			this.currentUsers.add(userEntity);
 		}
 	}
 	

@@ -36,7 +36,6 @@ public class IHMWelcomePageController {
 	private AppClient mainApp;
 	private IClientToIHM myIClientToIHM; 
 	
-	//FXML : main window
 	@FXML
 	BorderPane mainBorderPane; 
 	@FXML
@@ -75,7 +74,7 @@ public class IHMWelcomePageController {
 	}
 	@FXML
 	public void onLogOutClicked() {
-		myIClientToIHM.disconnect(); //methode a completer dans la classe correspondante 
+		myIClientToIHM.disconnect();  
 	}
 	@FXML
 	public void onSettingsClicked() {

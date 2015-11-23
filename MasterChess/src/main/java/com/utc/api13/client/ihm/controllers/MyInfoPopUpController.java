@@ -18,36 +18,36 @@ public class MyInfoPopUpController {
 	private AppClient mainApp;
 	private IClientToIHM myIClientToIHM; 
 	
-	//FXML : popup user info
-		@FXML
-		BorderPane userInfoBorderPane;  
-		@FXML
-		AnchorPane userInfoAnchorPane; 
-		@FXML
-		Label userInfoLogin, userInfoFirstName, userInfoLastName; 
-		@FXML
-		TableView userInfoTableView; 
-		@FXML
-		TableColumn userInfoWon, userInfoLost, userInfoPlayed; 
-		@FXML
-		Hyperlink modifyLink; 
+	@FXML
+	BorderPane userInfoBorderPane;  
+	@FXML
+	AnchorPane userInfoAnchorPane; 
+	@FXML
+	Label userInfoLogin, userInfoFirstName, userInfoLastName; 
+	@FXML
+	TableView userInfoTableView; 
+	@FXML
+	TableColumn userInfoWon, userInfoLost, userInfoPlayed; 
+	@FXML
+	Hyperlink modifyLink; 
 		
-		@FXML
-		public void onModifyProfileClicked() { 
-		}
+	@FXML
+	public void onModifyProfileClicked() {
 		
-		public MyInfoPopUpController() { 
-			this.IHMManager = new IHMManager(); 
-			this.myIClientToIHM=IHMManager.getClientToIHM(); 
-			initialize(); 
-		}
+	}
 		
-		public void initialize() {
-		}
+	public MyInfoPopUpController() { 
+		this.IHMManager = new IHMManager(); 
+		this.myIClientToIHM=IHMManager.getClientToIHM(); 
+		initialize(); 
+	}
 		
-		public void setMainApp(AppClient app) {
-			this.mainApp=app; 
-	        //initialiser avec login de l'user connecté : ATTENTE DATA 
-		}
+	public void initialize() {
+	}
+		
+	public void setMainApp(AppClient app) {
+		this.mainApp=app; 
+	      //initialiser avec login de l'user connecté : ATTENTE DATA 
+	}
 }
 	
