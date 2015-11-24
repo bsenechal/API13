@@ -65,7 +65,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * UUID)
 	 */
 	@Override
-	public AUserEntity getUserInfo(UUID iduser) {
+	public PublicUserEntity getUserInfo(UUID iduser) {
 		// TODO Auto-generated method stub
 		return null;
 	}
