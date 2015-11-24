@@ -6,7 +6,9 @@ package com.utc.api13.server.data;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import com.utc.api13.commun.entities.AUserEntity;
+//import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.server.com.interfaces.IServeurToData;
@@ -81,7 +83,7 @@ public class DataServerManager {
 		this.iServeurToData = null;
 		this.serverToCommImpl = new ServerToCommImpl(this);
 		this.currentGames = new ArrayList<GameEntity>();
-		this.currentUsers = new ArrayList<AUserEntity>();
+		//this.currentUsers = new ArrayList<AUserEntity>();
 	}
 	
 	// TODO : Supprimer cette méthode une fois la connexion implémentée

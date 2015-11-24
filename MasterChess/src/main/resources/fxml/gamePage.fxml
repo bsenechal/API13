@@ -46,6 +46,7 @@
                                     <Image url="@../pictures/icone-oeil.jpg" />
                                  </image>
                               </ImageView>
+                              <Pane fx:id="chessBoardPane" layoutX="27.0" layoutY="69.0" prefHeight="414.0" prefWidth="415.0" />
                            </children>
                         </AnchorPane>
                     </items>

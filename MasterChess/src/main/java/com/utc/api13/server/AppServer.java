@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.utc.api13.server;
 
 import com.utc.api13.server.com.ComServerManager;
@@ -18,7 +15,7 @@ public class AppServer {
 		
 		dataServerManager.setIServeurToData(comServerManager.getServerToDataImpl());
 		
-		comServerManager.setIServerToComm(dataServerManager.getServerToCommImpl());
+		//comServerManager.setIServerToComm(dataServerManager.getServerToCommImpl());
 		
 		comServerManager.launchAppCom();
 

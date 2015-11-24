@@ -32,7 +32,7 @@ public class ComServerManager {
 
 	public ComServerManager(int port){
 		this.port = port;
-		this.serverToDataImpl = new ServeurToDataImpl(this);
+		//this.serverToDataImpl = new ServeurToDataImpl(this);
 
 	}
 	
