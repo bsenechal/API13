@@ -9,8 +9,10 @@ import com.utc.api13.client.data.interfaces.IClientToIHM;
 import com.utc.api13.client.ihm.IHMFromDataImpl;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.commun.entities.AUserEntity;
+import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 
+import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
 import javafx.event.Event;
@@ -66,18 +68,6 @@ public class IHMWelcomePageController {
 	ScrollBar currentGamesScrollbar, savedGamesScrollbar, connectedUserScrollbar; 
 	@FXML
 	private void onHelpClicked(Event event) {
-		SetChangeListener<AUserEntity> connectedUserListListener;
-		connectedUserListListener = change -> 
-		{
-			System.out.println("OK LISTENER");
-			//ObservableSet<AUserEntity> ConnectedUserListToDisplay = myIClientToIHM.getUserList();
-		};
-		myIClientToIHM.getUserList().addListener(connectedUserListListener);
-		/*
-		// TODO Demande de la liste des users connectés
-		//IClientToIHM.getUsers();
-		// TODO Demande de la liste des jeux
-		//getAllGames();*/
 	}
 	@FXML
 	private void onParamClicked(Event event) {
@@ -158,17 +148,37 @@ public class IHMWelcomePageController {
 	
 	public void setListenersOnLoad()
 	{
+		// Demande de la liste des users
+		//-------------------------------
 		SetChangeListener<AUserEntity> connectedUserListListener;
 		connectedUserListListener = change -> 
 		{
-			System.out.println("OK LISTENER");
-			//ObservableSet<AUserEntity> ConnectedUserListToDisplay = myIClientToIHM.getUserList();
+			/*System.out.println("OK LISTENER Users");
+			bindings => setListConnectedUser(list); + implémenter méthode*/
 		};
-		/*myIClientToIHM.getUserList().addListener(connectedUserListListener);
+		//myIClientToIHM.getUserList().addListener(connectedUserListListener);
 		
-		// TODO Demande de la liste des users connectés
-		//IClientToIHM.getUsers();
-		// TODO Demande de la liste des jeux
-		//getAllGames();*/
+		
+		// Demande de la liste des jeux
+		//-------------------------------
+		SetChangeListener<GameEntity> currentGamesListListener;
+		currentGamesListListener = change -> 
+		{
+			/*System.out.println("OK LISTENER Game");
+			bindings => setListCurrentGames(list); + implémenter méthode*/
+		};
+		//myIClientToIHM.getAllGames().addListener(currentGamesListListener);
+		
+		
+		// Demande de la liste des parties sauvegardées
+		//-------------------------------
+		SetChangeListener<GameEntity> savedGamesListListener;
+		savedGamesListListener = change -> 
+		{
+			/*System.out.println("OK LISTENER Saved Game");
+			bindings => setListSavedGames(list); + implémenter méthode*/
+		};
+		//myIClientToIHM.getSavedGames().addListener(savedGamesListListener);
+		
 	}
 }
