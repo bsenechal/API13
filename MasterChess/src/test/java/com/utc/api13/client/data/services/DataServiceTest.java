@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Generated;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
