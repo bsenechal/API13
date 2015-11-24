@@ -81,12 +81,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#connect(java.lang.
-	 * String, java.lang.String)
-	 */
 	@Override
 	public void connect(String login, String password) throws FunctionalException, TechnicalException {
 		userService.connect(login, password);

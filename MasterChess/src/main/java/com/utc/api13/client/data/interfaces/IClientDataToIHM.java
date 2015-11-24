@@ -23,6 +23,13 @@ public interface IClientDataToIHM {
     
     public void getAllGames();
     
+    /**
+     * Connect a user to the app
+     * @param login login of user
+     * @param password password of user
+     * @throws FunctionalException exception when login or password are incorrect
+     * @throws TechnicalException technical exception
+     */
     public void connect(String login, String password) throws FunctionalException, TechnicalException;
     
     public void disconnect();
