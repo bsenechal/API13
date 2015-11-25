@@ -5,7 +5,6 @@ package com.utc.api13.client.ihm.controllers;
 import javax.swing.JFrame;
 
 
-import com.utc.api13.client.data.ClientToIHMImpl;
 import com.utc.api13.client.ihm.models.ChessBoardNode;
 
 import javafx.event.Event;
@@ -19,7 +18,7 @@ import javafx.scene.layout.Pane;
 
 
 public class IHMGamePageController {
-	ClientToIHMImpl clientToIHM ;
+//	ClientToIHMImpl clientToIHM ;
 	@FXML
 	Label chatLabel, otherPlayerLoginLabel, otherPlayerTimeLabel, playerLoginLabel, playerTimeLabel, numberObserversLabel;
 	@FXML

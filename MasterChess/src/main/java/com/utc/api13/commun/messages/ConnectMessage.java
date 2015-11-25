@@ -42,7 +42,7 @@ public class ConnectMessage extends Message {
 	@Override
 	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
 		//multicast new User
-		comServerManager.getIServerToComm().notifyConnections(pubUser);
+		comServerManager.getIServerDataToCom().notifyConnections(pubUser);
 
 	}
 

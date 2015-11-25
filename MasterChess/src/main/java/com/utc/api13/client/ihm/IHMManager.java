@@ -1,39 +1,33 @@
 package com.utc.api13.client.ihm;
 
-import com.utc.api13.client.data.interfaces.IClientToIHM;
-
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 
 public class IHMManager {
 
-	private IClientToIHM myIClientToIHM ;
-	private IHMFromDataImpl myIHMFromDataImpl; 
+	private IClientDataToIHM myIClientToIHM ;
+	private ClientIHMToDataImpl myClientIHMToDataImpl; 
 	
 	
 	public IHMManager () 
 	{
-		this.myIHMFromDataImpl = new IHMFromDataImpl(this);
+		this.myClientIHMToDataImpl = new ClientIHMToDataImpl(this);
 	}
 	
 	
-	public IClientToIHM getClientToIHM()
+	public IClientDataToIHM getIClientDataToIHM()
 	{
 		return this.myIClientToIHM;
 	}
 
 	
-	public void setClientToIHM(IClientToIHM dataInterface)
+	public void setIClientDataToIHM(IClientDataToIHM dataInterface)
 	{
 		myIClientToIHM = dataInterface;
 	}
 	
-	public IHMFromDataImpl getIHMFromDataImpl()
+	public ClientIHMToDataImpl getClientIHMToDataImpl()
 	{
-		return myIHMFromDataImpl;
+		return myClientIHMToDataImpl;
 	}
 	
 }

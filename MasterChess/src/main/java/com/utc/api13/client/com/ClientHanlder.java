@@ -48,6 +48,7 @@ public class ClientHanlder extends SimpleChannelInboundHandler<Message>{
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		logger.error("Lost connection, check your network connection");
 		cause.printStackTrace();
 		ctx.close();
 	}

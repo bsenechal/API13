@@ -69,14 +69,14 @@ public class StorageUtils<T extends ADataEntity>{
      * @throws DataAccessException erreur d'accès aux données
      */
     public void writeAll(List<T> entities) throws DataAccessException {
-    	NoHeaderObjectOutputStream noHeaderOs = null;
     	try{
             oos = new ObjectOutputStream(new FileOutputStream(file));
             noHeaderOos = new NoHeaderObjectOutputStream(new FileOutputStream(file, true));
             Iterator<T> iterator = entities.iterator();
-            oos.writeObject(iterator.next());
-            oos.close();
-            
+            if(iterator.hasNext()) {
+	            oos.writeObject(iterator.next());
+	            oos.close();
+            }
             while(iterator.hasNext()){
              noHeaderOos.writeObject(iterator.next());   
             }
@@ -88,9 +88,9 @@ public class StorageUtils<T extends ADataEntity>{
             	if(oos != null){
 	                oos.flush();
 	                oos.close();
-            	} else if(noHeaderOs != null){
-                	noHeaderOs.flush();
-                	noHeaderOs.close();
+            	} else if(noHeaderOos != null){
+            		noHeaderOos.flush();
+            		noHeaderOos.close();
                 }
             } catch (IOException ex) {
                 throw new DataAccessException("Error while closing output stream", ex);

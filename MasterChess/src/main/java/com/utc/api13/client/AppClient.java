@@ -5,7 +5,6 @@ import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.controllers.IHMConnexionPageController;
 
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -31,11 +30,11 @@ public class AppClient extends Application {
 		ComClientManager comClientManager = new ComClientManager();
 
 		DataClientManager dataClientManager = new DataClientManager();
-		dataClientManager.setiClientToData(comClientManager.getClientToDataImpl());
-		dataClientManager.setiIHMFromData(ihmManager.getIHMFromDataImpl());
+		dataClientManager.setIClientComToData(comClientManager.getClientComToDataImpl());
+		dataClientManager.setIClientIHMToData(ihmManager.getClientIHMToDataImpl());
 
-		ihmManager.setClientToIHM(dataClientManager.getClientToIHMImpl());
-		comClientManager.setIClientToComm(dataClientManager.getClientToCommImpl());
+		ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
+		comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
 		comClientManager.launchAppCom("localhost", 8000);
 		
 		/**
@@ -47,11 +46,7 @@ public class AppClient extends Application {
 		 * <<<<<<<<<<<<<<<<<<<<<<<
 		 */
 		this.stage = stage;
-
-		// on utilise un FXML par écran
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
-		
-	
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
 		Pane root = (Pane) fxmlLoader.load();
 		IHMConnexionPageController controller = fxmlLoader.getController();
         controller.setMainApp(this);

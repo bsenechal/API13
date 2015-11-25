@@ -3,8 +3,10 @@ package com.utc.api13.client.ihm.controllers;
 import java.io.IOException;
 
 import com.utc.api13.client.AppClient;
-import com.utc.api13.client.data.interfaces.IClientToIHM;
+import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.commun.exceptions.FunctionalException;
+import com.utc.api13.commun.exceptions.TechnicalException;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -24,7 +26,7 @@ public class IHMConnexionPageController {
 	
 	private IHMManager IHMManager; 
 	private AppClient mainApp;
-	private IClientToIHM myIClientToIHM;
+	private IClientDataToIHM myIClientToIHM;
 	
 	@FXML
 	BorderPane connexionBorderPane;
@@ -44,7 +46,17 @@ public class IHMConnexionPageController {
 		System.out.println(login); 
 		String pw=passwordTextView.getText(); 
 		System.out.println(pw); 
-		myIClientToIHM.connect(login, pw); //à tester à l'intégration
+		
+		// TODO : Gérer les exceptions avec le logger
+		try {
+			myIClientToIHM.connect(login, pw);
+		} catch (FunctionalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TechnicalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //à tester à l'intégration
 		
 		Stage stage; 
 		Parent root;
@@ -87,7 +99,7 @@ public class IHMConnexionPageController {
 	
 	public void setManager(IHMManager ihmManager){
 		this.IHMManager = ihmManager;
-		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getClientToIHM(); 
+		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getIClientDataToIHM(); 
 	}
 		 
 }
