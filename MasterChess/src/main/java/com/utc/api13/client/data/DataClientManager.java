@@ -9,7 +9,6 @@ import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.PublicUserEntity;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

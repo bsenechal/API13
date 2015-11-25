@@ -1,4 +1,3 @@
-
 package com.utc.api13.client.data.services;
 
 import java.util.ArrayList;
@@ -133,4 +132,3 @@ public class UserServiceTest {
 //	}
 
 }
-

@@ -295,5 +295,4 @@ public class ClientDataToComImpl implements IClientDataToCom {
         super();
         this.instanceDataClientManager = instanceDataClientManager;
     }
-
 }
