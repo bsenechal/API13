@@ -130,8 +130,6 @@ public class IHMWelcomePageController {
 
 	public void setMainApp(AppClient app) {
 		this.mainApp = app;
-		// this.currentGamesLabel.setText("");
-		// initialiser avec login de l'user connecté : ATTENTE DATA
 	}
 
 	private ObservableList<AUserEntity> observableListConnectedUser = FXCollections.observableArrayList(); 
