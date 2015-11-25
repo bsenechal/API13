@@ -149,7 +149,6 @@ public class IHMWelcomePageController {
 					@Override
 					public void onChanged(javafx.collections.ListChangeListener.Change<? extends AUserEntity> c) 
 					{
-						System.out.println(myIClientToIHM.getUserList().toString());
 						connectedUserTable.setItems(myIClientToIHM.getUserList());
 					}
 				}
