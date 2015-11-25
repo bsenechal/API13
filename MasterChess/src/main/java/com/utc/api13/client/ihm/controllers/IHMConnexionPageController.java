@@ -43,9 +43,7 @@ public class IHMConnexionPageController {
 	@FXML
 	private void onSignInClicked(Event event) throws IOException { 
 		String login=loginTextView.getText();  
-		System.out.println(login); 
 		String pw=passwordTextView.getText(); 
-		System.out.println(pw); 
 		
 		// TODO : Gérer les exceptions avec le logger
 		try {

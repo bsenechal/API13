@@ -35,12 +35,7 @@ public class AppServer {
 		dataServerManager.getServerDataToComImpl().saveUserData(user1);
 		dataServerManager.getServerDataToComImpl().saveUserData(user2);
 		
-		System.out.println(dataServerManager.getCurrentUsers().toString());
-		
 		comServerManager.launchAppCom();
-
-		// TODO : a rajouter
-//		comServerManager.close();
 	}
 
 }
