@@ -52,7 +52,7 @@ public class AppClient extends Application {
 		IHMWelcomePageController controller = fxmlLoader.getController();
         controller.setMainApp(this);
         ihmManager.getIClientDataToIHM().connect("login","mdp");//To move into connexion page when this page is OK (=>when user clicks OK then call this method, data implements all the rest (verif etc))
-        controller.setControllerContext(ihmManager);
+        controller.setManager(ihmManager);
 		Scene scene = new Scene(root, 800, 600);
 		scene.getStylesheets().add(getClass().getResource("/css/masterCSS.css").toExternalForm());
 		stage.setTitle("Connexion");

@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import javafx.collections.ObservableList;
 
 /**
  * @author Benoît

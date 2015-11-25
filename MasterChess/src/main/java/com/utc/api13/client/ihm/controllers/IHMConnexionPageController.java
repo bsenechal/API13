@@ -95,8 +95,9 @@ public class IHMConnexionPageController {
 		//bindings
 	}
 	
-	public void setControllerContext(IHMManager ihmManager){
+	public void setManager(IHMManager ihmManager){
 		this.IHMManager = ihmManager;
 		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getIClientDataToIHM(); 
 	}
+	
 }

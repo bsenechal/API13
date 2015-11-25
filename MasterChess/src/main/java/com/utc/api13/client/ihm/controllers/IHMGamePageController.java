@@ -2,38 +2,21 @@ package com.utc.api13.client.ihm.controllers;
 
 
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
-
-
-
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
-import com.utc.api13.client.AppClient;
-import com.utc.api13.client.data.interfaces.IClientDataToIHM;
-import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.models.ChessBoardNode;
 
-import javafx.embed.swing.SwingNode;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 
 
 public class IHMGamePageController {
-	private IHMManager IHMManager; 
-	private AppClient mainApp;
-	private IClientDataToIHM myIClientToIHM; 
-	
+//	ClientToIHMImpl clientToIHM ;
 	@FXML
 	Label chatLabel, otherPlayerLoginLabel, otherPlayerTimeLabel, playerLoginLabel, playerTimeLabel, numberObserversLabel;
 	@FXML
@@ -43,17 +26,15 @@ public class IHMGamePageController {
 	@FXML
 	TextArea chatTextArea, sendTextArea;
 	@FXML
-	AnchorPane topLeftAnchorPane;
-	@FXML
-	StackPane chessBoardStackPane;
+	Pane chessBoardPane;
 	
 	public IHMGamePageController() { 
 		initialize(); 
 	}
 	
 	public void initialize() {
-		/**final ChessBoardNode cb =new ChessBoardNode();
-		JFrame f = new JFrame("Chess");
+		final ChessBoardNode cb =new ChessBoardNode();
+		JFrame f = new JFrame("ChessChamp");
         f.add(cb.getGui());
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLocationByPlatform(true);
@@ -64,19 +45,9 @@ public class IHMGamePageController {
         // ensures the minimum size is enforced.
         f.setMinimumSize(f.getSize());
         f.setVisible(true);
-		final SwingNode swingNode = new SwingNode();
-		SwingUtilities.invokeLater(new Runnable() {
-			
-            public void run() {
-                swingNode.setContent(cb.getGui());
-            	
-            }
-        });
 		
-        chessBoardPane.getChildren().add(swingNode); // Adding swing node*/
-	
 	}
-
+	
 	@FXML
 	private void onExcludeChatClicked(Event event) {
 		
@@ -96,38 +67,5 @@ public class IHMGamePageController {
 	private void onQuitGameClicked(Event event) {
 		
 	}
-	public void setManager(IHMManager ihmManager){
-		this.IHMManager = ihmManager;
-		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getIClientDataToIHM(); 
-	}
-	public void setMainApp(AppClient app) {
-		this.mainApp=app; 
-		final ChessBoardNode cb =new ChessBoardNode();
-		
-		/**JFrame f = new JFrame("Chess");
-        f.add(cb.getGui());
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        f.setLocationByPlatform(true);
-
-        // ensures the frame is the minimum size it needs to be
-        // in order display the components within it
-        f.pack();
-        // ensures the minimum size is enforced.
-        f.setMinimumSize(f.getSize());
-        f.setVisible(true);*/
-		final SwingNode swingNode = new SwingNode();
-		
-		SwingUtilities.invokeLater(new Runnable() {
-			
-            public void run() {
-                swingNode.setContent(cb.getGui());
-            }
-        });
-		
-		
-        chessBoardStackPane.getChildren().add(swingNode);
-        
-	}
-
 	
 }

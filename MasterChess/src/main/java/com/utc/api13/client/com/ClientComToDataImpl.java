@@ -138,7 +138,4 @@ public class ClientComToDataImpl implements IClientComToData {
 	public void setComClientManagerInstance(ComClientManager comClientManagerInstance) {
 		this.comClientManagerInstance = comClientManagerInstance;
 	}
-
-	
-
 }
