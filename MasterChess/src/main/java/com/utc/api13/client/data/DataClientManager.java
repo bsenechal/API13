@@ -7,8 +7,8 @@ package com.utc.api13.client.data;
 import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
-import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 
 import javafx.collections.FXCollections;
@@ -54,7 +54,7 @@ public class DataClientManager {
 	/**
 	 * @return the userLocal
 	 */
-	public AUserEntity getUserLocal() {
+	public PrivateUserEntity getUserLocal() {
 		return userLocal;
 	}
 	/**
@@ -127,8 +127,8 @@ public class DataClientManager {
 		this.iClientIHMToData = null;
 		this.iClientComToData = null;
 		this.userLocal = new PrivateUserEntity();
-		this.currentUsers = FXCollections.emptyObservableList();
-		this.currentGames = FXCollections.emptyObservableList();
+		this.currentUsers = FXCollections.observableArrayList();
+		this.currentGames = FXCollections.observableArrayList();
 		// => Doesn't work :)
 		// this.setBouchonPierre();
 	}
