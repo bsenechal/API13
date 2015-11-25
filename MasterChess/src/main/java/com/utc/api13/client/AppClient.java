@@ -1,3 +1,4 @@
+
 package com.utc.api13.client;
 
 import com.utc.api13.client.com.ComClientManager;
@@ -27,7 +28,7 @@ public class AppClient extends Application {
 		 * <<<<<<<<<<<<<<<<<<<<<<<
 		 */
 		
-		/**IHMManager ihmManager = new IHMManager();
+		IHMManager ihmManager = new IHMManager();
 		ComClientManager comClientManager = new ComClientManager();
 
 		DataClientManager dataClientManager = new DataClientManager();
@@ -36,7 +37,7 @@ public class AppClient extends Application {
 
 		ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
 		comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
-		comClientManager.launchAppCom("localhost", 8000);*/
+		comClientManager.launchAppCom("localhost", 8000);
 		
 		/**
 		 * >>>>>>>>>>>>>>>>>>>>>>>
@@ -47,11 +48,11 @@ public class AppClient extends Application {
 		 * <<<<<<<<<<<<<<<<<<<<<<<
 		 */
 		this.stage = stage;
-		//FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/gamePage.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
+		
 		Pane root = (Pane) fxmlLoader.load();
-		//IHMConnexionPageController controller = fxmlLoader.getController();
-		IHMGamePageController controller = fxmlLoader.getController();
+		IHMConnexionPageController controller = fxmlLoader.getController();
+		
         controller.setMainApp(this);
         //controller.setManager(ihmManager);
 		Scene scene = new Scene(root, 800, 600);
@@ -75,4 +76,5 @@ public class AppClient extends Application {
 		launch(args);
 
 	}
+
 }
