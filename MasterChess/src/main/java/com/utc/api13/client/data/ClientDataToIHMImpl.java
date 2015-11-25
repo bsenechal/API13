@@ -77,9 +77,12 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public void connect(String login, String password) throws FunctionalException, TechnicalException {
-		userService.connect(login, password);
-		dataClientManager.setUserLocal(userService.getByLoginAndPassword(login, password));
-
+//		userService.connect(login, password);
+		PublicUserEntity user = new PublicUserEntity(login, password);
+		
+//		dataClientManager.setUserLocal(userService.getByLoginAndPassword(login, password));
+		
+		dataClientManager.getIClientComToData().notifyConnection(user);
 	}
 
 	/*

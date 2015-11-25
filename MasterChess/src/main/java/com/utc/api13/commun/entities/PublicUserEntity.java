@@ -14,6 +14,11 @@ public class PublicUserEntity extends AUserEntity {
 		
 	}
 	
+	public PublicUserEntity(String login, String password){
+		super(login, password);
+	}
+	
+	
 	/**
 	 * Creates a public user from a private user
 	 * @param privateUser the private user
