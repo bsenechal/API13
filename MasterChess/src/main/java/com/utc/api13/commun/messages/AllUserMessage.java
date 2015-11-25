@@ -19,6 +19,23 @@ public class AllUserMessage extends Message {
 		super(sender, receiver);
 		// TODO Auto-generated constructor stub
 	}
+	
+
+	/**
+	 * @return the users
+	 */
+	public List<AUserEntity> getUsers() {
+		return users;
+	}
+
+
+	/**
+	 * @param users the users to set
+	 */
+	public void setUsers(List<AUserEntity> users) {
+		this.users = users;
+	}
+
 
 	@Override
 	public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
