@@ -81,22 +81,5 @@ public class DataServerManager {
 		this.serverDataToComImpl = new ServerDataToComImpl(this);
 		this.currentGames = new ArrayList<GameEntity>();
 		this.currentUsers = new ArrayList<PublicUserEntity>();
-	}
-	
-	// TODO : Supprimer cette méthode une fois la connexion implémentée
-	public void addUsers(){
-		
-		for (int i = 0 ; i < 10 ; i++){
-			PublicUserEntity userEntity = new PublicUserEntity();
-			userEntity.setFirstName("firstName" + i);
-			userEntity.setLastName("lastName" + i);
-			userEntity.setLogin("login" + i);
-			userEntity.setNbLost((int) Math.random());
-			userEntity.setNbPlayed((int) Math.random());
-			userEntity.setNbWon((int) Math.random());
-			userEntity.setStatus((i % 2 == 0) ? true : false);
-			this.currentUsers.add(userEntity);
-		}
-	}
-	
+	}	
 }
