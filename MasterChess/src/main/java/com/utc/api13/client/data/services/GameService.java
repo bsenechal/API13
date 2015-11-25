@@ -4,10 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.utc.api13.commun.dao.GameDAO;
-import com.utc.api13.commun.dao.UserDAO;
 import com.utc.api13.commun.dao.interfaces.IGenericDAO;
 import com.utc.api13.commun.entities.GameEntity;
-import com.utc.api13.commun.entities.AUserEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
@@ -20,7 +19,7 @@ public class GameService extends ADataService<GameEntity> {
 	 * @return Returns the list of games observed by a user 
 	 * @throws DataAccessException data access exception
 	 */
-	public List<GameEntity> getByUser(AUserEntity user) throws TechnicalException{
+	public List<GameEntity> getByUser(PublicUserEntity user) throws TechnicalException{
 		return getAll().stream().filter(game -> game.getObservers().contains(user)).collect(Collectors.toList());
 	}
 

@@ -6,27 +6,28 @@ package com.utc.api13.client.data;
 import java.util.List;
 import java.util.UUID;
 
-import javafx.collections.ObservableSet;
-
 import com.utc.api13.client.data.entities.PrivateUserEntity;
-import com.utc.api13.client.data.services.ADataService;
-import com.utc.api13.client.data.services.UserService;
-import com.utc.api13.commun.dao.interfaces.IGenericDAO;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
+
+import javafx.collections.ObservableSet;
 
 /**
  * @author Benoît
  *
  */
 public class ClientDataToIHMImpl implements IClientDataToIHM {
-    private DataClientManager dataClientManager;    
+    private DataClientManager dataClientManager;
+    /**
+     * Service des users
+     */
+    private UserService userService;
     
     /*
      * (non-Javadoc)
@@ -36,7 +37,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      * List)
      */
     @Override
-    public ObservableSet<AUserEntity> getUserList() {
+    public ObservableSet<PublicUserEntity> getUserList() {
 //        return instanceDataClientManager.getUserList();
     	return null;
     }
@@ -50,7 +51,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * List)
 	 */
 	@Override
-	public void getUsers(List<AUserEntity> users) {
+	public void getUsers(List<PublicUserEntity> users) {
 		// TODO Auto-generated method stub
 
 	}
@@ -63,7 +64,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * UUID)
 	 */
 	@Override
-	public AUserEntity getUserInfo(UUID iduser) {
+	public PublicUserEntity getUserInfo(UUID iduser) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -79,15 +80,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#connect(java.lang.
-	 * String, java.lang.String)
-	 */
 	@Override
-	public void connect(String login, String password) {
-		// TODO Auto-generated method stub
+	public void connect(String login, String password) throws FunctionalException, TechnicalException {
+		userService.connect(login, password);
+		dataClientManager.setUserLocal(userService.getByLoginAndPassword(login, password));
 
 	}
 
@@ -198,7 +194,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * api13.commun.entities.UserEntity)
 	 */
 	@Override
-	public void updateProfil(AUserEntity user) {
+	public void updateProfil(PublicUserEntity user) {
 		// TODO Auto-generated method stub
 
 	}
@@ -303,6 +299,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
         super();
         this.dataClientManager = instanceDataClientManager;
+        this.userService = new UserService(dataClientManager.getIClientComToData());
     }
     
     
@@ -320,10 +317,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         newUser.setNbLost(0);
         newUser.setNbPlayed(0);
         newUser.setNbWon(0);
-        
-        //TODO: UME ???
-        //UserService service= new UserService(); 
-        //PrivateUserEntity saved = service.save(newUser);
+        userService.save(newUser);
 
     }
 

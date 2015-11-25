@@ -14,6 +14,11 @@ public class PublicUserEntity extends AUserEntity {
 		
 	}
 	
+	/**
+	 * Creates a public user from a private user
+	 * @param privateUser the private user
+	 * @throws TechnicalException technical error
+	 */
 	public PublicUserEntity(PrivateUserEntity privateUser) throws TechnicalException{
 		setId(privateUser.getId());
 		setLogin(privateUser.getLogin());
@@ -49,7 +54,4 @@ public class PublicUserEntity extends AUserEntity {
 	public void setObservedGames(GameEntity observedGame) {
 		this.observedGame = observedGame;
 	}
-	
-
-
 }

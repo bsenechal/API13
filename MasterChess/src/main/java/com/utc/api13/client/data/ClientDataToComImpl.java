@@ -11,7 +11,6 @@ import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.AUserEntity;
 
 /**
  * @author Benoît
@@ -51,7 +50,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 * com.utc.api13.client.data.interfaces.IClientToComm#displayUsersList()
 	 */
 	@Override
-	public void displayUsersList(List<AUserEntity> connectedUserList) {
+	public void displayUsersList(List<PublicUserEntity> connectedUserList) {
 	    // TODO Auto-generated method stub
 	}
 

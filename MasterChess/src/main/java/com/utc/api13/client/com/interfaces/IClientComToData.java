@@ -10,23 +10,23 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 
 public interface IClientComToData {
 
-	public boolean connectAsObserver(UUID game_id);
+	public void connectAsObserver(UUID game_id);
 
-	public List<PublicUserEntity> getUsers();
+	public void getUsers();
 	
 	public void notifyConnection(PublicUserEntity pubUser);
 	
-	public boolean validateMove(UUID idPlayer, MoveEntity move);
+	public void validateMove(UUID idPlayer, MoveEntity move);
 
 	public void sendUserUpdates(PublicUserEntity user);
 
-	public boolean pushReplayToServer(PublicUserEntity user, GameEntity game);
+	public void pushReplayToServer(PublicUserEntity user, GameEntity game);
 
 	public void sendProposition(PublicUserEntity player);
 
-	public boolean sendAnswer(String answer, PublicUserEntity sender);
+	public void sendAnswer(String answer, PublicUserEntity sender);
 
-	public boolean surrender(UUID uid);
+	public void surrender(UUID uid);
 
 	public void victoryBySurrender(UUID uid);
 
@@ -38,7 +38,7 @@ public interface IClientComToData {
 
 	public void sendTextChat(String text, UUID idPartie);
 
-	public List<GameEntity> getAllParties();
+	public void getAllParties();
 
 	public void observerLeave(UUID uid);
 
