@@ -3,7 +3,6 @@
  */
 package com.utc.api13.client.data;
 
-import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -51,7 +50,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * List)
 	 */
 	@Override
-	public void getUsers(List<PublicUserEntity> users) {
+	public void getUsers() {
 		// TODO Auto-generated method stub
 
 	}
@@ -64,9 +63,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * UUID)
 	 */
 	@Override
-	public PublicUserEntity getUserInfo(UUID iduser) {
-		// TODO Auto-generated method stub
-		return null;
+	public void getUserInfo(final UUID iduser) {
 	}
 
 	/*

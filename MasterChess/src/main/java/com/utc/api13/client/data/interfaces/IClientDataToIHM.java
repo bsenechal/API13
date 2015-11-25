@@ -1,6 +1,5 @@
 package com.utc.api13.client.data.interfaces;
 
-import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -16,9 +15,9 @@ import javafx.collections.ObservableSet;
 
 public interface IClientDataToIHM {
     
-    public void getUsers(List <PublicUserEntity> users);
+    public void getUsers();
     
-    public PublicUserEntity getUserInfo(UUID iduser);
+    public void getUserInfo(final UUID iduser);
     
     public void getAllGames();
     
