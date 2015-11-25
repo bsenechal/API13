@@ -11,7 +11,7 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
-import javafx.collections.ObservableSet;
+import javafx.collections.ObservableList;
 
 
 public interface IClientDataToIHM {
@@ -65,7 +65,7 @@ public interface IClientDataToIHM {
     
     public void sendChatText(String message);
 
-    public ObservableSet<PublicUserEntity> getUserList();
+    public ObservableList<PublicUserEntity> getUserList();
     
     public void createProfil(String login, String firstName, String lastName) throws FunctionalException, TechnicalException;
 }

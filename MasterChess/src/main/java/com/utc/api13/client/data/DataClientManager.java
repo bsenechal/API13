@@ -24,7 +24,7 @@ public class DataClientManager {
 	private IClientComToData iClientComToData;
 	private IClientIHMToData iClientIHMToData;
 	private PrivateUserEntity userLocal;
-	private ObservableList<AUserEntity> currentUsers;
+	private ObservableList<PublicUserEntity> currentUsers;
 	private ObservableList<GameEntity> currentGames;
 	/**
 	 * 
@@ -66,13 +66,13 @@ public class DataClientManager {
 	/**
 	 * @return the currentUsers
 	 */
-	public ObservableList<AUserEntity> getCurrentUsers() {
+	public ObservableList<PublicUserEntity> getCurrentUsers() {
 		return currentUsers;
 	}
 	/**
 	 * @param currentUsers the currentUsers to set
 	 */
-	public void setCurrentUsers(ObservableList<AUserEntity> currentUsers) {
+	public void setCurrentUsers(ObservableList<PublicUserEntity> currentUsers) {
 		this.currentUsers = currentUsers;
 	}
 	/**

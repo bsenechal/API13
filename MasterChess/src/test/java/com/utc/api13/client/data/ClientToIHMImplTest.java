@@ -9,6 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
+
+import javafx.collections.ObservableList;
 
 /**
  * @author Benoît
@@ -23,6 +26,7 @@ public class ClientToIHMImplTest {
 	@Before
 	public void setUp() throws Exception {
 		dataClientManager = new DataClientManager();
+		dataClientManager.getCurrentUsers().add(new PublicUserEntity());
 	}
 
 	/**
@@ -41,5 +45,10 @@ public class ClientToIHMImplTest {
 		Assert.assertNotNull("dataClientManager shouldn't be null", dataClientManager);
 		Assert.assertNull("UserLocal should be null", dataClientManager.getUserLocal());
 	}
+	
+	@Test
+    public void getUserListTest() {
+		Assert.assertNotNull("The list shouldn't be null", dataClientManager.getClientDataToIHMImpl().getUserList());
+    }
 
 }
