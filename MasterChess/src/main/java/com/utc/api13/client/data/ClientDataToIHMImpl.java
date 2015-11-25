@@ -16,7 +16,7 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
-import javafx.collections.ObservableSet;
+import javafx.collections.ObservableList;
 
 /**
  * @author Benoît
@@ -37,9 +37,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      * List)
      */
     @Override
-    public ObservableSet<PublicUserEntity> getUserList() {
-//        return instanceDataClientManager.getUserList();
-    	return null;
+    public ObservableList<PublicUserEntity> getUserList() {
+        return dataClientManager.getCurrentUsers();
     }
 
 
