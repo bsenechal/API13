@@ -6,18 +6,17 @@ package com.utc.api13.client.data;
 import java.util.List;
 import java.util.UUID;
 
-import javafx.collections.ObservableSet;
-
 import com.utc.api13.client.data.entities.PrivateUserEntity;
-import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
+
+import javafx.collections.ObservableSet;
 
 /**
  * @author Benoît
@@ -38,7 +37,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      * List)
      */
     @Override
-    public ObservableSet<AUserEntity> getUserList() {
+    public ObservableSet<PublicUserEntity> getUserList() {
 //        return instanceDataClientManager.getUserList();
     	return null;
     }
@@ -52,7 +51,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * List)
 	 */
 	@Override
-	public void getUsers(List<AUserEntity> users) {
+	public void getUsers(List<PublicUserEntity> users) {
 		// TODO Auto-generated method stub
 
 	}
@@ -195,7 +194,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * api13.commun.entities.UserEntity)
 	 */
 	@Override
-	public void updateProfil(AUserEntity user) {
+	public void updateProfil(PublicUserEntity user) {
 		// TODO Auto-generated method stub
 
 	}

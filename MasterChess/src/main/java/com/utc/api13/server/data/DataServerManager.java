@@ -6,7 +6,6 @@ package com.utc.api13.server.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.server.com.interfaces.IServeurComToData;

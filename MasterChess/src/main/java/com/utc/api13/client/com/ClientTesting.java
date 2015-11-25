@@ -24,7 +24,7 @@ public class ClientTesting {
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
-			//manager.close();
+			manager.close();
 		}
 	}
 

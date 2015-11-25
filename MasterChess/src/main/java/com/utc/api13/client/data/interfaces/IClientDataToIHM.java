@@ -3,21 +3,20 @@ package com.utc.api13.client.data.interfaces;
 import java.util.List;
 import java.util.UUID;
 
-import javafx.collections.ObservableSet;
-
+import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.client.data.entities.PrivateUserEntity;
-import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
+
+import javafx.collections.ObservableSet;
 
 
 public interface IClientDataToIHM {
     
-    public void getUsers(List <AUserEntity> users);
+    public void getUsers(List <PublicUserEntity> users);
     
     public PublicUserEntity getUserInfo(UUID iduser);
     
@@ -48,7 +47,7 @@ public interface IClientDataToIHM {
     
     public void notify (String message);
     
-    public void updateProfil (AUserEntity user);
+    public void updateProfil (PublicUserEntity user);
     
     public void watchGame (String idGame);
     
@@ -66,7 +65,7 @@ public interface IClientDataToIHM {
     
     public void sendChatText(String message);
 
-    public ObservableSet<AUserEntity> getUserList();
+    public ObservableSet<PublicUserEntity> getUserList();
     
     public void createProfil(String login, String firstName, String lastName) throws FunctionalException, TechnicalException;
 }

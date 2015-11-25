@@ -30,12 +30,10 @@ public class ServerDataToComImpl implements IServerDataToCom {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.utc.api13.server.data.interfaces.IServerToComm#getUserInfo(java.util.UUID)
-	 */
+	
 	@Override
 	public PublicUserEntity getUserInfo(UUID idUser) {
-	    return dataServerManager.getCurrentUsers().stream().filter(u -> u.getId().equals(idUser)).findFirst().get();
+	    return dataServerManager.getCurrentUsers().stream().filter(u -> u.getId().equals(idUser)).findFirst().orElse(null);
 	}
 
 	/* (non-Javadoc)

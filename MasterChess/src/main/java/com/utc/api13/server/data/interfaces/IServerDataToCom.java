@@ -6,12 +6,16 @@ import java.util.UUID;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 public interface IServerDataToCom {
     public List<PublicUserEntity> getUsers();
+    /**
+     * Returns the user with the given UUID
+     * @param idUser UUID of the user
+     * @return the found user or null when not founded
+     */
     public PublicUserEntity getUserInfo(final UUID idUser);
     public List<GameEntity> getAllGames();
     public void notifyConnections (final PublicUserEntity Player);

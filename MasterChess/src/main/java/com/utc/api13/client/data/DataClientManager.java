@@ -4,8 +4,6 @@
 package com.utc.api13.client.data;
 
 
-import java.util.UUID;
-
 import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
