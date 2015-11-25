@@ -51,8 +51,15 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 */
 	@Override
 	public void displayUsersList(List<PublicUserEntity> connectedUserList) {
+		connectedUserList.forEach(u -> {
+			if(u.getId().equals(instanceDataClientManager.getUserLocal().getId())){
+				connectedUserList.remove(u);
+			}
+		});
+	
 		instanceDataClientManager.getCurrentUsers().clear();
 		instanceDataClientManager.getCurrentUsers().addAll(connectedUserList);
+		
 	}
 
 	/*

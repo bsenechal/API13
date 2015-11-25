@@ -54,7 +54,13 @@ public interface IClientDataToIHM {
     
     public void beginReplay();
     
-    public void saveGame();
+    /**
+     * Saves the current game into storage
+     * @throws TechnicalException technical error
+     * @throws FunctionalException validation exception
+     */
+    public void saveGame() throws TechnicalException, FunctionalException;
+    
     
     public GameEntity getCurrentGame();
     
@@ -62,9 +68,13 @@ public interface IClientDataToIHM {
     
     public void surrender();
     
+    /**
+     * Sends message for chat
+     * @param message message to send
+     */
     public void sendChatText(String message);
 
     public ObservableList<PublicUserEntity> getUserList();
     
-    public void createProfil(String login, String firstName, String lastName) throws FunctionalException, TechnicalException;
+  	public void createProfile(PrivateUserEntity user) throws FunctionalException, TechnicalException;
 }
