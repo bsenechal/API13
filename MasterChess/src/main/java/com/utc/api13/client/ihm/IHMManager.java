@@ -2,12 +2,6 @@ package com.utc.api13.client.ihm;
 
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-
 public class IHMManager {
 
 	private IClientDataToIHM myIClientToIHM ;
@@ -16,7 +10,7 @@ public class IHMManager {
 	
 	public IHMManager () 
 	{
-		myClientIHMToDataImpl = new ClientIHMToDataImpl(this);
+		this.myClientIHMToDataImpl = new ClientIHMToDataImpl(this);
 	}
 	
 	

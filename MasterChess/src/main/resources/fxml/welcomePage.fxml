@@ -35,7 +35,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Text fx:id="userLabel" layoutX="409.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ConnectedPlayerLogin">
+                  <Text fx:id="userLabel" layoutX="409.0" layoutY="35.0" onMouseClicked="#onMyInfoClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="ConnectedPlayerLogin">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -84,7 +84,7 @@
                                  </font>
                               </Label>
                               <ScrollBar fx:id="currentGamesScrollbar" layoutX="450.0" layoutY="2.0" orientation="VERTICAL" prefHeight="262.0" prefWidth="14.0" /> 
-                              <ImageView fx:id="infoTest" fitHeight="33.0" fitWidth="26.0" layoutX="183.0" layoutY="15.0" onMouseClicked="#superTest" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="infoTest" fitHeight="33.0" fitWidth="26.0" layoutX="183.0" layoutY="15.0" onMouseClicked="#onUserInfoClicked" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../pictures/Icone-info.png" />
                                  </image>

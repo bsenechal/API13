@@ -33,7 +33,6 @@ public class ComServerManager {
 	public ComServerManager(int port){
 		this.port = port;
 		this.serverToDataImpl = new ServeurComToDataImpl(this);
-
 	}
 	
 	public void run() throws InterruptedException{
