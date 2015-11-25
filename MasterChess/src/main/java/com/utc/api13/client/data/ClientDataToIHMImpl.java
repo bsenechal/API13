@@ -50,8 +50,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 */
 	@Override
 	public void getUsers() {
-		// TODO Auto-generated method stub
-
+		dataClientManager.getIClientComToData().getUsers();
 	}
 
 	/*
