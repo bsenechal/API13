@@ -131,8 +131,6 @@ public class IHMWelcomePageController {
 		this.mainApp = app;
 	}
 
-	private ObservableList<AUserEntity> observableListConnectedUser = FXCollections.observableArrayList(); 
-
 	public void setControllerContext(IHMManager ihmManager) {
 		this.IHMManager = ihmManager;
 		if (ihmManager != null)
@@ -144,20 +142,20 @@ public class IHMWelcomePageController {
 	public void setListenersOnLoad() {
 		// Demande de la liste des users
 		// -------------------------------
-		observableListConnectedUser.addListener
+		myIClientToIHM.getUserList().addListener // add listener on observableList in DATA
 		(
 				new ListChangeListener<AUserEntity>() 
 				{
 					@Override
 					public void onChanged(javafx.collections.ListChangeListener.Change<? extends AUserEntity> c) 
 					{
-						connectedUserTable.setItems(observableListConnectedUser);
+						System.out.println(myIClientToIHM.getUserList().toString());
+						connectedUserTable.setItems(myIClientToIHM.getUserList());
 					}
 				}
 		 );
+		myIClientToIHM.getUsers(); // ask for list of user to DATA
 
-		setBouchon(); // a retirer lorsque data OK et remplacer l'objet du listener
-		
 		// Demande de la liste des jeux
 		// -------------------------------
 		/*SetChangeListener<GameEntity> currentGamesListListener;
@@ -203,8 +201,8 @@ public class IHMWelcomePageController {
 		userEntity2.setStatus(false);
 		userEntity2.setNbPlayed(267);
         userEntity2.setNbWon(123);
-        observableListConnectedUser.add(userEntity1);
-        observableListConnectedUser.add(userEntity2);
+        //observableListConnectedUser.add(userEntity1);
+        //observableListConnectedUser.add(userEntity2);
 		/*END Bouchon*/
 	}
 }
