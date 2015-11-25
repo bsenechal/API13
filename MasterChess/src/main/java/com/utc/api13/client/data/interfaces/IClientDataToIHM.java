@@ -55,7 +55,12 @@ public interface IClientDataToIHM {
     
     public void beginReplay();
     
-    public void saveGame();
+    /**
+     * Saves the current game into storage
+     * @throws TechnicalException technical error
+     * @throws FunctionalException validation exception
+     */
+    public void saveGame() throws TechnicalException, FunctionalException;
     
     public GameEntity getCurrentGame();
     

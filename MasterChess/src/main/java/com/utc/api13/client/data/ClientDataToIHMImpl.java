@@ -247,20 +247,14 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#saveGame()
 	 */
 	@Override
-	public void saveGame() {
-		// TODO Auto-generated method stub
+	public void saveGame() throws TechnicalException, FunctionalException {
+		gameService.save(dataClientManager.getCurrentGame());
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#getCurrentGame()
-	 */
 	@Override
 	public GameEntity getCurrentGame() {
-		// TODO Auto-generated method stub
-		return null;
+		return dataClientManager.getCurrentGame();
 	}
 
 	/*
