@@ -24,7 +24,6 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 */
 	@Override
 	public List<PublicUserEntity> getUsers() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -49,9 +48,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#notifyConnections(com.utc.api13.commun.entities.UserEntity)
 	 */
 	@Override
-	public void notifyConnections(PublicUserEntity Player) {
-		// TODO Auto-generated method stub
-
+	public void notifyConnections(final PublicUserEntity player) {
+		dataServerManager.getCurrentUsers().add(player);
 	}
 
 	/* (non-Javadoc)
@@ -95,7 +93,6 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 */
 	@Override
 	public void saveUserData(final PublicUserEntity User) {
-		System.out.println("Ajout de l'utilisateur " + User);
 		dataServerManager.getCurrentUsers().add(User);
 	}
 
@@ -122,8 +119,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 */
 	@Override
 	public List<PublicUserEntity> getConnectedUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return dataServerManager.getCurrentUsers();
 	}
 
 	/* (non-Javadoc)

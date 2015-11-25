@@ -28,7 +28,7 @@ public interface IClientDataToIHM {
      * @throws FunctionalException exception when login or password are incorrect
      * @throws TechnicalException technical exception
      */
-    public void connect(String login, String password) throws FunctionalException, TechnicalException;
+    public void connect(final String login, final String password) throws FunctionalException, TechnicalException;
     
     public void disconnect();
     
