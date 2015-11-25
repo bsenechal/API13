@@ -187,22 +187,4 @@ public class IHMWelcomePageController {
 		connectedUserStatus.setCellValueFactory(new PropertyValueFactory<AUserEntity, String>("Status"));
 		connectedUserStat.setCellValueFactory(new PropertyValueFactory<AUserEntity, String>("NbWon"));
 	}
-	
-	public void setBouchon() {
-		/*bouchon => ajouter setListConnectedUser() sur un listener de bouton pour test temporaire*/
-		AUserEntity userEntity1 = new PublicUserEntity();
-		AUserEntity userEntity2= new PublicUserEntity();
-		userEntity1.setLogin("login1");
-		userEntity1.setStatus(true);
-		userEntity1.setNbPlayed(20);
-        userEntity1.setNbWon(12);
-		userEntity2.setLogin("login2");
-		userEntity2.setStatus(false);
-		userEntity2.setNbPlayed(267);
-        userEntity2.setNbWon(123);
-        //observableListConnectedUser.add(userEntity1);
-        //observableListConnectedUser.add(userEntity2);
-		/*END Bouchon*/
-	}
 }
-

@@ -3,7 +3,6 @@ package com.utc.api13.client;
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.ihm.IHMManager;
-import com.utc.api13.client.ihm.controllers.IHMConnexionPageController;
 import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
 
 import javafx.application.Application;
@@ -36,7 +35,8 @@ public class AppClient extends Application {
 
 		ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
 		comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
-		comClientManager.launchAppCom("172.25.2.106", 8000);
+
+		comClientManager.launchAppCom("localhost", 8000);
 		
 		/**
 		 * >>>>>>>>>>>>>>>>>>>>>>>
@@ -62,10 +62,7 @@ public class AppClient extends Application {
 		/**
 		 * >>>>>>>>>>>>>>>>>>>>>>>
 		 */
-		
-		// TODO : Faire une vrai gestion d'erreur
-		//comClientManager.close();
-		
+	
 	}
 
 	// private static final Logger LOGGER = Logger.getLogger(AppClient.class);
@@ -74,5 +71,4 @@ public class AppClient extends Application {
 		launch(args);
 
 	}
-
 }
