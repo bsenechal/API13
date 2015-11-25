@@ -315,5 +315,4 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public void createProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException{
         userService.save(user);
     }
-
 }
