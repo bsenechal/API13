@@ -44,7 +44,7 @@ public class IHMConnexionPageController {
 		System.out.println(login); 
 		String pw=passwordTextView.getText(); 
 		System.out.println(pw); 
-		myIClientToIHM.connect(login, pw); //à tester à l'intégration
+		//myIClientToIHM.connect(login, pw); à tester à l'intégration
 		
 		Stage stage; 
 		Parent root;
