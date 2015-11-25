@@ -94,9 +94,9 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#saveUserData(com.utc.api13.commun.entities.UserEntity)
 	 */
 	@Override
-	public void saveUserData(PublicUserEntity User) {
+	public void saveUserData(final PublicUserEntity User) {
+		System.out.println("Ajout de l'utilisateur " + User);
 		dataServerManager.getCurrentUsers().add(User);
-
 	}
 
 	/* (non-Javadoc)
