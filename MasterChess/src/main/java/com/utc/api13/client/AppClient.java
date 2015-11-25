@@ -4,7 +4,6 @@ import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.controllers.IHMConnexionPageController;
-import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
