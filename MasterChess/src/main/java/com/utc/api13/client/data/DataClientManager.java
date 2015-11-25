@@ -7,8 +7,8 @@ package com.utc.api13.client.data;
 import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
-import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 
 import javafx.collections.FXCollections;
@@ -24,8 +24,13 @@ public class DataClientManager {
 	private IClientComToData iClientComToData;
 	private IClientIHMToData iClientIHMToData;
 	private PrivateUserEntity userLocal;
-	private ObservableList<AUserEntity> currentUsers;
+	private ObservableList<PublicUserEntity> currentUsers;
 	private ObservableList<GameEntity> currentGames;
+	/**
+	 * The game the user is playing or observing
+	 */
+	private GameEntity currentGame;
+	
 	/**
 	 * 
 	 * @return clientDataToComImpl
@@ -54,7 +59,7 @@ public class DataClientManager {
 	/**
 	 * @return the userLocal
 	 */
-	public AUserEntity getUserLocal() {
+	public PrivateUserEntity getUserLocal() {
 		return userLocal;
 	}
 	/**
@@ -66,13 +71,13 @@ public class DataClientManager {
 	/**
 	 * @return the currentUsers
 	 */
-	public ObservableList<AUserEntity> getCurrentUsers() {
+	public ObservableList<PublicUserEntity> getCurrentUsers() {
 		return currentUsers;
 	}
 	/**
 	 * @param currentUsers the currentUsers to set
 	 */
-	public void setCurrentUsers(ObservableList<AUserEntity> currentUsers) {
+	public void setCurrentUsers(ObservableList<PublicUserEntity> currentUsers) {
 		this.currentUsers = currentUsers;
 	}
 	/**
@@ -112,6 +117,22 @@ public class DataClientManager {
 	public void setIClientIHMToData(IClientIHMToData iClientIHMToData) {
 		this.iClientIHMToData = iClientIHMToData;
 	}
+	
+	/**
+	 * 
+	 * @return Returns the current game the local user is playing or observing
+	 */
+	public GameEntity getCurrentGame() {
+		return currentGame;
+	}
+	
+	/**
+	 * Set the game the user is playing or observing
+	 * @param currentGame current game
+	 */
+	public void setCurrentGame(GameEntity currentGame) {
+		this.currentGame = currentGame;
+	}
 	/**
 	 * @param clientDataToComImpl
 	 * @param clientDataToIHMImpl
@@ -127,32 +148,7 @@ public class DataClientManager {
 		this.iClientIHMToData = null;
 		this.iClientComToData = null;
 		this.userLocal = new PrivateUserEntity();
-		this.currentUsers = FXCollections.emptyObservableList();
-		this.currentGames = FXCollections.emptyObservableList();
-		// => Doesn't work :)
-		// this.setBouchonPierre();
-	}
-	
-	/*********************************************************
-	 * *****************  WARNING  ***************************
-	 * *******************************************************
-	 * 
-	 * To delete asap
-	 */
-	private void setBouchonPierre(){
-	    for (int i = 0 ; i < 10 ; i++){
-	    	PublicUserEntity userEntity = new PublicUserEntity();
-            userEntity.setFirstName("firstName" + i);
-            userEntity.setLastName("lastName" + i);
-            userEntity.setLogin("login" + i);
-            userEntity.setNbLost((int) Math.random());
-            userEntity.setNbPlayed((int) Math.random());
-            userEntity.setNbWon((int) Math.random());
-            userEntity.setStatus((i % 2 == 0) ? true : false);
-            //A pierre : NULL POINT EXCEPTION : currentUsers is null man !
-            //this.currentUsers.add(userEntity);
-        }
-	}
-
-	
+		this.currentUsers = FXCollections.observableArrayList();
+		this.currentGames = FXCollections.observableArrayList();
+	}	
 }
