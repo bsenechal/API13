@@ -52,7 +52,7 @@ public abstract class ADataService<T extends ADataEntity> {
 		validateInstance(entity);
 		validateInstanceForUpdate(entity);
 		Map<Boolean, List<T>> map = getAll().stream().collect(Collectors.partitioningBy(e -> e.getId().equals(entity.getId())));
-		if(map.get(true) == null) {
+		if(map.get(true) == null || map.get(true).isEmpty()) {
 			throw new TechnicalException("Entity cannot be updated: It has not been created yet");
 		}		
 		entity.setId(map.get(true).get(0).getId());

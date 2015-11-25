@@ -3,6 +3,9 @@
  */
 package com.utc.api13.client.data;
 
+
+import java.util.UUID;
+
 import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
@@ -148,7 +151,8 @@ public class DataClientManager {
             userEntity.setNbPlayed((int) Math.random());
             userEntity.setNbWon((int) Math.random());
             userEntity.setStatus((i % 2 == 0) ? true : false);
-            this.currentUsers.add(userEntity);
+            //A pierre : NULL POINT EXCEPTION : currentUsers is null man !
+            //this.currentUsers.add(userEntity);
         }
 	}
 

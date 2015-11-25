@@ -2,42 +2,37 @@ package com.utc.api13.client.data.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.Erreur;
 import com.utc.api13.commun.dao.UserDAO;
 import com.utc.api13.commun.dao.interfaces.IGenericDAO;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.enumerations.ErrorTypeEnum;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
-import com.utc.api13.commun.utils.ImageUtils;
 
-public class UserService extends ADataService<AUserEntity> {
+public class UserService extends ADataService<PrivateUserEntity> {
 
-	@Override
-	protected void validateInstance(AUserEntity entity) throws TechnicalException, FunctionalException {
-		// TODO Auto-generated method stub
-		
+	private IClientComToData comInterface;
+	public UserService(IClientComToData comInterface){
+		this.comInterface = comInterface;
 	}
 	
 	public void connect(String login, String password) throws FunctionalException, TechnicalException{
-		Optional<AUserEntity> user = getByLoginAndPassword(login, password);
+		PrivateUserEntity user = getByLoginAndPassword(login, password);
 		if(user == null) {
 			List<Erreur> erreurs = new ArrayList<>();
 			erreurs.add(new Erreur(ErrorTypeEnum.LOGIN_FAILED));
 			throw new FunctionalException(erreurs);
 		}
 		
-		PrivateUserEntity privateUser = (PrivateUserEntity) user.get();
+		PrivateUserEntity privateUser = (PrivateUserEntity) user;
 		//Create a public user from the private user
-		PublicUserEntity publicUser = (PublicUserEntity) user.get();
-		//extract bytes from image
-		publicUser.setImage(ImageUtils.extractBytes(privateUser.getImagePath()));
+		PublicUserEntity publicUser = new PublicUserEntity(privateUser);
 		//notify the com module
-		//TODO: interfaceFromCom.notifyConnection(userPublic)
+		comInterface.notifyConnection(publicUser);
 	}
 	
 	/**
@@ -47,13 +42,19 @@ public class UserService extends ADataService<AUserEntity> {
 	 * @throws FunctionalException when login and/or password are not valid
 	 * @throws TechnicalException technical exception
 	 */
-	public Optional<AUserEntity> getByLoginAndPassword(String login, String password) throws TechnicalException{
-		return getAll().stream().filter(entity -> entity instanceof PrivateUserEntity).filter(entity -> entity.getLogin().equals(login) && ((PrivateUserEntity)entity).getPassword().equals(password)).findFirst();
+	public PrivateUserEntity getByLoginAndPassword(String login, String password) throws TechnicalException{
+		return getAll().stream().filter(entity -> entity instanceof PrivateUserEntity).filter(entity -> entity.getLogin().equals(login) && ((PrivateUserEntity)entity).getPassword().equals(password)).findFirst().orElse(null);
 	}
 
 
 	@Override
-	protected IGenericDAO<AUserEntity> getDao() throws TechnicalException {
+	protected IGenericDAO<PrivateUserEntity> getDao() throws TechnicalException {
 		return new UserDAO();
+	}
+
+	@Override
+	protected void validateInstance(PrivateUserEntity entity) throws TechnicalException, FunctionalException {
+	
+		
 	}
 }

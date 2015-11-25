@@ -9,20 +9,26 @@ import java.util.UUID;
 import javafx.collections.ObservableSet;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.AUserEntity;
+import com.utc.api13.commun.exceptions.FunctionalException;
+import com.utc.api13.commun.exceptions.TechnicalException;
 
 /**
  * @author Benoît
  *
  */
 public class ClientDataToIHMImpl implements IClientDataToIHM {
-    DataClientManager dataClientManager;
-    
+    private DataClientManager dataClientManager;
+    /**
+     * Service des users
+     */
+    private UserService userService;
     
     /*
      * (non-Javadoc)
@@ -59,7 +65,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * UUID)
 	 */
 	@Override
-	public AUserEntity getUserInfo(UUID iduser) {
+	public PublicUserEntity getUserInfo(UUID iduser) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -75,15 +81,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#connect(java.lang.
-	 * String, java.lang.String)
-	 */
 	@Override
-	public void connect(String login, String password) {
-		// TODO Auto-generated method stub
+	public void connect(String login, String password) throws FunctionalException, TechnicalException {
+		userService.connect(login, password);
+		dataClientManager.setUserLocal(userService.getByLoginAndPassword(login, password));
 
 	}
 
@@ -299,6 +300,26 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
         super();
         this.dataClientManager = instanceDataClientManager;
+        this.userService = new UserService(dataClientManager.getIClientComToData());
+    }
+    
+    
+    /**
+     * @param the login and the password of the profil to create
+     * @throws FunctionalException 
+     * @throws TechnicalException 
+     */
+    @Override
+    public void createProfil(String login, String firstName, String lastName) throws TechnicalException, FunctionalException{
+        PrivateUserEntity newUser = new PrivateUserEntity();
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        newUser.setLogin(login);
+        newUser.setNbLost(0);
+        newUser.setNbPlayed(0);
+        newUser.setNbWon(0);
+        userService.save(newUser);
+
     }
 
 }
