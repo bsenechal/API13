@@ -11,7 +11,12 @@ public class ServeurComToDataImpl implements IServeurComToData {
 
 	ComServerManager comServerManagerInstance;
 	
-	
+	/*****************************************************************/
+	/*****************************************************************/
+	// on a plus besoin de cette classe, ne rien modifier SVP
+	// Xiaowei ZHANG
+	/*****************************************************************/
+	/*****************************************************************/
 	
 	/**
 	 * @param comServerManagerInstance
