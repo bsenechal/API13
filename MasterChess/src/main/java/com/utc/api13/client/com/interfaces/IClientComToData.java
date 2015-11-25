@@ -17,7 +17,7 @@ public interface IClientComToData {
 	
 	public void notifyConnection(PublicUserEntity pubUser);
 	
-	public void disconnect(UUID sender, UUID reciever, boolean chattable, boolean observable);
+	public void disconnect(UUID sender);
 	
 	public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, PublicUserEntity user);
 	
@@ -54,5 +54,7 @@ public interface IClientComToData {
 	public ComClientManager getComClientManagerInstance();
 
 	public void setComClientManagerInstance(ComClientManager comClientManagerInstance);
+
+	
 
 }

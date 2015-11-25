@@ -2,12 +2,15 @@ package com.utc.api13.client.com;
 
 import java.util.UUID;
 
+import org.junit.rules.DisableOnDebug;
+
 import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.messages.AllUserMessage;
 import com.utc.api13.commun.messages.ConnectMessage;
+import com.utc.api13.commun.messages.DisconnectMessage;
 
 public class ClientComToDataImpl implements IClientComToData {
 
@@ -148,8 +151,8 @@ public class ClientComToDataImpl implements IClientComToData {
 
 
 	@Override
-	public void disconnect(UUID sender, UUID reciever, boolean chattable, boolean observable) {
-		// TODO Auto-generated method stub
+	public void disconnect(UUID pubUser) {
+		comClientManagerInstance.sendMessage(new DisconnectMessage(pubUser ,new UUID(0, 0), pubUser));
 		
 	}
 
