@@ -279,7 +279,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 */
 	@Override
 	public void displayMessage(String message) {
-		// TODO Auto-generated method stub
+		// TODO: appeler la méthode displayMessage de IHM
 
 	}
 

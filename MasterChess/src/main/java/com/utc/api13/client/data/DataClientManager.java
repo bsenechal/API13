@@ -27,6 +27,10 @@ public class DataClientManager {
 	private ObservableList<AUserEntity> currentUsers;
 	private ObservableList<GameEntity> currentGames;
 	/**
+	 * The game the user is playing or observing
+	 */
+	private GameEntity currentGame;
+	/**
 	 * 
 	 * @return clientDataToComImpl
 	 */
@@ -111,6 +115,22 @@ public class DataClientManager {
 	 */
 	public void setIClientIHMToData(IClientIHMToData iClientIHMToData) {
 		this.iClientIHMToData = iClientIHMToData;
+	}
+	
+	/**
+	 * 
+	 * @return Returns the current game the local user is playing or observing
+	 */
+	public GameEntity getCurrentGame() {
+		return currentGame;
+	}
+	
+	/**
+	 * Set the game the user is playing or observing
+	 * @param currentGame current game
+	 */
+	public void setCurrentGame(GameEntity currentGame) {
+		this.currentGame = currentGame;
 	}
 	/**
 	 * @param clientDataToComImpl

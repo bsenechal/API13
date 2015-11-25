@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+import com.utc.api13.client.data.services.GameService;
 import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
@@ -25,9 +26,14 @@ import javafx.collections.ObservableSet;
 public class ClientDataToIHMImpl implements IClientDataToIHM {
     private DataClientManager dataClientManager;
     /**
-     * Service des users
+     * users service
      */
     private UserService userService;
+    
+    /**
+     * 
+     */
+    private GameService gameService;
     
     /*
      * (non-Javadoc)
@@ -282,16 +288,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#sendChatText(java.lang.
-	 * String)
-	 */
+
 	@Override
 	public void sendChatText(String message) {
-		// TODO Auto-generated method stub
+		dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
 
 	}
 
@@ -300,6 +300,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         super();
         this.dataClientManager = instanceDataClientManager;
         this.userService = new UserService(dataClientManager.getIClientComToData());
+        this.gameService = new GameService(dataClientManager.getIClientComToData());
     }
     
     

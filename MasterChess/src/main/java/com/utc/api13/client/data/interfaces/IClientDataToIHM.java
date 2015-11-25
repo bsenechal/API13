@@ -63,6 +63,10 @@ public interface IClientDataToIHM {
     
     public void surrender();
     
+    /**
+     * Sends message for chat
+     * @param message message to send
+     */
     public void sendChatText(String message);
 
     public ObservableSet<PublicUserEntity> getUserList();
