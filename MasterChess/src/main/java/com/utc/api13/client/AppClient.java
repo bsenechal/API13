@@ -60,7 +60,7 @@ public class AppClient extends Application {
 		 */
 		
 		// TODO : Faire une vrai gestion d'erreur
-		comClientManager.close();
+		// comClientManager.close();
 		
 	}
 
