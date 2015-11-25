@@ -49,3 +49,4 @@ public class ClientToIHMImplTest {
 		Assert.assertNotNull("The list shouldn't be null", dataClientManager.getClientDataToIHMImpl().getUserList());
     }
 }
+
