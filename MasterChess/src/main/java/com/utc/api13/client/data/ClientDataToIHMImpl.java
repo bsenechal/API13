@@ -3,7 +3,6 @@
  */
 package com.utc.api13.client.data;
 
-import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -16,7 +15,7 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
-import javafx.collections.ObservableSet;
+import javafx.collections.ObservableList;
 
 /**
  * @author Benoît
@@ -37,9 +36,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      * List)
      */
     @Override
-    public ObservableSet<PublicUserEntity> getUserList() {
-//        return instanceDataClientManager.getUserList();
-    	return null;
+    public ObservableList<PublicUserEntity> getUserList() {
+        return dataClientManager.getCurrentUsers();
     }
 
 
@@ -51,9 +49,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * List)
 	 */
 	@Override
-	public void getUsers(List<PublicUserEntity> users) {
-		// TODO Auto-generated method stub
-
+	public void getUsers() {
+		dataClientManager.getIClientComToData().getUsers();
 	}
 
 	/*
@@ -64,9 +61,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * UUID)
 	 */
 	@Override
-	public PublicUserEntity getUserInfo(UUID iduser) {
-		// TODO Auto-generated method stub
-		return null;
+	public void getUserInfo(final UUID iduser) {
 	}
 
 	/*
@@ -82,9 +77,12 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public void connect(String login, String password) throws FunctionalException, TechnicalException {
-		userService.connect(login, password);
-		dataClientManager.setUserLocal(userService.getByLoginAndPassword(login, password));
-
+//		userService.connect(login, password);
+		PublicUserEntity user = new PublicUserEntity(login, password);
+		
+//		dataClientManager.setUserLocal(userService.getByLoginAndPassword(login, password));
+		
+		dataClientManager.getIClientComToData().notifyConnection(user);
 	}
 
 	/*
