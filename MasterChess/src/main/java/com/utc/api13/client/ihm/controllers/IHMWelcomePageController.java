@@ -5,8 +5,7 @@ import java.io.IOException;
 import org.controlsfx.control.PopOver;
 
 import com.utc.api13.client.AppClient;
-import com.utc.api13.client.data.interfaces.IClientToIHM;
-import com.utc.api13.client.ihm.IHMFromDataImpl;
+import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
@@ -43,7 +42,7 @@ import javafx.stage.Stage;
 public class IHMWelcomePageController {
 	private IHMManager IHMManager;
 	private AppClient mainApp;
-	private IClientToIHM myIClientToIHM;
+	private IClientDataToIHM myIClientToIHM;
 
 	@FXML
 	BorderPane mainBorderPane;
@@ -137,7 +136,7 @@ public class IHMWelcomePageController {
 	public void setControllerContext(IHMManager ihmManager) {
 		this.IHMManager = ihmManager;
 		if (ihmManager != null)
-			this.myIClientToIHM = IHMManager.getClientToIHM();
+			this.myIClientToIHM = IHMManager.getIClientDataToIHM();
 		setListenersOnLoad();
 		setBindingsOnLoad();
 	}
@@ -209,3 +208,4 @@ public class IHMWelcomePageController {
 		/*END Bouchon*/
 	}
 }
+

@@ -31,11 +31,11 @@ public class AppClient extends Application {
 		ComClientManager comClientManager = new ComClientManager();
 
 		DataClientManager dataClientManager = new DataClientManager();
-		dataClientManager.setiClientToData(comClientManager.getClientToDataImpl());
-		dataClientManager.setiIHMFromData(ihmManager.getIHMFromDataImpl());
+		dataClientManager.setIClientComToData(comClientManager.getClientComToDataImpl());
+		dataClientManager.setIClientIHMToData(ihmManager.getClientIHMToDataImpl());
 
-		ihmManager.setClientToIHM(dataClientManager.getClientToIHMImpl());
-		comClientManager.setIClientToComm(dataClientManager.getClientToCommImpl());
+		ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
+		comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
 		comClientManager.launchAppCom("localhost", 8000);
 		
 		/**
@@ -47,9 +47,9 @@ public class AppClient extends Application {
 		 * <<<<<<<<<<<<<<<<<<<<<<<
 		 */
 		this.stage = stage;
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
 		Pane root = (Pane) fxmlLoader.load();
-		IHMConnexionPageController controller = fxmlLoader.getController();
+		IHMWelcomePageController controller = fxmlLoader.getController();
         controller.setMainApp(this);
         controller.setControllerContext(ihmManager);
 		Scene scene = new Scene(root, 800, 600);
@@ -73,4 +73,5 @@ public class AppClient extends Application {
 		launch(args);
 
 	}
+
 }

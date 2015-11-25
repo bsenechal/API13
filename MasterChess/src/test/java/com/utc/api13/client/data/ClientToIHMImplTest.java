@@ -36,7 +36,7 @@ public class ClientToIHMImplTest {
 	public void disconnectTest() {
 		dataClientManager.setUserLocal(new PrivateUserEntity());
 		
-		dataClientManager.getClientToIHMImpl().disconnect();
+		dataClientManager.getClientDataToIHMImpl().disconnect();
 		
 		Assert.assertNotNull("dataClientManager shouldn't be null", dataClientManager);
 		Assert.assertNull("UserLocal should be null", dataClientManager.getUserLocal());
