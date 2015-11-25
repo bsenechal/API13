@@ -23,7 +23,7 @@ public class AllUserMessage extends Message {
 	@Override
 	public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
 		if (users != null) {
-			comClientManager.getIClientToComm().displayUsersList(users);
+			comClientManager.getIClientDataToCom().displayUsersList(users);
 		}else{
 			logger.error("users is null");
 		}
@@ -31,7 +31,7 @@ public class AllUserMessage extends Message {
 
 	@Override
 	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-		users = comServerManager.getIServerToComm().getConnectedUsers();
+		users = comServerManager.getIServerDataToCom().getConnectedUsers();
 		comServerManager.sendMessage(ctx.channel(), this);
 	}
 
