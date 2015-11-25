@@ -27,6 +27,12 @@ public interface IServerDataToCom {
     public void newObserver(final int idGame, final UUID idUser);
     public void createReplay(final GameEntity game, final PublicUserEntity user);
     public List<PublicUserEntity> getConnectedUsers();
+    /**
+     * list of the Users (observers and players) connected to a specified Game
+     * @param idGame
+     * @return the list of found users or null if the game doesn't exist or an empty List<PublicUserEntity> if there are no players
+     */
+    public List<PublicUserEntity> getUsersByGame(final UUID idGame);
     public void surrender(final UUID idPlayer);
     public void disconnect(final UUID idUser);
 }
