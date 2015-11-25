@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-
 import javafx.collections.ObservableList;
 
 /**
@@ -19,7 +18,7 @@ import javafx.collections.ObservableList;
  */
 public class ClientToIHMImplTest {
 	private DataClientManager dataClientManager;
-	
+
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -39,9 +38,9 @@ public class ClientToIHMImplTest {
 	@Test
 	public void disconnectTest() {
 		dataClientManager.setUserLocal(new PrivateUserEntity());
-		
+
 		dataClientManager.getClientDataToIHMImpl().disconnect();
-		
+
 		Assert.assertNotNull("dataClientManager shouldn't be null", dataClientManager);
 		Assert.assertNull("UserLocal should be null", dataClientManager.getUserLocal());
 	}
@@ -50,5 +49,4 @@ public class ClientToIHMImplTest {
     public void getUserListTest() {
 		Assert.assertNotNull("The list shouldn't be null", dataClientManager.getClientDataToIHMImpl().getUserList());
     }
-
 }
