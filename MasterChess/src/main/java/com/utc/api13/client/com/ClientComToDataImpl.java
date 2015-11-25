@@ -28,21 +28,21 @@ public class ClientComToDataImpl implements IClientComToData {
 	}
 
 	@Override
-	public boolean connectAsObserver(UUID game_id) {
+	public void connectAsObserver(UUID game_id) {
 		// TODO Auto-generated method stub
-		return false;
+		return;
 	}
 	
 	@Override
-	public List<PublicUserEntity> getUsers() {
+	public void getUsers() {
 		// TODO Auto-generated method stub
-		return null;
+		return;
 	}
 	
 	@Override
-	public boolean validateMove(UUID idPlayer, MoveEntity move) {
+	public void validateMove(UUID idPlayer, MoveEntity move) {
 		// TODO Auto-generated method stub
-		return false;
+		return;
 	}
 
 	@Override
@@ -52,9 +52,9 @@ public class ClientComToDataImpl implements IClientComToData {
 	}
 
 	@Override
-	public boolean pushReplayToServer(PublicUserEntity user, GameEntity game) {
+	public void pushReplayToServer(PublicUserEntity user, GameEntity game) {
 		// TODO Auto-generated method stub
-		return false;
+		return;
 	}
 
 	@Override
@@ -63,15 +63,15 @@ public class ClientComToDataImpl implements IClientComToData {
 		
 	}
 	@Override
-	public boolean sendAnswer(String answer, PublicUserEntity sender) {
+	public void sendAnswer(String answer, PublicUserEntity sender) {
 		// TODO Auto-generated method stub
-		return false;
+		return;
 	}
 
 	@Override
-	public boolean surrender(UUID uid) {
+	public void surrender(UUID uid) {
 		// TODO Auto-generated method stub
-		return false;
+		return;
 	}
 
 	@Override
@@ -105,9 +105,9 @@ public class ClientComToDataImpl implements IClientComToData {
 	}
 
 	@Override
-	public List<GameEntity> getAllParties() {
+	public void getAllParties() {
 		// TODO Auto-generated method stub
-		return null;
+		return;
 	}
 
 	@Override
