@@ -298,21 +298,14 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     
     
     /**
+     * @author Lucie V
      * @param the login and the password of the profil to create
      * @throws FunctionalException 
      * @throws TechnicalException 
      */
     @Override
-    public void createProfil(String login, String firstName, String lastName) throws TechnicalException, FunctionalException{
-        PrivateUserEntity newUser = new PrivateUserEntity();
-        newUser.setFirstName(firstName);
-        newUser.setLastName(lastName);
-        newUser.setLogin(login);
-        newUser.setNbLost(0);
-        newUser.setNbPlayed(0);
-        newUser.setNbWon(0);
-        userService.save(newUser);
-
+    public void createProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException{
+        userService.save(user);
     }
 
 }

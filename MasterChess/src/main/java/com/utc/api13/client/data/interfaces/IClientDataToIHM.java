@@ -76,5 +76,5 @@ public interface IClientDataToIHM {
 
     public ObservableSet<PublicUserEntity> getUserList();
     
-    public void createProfil(String login, String firstName, String lastName) throws FunctionalException, TechnicalException;
+    public void createProfile(PrivateUserEntity user) throws FunctionalException, TechnicalException;
 }
