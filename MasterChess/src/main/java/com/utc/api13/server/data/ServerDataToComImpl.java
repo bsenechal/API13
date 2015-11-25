@@ -3,6 +3,7 @@
  */
 package com.utc.api13.server.data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -121,6 +122,33 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	public List<PublicUserEntity> getConnectedUsers() {
 		return dataServerManager.getCurrentUsers();
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.utc.api13.server.data.interfaces.IServerDataToCom#getUsersByGame(java.lang.String)
+	 */
+	public List<PublicUserEntity> getUsersByGame(final UUID idGame){
+		List<PublicUserEntity> listUsersByGame = new ArrayList<PublicUserEntity>();
+		//variable containing the corresponding idGame Game.
+		GameEntity gameFound;
+		
+		gameFound = dataServerManager.getCurrentGames().stream().filter(u -> u.getId().equals(idGame)).findFirst().orElse(null);
+		
+		if(gameFound.equals(null)){
+			//If the idGame doesn't exist on the server, the method sends back 'null'
+			return null;
+		}
+		else
+		{
+			//Else get all observer + two players
+			listUsersByGame.addAll(gameFound.getObservers());
+			listUsersByGame.add(gameFound.getBlackPlayer());
+			listUsersByGame.add(gameFound.getWhitePlayer());
+			return listUsersByGame;
+		}
+		
+		
+	};
+	
 
 	/* (non-Javadoc)
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#surrender(java.util.UUID)

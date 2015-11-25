@@ -111,7 +111,4 @@ public abstract class AUserEntity extends ADataEntity {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	
-
-
 }
