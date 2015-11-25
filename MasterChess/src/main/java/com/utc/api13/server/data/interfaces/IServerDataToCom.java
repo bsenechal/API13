@@ -28,6 +28,7 @@ public interface IServerDataToCom {
     public void createReplay(final GameEntity game, final PublicUserEntity user);
     public List<PublicUserEntity> getConnectedUsers();
     /**
+     * @author ulyss_000
      * list of the Users (observers and players) connected to a specified Game
      * @param idGame
      * @return the list of found users or null if the game doesn't exist or an empty List<PublicUserEntity> if there are no players

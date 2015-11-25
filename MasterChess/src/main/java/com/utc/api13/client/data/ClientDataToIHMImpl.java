@@ -88,7 +88,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	@Override
 	public void connect(String login, String password) throws FunctionalException, TechnicalException {
 		userService.connect(login, password);
-		dataClientManager.setUserLocal(userService.getByLoginAndPassword(login, password));
+		dataClientManager.setUserLocal(userService.getByLogin(login));
 
 	}
 
@@ -248,7 +248,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 */
 	@Override
 	public void saveGame() throws TechnicalException, FunctionalException {
-		gameService.save(dataClientManager.getCurrentGame());
+		dataClientManager.getUserLocal().getSavedGames().add(dataClientManager.getCurrentGame());
 
 	}
 
@@ -293,7 +293,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         super();
         this.dataClientManager = instanceDataClientManager;
         this.userService = new UserService(dataClientManager.getIClientComToData());
-        this.gameService = new GameService(dataClientManager.getIClientComToData());
     }
     
     

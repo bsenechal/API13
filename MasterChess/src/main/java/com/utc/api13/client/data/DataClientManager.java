@@ -58,7 +58,7 @@ public class DataClientManager {
 	/**
 	 * @return the userLocal
 	 */
-	public AUserEntity getUserLocal() {
+	public PrivateUserEntity getUserLocal() {
 		return userLocal;
 	}
 	/**

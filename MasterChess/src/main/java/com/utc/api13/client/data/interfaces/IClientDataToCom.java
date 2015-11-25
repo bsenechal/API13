@@ -22,6 +22,7 @@ public interface IClientDataToCom {
 	
 
 	/**
+	 * @author ulyss_000
 	 * This method will set the ClientDataManger ObservableList<AUserEntity> currentUsers
 	 * -> it will not add the localuser to currentUsers if existing in the connectedUserList parameter
 	 * @param connectedUserList
