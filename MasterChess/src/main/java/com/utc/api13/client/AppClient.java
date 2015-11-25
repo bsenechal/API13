@@ -4,7 +4,6 @@ import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.controllers.IHMConnexionPageController;
-import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -31,11 +30,11 @@ public class AppClient extends Application {
 		ComClientManager comClientManager = new ComClientManager();
 
 		DataClientManager dataClientManager = new DataClientManager();
-		dataClientManager.setiClientToData(comClientManager.getClientToDataImpl());
-		dataClientManager.setiIHMFromData(ihmManager.getIHMFromDataImpl());
+		dataClientManager.setIClientComToData(comClientManager.getClientComToDataImpl());
+		dataClientManager.setIClientIHMToData(ihmManager.getClientIHMToDataImpl());
 
-		ihmManager.setClientToIHM(dataClientManager.getClientToIHMImpl());
-		comClientManager.setIClientToComm(dataClientManager.getClientToCommImpl());
+		ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
+		comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
 		comClientManager.launchAppCom("localhost", 8000);
 		
 		/**
@@ -51,9 +50,9 @@ public class AppClient extends Application {
 		Pane root = (Pane) fxmlLoader.load();
 		IHMConnexionPageController controller = fxmlLoader.getController();
         controller.setMainApp(this);
+        controller.setManager(ihmManager);
 		Scene scene = new Scene(root, 800, 600);
 		scene.getStylesheets().add(getClass().getResource("/css/masterCSS.css").toExternalForm());
-		
 		stage.setTitle("Connexion");
 		stage.setScene(scene);
 		stage.show();

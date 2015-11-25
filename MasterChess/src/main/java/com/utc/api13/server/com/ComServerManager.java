@@ -3,7 +3,7 @@ package com.utc.api13.server.com;
 import org.apache.log4j.Logger;
 
 import com.utc.api13.commun.messages.Message;
-import com.utc.api13.server.data.interfaces.IServerToComm;
+import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -15,8 +15,8 @@ public class ComServerManager {
 	private final int port;
 	ServerInitializer serverInitializer = null;
 	private static final Logger logger = Logger.getLogger(ComServerManager.class);
-	private IServerToComm iServerToComm;
-	private ServeurToDataImpl serverToDataImpl;
+	private IServerDataToCom iServerDataToCom;
+	private ServeurComToDataImpl serverToDataImpl;
 	
 	
 
@@ -32,7 +32,7 @@ public class ComServerManager {
 
 	public ComServerManager(int port){
 		this.port = port;
-		//this.serverToDataImpl = new ServeurToDataImpl(this);
+		this.serverToDataImpl = new ServeurComToDataImpl(this);
 
 	}
 	
@@ -72,29 +72,29 @@ public class ComServerManager {
 	/**
 	 * @return the iServerToComm
 	 */
-	public IServerToComm getIServerToComm() {
-		return iServerToComm;
+	public IServerDataToCom getIServerDataToCom() {
+		return iServerDataToCom;
 	}
 
 	/**
-	 * @param iServerToComm the iServerToComm to set
+	 * @param iServerDataToCom the iServerToComm to set
 	 */
-	public void setIServerToComm(IServerToComm iServerToComm) {
-		iServerToComm = iServerToComm;
+	public void setIServerDataToCom(IServerDataToCom iServerDataToCom) {
+		this.iServerDataToCom = iServerDataToCom;
 	}
 
 	/**
 	 * @return the iServerToDataImpl
 	 */
-	public ServeurToDataImpl getServerToDataImpl() {
+	public ServeurComToDataImpl getServeurComToDataImpl() {
 		return serverToDataImpl;
 	}
 
 	/**
 	 * @param iServerToDataImpl the iServerToDataImpl to set
 	 */
-	public void setIServerToDataImpl(ServeurToDataImpl serverToDataImpl) {
-		serverToDataImpl = serverToDataImpl;
+	public void setServeurComToDataImpl(ServeurComToDataImpl serverToDataImpl) {
+		this.serverToDataImpl = serverToDataImpl;
 	}
 	
 

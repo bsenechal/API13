@@ -4,7 +4,7 @@ package com.utc.api13.client.com;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.utc.api13.client.data.interfaces.IClientToComm;
+import com.utc.api13.client.data.interfaces.IClientDataToCom;
 import com.utc.api13.commun.messages.Message;
 
 import io.netty.bootstrap.Bootstrap;
@@ -26,17 +26,17 @@ public class ComClientManager {
 	private Channel channel;
 	private EventLoopGroup group;
 	
-	private ClientToDataImpl clientToDataImpl;
-	private IClientToComm IClientToComm;
+	private ClientComToDataImpl clientComToDataImpl;
+	private IClientDataToCom iClientDataToCom;
 	
 	private static final Logger logger = Logger.getLogger(ComClientManager.class);
 
 
 	public ComClientManager() {
-		this.clientToDataImpl = new ClientToDataImpl(this);
+		this.clientComToDataImpl = new ClientComToDataImpl(this);
 	}
 
-	public void launchAppCom(String host, int port) {
+	public void launchAppCom(String host, int port) throws InterruptedException {
 		
 		group = new NioEventLoopGroup();
 		
@@ -49,7 +49,13 @@ public class ComClientManager {
 			this.channel = boostrap.connect(host,port).sync().channel();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
+			logger.error("Lost connection, check your network connection");
 			e.printStackTrace();
+			throw(e);
+		} catch (Throwable e){
+			logger.error("Can't connect to server, please check your connection and server statuts");
+			e.printStackTrace();
+			throw(e);
 		}
 		
 		logger.log(Level.DEBUG, "Message Manager is initialized for : " + host + ":" + port);
@@ -70,29 +76,29 @@ public class ComClientManager {
 	/**
 	 * @return the clientToDataImpl
 	 */
-	public ClientToDataImpl getClientToDataImpl() {
-		return clientToDataImpl;
+	public ClientComToDataImpl getClientComToDataImpl() {
+		return clientComToDataImpl;
 	}
 
 	/**
-	 * @param clientToDataImpl the clientToDataImpl to set
+	 * @param clientComToDataImpl the clientToDataImpl to set
 	 */
-	public void setClientToDataImpl(ClientToDataImpl clientToDataImpl) {
-		this.clientToDataImpl = clientToDataImpl;
+	public void setClientComToDataImpl(ClientComToDataImpl clientComToDataImpl) {
+		this.clientComToDataImpl = clientComToDataImpl;
 	}
 
 	/**
 	 * @return the iClientToComm
 	 */
-	public IClientToComm getIClientToComm() {
-		return IClientToComm;
+	public IClientDataToCom getIClientDataToCom() {
+		return iClientDataToCom;
 	}
 
 	/**
 	 * @param iClientToComm the iClientToComm to set
 	 */
-	public void setIClientToComm(IClientToComm iClientToComm) {
-		IClientToComm = iClientToComm;
+	public void setIClientDataToCom(IClientDataToCom iClientToComm) {
+		iClientDataToCom = iClientToComm;
 	}
 	
 

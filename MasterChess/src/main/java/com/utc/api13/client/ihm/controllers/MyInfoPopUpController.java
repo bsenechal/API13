@@ -1,5 +1,9 @@
 package com.utc.api13.client.ihm.controllers; 
 
+import com.utc.api13.client.AppClient;
+import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+import com.utc.api13.client.ihm.IHMManager;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -8,15 +12,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-import com.utc.api13.client.AppClient;
-import com.utc.api13.client.data.interfaces.IClientToIHM;
-import com.utc.api13.client.ihm.IHMManager;
-
 
 public class MyInfoPopUpController {
 	private IHMManager IHMManager; 
 	private AppClient mainApp;
-	private IClientToIHM myIClientToIHM; 
+	private IClientDataToIHM myIClientToIHM; 
 	
 	@FXML
 	BorderPane userInfoBorderPane;  
@@ -38,7 +38,7 @@ public class MyInfoPopUpController {
 		
 	public MyInfoPopUpController() { 
 		this.IHMManager = new IHMManager(); 
-		this.myIClientToIHM=IHMManager.getClientToIHM(); 
+		this.myIClientToIHM=IHMManager.getIClientDataToIHM(); 
 		initialize(); 
 	}
 		
