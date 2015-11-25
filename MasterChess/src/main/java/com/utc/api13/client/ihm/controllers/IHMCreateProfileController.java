@@ -1,4 +1,7 @@
 package com.utc.api13.client.ihm.controllers; 
+import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+import com.utc.api13.client.ihm.IHMManager;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -7,12 +10,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-import com.utc.api13.client.data.interfaces.IClientDataToIHM;
-//TODO: UME : why ?
-//import com.utc.api13.client.ihm.ClientToIHMImpl;
-
 public class IHMCreateProfileController {
-    //ClientToIHMImpl clientToIHM ;
+	private IHMManager IHMManager; 
+	private IClientDataToIHM myIClientToIHM; 
+	
     @FXML
     BorderPane createProfileBorderPane; 
     @FXML
@@ -32,12 +33,12 @@ public class IHMCreateProfileController {
     public void onChangePictureClicked() {
 	}
     
-    //methodes à relier au FXML 
-    
 	public IHMCreateProfileController() { 
-		//TODO: UME : ??
-		//clientToIHM = new ClientToIHMImpl(); 
-		initialize(); 
+		
+		// [DATA] : Le code ci-dessous Ne peut pas fonctionner :/
+//		IHMManager = new IHMManager(); 
+//		myIClientToIHM=IHMManager.getIClientDataToIHM(); 
+		initialize();  
 	}
 	
 	public void initialize() {

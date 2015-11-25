@@ -13,3 +13,4 @@
 .classpath
 .project
 .recommenders
+/.apt_generated/

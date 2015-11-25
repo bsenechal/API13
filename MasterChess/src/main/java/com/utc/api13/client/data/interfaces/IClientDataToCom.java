@@ -8,7 +8,6 @@ import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.AUserEntity;
 
 /**
  * 
@@ -20,50 +19,50 @@ public interface IClientDataToCom {
 	
 
 	
-	public void displayUsersList(final List<AUserEntity> connectedUserList);
+    void displayUsersList(final List<PublicUserEntity> connectedUserList);
 
     /**
      * 
      * @param user
      */
-	public void displayProfile(final PublicUserEntity user);
+    void displayProfile(final PublicUserEntity user);
 
-	public void print_error(final String error);
+    void print_error(final String error);
 
-	public void displayAllGames(final List<GameEntity> games);
+    void displayAllGames(final List<GameEntity> games);
 
-	public void displayResult(final UUID idPlayer, final MoveEntity move);
+    void displayResult(final UUID idPlayer, final MoveEntity move);
 
-	public void sendMessageToChat(final MessageEntity message);
+    void sendMessageToChat(final MessageEntity message);
 
-	public void sendAnswerForLeaving(final boolean answer);
+    void sendAnswerForLeaving(final boolean answer);
 
-	public void requestPlayerForLeaving(final UUID uid);
+    void requestPlayerForLeaving(final UUID uid);
 
-	public void endGameByLeaving();
+    void endGameByLeaving();
 
-	public void notify(final String message);
+    void notify(final String message);
 
-	public void initGame(final GameEntity game);
+    void initGame(final GameEntity game);
 
-	public void newObserver(final UUID idObserver);
+    void newObserver(final UUID idObserver);
 
-	public void newPlayer(final UUID idPlayer);
+    void newPlayer(final UUID idPlayer);
 
-	public void newReplay(final GameEntity game);
+    void newReplay(final GameEntity game);
 
-	public void sendProposition(final UUID uidSender, final UUID uidReciever, final boolean observable, final boolean chattable);
+    void sendProposition(final UUID uidSender, final UUID uidReciever, final boolean observable, final boolean chattable);
 
-	public void printProposition(final UUID uidSender, final boolean observable, final boolean chattable);
+    void printProposition(final UUID uidSender, final boolean observable, final boolean chattable);
 
-	public void victoryBySurrender();
+    void victoryBySurrender();
 
-	public void endGameBySurrender();
+    void endGameBySurrender();
 
-	public void displayMessage(final String message);
+    void displayMessage(final String message);
 
-	public DataClientManager getInstanceDataClientManager();
+    DataClientManager getInstanceDataClientManager();
 
-	public void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
+    void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
 	
 }

@@ -6,7 +6,6 @@ import java.util.UUID;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
