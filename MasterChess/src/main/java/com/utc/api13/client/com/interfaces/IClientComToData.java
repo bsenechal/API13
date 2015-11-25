@@ -1,6 +1,5 @@
 package com.utc.api13.client.com.interfaces;
 
-import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.com.ComClientManager;
@@ -14,7 +13,15 @@ public interface IClientComToData {
 
 	public void getUsers();
 	
+	public void getUserInfo(UUID iduser);
+	
 	public void notifyConnection(PublicUserEntity pubUser);
+	
+	public void disconnect(UUID sender, UUID reciever, boolean chattable, boolean observable);
+	
+	public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, PublicUserEntity user);
+	
+	public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer);
 	
 	public void validateMove(UUID idPlayer, MoveEntity move);
 
@@ -36,7 +43,7 @@ public interface IClientComToData {
 
 	public void requestPlayerForLeaving(UUID uid, boolean answer);
 
-	public void sendTextChat(String text, UUID idPartie);
+	public void sendTextChat(String texte , UUID partie);
 
 	public void getAllParties();
 

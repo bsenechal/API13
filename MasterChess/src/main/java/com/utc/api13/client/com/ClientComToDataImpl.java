@@ -138,4 +138,34 @@ public class ClientComToDataImpl implements IClientComToData {
 	public void setComClientManagerInstance(ComClientManager comClientManagerInstance) {
 		this.comClientManagerInstance = comClientManagerInstance;
 	}
+
+
+	@Override
+	public void getUserInfo(UUID iduser) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void disconnect(UUID sender, UUID reciever, boolean chattable, boolean observable) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable,
+			PublicUserEntity user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
