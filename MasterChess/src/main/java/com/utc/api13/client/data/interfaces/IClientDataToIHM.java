@@ -16,9 +16,9 @@ import javafx.collections.ObservableSet;
 
 public interface IClientDataToIHM {
     
-    public void getUsers(List <PublicUserEntity> users);
+    public void getUsers();                         // call com.getUsers()
     
-    public PublicUserEntity getUserInfo(UUID iduser);
+    public void getUserInfo(UUID iduser);   // call com.getUserInfo(UUID iduser)
     
     public void getAllGames();
     
@@ -29,9 +29,9 @@ public interface IClientDataToIHM {
      * @throws FunctionalException exception when login or password are incorrect
      * @throws TechnicalException technical exception
      */
-    public void connect(String login, String password) throws FunctionalException, TechnicalException;
+    public void connect(String login, String password) throws FunctionalException, TechnicalException;      //call com.notifyConnection(PublicUserEntity publicUser)
     
-    public void disconnect();
+    public void disconnect();            //call com.disconnect(UUID idUser)
     
     public void move(PieceEntity piece, PositionEntity position);
     

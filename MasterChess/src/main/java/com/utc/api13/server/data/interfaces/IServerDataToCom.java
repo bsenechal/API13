@@ -10,15 +10,15 @@ import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 public interface IServerDataToCom {
-    public List<PublicUserEntity> getUsers();
+    public List<PublicUserEntity> getUsers();               //Called by com.getUsers()
     /**
      * Returns the user with the given UUID
      * @param idUser UUID of the user
      * @return the found user or null when not founded
      */
-    public PublicUserEntity getUserInfo(final UUID idUser);
+    public PublicUserEntity getUserInfo(final UUID idUser);     //Called by com.getUserInfo(final UUID idUser)
     public List<GameEntity> getAllGames();
-    public void notifyConnections (final PublicUserEntity Player);
+    public void notifyConnections (final PublicUserEntity Player);      // Called by com.notifyConnections (PublicUserEntity Player)
     public boolean computerResult(final int idPlayer, final MoveEntity  move);
     public boolean isFinished (final String idGame);
     public void observerLeave(final UUID idUser);
@@ -34,5 +34,5 @@ public interface IServerDataToCom {
      */
     public List<PublicUserEntity> getUsersByGame(final UUID idGame);
     public void surrender(final UUID idPlayer);
-    public void disconnect(final UUID idUser);
+    public void disconnect(final UUID idUser);               //Called by disconnect(UUID idUser)
 }
