@@ -10,8 +10,6 @@ import java.util.UUID;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.exceptions.FunctionalException;
-import com.utc.api13.commun.exceptions.TechnicalException;
 import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
 /**
@@ -96,7 +94,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#saveUserData(com.utc.api13.commun.entities.UserEntity)
 	 */
 	@Override
-	public void saveUserData(PublicUserEntity User) throws TechnicalException, FunctionalException {
+	public void saveUserData(PublicUserEntity User) {
 		dataServerManager.getCurrentUsers().add(User);
 
 	}
