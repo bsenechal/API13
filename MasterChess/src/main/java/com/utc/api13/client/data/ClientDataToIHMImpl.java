@@ -7,7 +7,6 @@ import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
-import com.utc.api13.client.data.services.GameService;
 import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
@@ -28,10 +27,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      * Service des users
      */
     private UserService userService;
-    
-   
-    private GameService gameService;
-    
+        
     /*
      * (non-Javadoc)
      * 
@@ -246,8 +242,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 */
 	@Override
 	public void saveGame() throws TechnicalException, FunctionalException {
-		gameService.save(dataClientManager.getCurrentGame());
-
+		dataClientManager.getUserLocal().getSavedGames().add(dataClientManager.getCurrentGame());
+		//TODO: Ulysse à Amadou : est-ce qu'il vaut mieux pas aussi sauvegarder l'user à ce moment là ?
+		userService.save(dataClientManager.getUserLocal());
 	}
 
 
@@ -302,7 +299,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         super();
         this.dataClientManager = instanceDataClientManager;
         this.userService = new UserService(dataClientManager.getIClientComToData());
-    	this.gameService = new GameService(dataClientManager.getIClientComToData());
     }
     
     
@@ -316,3 +312,4 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         userService.save(user);
     }
 }
+

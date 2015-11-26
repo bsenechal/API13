@@ -1,18 +1,18 @@
-package com.utc.api13.client.data.services;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import com.utc.api13.client.com.ClientComToDataImpl;
-import com.utc.api13.client.com.ComClientManager;
-import com.utc.api13.client.data.entities.PrivateUserEntity;
-import com.utc.api13.client.data.services.ADataService;
-import com.utc.api13.client.data.services.UserService;
-import com.utc.api13.commun.exceptions.FunctionalException;
-import com.utc.api13.commun.exceptions.TechnicalException;
-
-public class UserServiceTest {
-//extends DataServiceTest<PrivateUserEntity> {
+//
+//package com.utc.api13.client.data.services;
+//
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//import com.utc.api13.client.com.ClientComToDataImpl;
+//import com.utc.api13.client.com.ComClientManager;
+//import com.utc.api13.client.data.entities.PrivateUserEntity;
+//import com.utc.api13.client.data.services.ADataService;
+//import com.utc.api13.client.data.services.UserService;
+//import com.utc.api13.commun.exceptions.FunctionalException;
+//import com.utc.api13.commun.exceptions.TechnicalException;
+//
+//public class UserServiceTest extends DataServiceTest<PrivateUserEntity> {
 //
 //	@Override
 //	protected PrivateUserEntity getEntityWithoutId() {
@@ -130,5 +130,6 @@ public class UserServiceTest {
 //		
 //		return users;
 //	}
-
-}
+//
+//}
+//
