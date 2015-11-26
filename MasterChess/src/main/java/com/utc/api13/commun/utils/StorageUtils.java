@@ -1,20 +1,21 @@
 package com.utc.api13.commun.utils;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.net.URL;
 import java.io.File;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
+import com.utc.api13.commun.exceptions.TechnicalException;
 
 public class StorageUtils{
-	private static String PATH = "user";
+	private static File PATH = new File(StorageUtils.class.getClassLoader().getResource("user").getFile());
 	
 	private static ObjectOutputStream oos;
     private static ObjectInputStream ois;
@@ -22,46 +23,60 @@ public class StorageUtils{
 
     
     /**
-     * écrit un entity à la fin du fichier
-     * @param entity entity à écrire dans le fichier
-     * @throws DataAccessException erreur lors de l'accès aux données
+     * Stores a user in a file<br/> 
+     * If the user has not been stored yet, a new file is created and the user is serialized<br/>
+     * In the other case, the existing file is overwritten
+     * @param user user to store
+     * @throws DataAccessException input/output exception
      */
     public static void write(PrivateUserEntity user)throws DataAccessException{
         try {
-	            oos = new ObjectOutputStream(new FileOutputStream(PATH+File.separator+user.getLogin()));
-	            oos.writeObject(user);
+        	String filePath = PATH.getAbsolutePath()+File.separator+user.getLogin()+"_"+user.getId()+".ser";
+        	//First let's try to create the file
+        	File file = new File(filePath);
+        	boolean ret = file.createNewFile();
+        	//let's write in the content whether the file existed already or not
+//        	URL url = StorageUtils.class.getClassLoader().getResource(filePath);
+            oos = new ObjectOutputStream(new FileOutputStream(filePath));
+            oos.writeObject(user);
         } catch (IOException ex) {
             throw new DataAccessException("Error while writing entity", ex);
         } finally{
-                try {
-	            	 if(oos != null){
-	            		 oos.flush();
-	            		 oos.close();
-	            	 }
-                } catch (IOException ex) {
-                    throw new DataAccessException("Error while closing output stream", ex);
-                }
+        	if(oos != null){
+	        	try {
+	        		oos.flush();
+	        		oos.close(); 
+	            } catch (IOException ex) {
+	                throw new DataAccessException("Error while closing output stream", ex);
+	            }
+        	}
         }
     }
     
 
     /**
-     * Permet de stocker dans le fichier un objet<br/>Ici ce sera un objet héritant de Entity
-     * @return l'entity lu à partir du fichier
-     * @throws DataAccessException 
+     * Reads a user from file
+     * @param fileName the file name (login + _ + uuid of the user)
+     * @return read user
+     * @throws TechnicalException 
      */
-    public static PrivateUserEntity read(String login)throws DataAccessException{
+    public static PrivateUserEntity read(String fileName)throws TechnicalException{
         try {
-            ois = new ObjectInputStream(new FileInputStream(PATH+File.separator+login));
+        	File file = new File(PATH.getAbsolutePath() +File.separator + fileName);
+        	if(!file.exists()) {
+        		throw new TechnicalException("The file you are trying to read doesn't exist");
+        	}
+        	
+            ois = new ObjectInputStream(new FileInputStream(file));
             return (PrivateUserEntity) ois.readObject();
         } catch (InvalidClassException icx) {
             throw new DataAccessException("The class " + icx.classname + " has changed since the serialization of object", icx);
         } catch (StreamCorruptedException scx){
-            throw new DataAccessException("The file " + PATH+File.separator+login + " is corrupted. Do not modify storage files!", scx);
+            throw new DataAccessException("The file " + PATH+File.separator+fileName + " is corrupted. Do not modify storage files!", scx);
         } catch (ClassNotFoundException cnx) {
             throw new DataAccessException("The entity you are trying to deserialize doest not have a valid class", cnx);
         } catch (IOException iox) {
-            throw new DataAccessException("Error while reading object from the file " + PATH+File.separator+login, iox);
+            throw new DataAccessException("Error while reading object from the file " + PATH+File.separator+fileName, iox);
         }  finally{
             if(oos != null){
                 try {
@@ -74,14 +89,27 @@ public class StorageUtils{
     }
     
     
-    public static void delete(String login) throws DataAccessException {
-        try {
-            new FileOutputStream(PATH+File.separator+login).close();
-        } catch (FileNotFoundException fnfx) {
-            throw new DataAccessException("The file " + PATH+File.separator+login + " was not found", fnfx);
-        } catch (IOException ex) {
-            throw new DataAccessException("Error while closing output stream", ex);
-        }
+    /**
+     * Delete the file with given name
+     * @param fileName file to delete
+     * @throws TechnicalException when deletion fails
+     */
+    public static void delete(String fileName) throws TechnicalException{
+    	String filePath = PATH.getAbsolutePath() + File.separator + fileName + ".ser";
+        File file = new File(filePath);
+		if(!file.delete()) {
+			throw new TechnicalException("Delete operation has failed");
+		}
+    }
+    
+    /**
+     * 
+     * @return Returns the list of files in the storage directory
+     */
+    public static File[] getAllFiles(){
+    	File[] listofFiles = PATH.listFiles();
+    	File[] NO_FILES = {};
+    	return listofFiles == null ? NO_FILES : listofFiles;
     }
 
 }

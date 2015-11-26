@@ -16,19 +16,18 @@ public class UserService{
 
 	private IClientComToData comInterface;
 	private final static UserDAO userDAO = new UserDAO();
+	
 	public UserService(IClientComToData comInterface){
 		this.comInterface = comInterface;
 	}
 	
 	public void connect(String login, String password) throws FunctionalException, TechnicalException{
-		PrivateUserEntity user = getByLogin(login);
-		if(user == null || !user.getPassword().equals(password)) {
+		PrivateUserEntity privateUser = getByLoginAndPassword(login, password);
+		if(privateUser == null) {
 			List<Erreur> erreurs = new ArrayList<>();
 			erreurs.add(new Erreur(ErrorTypeEnum.LOGIN_FAILED));
 			throw new FunctionalException(erreurs);
 		}
-		
-		PrivateUserEntity privateUser = (PrivateUserEntity) user;
 		//Create a public user from the private user
 		PublicUserEntity publicUser = new PublicUserEntity(privateUser);
 		//notify the com module
@@ -36,19 +35,14 @@ public class UserService{
 	}
 	
 	/**
-	 * Checks if the login and password are valid
+	 * Returns the found user or null when nothing found
 	 * @param login login
 	 * @param password password
-	 * @throws FunctionalException when login and/or password are not valid
 	 * @throws TechnicalException technical exception
 	 */
-	public PrivateUserEntity getByLogin(String login) throws TechnicalException{
-		//TODO check field existence
-		return null;
+	public PrivateUserEntity getByLoginAndPassword(String login, String password) throws TechnicalException{
+		return userDAO.getByLoginAndPassword(login, password);
 	}
-
-
-	
 
 	/**
 	 * Create a new entity
@@ -69,19 +63,19 @@ public class UserService{
 	 * @throws TechnicalException technical exception
 	 * @throws FunctionalException functional exception
 	 */
-	protected void validateInstance(final PrivateUserEntity u) throws TechnicalException, FunctionalException{
+	private void validateInstance(final PrivateUserEntity u) throws TechnicalException, FunctionalException{
 		//TODO
 	};
 	
 	
 
 	/**
-	 * Delte the given entity in file
-	 * @param entity entity to destroy
-	 * @throws TechnicalException 
+	 * Delete the given user in files
+	 * @param user the user to delete
+	 * @throws TechnicalException when deletion fails
 	 */
 	public void delete(PrivateUserEntity user) throws TechnicalException{
-		userDAO.delete(user.getLogin());
+		userDAO.delete(user);
 	}
 
 }
