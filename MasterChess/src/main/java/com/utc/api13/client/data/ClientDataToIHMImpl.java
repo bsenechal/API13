@@ -291,11 +291,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     }
     
     
-    /**
-     * @param the login and the password of the profil to create
-     * @throws FunctionalException 
-     * @throws TechnicalException 
-     */
     @Override
     public void createProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException{
         userService.save(user);

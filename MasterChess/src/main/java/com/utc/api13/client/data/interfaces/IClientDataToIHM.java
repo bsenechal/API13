@@ -86,5 +86,12 @@ public interface IClientDataToIHM {
 
     public ObservableList<PublicUserEntity> getUserList();
     
+    /**
+     * Creates a new user
+     * @param the login and the password of the profile to create
+     * @throws FunctionalException data access exception
+     * @throws TechnicalException functional exception: to display for the user
+     */
+    
   	public void createProfile(PrivateUserEntity user) throws FunctionalException, TechnicalException;
 }
