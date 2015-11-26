@@ -1,6 +1,5 @@
 package com.utc.api13.commun.utils;
 
-import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -9,13 +8,9 @@ import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.io.File;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
-import com.utc.api13.commun.entities.ADataEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
 
 public class StorageUtils{

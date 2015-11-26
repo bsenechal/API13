@@ -1,6 +1,5 @@
 package com.utc.api13.client.data.interfaces;
 
-import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -11,14 +10,14 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
-import javafx.collections.ObservableSet;
+import javafx.collections.ObservableList;
 
 
 public interface IClientDataToIHM {
     
-    public void getUsers();                         // call com.getUsers()
+    public void getUsers();
     
-    public void getUserInfo(UUID iduser);   // call com.getUserInfo(UUID iduser)
+    public void getUserInfo(final UUID iduser);
     
     public void getAllGames();
     
@@ -29,9 +28,9 @@ public interface IClientDataToIHM {
      * @throws FunctionalException exception when login or password are incorrect
      * @throws TechnicalException technical exception
      */
-    public void connect(String login, String password) throws FunctionalException, TechnicalException;      //call com.notifyConnection(PublicUserEntity publicUser)
+    public void connect(final String login, final String password) throws FunctionalException, TechnicalException;
     
-    public void disconnect();            //call com.disconnect(UUID idUser)
+    public void disconnect();
     
     public void move(PieceEntity piece, PositionEntity position);
     
@@ -62,6 +61,7 @@ public interface IClientDataToIHM {
      */
     public void saveGame() throws TechnicalException, FunctionalException;
     
+    
     public GameEntity getCurrentGame();
     
     public void createProposition(UUID uidReciever, boolean chattable, boolean observable);
@@ -74,7 +74,7 @@ public interface IClientDataToIHM {
      */
     public void sendChatText(String message);
 
-    public ObservableSet<PublicUserEntity> getUserList();
+    public ObservableList<PublicUserEntity> getUserList();
     
-    public void createProfil(String login, String firstName, String lastName) throws FunctionalException, TechnicalException;
+  	public void createProfile(PrivateUserEntity user) throws FunctionalException, TechnicalException;
 }

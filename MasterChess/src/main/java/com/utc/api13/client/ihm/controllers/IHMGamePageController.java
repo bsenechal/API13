@@ -4,12 +4,10 @@ package com.utc.api13.client.ihm.controllers;
 
 import javax.swing.JFrame;
 
-
 import com.utc.api13.client.ihm.models.ChessBoardNode;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;

@@ -7,13 +7,10 @@ import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.data.interfaces.IClientDataToCom;
-import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-
-import javafx.collections.ObservableList;
 
 /**
  * @author Benoît
@@ -54,16 +51,14 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 */
 	@Override
 	public void displayUsersList(List<PublicUserEntity> connectedUserList) {
-	    // TODO Auto-generated method stub
-		UUID localUserId = this.instanceDataClientManager.getUserLocal().getId();
-		ObservableList<AUserEntity> CurrentUsers = this.instanceDataClientManager.getCurrentUsers();
-		CurrentUsers.clear();
-		
 		connectedUserList.forEach(u -> {
-			if(u.getId() != localUserId){
-				CurrentUsers.add(u);
+			if(u.getId().equals(instanceDataClientManager.getUserLocal().getId())){
+				connectedUserList.remove(u);
 			}
 		});
+	
+		instanceDataClientManager.getCurrentUsers().clear();
+		instanceDataClientManager.getCurrentUsers().addAll(connectedUserList);
 		
 	}
 
@@ -129,7 +124,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	@Override
 	public void sendMessageToChat(MessageEntity message) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/*
@@ -292,7 +287,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 */
 	@Override
 	public void displayMessage(String message) {
-		// TODO: appeler la méthode displayMessage de IHM
+		// TODO Auto-generated method stub
 
 	}
 
@@ -300,5 +295,4 @@ public class ClientDataToComImpl implements IClientDataToCom {
         super();
         this.instanceDataClientManager = instanceDataClientManager;
     }
-
 }

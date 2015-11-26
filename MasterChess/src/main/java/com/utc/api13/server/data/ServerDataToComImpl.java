@@ -11,8 +11,6 @@ import java.util.UUID;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.exceptions.FunctionalException;
-import com.utc.api13.commun.exceptions.TechnicalException;
 import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
 /**
@@ -27,14 +25,15 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 */
 	@Override
 	public List<PublicUserEntity> getUsers() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
+	/* (non-Javadoc)
+	 * @see com.utc.api13.server.data.interfaces.IServerToComm#getUserInfo(java.util.UUID)
+	 */
 	@Override
 	public PublicUserEntity getUserInfo(UUID idUser) {
-	    return dataServerManager.getCurrentUsers().stream().filter(u -> u.getId().equals(idUser)).findFirst().orElse(null);
+	    return dataServerManager.getCurrentUsers().stream().filter(u -> u.getId().equals(idUser)).findFirst().get();
 	}
 
 	/* (non-Javadoc)
@@ -50,9 +49,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#notifyConnections(com.utc.api13.commun.entities.UserEntity)
 	 */
 	@Override
-	public void notifyConnections(PublicUserEntity Player) {
-		// TODO Auto-generated method stub
-
+	public void notifyConnections(final PublicUserEntity player) {
+		dataServerManager.getCurrentUsers().add(player);
 	}
 
 	/* (non-Javadoc)
@@ -95,9 +93,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#saveUserData(com.utc.api13.commun.entities.UserEntity)
 	 */
 	@Override
-	public void saveUserData(PublicUserEntity User) throws TechnicalException, FunctionalException {
+	public void saveUserData(final PublicUserEntity User) {
 		dataServerManager.getCurrentUsers().add(User);
-
 	}
 
 	/* (non-Javadoc)
@@ -123,11 +120,9 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 */
 	@Override
 	public List<PublicUserEntity> getConnectedUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return dataServerManager.getCurrentUsers();
 	}
 	
-
 	/* (non-Javadoc)
 	 * @see com.utc.api13.server.data.interfaces.IServerDataToCom#getUsersByGame(java.lang.String)
 	 */
@@ -153,6 +148,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
 		
 		
 	};
+	
 
 	/* (non-Javadoc)
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#surrender(java.util.UUID)
