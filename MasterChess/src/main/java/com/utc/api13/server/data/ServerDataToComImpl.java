@@ -182,9 +182,16 @@ public class ServerDataToComImpl implements IServerDataToCom {
         // If the idGame exist on the server
         if (gameFound != null) {
             // Else get all observer + two players
-            listUsersByGame.addAll(gameFound.getObservers());
-            listUsersByGame.add(gameFound.getBlackPlayer());
-            listUsersByGame.add(gameFound.getWhitePlayer());
+            if (gameFound.getObservers() != null) {
+                listUsersByGame.addAll(gameFound.getObservers());
+            }
+            if (gameFound.getBlackPlayer() != null) {
+                listUsersByGame.add(gameFound.getBlackPlayer());
+            }
+            
+            if (gameFound.getWhitePlayer() != null) {
+                listUsersByGame.add(gameFound.getWhitePlayer());
+            }
             return listUsersByGame;
         }
 
