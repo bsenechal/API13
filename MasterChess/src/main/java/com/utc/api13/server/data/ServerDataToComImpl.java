@@ -5,7 +5,9 @@ package com.utc.api13.server.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 //import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
@@ -105,16 +107,13 @@ public class ServerDataToComImpl implements IServerDataToCom {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.server.data.interfaces.IServerToComm#saveUserData(com.utc.
-     * api13.commun.entities.UserEntity)
-     */
+
     @Override
-    public void saveUserData(final PublicUserEntity User) {
-        dataServerManager.getCurrentUsers().add(User);
+    public void saveUserData(final PublicUserEntity user) {
+    	Map<Boolean, List<PublicUserEntity>> map = dataServerManager.getCurrentUsers().stream().collect(Collectors.partitioningBy(u -> u.getId().equals(user.getId())));
+        List<PublicUserEntity> currentUsers = map.get(false);
+        currentUsers.add(user);
+        dataServerManager.setCurrentUsers(currentUsers);
     }
 
     /*

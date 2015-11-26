@@ -3,15 +3,19 @@
  */
 package com.utc.api13.client.data;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.data.services.UserService;
+import com.utc.api13.commun.Erreur;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.ErrorTypeEnum;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
@@ -60,12 +64,20 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public void connect(String login, String password) throws FunctionalException, TechnicalException {
-//		userService.connect(login, password);
-		PublicUserEntity user = new PublicUserEntity(login, password);
-		
-//		dataClientManager.setUserLocal(userService.getByLoginAndPassword(login, password));
-		
-		dataClientManager.getIClientComToData().notifyConnection(user);
+		//Check the login and password
+		PrivateUserEntity privateUser = userService.getByLoginAndPassword(login, password);
+		if(privateUser == null) {
+			List<Erreur> erreurs = new ArrayList<>();
+			erreurs.add(new Erreur(ErrorTypeEnum.LOGIN_FAILED));
+			throw new FunctionalException(erreurs);
+		}
+		//Save the local user
+		dataClientManager.setUserLocal(privateUser);
+		//Notify the server
+		PublicUserEntity publicUser = new PublicUserEntity(privateUser);
+		dataClientManager.getIClientComToData().notifyConnection(publicUser);
+		//Open the main frame
+		//dataClientManager.getIClientIHMToData().openFrame()
 	}
 
 	/*
@@ -275,7 +287,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
         super();
         this.dataClientManager = instanceDataClientManager;
-        this.userService = new UserService(dataClientManager.getIClientComToData());
+        this.userService = new UserService();
     }
     
     

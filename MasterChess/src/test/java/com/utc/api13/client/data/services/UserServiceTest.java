@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.exceptions.FunctionalException;
@@ -22,7 +21,7 @@ public class UserServiceTest {
 	/**
 	 * UserService instance
 	 */
-	private final UserService userService = new UserService(new DataClientManager().getIClientComToData());
+	private final UserService userService = new UserService();
 	
 	/**
 	 * Class logger

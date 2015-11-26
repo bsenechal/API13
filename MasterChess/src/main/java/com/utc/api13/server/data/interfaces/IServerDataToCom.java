@@ -27,6 +27,12 @@ public interface IServerDataToCom {
     public boolean isFinished (final String idGame);
     public void observerLeave(final UUID idUser);
     public List<PublicUserEntity> getListObservers();
+    /**
+     * Saves or updates the given user in the list of current users
+     * @param User user to save or update in
+     * @throws TechnicalException technical exception
+     * @throws FunctionalException functional exception
+     */
     public void saveUserData(final PublicUserEntity User) throws TechnicalException, FunctionalException;
     public void newObserver(final int idGame, final UUID idUser);
     public void createReplay(final GameEntity game, final PublicUserEntity user);
