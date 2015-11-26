@@ -165,13 +165,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
         return dataServerManager.getCurrentUsers();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.server.data.interfaces.IServerDataToCom#getUsersByGame(java
-     * .lang.String)
-     */
+
     public List<PublicUserEntity> getUsersByGame(final UUID idGame) {
         List<PublicUserEntity> listUsersByGame = new ArrayList<PublicUserEntity>();
 

@@ -58,13 +58,13 @@ public class UserService{
 	
 
 	/**
-	 * Needed validations to do before creation and update
-	 * @param entity entity to modify or create
+	 * Needed validations to do before creation and update of an user
+	 * @param u user to create or update
 	 * @throws TechnicalException technical exception
 	 * @throws FunctionalException functional exception
 	 */
 	private void validateInstance(final PrivateUserEntity u) throws TechnicalException, FunctionalException{
-		//TODO
+		//TODO: needed validation before saving
 	};
 	
 	

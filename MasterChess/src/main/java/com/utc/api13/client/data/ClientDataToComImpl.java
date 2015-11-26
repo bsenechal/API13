@@ -278,16 +278,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#displayMessage(java.
-	 * lang.String)
-	 */
 	@Override
 	public void displayMessage(String message) {
 		// TODO Auto-generated method stub
+		//dataClientManager.getClientIHMToData.displayMessage(message)
 
 	}
 

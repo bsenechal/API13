@@ -7,7 +7,6 @@ import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
-import java.net.URL;
 import java.io.File;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -34,9 +33,8 @@ public class StorageUtils{
         	String filePath = PATH.getAbsolutePath()+File.separator+user.getLogin()+"_"+user.getId()+".ser";
         	//First let's try to create the file
         	File file = new File(filePath);
-        	boolean ret = file.createNewFile();
+        	file.createNewFile();
         	//let's write in the content whether the file existed already or not
-//        	URL url = StorageUtils.class.getClassLoader().getResource(filePath);
             oos = new ObjectOutputStream(new FileOutputStream(filePath));
             oos.writeObject(user);
         } catch (IOException ex) {

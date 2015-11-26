@@ -65,6 +65,10 @@ public interface IClientDataToCom {
 
     void endGameBySurrender();
 
+    /**
+     * Calls the IHM module displayMessage method to display a message on the chat
+     * @param message message to display
+     */
     void displayMessage(final String message);
 
     DataClientManager getInstanceDataClientManager();

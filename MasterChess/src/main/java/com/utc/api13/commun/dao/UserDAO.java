@@ -1,7 +1,6 @@
 package com.utc.api13.commun.dao;
 
 import java.io.File;
-import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
@@ -12,9 +11,6 @@ public class UserDAO{
 
 
     public void save(PrivateUserEntity user) throws DataAccessException {
-	    if(user.getId()==null){
-	    	user.setId(UUID.randomUUID());
-	    }
 	    StorageUtils.write(user);
     }
 

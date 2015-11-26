@@ -282,13 +282,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#sendChatText(java.lang.
-	 * String)
-	 */
+
 	@Override
 	public void sendChatText(String message) {
 		dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
