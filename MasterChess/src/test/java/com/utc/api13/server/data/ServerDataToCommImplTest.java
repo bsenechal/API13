@@ -17,7 +17,7 @@ import com.utc.api13.commun.entities.PublicUserEntity;
  * @author DATA
  *
  */
-public class ServerToCommImplTest {
+public class ServerDataToCommImplTest {
 	private DataServerManager dataServerManager;
 	
 	/**

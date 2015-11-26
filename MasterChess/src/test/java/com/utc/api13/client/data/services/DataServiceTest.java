@@ -1,17 +1,7 @@
 
 package com.utc.api13.client.data.services;
 
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.log4j.Logger;
-
 import com.utc.api13.commun.entities.ADataEntity;
-import com.utc.api13.commun.exceptions.FunctionalException;
-import com.utc.api13.commun.exceptions.TechnicalException;
 
 import junit.framework.TestCase;
 

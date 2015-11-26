@@ -9,13 +9,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 
 /**
  * @author Benoît
  *
  */
-public class ClientToIHMImplTest {
+public class ClientDataToIHMImplTest {
 	private DataClientManager dataClientManager;
 
 	/**
@@ -24,7 +25,6 @@ public class ClientToIHMImplTest {
 	@Before
 	public void setUp() throws Exception {
 		dataClientManager = new DataClientManager();
-		dataClientManager.getCurrentUsers().add(new PublicUserEntity());
 	}
 
 	/**
@@ -46,7 +46,20 @@ public class ClientToIHMImplTest {
 	
 	@Test
     public void getUserListTest() {
+	    final PublicUserEntity user = new PublicUserEntity();
+	    
+	    dataClientManager.getCurrentUsers().add(user);
 		Assert.assertNotNull("The list shouldn't be null", dataClientManager.getClientDataToIHMImpl().getUserList());
-    }
+		Assert.assertTrue("The list should contain the user " + user.toString(), dataClientManager.getClientDataToIHMImpl().getUserList().contains(user));
+	}
+	
+	@Test
+	public void getCurrentGameTest() {
+	    final GameEntity game = new GameEntity();
+	    
+	    dataClientManager.setCurrentGame(game);
+	    Assert.assertNotNull("The current game shouldn't be null", dataClientManager.getClientDataToIHMImpl().getCurrentGame());
+	    Assert.assertEquals("Current game should be equal to " + game.toString(), dataClientManager.getClientDataToIHMImpl().getCurrentGame(), game);
+	}
 }
 
