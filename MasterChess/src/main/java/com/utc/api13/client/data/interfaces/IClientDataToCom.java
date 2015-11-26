@@ -34,6 +34,9 @@ public interface IClientDataToCom {
     void displayProfile(final PublicUserEntity user);
 
     void print_error(final String error);
+    /*
+     * Displays list of users
+     */
 
     void displayAllGames(final List<GameEntity> games);
 

@@ -41,37 +41,20 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     }
 
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#getUsers(java.util.
-	 * List)
-	 */
 	@Override
 	public void getUsers() {
 		dataClientManager.getIClientComToData().getUsers();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#getUserInfo(java.util.
-	 * UUID)
-	 */
 	@Override
 	public void getUserInfo(final UUID iduser) {
+		//TODO
+		//dataClientManager.getIClientComToData().getUserInfo(idUser);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#getAllGames()
-	 */
 	@Override
 	public void getAllGames() {
-		// TODO Auto-generated method stub
+		dataClientManager.getIClientComToData().getAllParties();
 
 	}
 

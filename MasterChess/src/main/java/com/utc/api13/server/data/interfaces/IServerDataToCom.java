@@ -17,6 +17,10 @@ public interface IServerDataToCom {
      * @return the found user or null when not founded
      */
     public PublicUserEntity getUserInfo(final UUID idUser);     //Called by com.getUserInfo(final UUID idUser)
+    /**
+     * 
+     * @return Returns the list of current games
+     */
     public List<GameEntity> getAllGames();
     public void notifyConnections (final PublicUserEntity Player);      // Called by com.notifyConnections (PublicUserEntity Player)
     public boolean computerResult(final int idPlayer, final MoveEntity  move);

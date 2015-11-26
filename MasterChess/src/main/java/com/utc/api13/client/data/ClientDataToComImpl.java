@@ -62,16 +62,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
 		
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#displayProfile(com.utc
-	 * .api13.commun.entities.PublicUserEntity)
-	 */
+
 	@Override
 	public void displayProfile(PublicUserEntity user) {
-		// TODO Auto-generated method stub
+		//instanceDataClientManager.displayProfile(user)
 
 	}
 
@@ -84,20 +78,15 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 */
 	@Override
 	public void print_error(String error) {
-		// TODO Auto-generated method stub
+		// instanceDataClientManager.print_error()
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#displayAllGames(java.
-	 * util.List)
-	 */
+
 	@Override
 	public void displayAllGames(List<GameEntity> games) {
-		// TODO Auto-generated method stub
+		instanceDataClientManager.getCurrentGames().clear();
+		instanceDataClientManager.getCurrentGames().addAll(games);
 
 	}
 

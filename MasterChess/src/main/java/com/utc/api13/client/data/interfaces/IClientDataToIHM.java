@@ -15,10 +15,20 @@ import javafx.collections.ObservableList;
 
 public interface IClientDataToIHM {
     
+	/**
+	 * Demands the list of users online from the server
+	 */
     public void getUsers();
     
+    /**
+     *Demands a user online with the given uuid
+     * @param iduser uuid of the demanded user
+     */
     public void getUserInfo(final UUID iduser);
     
+    /**
+     * Demands all games from server
+     */
     public void getAllGames();
     
     /**
