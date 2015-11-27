@@ -12,23 +12,14 @@ import com.utc.api13.commun.exceptions.TechnicalException;
 
 import javafx.collections.ObservableList;
 
+//Cette interface est mise à disposition de IHM. Elle permet d'appeler les méthodes chez Data pour réaliser les actions correspondants aux actions sur l'IHM
 
 public interface IClientDataToIHM {
     
-	/**
-	 * Demands the list of users online from the server
-	 */
-    public void getUsers();
+    public void getUsers();                         //Appelle com.getUsers();
     
-    /**
-     *Demands a user online with the given uuid
-     * @param iduser uuid of the demanded user
-     */
-    public void getUserInfo(final UUID iduser);
+    public void getUserInfo(final UUID iduser);     //Appelle com.getUserInfo(UUID iduser);
     
-    /**
-     * Demands all games from server
-     */
     public void getAllGames();
     
     /**
@@ -38,39 +29,25 @@ public interface IClientDataToIHM {
      * @throws FunctionalException exception when login or password are incorrect
      * @throws TechnicalException technical exception
      */
-    public void connect(final String login, final String password) throws FunctionalException, TechnicalException;
+    public void connect(final String login, final String password) throws FunctionalException, TechnicalException;  //Appelle com.notifyConnection(PublicUserEntity publicUser)
     
-    /**
-     * Signs out the local user from the app
-     */
-    public void disconnect();
+    public void disconnect();                       //Appelle com.disconnect(UUID idUser)
     
     public void move(PieceEntity piece, PositionEntity position);
     
-    /**
-     * informs the server that the local user is leaving as an observer
-     */
     public void observerLeave();
     
-    /**
-     * informs the server that the local user is leaving the game he(she) is playing
-     */
     public void requestPlayerForLeaving();
     
     public void sendAnserForLeaving(boolean answer);
     
-    /**
-     * Updates the info of local user
-     * @param user local user
-     * @throws FunctionalException if the saving fails due to some validation
-     * @throws TechnicalException technical exception
-     */
-    
-    public void updateProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException;
+    public void updateProfile(PrivateUserEntity user);
     
     public void sendUserUpdates(PublicUserEntity user);
     
     public void notify (String message);
+    
+    public void updateProfil (PublicUserEntity user);
     
     public void watchGame (String idGame);
     
@@ -88,7 +65,7 @@ public interface IClientDataToIHM {
     
     public GameEntity getCurrentGame();
     
-    public void createProposition(UUID uidReciever, boolean chattable, boolean observable);
+    public void createProposition(UUID uidReciever, boolean chattable, boolean observable);     //Appelle com.sendProposition(UUID idUser, boolean chattable, boolean observable) pour demander à com de faire une proposition à l'user;
     
     public void surrender();
     
@@ -100,14 +77,11 @@ public interface IClientDataToIHM {
 
     public ObservableList<PublicUserEntity> getUserList();
     
-    /**
-     * Creates a new user
-     * @param the login and the password of the profile to create
-     * @throws FunctionalException data access exception
-     * @throws TechnicalException functional exception: to display for the user
-     */
+    public void createProfile(PrivateUserEntity user) throws FunctionalException, TechnicalException;
     
-  	public void createProfile(PrivateUserEntity user) throws FunctionalException, TechnicalException;
-  	
-  	//TODO : endGameByLeaving
+    
+  //TODO
+  //Si le  (IClientDataToCom.)printProposition()  ne renvoie pas directement la réponse à com pour dire si un User à accepté la partie, il faudra créer la méthode de réponse 
+  //answerProposition(final UUID uidSender, final UUID uidReciever, final boolean observable, final boolean chattable, boolean answer); qui va appeler com.answerProposition(...)
+    
 }
