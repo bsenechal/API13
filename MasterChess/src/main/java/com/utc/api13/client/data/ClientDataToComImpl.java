@@ -103,41 +103,24 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#sendMessageToChat(com.
-	 * utc.api13.commun.entities.MessageEntity)
-	 */
+
 	@Override
 	public void sendMessageToChat(MessageEntity message) {
-		// TODO Auto-generated method stub
+//		TODO: instanceDataClientManager.sendMessageToChat(message);
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#sendAnswerForLeaving(
-	 * boolean)
-	 */
+
 	@Override
 	public void sendAnswerForLeaving(boolean answer) {
-		// TODO Auto-generated method stub
+//		TODO: instanceDataClientManager.getIClientIHMToData().displayAnswerForLeaving(answer);
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToComm#
-	 * requestPlayerForLeaving(java.util.UUID)
-	 */
+
 	@Override
 	public void requestPlayerForLeaving(UUID uid) {
-		// TODO Auto-generated method stub
+//		TODO: instanceDataClientManager.getIClientIHMToData().requestPlayerForLeaving();
 
 	}
 
@@ -153,15 +136,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToComm#notify(java.lang.
-	 * String)
-	 */
+
 	@Override
 	public void notify(String message) {
-		// TODO Auto-generated method stub
+//		instanceDataClientManager.getIClientIHMToData().notify(message);
 
 	}
 

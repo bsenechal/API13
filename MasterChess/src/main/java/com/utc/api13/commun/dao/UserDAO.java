@@ -1,6 +1,7 @@
 package com.utc.api13.commun.dao;
 
 import java.io.File;
+import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
@@ -19,6 +20,19 @@ public class UserDAO{
         StorageUtils.delete(user.getLogin() + "_" + user.getId());
     }
 
+    
+    /**
+     * Deletes user's stored info
+     * @param userId user id
+     */
+    public void deleteById(UUID userId) {
+    	File[] listOfFiles = StorageUtils.getAllFiles();
+    	for(File file : listOfFiles){
+    		if(file.getName().endsWith("_" + userId)) {
+    			file.delete();
+    		}
+    	}
+    }
 
     /**
      * Finds the user with the given login and password<br/>

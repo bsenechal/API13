@@ -82,16 +82,15 @@ public class ServerDataToComImpl implements IServerDataToCom {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.server.data.interfaces.IServerToComm#observerLeave(java.
-     * util.UUID)
-     */
+
     @Override
     public void observerLeave(UUID idUser) {
-        // TODO Auto-generated method stub
+        dataServerManager.getCurrentGames().stream().forEach(game -> 
+        {
+        	game.getObservers().removeIf(u -> idUser.equals(u.getId()));
+        });
+        dataServerManager.getCurrentUsers().removeIf(u -> idUser.equals(u.getId()));
+        //TODO: dataServerManager.getIServeurComToData().sendMessageToChat()
 
     }
 

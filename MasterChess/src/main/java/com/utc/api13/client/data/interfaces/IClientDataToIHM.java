@@ -40,23 +40,37 @@ public interface IClientDataToIHM {
      */
     public void connect(final String login, final String password) throws FunctionalException, TechnicalException;
     
+    /**
+     * Signs out the local user from the app
+     */
     public void disconnect();
     
     public void move(PieceEntity piece, PositionEntity position);
     
+    /**
+     * informs the server that the local user is leaving as an observer
+     */
     public void observerLeave();
     
+    /**
+     * informs the server that the local user is leaving the game he(she) is playing
+     */
     public void requestPlayerForLeaving();
     
     public void sendAnserForLeaving(boolean answer);
     
-    public void updateProfile(PrivateUserEntity user);
+    /**
+     * Updates the info of local user
+     * @param user local user
+     * @throws FunctionalException if the saving fails due to some validation
+     * @throws TechnicalException technical exception
+     */
+    
+    public void updateProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException;
     
     public void sendUserUpdates(PublicUserEntity user);
     
     public void notify (String message);
-    
-    public void updateProfil (PublicUserEntity user);
     
     public void watchGame (String idGame);
     
@@ -94,4 +108,6 @@ public interface IClientDataToIHM {
      */
     
   	public void createProfile(PrivateUserEntity user) throws FunctionalException, TechnicalException;
+  	
+  	//TODO : endGameByLeaving
 }

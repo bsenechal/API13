@@ -25,6 +25,10 @@ public interface IServerDataToCom {
     public void notifyConnections (final PublicUserEntity Player);      // Called by com.notifyConnections (PublicUserEntity Player)
     public boolean computerResult(final int idPlayer, final MoveEntity  move);
     public boolean isFinished (final String idGame);
+    /**
+     * erase the observer from all current games
+     * @param idUser user who is leaving
+     */
     public void observerLeave(final UUID idUser);
     public List<PublicUserEntity> getListObservers();
     /**

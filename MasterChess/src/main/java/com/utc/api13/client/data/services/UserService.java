@@ -2,6 +2,8 @@ package com.utc.api13.client.data.services;
 
 
 
+import java.util.UUID;
+
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.dao.UserDAO;
 import com.utc.api13.commun.exceptions.FunctionalException;
@@ -47,12 +49,23 @@ public class UserService{
 	
 
 	/**
-	 * Delete the given user in files
+	 * Delete the given user from files
+	 * To use only if the user's login hasn't changed since the last update
 	 * @param user the user to delete
 	 * @throws TechnicalException when deletion fails
 	 */
 	public void delete(PrivateUserEntity user) throws TechnicalException{
 		userDAO.delete(user);
+	}
+
+	/**
+	 * Delete the user with id userId from the files
+	 * Works in any case
+	 * @param userId id of user to delete
+	 */
+	public void deleteById(UUID userId) {
+		userDAO.deleteById(userId);
+		
 	}
 
 }

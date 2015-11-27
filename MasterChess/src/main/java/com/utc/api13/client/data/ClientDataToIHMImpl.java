@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+import com.utc.api13.client.data.services.GameService;
 import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.Erreur;
 import com.utc.api13.commun.entities.GameEntity;
@@ -28,9 +29,14 @@ import javafx.collections.ObservableList;
 public class ClientDataToIHMImpl implements IClientDataToIHM {
     private DataClientManager dataClientManager;
     /**
-     * Service des users
+     * users service
      */
     private UserService userService;
+    
+    /**
+     * game service
+     */
+    private GameService gameService;
         
     /*
      * (non-Javadoc)
@@ -80,13 +86,15 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 		//dataClientManager.getIClientIHMToData().openFrame()
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#disconnect()
-	 */
+
 	@Override
 	public void disconnect() {
+		
+		if(gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
+			observerLeave();
+		} else {
+			requestPlayerForLeaving();
+		}
 		dataClientManager.setUserLocal(null);
 	}
 
@@ -104,54 +112,36 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#observerLeave()
-	 */
+
 	@Override
 	public void observerLeave() {
-		// TODO Auto-generated method stub
+		dataClientManager.getIClientComToData().observerLeave(dataClientManager.getUserLocal().getId());
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#requestPlayerForLeaving
-	 * ()
-	 */
+
 	@Override
 	public void requestPlayerForLeaving() {
-		// TODO Auto-generated method stub
+		//TODO: le second paramètre, c'est fait pour quoi?
+		dataClientManager.getIClientComToData().requestPlayerForLeaving(dataClientManager.getUserLocal().getId(), true);
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#sendAnserForLeaving(
-	 * boolean)
-	 */
+
 	@Override
 	public void sendAnserForLeaving(boolean answer) {
-		// TODO Auto-generated method stub
+//		TODO: dataClientManager.getIClientComToData().sendAnswer(answer, dataClientManager.getUserLocal());
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#updateProfile(com.utc.
-	 * api13.commun.entities.PrivateUserEntity)
-	 */
 	@Override
-	public void updateProfile(PrivateUserEntity user) {
-		// TODO Auto-generated method stub
-
+	public void updateProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException {
+		//delete the existing info
+		userService.deleteById(user.getId());
+		//Store the new one
+		userService.save(user);
+		//notify the server
+		dataClientManager.getIClientComToData().sendUserUpdates(new PublicUserEntity(user));
 	}
 
 	/*
@@ -179,18 +169,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#updateProfil(com.utc.
-	 * api13.commun.entities.UserEntity)
-	 */
-	@Override
-	public void updateProfil(PublicUserEntity user) {
-		// TODO Auto-generated method stub
-
-	}
 
 	/*
 	 * (non-Javadoc)

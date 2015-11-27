@@ -41,15 +41,33 @@ public interface IClientDataToCom {
     void displayAllGames(final List<GameEntity> games);
 
     void displayResult(final UUID idPlayer, final MoveEntity move);
+    
+    /**
+     * Add a new message to the chat
+     * @param message message to add to the chat
+     */
 
     void sendMessageToChat(final MessageEntity message);
 
+    /**
+     * Sends the decision of opponent user after leaving request of the local user
+     * @param answer true if ok to leave and false if not
+     */
     void sendAnswerForLeaving(final boolean answer);
+    
+    /**
+     * Leaving Request sent by the opponent player 
+     * @param uid oppinent player uid
+     */
 
     void requestPlayerForLeaving(final UUID uid);
 
     void endGameByLeaving();
 
+    /**
+     * notifies the local user that his (her) information have been updated successfully
+     * @param message message
+     */
     void notify(final String message);
 
     void initGame(final GameEntity game);
