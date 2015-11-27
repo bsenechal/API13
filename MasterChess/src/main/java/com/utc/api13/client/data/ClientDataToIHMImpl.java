@@ -61,7 +61,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	@Override
 	public void getAllGames() {
 		dataClientManager.getIClientComToData().getAllParties();
-
 	}
 
 	@Override
@@ -85,11 +84,15 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public void disconnect() {		
-//		if(gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
-//			observerLeave();
-//		} else {
-//			requestPlayerForLeaving();
-//		}
+	    Assert.notNull(gameService, "[ClientDataToIHMImpl][disconnect] GameService shouldn't be null");
+	    
+	    if (dataClientManager.getCurrentGame() != null){
+    		if(gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
+    			observerLeave();
+    		} else {
+    			requestPlayerForLeaving();
+    		}
+	    }
 		dataClientManager.setUserLocal(null);
 	}
 
