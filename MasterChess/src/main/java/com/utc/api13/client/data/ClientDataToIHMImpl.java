@@ -142,7 +142,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 		//delete the existing info
 		userService.deleteById(user.getId());
 		//Store the new one
+		
 		userService.save(user);
+		this.dataClientManager.setUserLocal(user);
 		//notify the server
 		dataClientManager.getIClientComToData().sendUserUpdates(new PublicUserEntity(user));
 	}
@@ -157,7 +159,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	@Override
 	public void notify(String message) {
 		// TODO Auto-generated method stub
-
 	}
 
 
@@ -255,10 +256,14 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         userService.save(user);
     }
 
+    /**
+     * @author Hugo R-L
+     * @return PrivateUserEntity LocalUser
+     */
 	@Override
 	public PrivateUserEntity getLocalUser() {
-		// TODO Auto-generated method stub
-		return null;
+	    Assert.notNull(this.dataClientManager.getUserLocal(),"[ClientDataToIHMImpl][getLocalUser()] Local user in dataClientManager shouldn't be null" );
+		return this.dataClientManager.getUserLocal();
 	}
 
 	@Override
