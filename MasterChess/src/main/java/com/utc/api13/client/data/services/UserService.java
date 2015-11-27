@@ -3,6 +3,7 @@ package com.utc.api13.client.data.services;
 
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -90,6 +91,16 @@ public class UserService{
 		}
 		//save user
 		save(privateUser);
+	}
+	
+	/**
+	 * Gets the storage file of given user
+	 * @param user user
+	 * @return file
+	 */
+	public File exportProfile(PrivateUserEntity user) {
+		URL url = UserService.class.getClassLoader().getResource("user" + File.separator + user.getLogin() + "_" + user.getId());
+		return new File(url.getFile());
 	}
 
 }

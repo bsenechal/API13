@@ -282,7 +282,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public File exportProfile() {
-		return null;
+		return userService.exportProfile(dataClientManager.getUserLocal());
 	}
 
 
