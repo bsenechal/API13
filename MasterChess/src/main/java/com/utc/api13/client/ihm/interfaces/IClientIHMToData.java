@@ -1,5 +1,7 @@
 package com.utc.api13.client.ihm.interfaces; 
 
+import com.utc.api13.commun.entities.PublicUserEntity;
+
 public interface IClientIHMToData {
 	//corriger les types de retour et les paramètres au fur et à mesure .. !
 	
@@ -29,5 +31,10 @@ public interface IClientIHMToData {
 	public void propositionOfGameDenied(); 
 	public void didReceiveListOfOngoingAndReplayedGames(); 
 	public void didReceiveErrorInChatMessage(); 
+	
+	/**
+	 * Display distant profile 
+	 */
+	public void displayProfile(PublicUserEntity u); 
 	
 }

@@ -3,6 +3,7 @@ package com.utc.api13.client.ihm.controllers;
 import java.io.IOException;
 
 import com.utc.api13.client.AppClient;
+import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 
@@ -117,8 +118,8 @@ public class IHMWelcomePageController {
 	
 	public void setMainApp(AppClient app) {
 		this.mainApp=app; 
-		//this.currentGamesLabel.setText(""); 
-        //initialiser avec login de l'user connecté : ATTENTE DATA 
+		//PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
+		//et directement initialiser le login
 	}
 	
 	public void setListConnectedUser() {
