@@ -19,7 +19,7 @@ public class UserService{
 	 * @param password password
 	 * @throws TechnicalException technical exception
 	 */
-	public PrivateUserEntity getByLoginAndPassword(String login, String password) throws TechnicalException{
+	public PrivateUserEntity getByLoginAndPassword(final String login, final String password) throws TechnicalException{
 		return userDAO.getByLoginAndPassword(login, password);
 	}
 
@@ -30,7 +30,7 @@ public class UserService{
 	 * @throws TechnicalException technical exception
 	 * @throws FunctionalException functional exception
 	 */
-	public void save(PrivateUserEntity user) throws TechnicalException, FunctionalException{
+	public void save(final PrivateUserEntity user) throws TechnicalException, FunctionalException{
 		validateInstance(user);
 		userDAO.save(user);
 	}
@@ -54,7 +54,7 @@ public class UserService{
 	 * @param user the user to delete
 	 * @throws TechnicalException when deletion fails
 	 */
-	public void delete(PrivateUserEntity user) throws TechnicalException{
+	public void delete(final PrivateUserEntity user) throws TechnicalException{
 		userDAO.delete(user);
 	}
 
@@ -63,7 +63,7 @@ public class UserService{
 	 * Works in any case
 	 * @param userId id of user to delete
 	 */
-	public void deleteById(UUID userId) {
+	public void deleteById(final UUID userId) {
 		userDAO.deleteById(userId);
 		
 	}

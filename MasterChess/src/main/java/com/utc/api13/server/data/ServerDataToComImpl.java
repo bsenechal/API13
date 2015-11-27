@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.util.Assert;
+
 //import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
@@ -35,6 +37,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
     @Override
     public PublicUserEntity getUserInfo(final UUID idUser) {
+        Assert.notNull(idUser, "[ServerDataToComImpl][getUserInfo] idUser shouldn't be null"); 
+        Assert.notNull(dataServerManager.getCurrentUsers(), "[ServerDataToComImpl][getUserInfo] currentUsers shouldn't be null"); 
         return dataServerManager.getCurrentUsers().stream().filter(u -> u.getId().equals(idUser)).findFirst().orElse(null);
     }
 
@@ -53,6 +57,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public void notifyConnections(final PublicUserEntity player) {
+        Assert.notNull(dataServerManager.getCurrentUsers(), "[ServerDataToComImpl][notifyConnections] currentUsers shouldn't be null"); 
         dataServerManager.getCurrentUsers().add(player);
     }
 
@@ -84,7 +89,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
 
     @Override
-    public void observerLeave(UUID idUser) {
+    public void observerLeave(final UUID idUser) {
+        Assert.notNull(dataServerManager.getCurrentUsers(), "[ServerDataToComImpl][observerLeave] currentUsers shouldn't be null"); 
         dataServerManager.getCurrentGames().stream().forEach(game -> 
         {
         	game.getObservers().removeIf(u -> idUser.equals(u.getId()));
@@ -109,6 +115,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
     @Override
     public void saveUserData(final PublicUserEntity user) {
+        Assert.notNull(dataServerManager.getCurrentUsers(), "[ServerDataToComImpl][saveUserData] currentUsers shouldn't be null"); 
     	Map<Boolean, List<PublicUserEntity>> map = dataServerManager.getCurrentUsers().stream().collect(Collectors.partitioningBy(u -> u.getId().equals(user.getId())));
         List<PublicUserEntity> currentUsers = map.get(false);
         currentUsers.add(user);
@@ -154,6 +161,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
 
     public List<PublicUserEntity> getUsersByGame(final UUID idGame) {
+        Assert.notNull(dataServerManager.getCurrentGames(), "[ServerDataToComImpl][getUsersByGame] currentGames shouldn't be null"); 
         List<PublicUserEntity> listUsersByGame = new ArrayList<PublicUserEntity>();
 
         // variable containing the corresponding idGame Game.
@@ -203,6 +211,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public void disconnect(final UUID idUser) {
+        Assert.notNull(dataServerManager.getCurrentUsers(), "[ServerDataToComImpl][disconnect] currentUsers shouldn't be null"); 
         dataServerManager.getCurrentUsers().removeIf(user -> user.getId() == idUser);
     }
 
@@ -211,6 +220,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     public ServerDataToComImpl(DataServerManager dataServerManager) {
         super();
+        Assert.notNull(dataServerManager, "[ServerDataToComImpl][Constructor] dataServerManager shouldn't be null"); 
         this.dataServerManager = dataServerManager;
     }
 }

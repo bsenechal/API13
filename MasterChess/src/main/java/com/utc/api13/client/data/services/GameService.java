@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.util.Assert;
+
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
@@ -19,7 +21,8 @@ public class GameService{
 	 * @return Returns the list of games observed by a user 
 	 * @throws DataAccessException data access exception
 	 */
-	public List<GameEntity> getObservedGames(PrivateUserEntity user) throws TechnicalException{
+	public List<GameEntity> getObservedGames(final PrivateUserEntity user) throws TechnicalException{
+	    Assert.notNull(user, "[GameService][getObservedGames] user shouldn't be null");
 		return user.getSavedGames().stream().filter(g -> !(g.getBlackPlayer().getId().equals(user.getId())||g.getWhitePlayer().getId().equals(user.getId()))).collect(Collectors.toList());
 	}
 
@@ -35,7 +38,10 @@ public class GameService{
 	 * @return true if and only if the user is an observer of the game
 	 */
 	public boolean isObserver(final GameEntity game, final UUID userId) {
-	    return (game.getObservers() != null) ? game.getObservers().stream().anyMatch(u -> userId.equals(u.getId())) : false;
+	    Assert.notNull(game, "[GameService][isObserver] game shouldn't be null");
+	    Assert.notNull(game.getObservers(), "[GameService][isObserver] game.getObservers() shouldn't be null");
+	    Assert.notNull(userId, "[GameService][isObserver] userId shouldn't be null");
+	    return game.getObservers().stream().anyMatch(u -> userId.equals(u.getId()));
 	}
 }
 

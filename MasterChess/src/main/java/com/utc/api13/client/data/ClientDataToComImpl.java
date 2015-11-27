@@ -6,6 +6,8 @@ package com.utc.api13.client.data;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.util.Assert;
+
 import com.utc.api13.client.data.interfaces.IClientDataToCom;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
@@ -51,6 +53,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 */
 	@Override
 	public void displayUsersList(List<PublicUserEntity> connectedUserList) {
+	    Assert.notNull(connectedUserList, "[ClientDataToComImpl][displayUsersList] connectedUserList shouldn't be null");
+	    Assert.notNull(instanceDataClientManager.getUserLocal(), "[ClientDataToComImpl][displayUsersList] UserLocal shouldn't be null");
+	    Assert.notNull(instanceDataClientManager.getCurrentUsers(), "[ClientDataToComImpl][displayUsersList] currentUsers shouldn't be null");
+        
 		connectedUserList.forEach(u -> {
 			if(u.getId().equals(instanceDataClientManager.getUserLocal().getId())){
 				connectedUserList.remove(u);
@@ -84,7 +90,9 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 
 	@Override
-	public void displayAllGames(List<GameEntity> games) {
+	public void displayAllGames(final List<GameEntity> games) {
+	    Assert.notNull(instanceDataClientManager.getCurrentGames(), "[ClientDataToComImpl][displayAllGames] currentGames shouldn't be null");
+        
 		instanceDataClientManager.getCurrentGames().clear();
 		instanceDataClientManager.getCurrentGames().addAll(games);
 
@@ -247,6 +255,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     public ClientDataToComImpl(DataClientManager instanceDataClientManager) {
         super();
+        Assert.notNull(instanceDataClientManager, "[ClientDataToComImpl][Constructor] dataClientManager shouldn't be null");
         this.instanceDataClientManager = instanceDataClientManager;
     }
 }
