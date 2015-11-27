@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.data.DataClientManager;
+import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 
+import javafx.collections.ObservableList;
 
 /**
  * 
@@ -16,49 +18,35 @@ import com.utc.api13.commun.entities.PublicUserEntity;
  * @author ulyss_000
  *
  */
-public interface IClientDataToCom {
-	
 
-	/**
-	 * @author ulyss_000
-	 * This method will set the ClientDataManger ObservableList<AUserEntity> currentUsers
-	 * -> it will not add the localuser to currentUsers if existing in the connectedUserList parameter
-	 * @param connectedUserList
-	 */
-    void displayUsersList(final List<PublicUserEntity> connectedUserList);
+//Cette Interface sert à recevoir les réponses de Com
+//Com n'appelle pas les méthodes de ces interfaces à l'aide de méthodes, mais à l'aide de proceed.
+
+public interface IClientDataToCom {
+    
+
+    /**
+     * This method will set the ClientDataManger ObservableList<AUserEntity> currentUsers
+     * -> it will not add the localuser to currentUsers if existing in the connectedUserList parameter
+     * @param connectedUserList
+     */
+    void displayUsersList(final List<PublicUserEntity> connectedUserList);          //Affiche (récupère pour affichege IHM) la liste des PublicUserEntity connectés
 
     /**
      * 
      * @param user
      */
-    void displayProfile(final PublicUserEntity user);
+    void displayProfile(final PublicUserEntity user);                               //Affiche un Profil de PublicUserEntity distant
 
     void print_error(final String error);
-    /*
-     * Displays list of users
-     */
 
-    void displayAllGames(final List<GameEntity> games);
+    void displayAllGames(final List<GameEntity> games);                             //Affiche (récupère pour affichege IHM) la liste des GameEntity en cours
 
     void displayResult(final UUID idPlayer, final MoveEntity move);
-    
-    /**
-     * Add a new message to the chat
-     * @param message message to add to the chat
-     */
 
     void sendMessageToChat(final MessageEntity message);
 
-    /**
-     * Sends the decision of opponent user after leaving request of the local user
-     * @param answer true if ok to leave and false if not
-     */
     void sendAnswerForLeaving(final boolean answer);
-    
-    /**
-     * Leaving Request sent by the opponent player 
-     * @param uid oppinent player uid
-     */
 
     void requestPlayerForLeaving(final UUID uid);
 
@@ -70,30 +58,26 @@ public interface IClientDataToCom {
      */
     void notify(final String message);
 
-    void initGame(final GameEntity game);
+    void initGame(final GameEntity game);                                           //La GameEntity est créé sur le serveur. Cette méthode initialise l'instance de la GameEntity sur le client
 
     void newObserver(final UUID idObserver);
 
-    void newPlayer(final UUID idPlayer);
+    void newPlayer(final UUID idPlayer);                                            //Etant donné qu'un GameEntity est créé sur le serveur avec deux users, cette méthode semble inutile
 
     void newReplay(final GameEntity game);
 
-    void sendProposition(final UUID uidSender, final UUID uidReciever, final boolean observable, final boolean chattable);
+    void sendProposition(final UUID uidSender, final UUID uidReciever, final boolean observable, final boolean chattable);      //A quoi sert cette méthode dans les méthodes utilisées par le "retour" de com ?
 
-    void printProposition(final UUID uidSender, final boolean observable, final boolean chattable);
+    void printProposition(final UUID uidSender, final boolean observable, final boolean chattable);     //Affiche la proposition de jeu d'un autre joueur. "Voulez vous jouer avec moi ?"
 
     void victoryBySurrender();
 
     void endGameBySurrender();
 
-    /**
-     * Calls the IHM module displayMessage method to display a message on the chat
-     * @param message message to display
-     */
     void displayMessage(final String message);
 
     DataClientManager getInstanceDataClientManager();
 
     void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
-	
+    
 }

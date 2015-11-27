@@ -34,8 +34,8 @@ public class GameService{
 	 * @param userId id of the user to check
 	 * @return true if and only if the user is an observer of the game
 	 */
-	public boolean isObserver(GameEntity game, UUID userId) {
-		return game.getObservers().stream().anyMatch(u -> userId.equals(u.getId()));
+	public boolean isObserver(final GameEntity game, final UUID userId) {
+	    return (game.getObservers() != null) ? game.getObservers().stream().anyMatch(u -> userId.equals(u.getId())) : false;
 	}
 }
 

@@ -13,6 +13,7 @@ import com.utc.api13.commun.exceptions.TechnicalException;
 
 import javafx.collections.ObservableList;
 
+//Cette interface est mise à disposition de IHM. Elle permet d'appeler les méthodes chez Data pour réaliser les actions correspondants aux actions sur l'IHM
 
 public interface IClientDataToIHM {
     
@@ -68,6 +69,10 @@ public interface IClientDataToIHM {
      * informs the server that the local user is leaving the game he(she) is playing
      */
     public void requestPlayerForLeaving();
+    
+    /**
+     * TODO: à revoir
+     */
     
     public void otherPlayerLeaving();
     
@@ -131,6 +136,11 @@ public interface IClientDataToIHM {
      */
     public void sendChatText(String message);
 
+    /**
+     * 
+     * @return Returns list of online users
+     */
+    public ObservableList<PublicUserEntity> getUserList();
     
     /**
      * Creates a new user
@@ -172,10 +182,4 @@ public interface IClientDataToIHM {
   	 * @return file containing the user profile
   	 */
   	public File exportProfile();
-
-  	/**
-  	 * 
-  	 * @return Returns the list of connected users
-  	 */
-	ObservableList<PublicUserEntity> getUserList();
 }

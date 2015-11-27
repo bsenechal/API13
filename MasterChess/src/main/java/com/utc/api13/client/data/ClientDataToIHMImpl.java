@@ -39,6 +39,11 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      */
     private GameService gameService;
 
+    @Override
+    public ObservableList<PublicUserEntity> getUserList() {
+        return dataClientManager.getCurrentUsers();
+    }
+
 
 	@Override
 	public void getUsers() {
@@ -257,10 +262,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 		return null;
 	}
 
-	@Override
-	public ObservableList<PublicUserEntity> getUserList() {
-		return dataClientManager.getCurrentUsers();
-	}
 
 	@Override
 	public void importProfile(File file) throws FunctionalException, TechnicalException {
