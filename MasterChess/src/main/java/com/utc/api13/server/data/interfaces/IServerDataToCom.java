@@ -6,8 +6,6 @@ import java.util.UUID;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.exceptions.FunctionalException;
-import com.utc.api13.commun.exceptions.TechnicalException;
 
 public interface IServerDataToCom {
     public List<PublicUserEntity> getUsers();
@@ -18,10 +16,16 @@ public interface IServerDataToCom {
     public boolean isFinished (final String idGame);
     public void observerLeave(final UUID idUser);
     public List<PublicUserEntity> getListObservers();
-    public void saveUserData(final PublicUserEntity User) throws TechnicalException, FunctionalException;
+    public void saveUserData(final PublicUserEntity User);
     public void newObserver(final int idGame, final UUID idUser);
     public void createReplay(final GameEntity game, final PublicUserEntity user);
     public List<PublicUserEntity> getConnectedUsers();
+    /**
+     * list of the Users (observers and players) connected to a specified Game
+     * @param idGame
+     * @return the list of found users or null if the game doesn't exist or an empty List<PublicUserEntity> if there are no players
+     */
+    public List<PublicUserEntity> getUsersByGame(final UUID idGame);
     public void surrender(final UUID idPlayer);
     public void disconnect(final UUID idUser);
 }

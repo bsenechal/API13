@@ -20,8 +20,9 @@ import junit.framework.TestCase;
  * @param <T> le type du bean à gérer
  */
 public abstract class DataServiceTest {
+//
 //<T extends ADataEntity> extends TestCase{
-
+//
 //	/**
 //	 *
 //	 * @return Returns an entity without an id <br/> Used in belowing methods to create a new entity ans save to the files

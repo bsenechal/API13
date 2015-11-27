@@ -1,4 +1,4 @@
-package com.utc.api13.client.ihm.controllers; 
+package com.utc.api13.client.ihm.controllers;
 
 import java.io.IOException;
 
@@ -25,6 +25,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+<<<<<<< HEAD
 
 public class IHMWelcomePageController {
 	private IHMManager IHMManager; 
@@ -140,3 +141,4 @@ public class IHMWelcomePageController {
 	
 
 }
+

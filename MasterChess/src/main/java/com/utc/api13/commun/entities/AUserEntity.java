@@ -1,5 +1,7 @@
 package com.utc.api13.commun.entities;
 
+import java.util.UUID;
+
 public abstract class AUserEntity extends ADataEntity {
 	
     private static final long serialVersionUID = 5601063024006338259L;
@@ -11,6 +13,19 @@ public abstract class AUserEntity extends ADataEntity {
 	private int nbLost;
 	private boolean status;
 	
+	
+	public AUserEntity() {
+		super();
+	}
+	
+	/**
+	 * @param login
+	 */
+	public AUserEntity(String login, String password) {
+		super();
+		this.login = login;
+		this.setId(UUID.randomUUID());
+	}
 	
 	/**
 	 * @return the login
@@ -96,7 +111,4 @@ public abstract class AUserEntity extends ADataEntity {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	
-
-
 }
