@@ -81,5 +81,4 @@ public interface IClientDataToIHM {
   //TODO
   //Si le  (IClientDataToCom.)printProposition()  ne renvoie pas directement la réponse à com pour dire si un User à accepté la partie, il faudra créer la méthode de réponse 
   //answerProposition(final UUID uidSender, final UUID uidReciever, final boolean observable, final boolean chattable, boolean answer); qui va appeler com.answerProposition(...)
-    
 }
