@@ -9,6 +9,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.log4j.Logger;
 
+import com.utc.api13.commun.messages.ConnectMessage;
+import com.utc.api13.commun.messages.DisconnectMessage;
 import com.utc.api13.commun.messages.HeartBeat;
 import com.utc.api13.commun.messages.Message;
 
@@ -31,7 +33,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 
 	private static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-	private static HashMap<UUID, ChannelHandlerContext> channelHandlerContextMap= new HashMap<UUID, ChannelHandlerContext>();
+	
 	private static final Logger logger = Logger.getLogger(ServerHanlder.class);
 	
 	// ping_lost_map stores ping lost count for each channel -> unique attribute ping_lost may cause unexpected channel closure
@@ -59,14 +61,11 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 		
 		ping_lost_map.remove(incoming);
 		//TODO Notify user disconnection
-	}
+	} 
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext arg0, Message arg1)
 			throws Exception {
-		if (channelHandlerContextMap.get(arg1.getSender()) !=null){
-			channelHandlerContextMap.put(arg1.getSender(), arg0);
-		}
 		Channel incoming = arg0.channel();
 		
 		arg1.proceedServer(arg0,comServerManager);
@@ -79,7 +78,7 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 		if (evt instanceof IdleStateEvent) { // IdleStateEvent fired when no inbound messages
 			IdleStateEvent e = (IdleStateEvent) evt;
 			if (e.state() == IdleState.WRITER_IDLE) {
-				logger.info("Channel IDLE : sending Hello");
+				//logger.info("Channel IDLE : sending Hello");
 				ctx.writeAndFlush(new HeartBeat(new UUID(0, 0), new UUID(0, 0), null));
 				
 				//incrementing concerned channel's counter
@@ -95,7 +94,12 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 	
 	@Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        cause.printStackTrace();
+        //cause.printStackTrace();
+		UUID userId= comServerManager.findUserIdFromChannelHandlerContext(ctx);
+		logger.warn("User : " + userId + " quit application, broadcast disconnection");
+		comServerManager.unlinkUserToChannelHandlerContext(userId);
+		DisconnectMessage msg = new DisconnectMessage(userId, new UUID(0, 0),userId);
+        comServerManager.broadcastMessage(msg);
         ctx.close();
     }
 	
@@ -116,19 +120,7 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 		}
 	}
 
-	/**
-	 * @return the channelHandlerContextMap
-	 */
-	public static HashMap<UUID, ChannelHandlerContext> getChannelHandlerContextMap() {
-		return channelHandlerContextMap;
-	}
 
-	/**
-	 * @param channelHandlerContextMap the channelHandlerContextMap to set
-	 */
-	public static void setChannelHandlerContextMap(HashMap<UUID, ChannelHandlerContext> channelHandlerContextMap) {
-		ServerHanlder.channelHandlerContextMap = channelHandlerContextMap;
-	}
 
 	/**
 	 * @return the comServerManager
