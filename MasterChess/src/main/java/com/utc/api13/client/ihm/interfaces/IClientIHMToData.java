@@ -47,6 +47,10 @@ public interface IClientIHMToData {
 	 * display the game for an observer -live
 	 */
 	public void displayGameLiveObserver(); 
+	/**
+	 * when a user leaves before the end of the game, he needs the approbation of the other one to change the final score
+	 */
+	//displayAnswerForLeaving(boolean answer)
 	
 	/*public void didReceiveBoard(); 
 	public void didReceiveEndOfGameBySurrender(); 
