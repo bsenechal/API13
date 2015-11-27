@@ -65,7 +65,7 @@ public interface IClientDataToCom {
     void endGameByLeaving();
 
     /**
-     * notifies the local user that his (her) information have been updated successfully
+     * TODO: unnecessary
      * @param message message
      */
     void notify(final String message);

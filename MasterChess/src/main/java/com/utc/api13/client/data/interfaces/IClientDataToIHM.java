@@ -1,5 +1,6 @@
 package com.utc.api13.client.data.interfaces;
 
+import java.io.File;
 import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -27,6 +28,12 @@ public interface IClientDataToIHM {
     public void getUserInfo(final UUID iduser);
     
     /**
+     * 
+     * @return Returns the local user
+     */
+    public PrivateUserEntity getLocalUser();
+    
+    /**
      * Demands all games from server
      */
     public void getAllGames();
@@ -45,6 +52,11 @@ public interface IClientDataToIHM {
      */
     public void disconnect();
     
+    /**
+     * Moves a piece to the given position
+     * @param piece
+     * @param position
+     */
     public void move(PieceEntity piece, PositionEntity position);
     
     /**
@@ -57,7 +69,7 @@ public interface IClientDataToIHM {
      */
     public void requestPlayerForLeaving();
     
-    public void sendAnserForLeaving(boolean answer);
+    public void otherPlayerLeaving();
     
     /**
      * Updates the info of local user
@@ -68,14 +80,29 @@ public interface IClientDataToIHM {
     
     public void updateProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException;
     
-    public void sendUserUpdates(PublicUserEntity user);
     
+    //TODO:à virer
     public void notify (String message);
     
-    public void watchGame (String idGame);
+    /**
+     * local user asks to watch game
+     * @param idGame id of game to watch
+     */
+    public void watchGame (UUID idGame);
     
-    public void chargeReplayFromFile(String file);
+    /**
+     * Replays a game
+     * do not call the server
+     * only between ihm and data
+     * @param idGame id of the game
+     */
+    public void chargeReplay(UUID idGame);
     
+    /**
+     * Begins the replay of saved game
+     * Informs the server of the new game
+     * Update the list of games
+     */
     public void beginReplay();
     
     /**
@@ -88,6 +115,12 @@ public interface IClientDataToIHM {
     
     public GameEntity getCurrentGame();
     
+    /**
+     * Creates a game proposition and sends it to the other player
+     * @param uidReciever opponent
+     * @param chattable true if the chat is allowed
+     * @param observable true if observers are allowed
+     */
     public void createProposition(UUID uidReciever, boolean chattable, boolean observable);
     
     public void surrender();
@@ -98,7 +131,6 @@ public interface IClientDataToIHM {
      */
     public void sendChatText(String message);
 
-    public ObservableList<PublicUserEntity> getUserList();
     
     /**
      * Creates a new user
@@ -109,5 +141,41 @@ public interface IClientDataToIHM {
     
   	public void createProfile(PrivateUserEntity user) throws FunctionalException, TechnicalException;
   	
+  	/**
+  	 * Sends the decision of the local user to the other distant proposer
+  	 * @param idUser id of reciever
+  	 * @param answer answer
+  	 */
+  	public void sendResponse(UUID idUser, boolean answer);
   	//TODO : endGameByLeaving
+  	
+  	/**
+  	 * Imports the profile of the user contained in file into the app
+  	 * @param file file containing the profile of user
+  	 * @param force if the same user is found in storage, the ancient one is overwritten if force is true otherwise an exception is thrown
+  	 * @throws FunctionalException when a user with same id exists already
+  	 * @throws TechnicalException error while saving
+  	 */
+  	public void importProfile(File file, boolean force) throws FunctionalException, TechnicalException;
+  	
+  	/**
+  	 * calls the importProfile (File file, boolean force) method with force parameter at false<br/>
+  	 * To call at the first time
+  	 * @param file file containing the profile to import
+  	 * @throws FunctionalException when a user with same id exists already
+  	 * @throws TechnicalException error while saving
+  	 */
+  	public void importProfile(File file) throws FunctionalException, TechnicalException;
+  	
+  	/**
+  	 * Exports the local user profile so that the user will be able to import it in an other app
+  	 * @return file containing the user profile
+  	 */
+  	public File exportProfile();
+
+  	/**
+  	 * 
+  	 * @return Returns the list of connected users
+  	 */
+	ObservableList<PublicUserEntity> getUserList();
 }

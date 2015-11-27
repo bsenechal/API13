@@ -3,6 +3,7 @@
  */
 package com.utc.api13.client.data;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -37,18 +38,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      * game service
      */
     private GameService gameService;
-        
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.client.data.interfaces.IClientToIHM#getUserList(java.util.
-     * List)
-     */
-    @Override
-    public ObservableList<PublicUserEntity> getUserList() {
-        return dataClientManager.getCurrentUsers();
-    }
 
 
 	@Override
@@ -82,19 +71,16 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 		//Notify the server
 		PublicUserEntity publicUser = new PublicUserEntity(privateUser);
 		dataClientManager.getIClientComToData().notifyConnection(publicUser);
-		//Open the main frame
-		//dataClientManager.getIClientIHMToData().openFrame()
 	}
 
 
 	@Override
-	public void disconnect() {
-		
-		if(gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
-			observerLeave();
-		} else {
-			requestPlayerForLeaving();
-		}
+	public void disconnect() {		
+//		if(gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
+//			observerLeave();
+//		} else {
+//			requestPlayerForLeaving();
+//		}
 		dataClientManager.setUserLocal(null);
 	}
 
@@ -129,7 +115,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 
 	@Override
-	public void sendAnserForLeaving(boolean answer) {
+	public void otherPlayerLeaving() {
 //		TODO: dataClientManager.getIClientComToData().sendAnswer(answer, dataClientManager.getUserLocal());
 
 	}
@@ -144,18 +130,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 		dataClientManager.getIClientComToData().sendUserUpdates(new PublicUserEntity(user));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#sendUserUpdates(com.utc
-	 * .api13.commun.entities.PublicUserEntity)
-	 */
-	@Override
-	public void sendUserUpdates(PublicUserEntity user) {
-		// TODO Auto-generated method stub
-
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -170,28 +144,16 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	}
 
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#watchGame(java.lang.
-	 * String)
-	 */
+
 	@Override
-	public void watchGame(String idGame) {
+	public void watchGame(UUID idGame) {
 		// TODO Auto-generated method stub
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#chargeReplayFromFile(
-	 * java.lang.String)
-	 */
+
 	@Override
-	public void chargeReplayFromFile(String file) {
+	public void chargeReplay(UUID idGame) {
 		// TODO Auto-generated method stub
 
 	}
@@ -208,11 +170,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	}
 
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#saveGame()
-	 */
+	
 	@Override
 	public void saveGame() throws TechnicalException, FunctionalException {
 		dataClientManager.getUserLocal().getSavedGames().add(dataClientManager.getCurrentGame());
@@ -273,5 +231,41 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public void createProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException{
         userService.save(user);
     }
+
+	@Override
+	public PrivateUserEntity getLocalUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void sendResponse(UUID idUser, boolean answer) {
+		if(answer) {
+			//Créer un game et l'ajouter à la liste des games
+			//Ajouter sur le server
+		}
+		
+	}
+
+	@Override
+	public void importProfile(File file, boolean force) throws FunctionalException, TechnicalException{
+		
+	}
+
+	@Override
+	public File exportProfile() {
+		return null;
+	}
+
+	@Override
+	public ObservableList<PublicUserEntity> getUserList() {
+		return dataClientManager.getCurrentUsers();
+	}
+
+	@Override
+	public void importProfile(File file) throws FunctionalException, TechnicalException {
+		this.importProfile(file, true);
+		
+	}
 }
 

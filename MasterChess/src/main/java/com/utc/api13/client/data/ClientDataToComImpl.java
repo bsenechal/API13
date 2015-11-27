@@ -208,16 +208,9 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#printProposition(java.
-	 * util.UUID, boolean, boolean)
-	 */
 	@Override
 	public void printProposition(UUID uidSender, boolean observable, boolean chattable) {
-		// TODO Auto-generated method stub
+		// TODO à faire
 
 	}
 
