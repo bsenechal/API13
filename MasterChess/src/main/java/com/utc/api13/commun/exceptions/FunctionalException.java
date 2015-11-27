@@ -12,7 +12,8 @@ import com.utc.api13.commun.Erreur;
 
 public class FunctionalException extends Exception {
 
-	/**
+    private static final long serialVersionUID = -7559305873860060208L;
+    /**
      * Object erreurs listant les erreurs levée pour l'exception
      */
     private final List<Erreur> erreurs;

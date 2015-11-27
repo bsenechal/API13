@@ -3,10 +3,13 @@ package com.utc.api13.commun.dao;
 import java.io.File;
 import java.util.UUID;
 
+import org.springframework.util.Assert;
+
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 import com.utc.api13.commun.utils.StorageUtils;
+
 
 public class UserDAO{
 
@@ -16,7 +19,8 @@ public class UserDAO{
     }
 
     
-    public void delete(PrivateUserEntity user) throws TechnicalException {
+    public void delete(final PrivateUserEntity user) throws TechnicalException {
+        Assert.notNull(user, "[UserDAO][delete] user shouldn't be null");
         StorageUtils.delete(user.getLogin() + "_" + user.getId());
     }
 
@@ -25,7 +29,7 @@ public class UserDAO{
      * Deletes user's stored info
      * @param userId user id
      */
-    public void deleteById(UUID userId) {
+    public void deleteById(final UUID userId) {
     	File[] listOfFiles = StorageUtils.getAllFiles();
     	for(File file : listOfFiles){
     		if(file.getName().endsWith("_" + userId)) {
@@ -44,7 +48,7 @@ public class UserDAO{
      * @return the first occurence of found user, otherwise null
      * @throws TechnicalException 
      */
-    public PrivateUserEntity getByLoginAndPassword(String login, String password) throws TechnicalException {
+    public PrivateUserEntity getByLoginAndPassword(final String login, final String password) throws TechnicalException {
     	File[] listOfFiles = StorageUtils.getAllFiles();
     	PrivateUserEntity user = null;
     	for(File file: listOfFiles) {

@@ -7,6 +7,9 @@ import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+
+import org.springframework.util.Assert;
+
 import java.io.File;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -28,7 +31,8 @@ public class StorageUtils{
      * @param user user to store
      * @throws DataAccessException input/output exception
      */
-    public static void write(PrivateUserEntity user)throws DataAccessException{
+    public static void write(final PrivateUserEntity user)throws DataAccessException{
+        Assert.notNull(user, "[StorageUtils] User shouldn't be null");
         try {
         	String filePath = PATH.getAbsolutePath()+File.separator+user.getLogin()+"_"+user.getId()+".ser";
         	//First let's try to create the file
@@ -58,7 +62,7 @@ public class StorageUtils{
      * @return read user
      * @throws TechnicalException 
      */
-    public static PrivateUserEntity read(String fileName)throws TechnicalException{
+    public static PrivateUserEntity read(final String fileName)throws TechnicalException{
         try {
         	File file = new File(PATH.getAbsolutePath() +File.separator + fileName);
         	if(!file.exists()) {
@@ -92,7 +96,7 @@ public class StorageUtils{
      * @param fileName file to delete
      * @throws TechnicalException when deletion fails
      */
-    public static void delete(String fileName) throws TechnicalException{
+    public static void delete(final String fileName) throws TechnicalException{
     	String filePath = PATH.getAbsolutePath() + File.separator + fileName + ".ser";
         File file = new File(filePath);
 		if(!file.delete()) {

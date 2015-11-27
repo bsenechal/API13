@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.util.Assert;
+
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.data.services.GameService;
@@ -69,7 +71,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	}
 
 	@Override
-	public void connect(String login, String password) throws FunctionalException, TechnicalException {
+	public void connect(final String login, final String password) throws FunctionalException, TechnicalException {
+	    Assert.notNull(userService, "[ClientDataToIHMImpl][connect] userService shouldn't be null");
+
 		//Check the login and password
 		PrivateUserEntity privateUser = userService.getByLoginAndPassword(login, password);
 		if(privateUser == null) {
@@ -89,6 +93,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public void disconnect() {
+	    Assert.notNull(gameService, "[ClientDataToIHMImpl][disconnect] gameService shouldn't be null");
+
 		if (dataClientManager.getCurrentGame() != null) {
     		if(gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
     			observerLeave();
@@ -116,6 +122,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public void observerLeave() {
+	    Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][observerLeave] UserLocal shouldn't be null");
+
 		dataClientManager.getIClientComToData().observerLeave(dataClientManager.getUserLocal().getId());
 
 	}
@@ -123,6 +131,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public void requestPlayerForLeaving() {
+	    Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][requestPlayerForLeaving] UserLocal shouldn't be null");
 		//TODO: le second paramètre, c'est fait pour quoi?
 		dataClientManager.getIClientComToData().requestPlayerForLeaving(dataClientManager.getUserLocal().getId(), true);
 
@@ -137,6 +146,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public void updateProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException {
+	    Assert.notNull(user, "[ClientDataToIHMImpl][updateProfile] user shouldn't be null");
+        
 		//delete the existing info
 		userService.deleteById(user.getId());
 		//Store the new one
@@ -216,6 +227,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 */
 	@Override
 	public void saveGame() throws TechnicalException, FunctionalException {
+	    Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][saveGame] UserLocal shouldn't be null");
+	    Assert.notNull(dataClientManager.getUserLocal().getSavedGames(), "[ClientDataToIHMImpl][saveGame] SavedGames shouldn't be null");
+	            
 		dataClientManager.getUserLocal().getSavedGames().add(dataClientManager.getCurrentGame());
 		//TODO: Ulysse à Amadou : est-ce qu'il vaut mieux pas aussi sauvegarder l'user à ce moment là ?
 		userService.save(dataClientManager.getUserLocal());
@@ -258,13 +272,15 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 
 	@Override
-	public void sendChatText(String message) {
+	public void sendChatText(final String message) {
 		dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
 	}
 
 
     public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
         super();
+        Assert.notNull(instanceDataClientManager, "[ClientDataToIHMImpl][Constructor] dataClientManager shouldn't be null");
+             
         this.dataClientManager = instanceDataClientManager;
         this.userService = new UserService();
         this.gameService = new GameService();
@@ -272,7 +288,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     
     
     @Override
-    public void createProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException{
+    public void createProfile(final PrivateUserEntity user) throws TechnicalException, FunctionalException{
         userService.save(user);
     }
 }
