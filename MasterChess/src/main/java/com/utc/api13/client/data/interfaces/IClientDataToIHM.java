@@ -12,12 +12,13 @@ import com.utc.api13.commun.exceptions.TechnicalException;
 
 import javafx.collections.ObservableList;
 
+//Cette interface est mise à disposition de IHM. Elle permet d'appeler les méthodes chez Data pour réaliser les actions correspondants aux actions sur l'IHM
 
 public interface IClientDataToIHM {
     
-    public void getUsers();
+    public void getUsers();                         //Appelle com.getUsers();
     
-    public void getUserInfo(final UUID iduser);
+    public void getUserInfo(final UUID iduser);     //Appelle com.getUserInfo(UUID iduser);
     
     public void getAllGames();
     
@@ -28,9 +29,9 @@ public interface IClientDataToIHM {
      * @throws FunctionalException exception when login or password are incorrect
      * @throws TechnicalException technical exception
      */
-    public void connect(final String login, final String password) throws FunctionalException, TechnicalException;
+    public void connect(final String login, final String password) throws FunctionalException, TechnicalException;  //Appelle com.notifyConnection(PublicUserEntity publicUser)
     
-    public void disconnect();
+    public void disconnect();                       //Appelle com.disconnect(UUID idUser)
     
     public void move(PieceEntity piece, PositionEntity position);
     
@@ -64,7 +65,7 @@ public interface IClientDataToIHM {
     
     public GameEntity getCurrentGame();
     
-    public void createProposition(UUID uidReciever, boolean chattable, boolean observable);
+    public void createProposition(UUID uidReciever, boolean chattable, boolean observable);     //Appelle com.sendProposition(UUID idUser, boolean chattable, boolean observable) pour demander à com de faire une proposition à l'user;
     
     public void surrender();
     
@@ -77,4 +78,10 @@ public interface IClientDataToIHM {
     public ObservableList<PublicUserEntity> getUserList();
     
   	public void createProfile(PrivateUserEntity user) throws FunctionalException, TechnicalException;
+  	
+  	
+  //TODO
+  //Si le  (IClientDataToCom.)printProposition()  ne renvoie pas directement la réponse à com pour dire si un User à accepté la partie, il faudra créer la méthode de réponse 
+  //answerProposition(final UUID uidSender, final UUID uidReciever, final boolean observable, final boolean chattable, boolean answer); qui va appeler com.answerProposition(...)
+    
 }
