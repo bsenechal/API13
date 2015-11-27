@@ -2,10 +2,15 @@ package com.utc.api13.client.data.services;
 
 
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.commun.Erreur;
 import com.utc.api13.commun.dao.UserDAO;
+import com.utc.api13.commun.enumerations.ErrorTypeEnum;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
@@ -64,8 +69,27 @@ public class UserService{
 	 * @param userId id of user to delete
 	 */
 	public void deleteById(final UUID userId) {
-		userDAO.deleteById(userId);
-		
+		userDAO.deleteById(userId);		
+	}
+	
+	/**
+	 * Reads the user from file and saves it
+	 * @param file file
+	 * @throws FunctionalException when the stored object is not a private user
+	 * @throws TechnicalException exception when reading file
+	 */
+	public void importProfile(File file, boolean force) throws FunctionalException, TechnicalException {
+		//Read object in file and check if it is a private user with an id
+		PrivateUserEntity privateUser = userDAO.getUserFromFile(file);
+		//Check if the user already exists
+		//throw an exception when the user exists already and the force mode is not activated
+		if(userDAO.getById(privateUser.getId()) != null && !force) {
+			List<Erreur> erreurs = new ArrayList<>();
+			erreurs.add(new Erreur(ErrorTypeEnum.DUPLICATED_USER));
+			throw new FunctionalException(erreurs);
+		}
+		//save user
+		save(privateUser);
 	}
 
 }

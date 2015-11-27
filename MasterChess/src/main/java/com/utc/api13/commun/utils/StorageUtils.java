@@ -7,13 +7,18 @@ import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.util.Assert;
 
 import java.io.File;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.commun.Erreur;
+import com.utc.api13.commun.enumerations.ErrorTypeEnum;
 import com.utc.api13.commun.exceptions.DataAccessException;
+import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 public class StorageUtils{
@@ -112,6 +117,29 @@ public class StorageUtils{
     	File[] listofFiles = PATH.listFiles();
     	File[] NO_FILES = {};
     	return listofFiles == null ? NO_FILES : listofFiles;
+    }
+    
+    /**
+     * Method used to import a user in the app
+     * Reads the user stored in the given file
+     * @param file file
+     * @return the user stored in the file
+     * @throws FunctionalException when the stored object is not a private user
+     * @throws TechnicalException exception when reading file
+     */
+    public static PrivateUserEntity readUserFromFile(File file) throws FunctionalException, TechnicalException {
+    	try {
+			ois = new ObjectInputStream(new FileInputStream(file));
+			Object ob = ois.readObject();
+			if(!(ob instanceof PrivateUserEntity)){
+				List<Erreur> erreurs = new ArrayList<>();
+				erreurs.add(new Erreur(ErrorTypeEnum.NON_PRIVATE_USER));
+				throw new FunctionalException(erreurs);
+			}
+			return (PrivateUserEntity)ob;
+		} catch (IOException | ClassNotFoundException e) {
+			throw new TechnicalException("Error while reading object from file", e);
+		}
     }
 
 }

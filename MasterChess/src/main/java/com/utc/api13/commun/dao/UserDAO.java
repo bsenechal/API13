@@ -1,12 +1,14 @@
 package com.utc.api13.commun.dao;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.UUID;
 
 import org.springframework.util.Assert;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
+import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 import com.utc.api13.commun.utils.StorageUtils;
 
@@ -55,6 +57,38 @@ public class UserDAO{
     		if(file.getName().startsWith(login+"_")) {
     			user = StorageUtils.read(file.getName());
     			if(login.equals(user.getLogin()) && password.equals(user.getPassword())){
+    				return user;
+    			}
+    		}
+    	}
+    	return null;
+    }
+    
+    /**
+     * Method used to import a user in the app
+     * Reads the user stored in the given file
+     * @param file file
+     * @return the user stored in the file
+     * @throws FunctionalException when the stored object is not a private user
+     * @throws TechnicalException exception when reading file
+     */
+    public PrivateUserEntity getUserFromFile(File file) throws FunctionalException, TechnicalException {
+    	return StorageUtils.readUserFromFile(file);
+    }
+    
+    /**
+     * Gets the user with the given id from storage
+     * @param userIdid of user
+     * @return returns the found user or null when non found
+     * @throws FunctionalException when the stored object is not a private user
+     * @throws TechnicalException exception when reading file
+     */
+    public PrivateUserEntity getById(UUID userId) throws FunctionalException, TechnicalException{
+    	File[] listOfFiles = StorageUtils.getAllFiles();
+    	for(File file : listOfFiles){
+    		if(file.getName().endsWith("_" + userId)) {
+    			PrivateUserEntity user = getUserFromFile(file);
+    			if(userId.equals(user.getId())) {
     				return user;
     			}
     		}

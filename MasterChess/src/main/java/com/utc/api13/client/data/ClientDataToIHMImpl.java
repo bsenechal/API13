@@ -277,7 +277,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public void importProfile(File file, boolean force) throws FunctionalException, TechnicalException{
-		
+		userService.importProfile(file, force);
 	}
 
 	@Override
@@ -288,7 +288,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public void importProfile(File file) throws FunctionalException, TechnicalException {
-		this.importProfile(file, true);
+		this.importProfile(file, false);
 		
 	}
 }
