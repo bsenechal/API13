@@ -89,11 +89,12 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public void disconnect() {
-		
-		if(gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
-			observerLeave();
-		} else {
-			requestPlayerForLeaving();
+		if (dataClientManager.getCurrentGame() != null) {
+    		if(gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
+    			observerLeave();
+    		} else {
+    			requestPlayerForLeaving();
+    		}
 		}
 		dataClientManager.setUserLocal(null);
 	}
@@ -266,6 +267,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         super();
         this.dataClientManager = instanceDataClientManager;
         this.userService = new UserService();
+        this.gameService = new GameService();
     }
     
     

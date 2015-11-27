@@ -41,13 +41,11 @@ public interface IClientDataToIHM {
     
     public void sendAnserForLeaving(boolean answer);
     
-    public void updateProfile(PrivateUserEntity user);
+    public void updateProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException;
     
     public void sendUserUpdates(PublicUserEntity user);
     
     public void notify (String message);
-    
-    public void updateProfil (PublicUserEntity user);
     
     public void watchGame (String idGame);
     
