@@ -28,16 +28,14 @@ public class IHMCreateProfileController {
     AnchorPane createProfileAnchorPane; 
     @FXML
     public void onSaveProfileClicked() {
+    	//appel de this.myIClientToIHM.createProfile(PrivateUserEntity u) et catch des exceptions
+    	//modifier : idem avec this.myIClientToIHM.updateProfile(PrivateUserEntity u)
 	}
     @FXML
     public void onChangePictureClicked() {
 	}
     
 	public IHMCreateProfileController() { 
-		
-		// [DATA] : Le code ci-dessous Ne peut pas fonctionner :/
-//		IHMManager = new IHMManager(); 
-//		myIClientToIHM=IHMManager.getIClientDataToIHM(); 
 		initialize();  
 	}
 	

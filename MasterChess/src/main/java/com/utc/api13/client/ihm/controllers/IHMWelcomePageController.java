@@ -25,7 +25,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-<<<<<<< HEAD
+
 
 public class IHMWelcomePageController {
 	private IHMManager IHMManager; 
@@ -70,7 +70,7 @@ public class IHMWelcomePageController {
 	}
 	@FXML
 	public void onLogOutClicked() {
-		myIClientToIHM.disconnect();  
+		this.myIClientToIHM.disconnect();  
 	}
 	@FXML
 	public void onSettingsClicked() {
@@ -92,6 +92,13 @@ public class IHMWelcomePageController {
 	
 	@FXML
 	public void onMyInfoClicked() throws IOException  {
+		/*
+		 clic => appel de myIClientToIHM.getUserInfo(uuid)
+		 rien d'autre dans cette fonction
+		 dans l'interface displayProfile, appel d'une autre fonction qui fait lancement de l'écran pop up 
+		 qui set les bonnes infos 
+		 */
+		
 		Stage stage; 
 		Parent root;
 		stage = new Stage();
