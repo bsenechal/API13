@@ -1,4 +1,5 @@
 package com.utc.api13.client.ihm.controllers; 
+import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 
@@ -12,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 
 public class IHMCreateProfileController {
 	private IHMManager IHMManager; 
+	private AppClient mainApp;
 	private IClientDataToIHM myIClientToIHM; 
 	
     @FXML
@@ -41,6 +43,15 @@ public class IHMCreateProfileController {
 	
 	public void initialize() {
 		
+	}
+	
+	public void setMainApp(AppClient app) {
+		this.mainApp=app; 
+	}
+	
+	public void setManager(IHMManager ihmManager){
+		this.IHMManager = ihmManager;
+		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getIClientDataToIHM(); 
 	}
 	
 }

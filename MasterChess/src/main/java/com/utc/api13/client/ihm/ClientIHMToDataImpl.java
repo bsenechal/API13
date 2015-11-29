@@ -15,7 +15,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 		myIHMManager = pIHMManager;
 	}
 	
-	public void didReceiveBoard() {
+	/*public void didReceiveBoard() {
 		
 	}
 	
@@ -29,7 +29,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 	
 	public void didReceiveEndOfGameByLoss() {
 		
-	}
+	}*/
 	
 	public void didReceiveEndOfGameByTie() {
 		
@@ -144,19 +144,31 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 	}
 
 	@Override
-	public void displayChessBoard(GameEntity g) {
+	public void displayChessBoard() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void refreshChessBoard(ChessboardEntity c) {
+	public void refreshChessBoard() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void displayMessage(String newMessage) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void refreshObserverList() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayGameLiveObserver() {
 		// TODO Auto-generated method stub
 		
 	}

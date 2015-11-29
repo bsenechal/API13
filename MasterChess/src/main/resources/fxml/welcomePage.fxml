@@ -51,6 +51,7 @@
                   </graphic>
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#onModifyProfileClicked" text="Modify my profile" />
+                      <MenuItem mnemonicParsing="false" onAction="#onExportClicked" text="Export my profile" />
                       <MenuItem mnemonicParsing="false" onAction="#onLogOutClicked" text="Log out" />
                     </items>
                   </SplitMenuButton>

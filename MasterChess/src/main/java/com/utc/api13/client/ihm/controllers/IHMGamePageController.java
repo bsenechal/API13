@@ -4,6 +4,9 @@ package com.utc.api13.client.ihm.controllers;
 
 import javax.swing.JFrame;
 
+import com.utc.api13.client.AppClient;
+import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.models.ChessBoardNode;
 
 import javafx.event.Event;
@@ -16,7 +19,10 @@ import javafx.scene.layout.Pane;
 
 
 public class IHMGamePageController {
-//	ClientToIHMImpl clientToIHM ;
+	private IHMManager IHMManager; 
+	private AppClient mainApp;
+	private IClientDataToIHM myIClientToIHM;
+	
 	@FXML
 	Label chatLabel, otherPlayerLoginLabel, otherPlayerTimeLabel, playerLoginLabel, playerTimeLabel, numberObserversLabel;
 	@FXML
@@ -66,6 +72,15 @@ public class IHMGamePageController {
 	@FXML
 	private void onQuitGameClicked(Event event) {
 		
+	}
+	
+	public void setMainApp(AppClient app) {
+		this.mainApp=app; 
+	}
+	
+	public void setManager(IHMManager ihmManager){
+		this.IHMManager = ihmManager;
+		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getIClientDataToIHM(); 
 	}
 	
 }
