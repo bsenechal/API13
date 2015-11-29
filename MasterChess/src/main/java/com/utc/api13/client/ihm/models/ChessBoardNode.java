@@ -6,8 +6,6 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.image.BufferedImage;
 
-import javafx.scene.Scene;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -16,8 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-
-import com.utc.api13.client.ihm.controllers.IHMGamePageController;
 
 
 public class ChessBoardNode {
@@ -44,7 +40,7 @@ public class ChessBoardNode {
                 b.setMargin(buttonMargin);
                 // our chess pieces are 64x64 px in size, so we'll
                 // fill this in using a transparent icon..
-                ImageIcon icon = new ImageIcon(new BufferedImage(30, 30, BufferedImage.TYPE_INT_ARGB));
+                ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
                 b.setIcon(icon);
                 if ((jj % 2 == 1 && ii % 2 == 1)
                         //) {

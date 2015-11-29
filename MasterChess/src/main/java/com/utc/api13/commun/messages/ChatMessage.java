@@ -38,7 +38,7 @@ public class ChatMessage extends Message {
 
 	@Override
 	public void proceed(ChannelHandlerContext ctx,ComClientManager comClientManager) {
-		System.out.println(this.getMessage());
+//		System.out.println(this.getMessage());
 		//Trouver le game et ajouter le message
 
 	}

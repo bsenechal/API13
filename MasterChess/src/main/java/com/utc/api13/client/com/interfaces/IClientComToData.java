@@ -13,7 +13,7 @@ public interface IClientComToData {
 	public void connectAsObserver(UUID game_id);
 
 	public void getUsers();
-	
+//public void getUserInfo();
 	public void notifyConnection(PublicUserEntity pubUser);
 	
 	public void validateMove(UUID idPlayer, MoveEntity move);

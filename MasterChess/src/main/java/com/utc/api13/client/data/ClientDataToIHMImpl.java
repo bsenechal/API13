@@ -3,20 +3,27 @@
  */
 package com.utc.api13.client.data;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.util.Assert;
+
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+import com.utc.api13.client.data.services.GameService;
 import com.utc.api13.client.data.services.UserService;
+import com.utc.api13.commun.Erreur;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.ErrorTypeEnum;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
-import javafx.collections.ObservableSet;
+import javafx.collections.ObservableList;
 
 /**
  * @author Benoît
@@ -25,75 +32,67 @@ import javafx.collections.ObservableSet;
 public class ClientDataToIHMImpl implements IClientDataToIHM {
     private DataClientManager dataClientManager;
     /**
-     * Service des users
+     * users service
      */
     private UserService userService;
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.client.data.interfaces.IClientToIHM#getUserList(java.util.
-     * List)
+    /**
+     * game service
      */
+    private GameService gameService;
+
     @Override
-    public ObservableSet<PublicUserEntity> getUserList() {
-//        return instanceDataClientManager.getUserList();
-    	return null;
+    public ObservableList<PublicUserEntity> getUserList() {
+        return dataClientManager.getCurrentUsers();
     }
 
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#getUsers(java.util.
-	 * List)
-	 */
 	@Override
-	public void getUsers(List<PublicUserEntity> users) {
-		// TODO Auto-generated method stub
-
+	public void getUsers() {
+		dataClientManager.getIClientComToData().getUsers();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#getUserInfo(java.util.
-	 * UUID)
-	 */
 	@Override
-	public PublicUserEntity getUserInfo(UUID iduser) {
-		// TODO Auto-generated method stub
-		return null;
+	public void getUserInfo(final UUID iduser) {
+		//TODO
+		//dataClientManager.getIClientComToData().getUserInfo(idUser);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#getAllGames()
-	 */
 	@Override
 	public void getAllGames() {
-		// TODO Auto-generated method stub
-
+		dataClientManager.getIClientComToData().getAllParties();
 	}
 
 	@Override
-	public void connect(String login, String password) throws FunctionalException, TechnicalException {
-		userService.connect(login, password);
-		dataClientManager.setUserLocal(userService.getByLoginAndPassword(login, password));
+	public void connect(final String login, final String password) throws FunctionalException, TechnicalException {
+	    Assert.notNull(userService, "[ClientDataToIHMImpl][connect] userService shouldn't be null");
 
+		//Check the login and password
+		PrivateUserEntity privateUser = userService.getByLoginAndPassword(login, password);
+		if(privateUser == null) {
+			List<Erreur> erreurs = new ArrayList<>();
+			erreurs.add(new Erreur(ErrorTypeEnum.LOGIN_FAILED));
+			throw new FunctionalException(erreurs);
+		}
+		//Save the local user
+		dataClientManager.setUserLocal(privateUser);
+		//Notify the server
+		PublicUserEntity publicUser = new PublicUserEntity(privateUser);
+		dataClientManager.getIClientComToData().notifyConnection(publicUser);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#disconnect()
-	 */
+
 	@Override
-	public void disconnect() {
+	public void disconnect() {		
+	    Assert.notNull(gameService, "[ClientDataToIHMImpl][disconnect] GameService shouldn't be null");
+	    
+	    if (dataClientManager.getCurrentGame() != null){
+    		if(gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
+    			observerLeave();
+    		} else {
+    			requestPlayerForLeaving();
+    		}
+	    }
 		dataClientManager.setUserLocal(null);
 	}
 
@@ -111,68 +110,45 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#observerLeave()
-	 */
+
 	@Override
 	public void observerLeave() {
-		// TODO Auto-generated method stub
+	    Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][observerLeave] UserLocal shouldn't be null");
+
+		dataClientManager.getIClientComToData().observerLeave(dataClientManager.getUserLocal().getId());
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#requestPlayerForLeaving
-	 * ()
-	 */
+
 	@Override
 	public void requestPlayerForLeaving() {
-		// TODO Auto-generated method stub
+	    Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][requestPlayerForLeaving] UserLocal shouldn't be null");
+		//TODO: le second paramètre, c'est fait pour quoi?
+		dataClientManager.getIClientComToData().requestPlayerForLeaving(dataClientManager.getUserLocal().getId(), true);
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#sendAnserForLeaving(
-	 * boolean)
-	 */
+
 	@Override
-	public void sendAnserForLeaving(boolean answer) {
-		// TODO Auto-generated method stub
+	public void otherPlayerLeaving() {
+//		TODO: dataClientManager.getIClientComToData().sendAnswer(answer, dataClientManager.getUserLocal());
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#updateProfile(com.utc.
-	 * api13.commun.entities.PrivateUserEntity)
-	 */
 	@Override
-	public void updateProfile(PrivateUserEntity user) {
-		// TODO Auto-generated method stub
-
+	public void updateProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException {
+	    Assert.notNull(user, "[ClientDataToIHMImpl][updateProfile] user shouldn't be null");
+        
+		//delete the existing info
+		userService.deleteById(user.getId());
+		//Store the new one
+		
+		userService.save(user);
+		this.dataClientManager.setUserLocal(user);
+		//notify the server
+		dataClientManager.getIClientComToData().sendUserUpdates(new PublicUserEntity(user));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#sendUserUpdates(com.utc
-	 * .api13.commun.entities.PublicUserEntity)
-	 */
-	@Override
-	public void sendUserUpdates(PublicUserEntity user) {
-		// TODO Auto-generated method stub
-
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -183,44 +159,19 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	@Override
 	public void notify(String message) {
 		// TODO Auto-generated method stub
-
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#updateProfil(com.utc.
-	 * api13.commun.entities.UserEntity)
-	 */
+
+
 	@Override
-	public void updateProfil(PublicUserEntity user) {
+	public void watchGame(UUID idGame) {
 		// TODO Auto-generated method stub
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#watchGame(java.lang.
-	 * String)
-	 */
-	@Override
-	public void watchGame(String idGame) {
-		// TODO Auto-generated method stub
 
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#chargeReplayFromFile(
-	 * java.lang.String)
-	 */
 	@Override
-	public void chargeReplayFromFile(String file) {
+	public void chargeReplay(UUID idGame) {
 		// TODO Auto-generated method stub
 
 	}
@@ -236,16 +187,18 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#saveGame()
-	 */
-	@Override
-	public void saveGame() {
-		// TODO Auto-generated method stub
 
+	
+	@Override
+	public void saveGame() throws TechnicalException, FunctionalException {
+	    Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][saveGame] UserLocal shouldn't be null");
+	    Assert.notNull(dataClientManager.getUserLocal().getSavedGames(), "[ClientDataToIHMImpl][saveGame] SavedGames shouldn't be null");
+	            
+		dataClientManager.getUserLocal().getSavedGames().add(dataClientManager.getCurrentGame());
+		//TODO: Ulysse à Amadou : est-ce qu'il vaut mieux pas aussi sauvegarder l'user à ce moment là ?
+		userService.save(dataClientManager.getUserLocal());
 	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -254,10 +207,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 */
 	@Override
 	public GameEntity getCurrentGame() {
-		// TODO Auto-generated method stub
-		return null;
+		return dataClientManager.getCurrentGame();
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -282,43 +234,62 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#sendChatText(java.lang.
-	 * String)
-	 */
-	@Override
-	public void sendChatText(String message) {
-		// TODO Auto-generated method stub
 
+	@Override
+	public void sendChatText(final String message) {
+		dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
 	}
 
 
     public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
         super();
+        Assert.notNull(instanceDataClientManager, "[ClientDataToIHMImpl][Constructor] dataClientManager shouldn't be null");
+             
         this.dataClientManager = instanceDataClientManager;
-        this.userService = new UserService(dataClientManager.getIClientComToData());
+        this.userService = new UserService();
+        this.gameService = new GameService();
     }
     
     
-    /**
-     * @param the login and the password of the profil to create
-     * @throws FunctionalException 
-     * @throws TechnicalException 
-     */
     @Override
-    public void createProfil(String login, String firstName, String lastName) throws TechnicalException, FunctionalException{
-        PrivateUserEntity newUser = new PrivateUserEntity();
-        newUser.setFirstName(firstName);
-        newUser.setLastName(lastName);
-        newUser.setLogin(login);
-        newUser.setNbLost(0);
-        newUser.setNbPlayed(0);
-        newUser.setNbWon(0);
-        userService.save(newUser);
-
+    public void createProfile(final PrivateUserEntity user) throws TechnicalException, FunctionalException{
+        userService.save(user);
     }
 
+    /**
+     * @author Hugo R-L
+     * @return PrivateUserEntity LocalUser
+     */
+	@Override
+	public PrivateUserEntity getLocalUser() {
+	    Assert.notNull(this.dataClientManager.getUserLocal(),"[ClientDataToIHMImpl][getLocalUser()] Local user in dataClientManager shouldn't be null" );
+		return this.dataClientManager.getUserLocal();
+	}
+
+	@Override
+	public void sendResponse(UUID idUser, boolean answer) {
+		if(answer) {
+			//Créer un game et l'ajouter à la liste des games
+			//Ajouter sur le server
+		}
+		
+	}
+
+	@Override
+	public void importProfile(File file, boolean force) throws FunctionalException, TechnicalException{
+		
+	}
+
+	@Override
+	public File exportProfile() {
+		return null;
+	}
+
+
+	@Override
+	public void importProfile(File file) throws FunctionalException, TechnicalException {
+		this.importProfile(file, true);
+		
+	}
 }
+

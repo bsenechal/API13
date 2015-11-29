@@ -1,6 +1,11 @@
 package com.utc.api13.client.ihm;
 
+import java.util.UUID;
+
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
+import com.utc.api13.commun.entities.ChessboardEntity;
+import com.utc.api13.commun.entities.GameEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
 
 public class ClientIHMToDataImpl implements IClientIHMToData {
 	
@@ -10,7 +15,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 		myIHMManager = pIHMManager;
 	}
 	
-	public void didReceiveBoard() {
+	/*public void didReceiveBoard() {
 		
 	}
 	
@@ -24,7 +29,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 	
 	public void didReceiveEndOfGameByLoss() {
 		
-	}
+	}*/
 	
 	public void didReceiveEndOfGameByTie() {
 		
@@ -110,6 +115,61 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 	}
 	
 	public void didReceiveErrorInChatMessage() {
+		
+	}
+
+	@Override
+	public void displayProfile(PublicUserEntity u) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void otherPlayerLeaving() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayProposition(UUID uidSender, boolean observable,
+			boolean chattable) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayAnswer(UUID uidSender, boolean observable) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayChessBoard() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void refreshChessBoard() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayMessage(String newMessage) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void refreshObserverList() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayGameLiveObserver() {
+		// TODO Auto-generated method stub
 		
 	}
 }

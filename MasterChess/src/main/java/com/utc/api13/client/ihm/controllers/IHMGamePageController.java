@@ -2,13 +2,7 @@ package com.utc.api13.client.ihm.controllers;
 
 
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-
-
-
-
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import com.utc.api13.client.AppClient;
@@ -19,12 +13,10 @@ import com.utc.api13.client.ihm.models.ChessBoardNode;
 import javafx.embed.swing.SwingNode;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
@@ -32,7 +24,7 @@ import javafx.scene.layout.StackPane;
 public class IHMGamePageController {
 	private IHMManager IHMManager; 
 	private AppClient mainApp;
-	private IClientDataToIHM myIClientToIHM; 
+	private IClientDataToIHM myIClientToIHM;
 	
 	@FXML
 	Label chatLabel, otherPlayerLoginLabel, otherPlayerTimeLabel, playerLoginLabel, playerTimeLabel, numberObserversLabel;
@@ -43,8 +35,6 @@ public class IHMGamePageController {
 	@FXML
 	TextArea chatTextArea, sendTextArea;
 	@FXML
-	AnchorPane topLeftAnchorPane;
-	@FXML
 	StackPane chessBoardStackPane;
 	
 	public IHMGamePageController() { 
@@ -53,9 +43,9 @@ public class IHMGamePageController {
 	
 	public void initialize() {
 		
-	
+		
 	}
-
+	
 	@FXML
 	private void onExcludeChatClicked(Event event) {
 		
@@ -75,6 +65,8 @@ public class IHMGamePageController {
 	private void onQuitGameClicked(Event event) {
 		
 	}
+	
+	
 	public void setManager(IHMManager ihmManager){
 		this.IHMManager = ihmManager;
 		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getIClientDataToIHM(); 
@@ -111,3 +103,6 @@ public class IHMGamePageController {
 
 	
 }
+
+
+
