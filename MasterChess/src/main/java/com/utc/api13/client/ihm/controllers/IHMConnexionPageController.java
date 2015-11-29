@@ -1,5 +1,7 @@
+
 package com.utc.api13.client.ihm.controllers;
 
+import java.io.File;
 import java.io.IOException;
 
 import com.utc.api13.client.AppClient;
@@ -20,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class IHMConnexionPageController {
@@ -43,9 +46,7 @@ public class IHMConnexionPageController {
 	@FXML
 	private void onSignInClicked(Event event) throws IOException { 
 		String login=loginTextView.getText();  
-		System.out.println(login); 
 		String pw=passwordTextView.getText(); 
-		System.out.println(pw); 
 		
 		// TODO : Gérer les exceptions avec le logger
 		try {
@@ -65,6 +66,7 @@ public class IHMConnexionPageController {
 		root = (Pane) fxmlLoader.load();
 		IHMWelcomePageController controller = fxmlLoader.getController();
         controller.setMainApp(mainApp);
+        controller.setManager(IHMManager);
 		Scene scene = new Scene(root, 800, 600);
 		stage.setTitle("Connexion to MasterChess");
 		stage.setScene(scene);
@@ -74,27 +76,24 @@ public class IHMConnexionPageController {
 	}
 	@FXML
 	private void onImportClicked(Event event) {
-	    
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Import my profile");
+		File f = fileChooser.showOpenDialog(new Stage());
+		if (f != null) {
+			try {
+				myIClientToIHM.importProfile(f, true);
+			}			
+			catch (FunctionalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TechnicalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	@FXML
-	private void onExportClicked(Event event) {
-	    
-	}
-	@FXML
-	private void onSignUpClicked(Event event) throws IOException {
-		Stage stage; 
-		Parent root;
-		stage = new Stage();
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/createProfilePage.fxml"));
-		root = (Pane) fxmlLoader.load();
-		IHMCreateProfileController controller = fxmlLoader.getController();
-        controller.setMainApp(mainApp);
-		Scene scene = new Scene(root, 800, 600);
-		stage.setTitle("Connexion to MasterChess");
-		stage.setScene(scene);
-		
-		mainApp.stage.close(); 
-		stage.show();
+	private void onSignUpClicked(Event event) {
 	    
 	}
 	
@@ -114,5 +113,6 @@ public class IHMConnexionPageController {
 		this.IHMManager = ihmManager;
 		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getIClientDataToIHM(); 
 	}
-		 
+	
 }
+

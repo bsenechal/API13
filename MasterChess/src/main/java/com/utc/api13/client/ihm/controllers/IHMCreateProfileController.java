@@ -1,4 +1,5 @@
 package com.utc.api13.client.ihm.controllers; 
+
 import java.io.File;
 
 
@@ -35,10 +36,15 @@ public class IHMCreateProfileController {
     AnchorPane createProfileAnchorPane; 
     @FXML
     public void onSaveProfileClicked() {
+
     	String login=loginTextView.getText();  
 		String pw=passwordTextView.getText(); 
 		String firstName=firstNameTextView.getText();  
 		String lastName=lastNameTextView.getText(); 
+
+    	//appel de this.myIClientToIHM.createProfile(PrivateUserEntity u) et catch des exceptions
+    	//modifier : idem avec this.myIClientToIHM.updateProfile(PrivateUserEntity u)
+
 	}
     @FXML
     public void onChangePictureClicked() {
@@ -66,21 +72,27 @@ public class IHMCreateProfileController {
 		}
 	}
     
- 
-	public void setMainApp(AppClient app) {
-		this.mainApp=app; 
-	}
     
 	public IHMCreateProfileController() { 
 		
 		// [DATA] : Le code ci-dessous Ne peut pas fonctionner émoticône unsure
 //		IHMManager = new IHMManager(); 
 //		myIClientToIHM=IHMManager.getIClientDataToIHM(); 
+
 		initialize();  
 	}
 	
 	public void initialize() {
 		
+	}
+	
+	public void setMainApp(AppClient app) {
+		this.mainApp=app; 
+	}
+	
+	public void setManager(IHMManager ihmManager){
+		this.IHMManager = ihmManager;
+		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getIClientDataToIHM(); 
 	}
 	
 }

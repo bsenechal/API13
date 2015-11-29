@@ -3,6 +3,7 @@ package com.utc.api13.client.data.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.commun.dao.GameDAO;
 import com.utc.api13.commun.dao.interfaces.IGenericDAO;
 import com.utc.api13.commun.entities.GameEntity;
@@ -13,6 +14,13 @@ import com.utc.api13.commun.exceptions.TechnicalException;
 
 public class GameService extends ADataService<GameEntity> {
 
+
+    private IClientComToData comInterface;
+    public GameService(IClientComToData comInterface){
+        this.comInterface = comInterface;
+    }
+
+    
 	/**
 	 * 
 	 * @param user user

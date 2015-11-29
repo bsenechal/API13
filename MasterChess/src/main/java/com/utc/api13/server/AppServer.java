@@ -21,9 +21,6 @@ public class AppServer {
 		comServerManager.setIServerDataToCom(dataServerManager.getServerDataToComImpl());
 		
 		comServerManager.launchAppCom();
-
-		// TODO : a rajouter
-//		comServerManager.close();
 	}
 
 }

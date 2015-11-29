@@ -1,10 +1,15 @@
-package com.utc.api13.client.ihm.controllers; 
+package com.utc.api13.client.ihm.controllers;
 
 import java.io.IOException;
+import java.io.File;
+import java.nio.file.Files;
 
 import com.utc.api13.client.AppClient;
+import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.commun.exceptions.FunctionalException;
+import com.utc.api13.commun.exceptions.TechnicalException;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -22,8 +27,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 
 public class IHMWelcomePageController {
 	private IHMManager IHMManager; 
@@ -68,11 +75,29 @@ public class IHMWelcomePageController {
 	}
 	@FXML
 	public void onLogOutClicked() {
-		myIClientToIHM.disconnect();  
+		//NB : pas d'exception prévu par data = normal ??
+			this.myIClientToIHM.disconnect();  
 	}
 	@FXML
-	public void onSettingsClicked() {
-	}
+	public void onExportClicked() throws IOException {
+		File exportFile=this.myIClientToIHM.exportProfile(); 
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		directoryChooser.setTitle("Export to ...");
+        File selectedDirectory = directoryChooser.showDialog(new Stage()); 
+        
+        if(selectedDirectory != null){
+	        try {
+	        	Files.copy(exportFile.toPath(), selectedDirectory.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING,
+	                java.nio.file.StandardCopyOption.COPY_ATTRIBUTES); 
+	        }
+	        catch (IOException e) {
+	        	e.printStackTrace();
+	        }
+	        
+	        //pop up de confirmation 
+	        this.exportOK(selectedDirectory.getAbsolutePath()); 
+        }
+    }
 	@FXML
 	public void onUserInfoClicked() throws IOException  {
 		Stage stage; 
@@ -82,6 +107,7 @@ public class IHMWelcomePageController {
 		root = (Pane) fxmlLoader.load();
 		UserInfoPopUpController controller = fxmlLoader.getController();
         controller.setMainApp(this.mainApp);
+        controller.setManager(this.IHMManager); 
 		stage.setScene(new Scene(root));
 		stage.setTitle("User Information");
 		stage.initModality(Modality.APPLICATION_MODAL); 
@@ -90,6 +116,13 @@ public class IHMWelcomePageController {
 	
 	@FXML
 	public void onMyInfoClicked() throws IOException  {
+		/*
+		 clic => appel de myIClientToIHM.getUserInfo(uuid)
+		 rien d'autre dans cette fonction
+		 dans l'interface displayProfile, appel d'une autre fonction qui fait lancement de l'écran pop up 
+		 qui set les bonnes infos 
+		 */
+		
 		Stage stage; 
 		Parent root;
 		stage = new Stage();
@@ -97,6 +130,7 @@ public class IHMWelcomePageController {
 		root = (Pane) fxmlLoader.load();
 		MyInfoPopUpController controller = fxmlLoader.getController();
         controller.setMainApp(this.mainApp);
+        controller.setManager(this.IHMManager);
 		stage.setScene(new Scene(root));
 		stage.setTitle("My Information");
 		stage.initModality(Modality.APPLICATION_MODAL); 
@@ -117,8 +151,23 @@ public class IHMWelcomePageController {
 	
 	public void setMainApp(AppClient app) {
 		this.mainApp=app; 
-		//this.currentGamesLabel.setText(""); 
-        //initialiser avec login de l'user connecté : ATTENTE DATA 
+		PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
+		this.connectedUserLabel.setText(u.getLogin()); 
+	}
+	
+	public void exportOK(String path) throws IOException {
+		Stage stage; 
+		Parent root;
+		stage = new Stage();
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/exportOKPopUp.fxml"));
+		root = (Pane) fxmlLoader.load();
+		ExportOKPopUpController controller = fxmlLoader.getController();
+		controller.setManager(this.IHMManager);
+        controller.setMainApp(this.mainApp, path);
+		stage.setScene(new Scene(root));
+		stage.setTitle("Export success");
+		stage.initModality(Modality.APPLICATION_MODAL); 
+		stage.showAndWait();
 	}
 	
 	public void setListConnectedUser() {
@@ -134,8 +183,9 @@ public class IHMWelcomePageController {
 	}
 	public void setManager(IHMManager ihmManager){
 		this.IHMManager = ihmManager;
-		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getIClientDataToIHM(); 
+		if(ihmManager!=null) this.myIClientToIHM=this.IHMManager.getIClientDataToIHM(); 
 	}
 	
 
 }
+
