@@ -3,6 +3,7 @@
  */
 package com.utc.api13.server.data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,8 +11,6 @@ import java.util.UUID;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.exceptions.FunctionalException;
-import com.utc.api13.commun.exceptions.TechnicalException;
 import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
 /**
@@ -26,7 +25,6 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 */
 	@Override
 	public List<PublicUserEntity> getUsers() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -51,9 +49,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#notifyConnections(com.utc.api13.commun.entities.UserEntity)
 	 */
 	@Override
-	public void notifyConnections(PublicUserEntity Player) {
-		// TODO Auto-generated method stub
-
+	public void notifyConnections(final PublicUserEntity player) {
+		dataServerManager.getCurrentUsers().add(player);
 	}
 
 	/* (non-Javadoc)
@@ -96,9 +93,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#saveUserData(com.utc.api13.commun.entities.UserEntity)
 	 */
 	@Override
-	public void saveUserData(PublicUserEntity User) throws TechnicalException, FunctionalException {
+	public void saveUserData(final PublicUserEntity User) {
 		dataServerManager.getCurrentUsers().add(User);
-
 	}
 
 	/* (non-Javadoc)
@@ -124,9 +120,35 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 */
 	@Override
 	public List<PublicUserEntity> getConnectedUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return dataServerManager.getCurrentUsers();
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.utc.api13.server.data.interfaces.IServerDataToCom#getUsersByGame(java.lang.String)
+	 */
+	public List<PublicUserEntity> getUsersByGame(final UUID idGame){
+		List<PublicUserEntity> listUsersByGame = new ArrayList<PublicUserEntity>();
+		//variable containing the corresponding idGame Game.
+		GameEntity gameFound;
+		
+		gameFound = dataServerManager.getCurrentGames().stream().filter(u -> u.getId().equals(idGame)).findFirst().orElse(null);
+		
+		if(gameFound.equals(null)){
+			//If the idGame doesn't exist on the server, the method sends back 'null'
+			return null;
+		}
+		else
+		{
+			//Else get all observer + two players
+			listUsersByGame.addAll(gameFound.getObservers());
+			listUsersByGame.add(gameFound.getBlackPlayer());
+			listUsersByGame.add(gameFound.getWhitePlayer());
+			return listUsersByGame;
+		}
+		
+		
+	};
+	
 
 	/* (non-Javadoc)
 	 * @see com.utc.api13.server.data.interfaces.IServerToComm#surrender(java.util.UUID)

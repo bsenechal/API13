@@ -3,11 +3,11 @@
  */
 package com.utc.api13.client.data;
 
-import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+import com.utc.api13.client.data.services.GameService;
 import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PieceEntity;
@@ -28,6 +28,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      * Service des users
      */
     private UserService userService;
+    
+   
+    private GameService gameService;
     
     /*
      * (non-Javadoc)
@@ -50,9 +53,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * List)
 	 */
 	@Override
-	public void getUsers(List<PublicUserEntity> users) {
-		// TODO Auto-generated method stub
-
+	public void getUsers() {
+		dataClientManager.getIClientComToData().getUsers();
 	}
 
 	/*
@@ -63,9 +65,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * UUID)
 	 */
 	@Override
-	public PublicUserEntity getUserInfo(UUID iduser) {
-		// TODO Auto-generated method stub
-		return null;
+	public void getUserInfo(final UUID iduser) {
 	}
 
 	/*
@@ -81,9 +81,12 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public void connect(String login, String password) throws FunctionalException, TechnicalException {
-		userService.connect(login, password);
-		dataClientManager.setUserLocal(userService.getByLoginAndPassword(login, password));
-
+//		userService.connect(login, password);
+		PublicUserEntity user = new PublicUserEntity(login, password);
+		
+//		dataClientManager.setUserLocal(userService.getByLoginAndPassword(login, password));
+		
+		dataClientManager.getIClientComToData().notifyConnection(user);
 	}
 
 	/*
@@ -235,16 +238,18 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	}
 
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#saveGame()
 	 */
 	@Override
-	public void saveGame() {
-		// TODO Auto-generated method stub
+	public void saveGame() throws TechnicalException, FunctionalException {
+		gameService.save(dataClientManager.getCurrentGame());
 
 	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -253,10 +258,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 */
 	@Override
 	public GameEntity getCurrentGame() {
-		// TODO Auto-generated method stub
-		return null;
+		return dataClientManager.getCurrentGame();
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -290,8 +294,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 */
 	@Override
 	public void sendChatText(String message) {
-		// TODO Auto-generated method stub
-
+		dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
 	}
 
 
@@ -299,6 +302,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         super();
         this.dataClientManager = instanceDataClientManager;
         this.userService = new UserService(dataClientManager.getIClientComToData());
+    	this.gameService = new GameService(dataClientManager.getIClientComToData());
     }
     
     
@@ -308,16 +312,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      * @throws TechnicalException 
      */
     @Override
-    public void createProfil(String login, String firstName, String lastName) throws TechnicalException, FunctionalException{
-        PrivateUserEntity newUser = new PrivateUserEntity();
-        newUser.setFirstName(firstName);
-        newUser.setLastName(lastName);
-        newUser.setLogin(login);
-        newUser.setNbLost(0);
-        newUser.setNbPlayed(0);
-        newUser.setNbWon(0);
-        userService.save(newUser);
-
+    public void createProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException{
+        userService.save(user);
     }
-
 }

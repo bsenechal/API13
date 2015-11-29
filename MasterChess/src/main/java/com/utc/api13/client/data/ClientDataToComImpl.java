@@ -51,7 +51,15 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 */
 	@Override
 	public void displayUsersList(List<PublicUserEntity> connectedUserList) {
-	    // TODO Auto-generated method stub
+		connectedUserList.forEach(u -> {
+			if(u.getId().equals(instanceDataClientManager.getUserLocal().getId())){
+				connectedUserList.remove(u);
+			}
+		});
+	
+		instanceDataClientManager.getCurrentUsers().clear();
+		instanceDataClientManager.getCurrentUsers().addAll(connectedUserList);
+		
 	}
 
 	/*
@@ -287,5 +295,4 @@ public class ClientDataToComImpl implements IClientDataToCom {
         super();
         this.instanceDataClientManager = instanceDataClientManager;
     }
-
 }
