@@ -81,7 +81,20 @@ public class IHMConnexionPageController {
 	    
 	}
 	@FXML
-	private void onSignUpClicked(Event event) {
+	private void onSignUpClicked(Event event) throws IOException {
+		Stage stage; 
+		Parent root;
+		stage = new Stage();
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/createProfilePage.fxml"));
+		root = (Pane) fxmlLoader.load();
+		IHMCreateProfileController controller = fxmlLoader.getController();
+        controller.setMainApp(mainApp);
+		Scene scene = new Scene(root, 800, 600);
+		stage.setTitle("Connexion to MasterChess");
+		stage.setScene(scene);
+		
+		mainApp.stage.close(); 
+		stage.show();
 	    
 	}
 	
