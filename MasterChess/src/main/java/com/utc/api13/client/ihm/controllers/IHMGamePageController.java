@@ -52,28 +52,7 @@ public class IHMGamePageController {
 	}
 	
 	public void initialize() {
-		/**final ChessBoardNode cb =new ChessBoardNode();
-		JFrame f = new JFrame("Chess");
-        f.add(cb.getGui());
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        f.setLocationByPlatform(true);
-
-        // ensures the frame is the minimum size it needs to be
-        // in order display the components within it
-        f.pack();
-        // ensures the minimum size is enforced.
-        f.setMinimumSize(f.getSize());
-        f.setVisible(true);
-		final SwingNode swingNode = new SwingNode();
-		SwingUtilities.invokeLater(new Runnable() {
-			
-            public void run() {
-                swingNode.setContent(cb.getGui());
-            	
-            }
-        });
 		
-        chessBoardPane.getChildren().add(swingNode); // Adding swing node*/
 	
 	}
 
@@ -123,6 +102,7 @@ public class IHMGamePageController {
                 swingNode.setContent(cb.getGui());
             }
         });
+		chatTextArea.setDisable(true);
 		
 		
         chessBoardStackPane.getChildren().add(swingNode);
