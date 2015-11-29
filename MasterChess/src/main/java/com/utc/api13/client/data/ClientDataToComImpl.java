@@ -6,6 +6,8 @@ package com.utc.api13.client.data;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.util.Assert;
+
 import com.utc.api13.client.data.interfaces.IClientDataToCom;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
@@ -51,6 +53,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 */
 	@Override
 	public void displayUsersList(List<PublicUserEntity> connectedUserList) {
+	    Assert.notNull(connectedUserList, "[ClientDataToComImpl][displayUsersList] connectedUserList shouldn't be null");
+	    Assert.notNull(instanceDataClientManager.getUserLocal(), "[ClientDataToComImpl][displayUsersList] UserLocal shouldn't be null");
+	    Assert.notNull(instanceDataClientManager.getCurrentUsers(), "[ClientDataToComImpl][displayUsersList] currentUsers shouldn't be null");
+        
 		connectedUserList.forEach(u -> {
 			if(u.getId().equals(instanceDataClientManager.getUserLocal().getId())){
 				connectedUserList.remove(u);
@@ -62,16 +68,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
 		
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#displayProfile(com.utc
-	 * .api13.commun.entities.PublicUserEntity)
-	 */
+
 	@Override
 	public void displayProfile(PublicUserEntity user) {
-		// TODO Auto-generated method stub
+		//instanceDataClientManager.displayProfile(user)
 
 	}
 
@@ -84,20 +84,17 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 */
 	@Override
 	public void print_error(String error) {
-		// TODO Auto-generated method stub
+		// instanceDataClientManager.print_error()
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#displayAllGames(java.
-	 * util.List)
-	 */
+
 	@Override
-	public void displayAllGames(List<GameEntity> games) {
-		// TODO Auto-generated method stub
+	public void displayAllGames(final List<GameEntity> games) {
+	    Assert.notNull(instanceDataClientManager.getCurrentGames(), "[ClientDataToComImpl][displayAllGames] currentGames shouldn't be null");
+        
+		instanceDataClientManager.getCurrentGames().clear();
+		instanceDataClientManager.getCurrentGames().addAll(games);
 
 	}
 
@@ -114,41 +111,24 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#sendMessageToChat(com.
-	 * utc.api13.commun.entities.MessageEntity)
-	 */
+
 	@Override
 	public void sendMessageToChat(MessageEntity message) {
-		// TODO Auto-generated method stub
+//		TODO: instanceDataClientManager.sendMessageToChat(message);
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#sendAnswerForLeaving(
-	 * boolean)
-	 */
+
 	@Override
 	public void sendAnswerForLeaving(boolean answer) {
-		// TODO Auto-generated method stub
+//		TODO: instanceDataClientManager.getIClientIHMToData().displayAnswerForLeaving(answer);
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToComm#
-	 * requestPlayerForLeaving(java.util.UUID)
-	 */
+
 	@Override
 	public void requestPlayerForLeaving(UUID uid) {
-		// TODO Auto-generated method stub
+//		TODO: instanceDataClientManager.getIClientIHMToData().requestPlayerForLeaving();
 
 	}
 
@@ -164,15 +144,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToComm#notify(java.lang.
-	 * String)
-	 */
+
 	@Override
 	public void notify(String message) {
-		// TODO Auto-generated method stub
+//		instanceDataClientManager.getIClientIHMToData().notify(message);
 
 	}
 
@@ -241,16 +216,9 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#printProposition(java.
-	 * util.UUID, boolean, boolean)
-	 */
 	@Override
 	public void printProposition(UUID uidSender, boolean observable, boolean chattable) {
-		// TODO Auto-generated method stub
+		// TODO à faire
 
 	}
 
@@ -278,21 +246,16 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#displayMessage(java.
-	 * lang.String)
-	 */
 	@Override
 	public void displayMessage(String message) {
 		// TODO Auto-generated method stub
+		//dataClientManager.getClientIHMToData.displayMessage(message)
 
 	}
 
     public ClientDataToComImpl(DataClientManager instanceDataClientManager) {
         super();
+        Assert.notNull(instanceDataClientManager, "[ClientDataToComImpl][Constructor] dataClientManager shouldn't be null");
         this.instanceDataClientManager = instanceDataClientManager;
     }
 }

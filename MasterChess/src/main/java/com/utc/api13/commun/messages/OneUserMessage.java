@@ -5,7 +5,6 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 
 import com.utc.api13.client.com.ComClientManager;
-import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.server.com.ComServerManager;
 
 import io.netty.channel.ChannelHandlerContext;

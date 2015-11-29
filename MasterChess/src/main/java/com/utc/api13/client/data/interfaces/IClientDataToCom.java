@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.data.DataClientManager;
-import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
@@ -23,13 +22,13 @@ import javafx.collections.ObservableList;
 //Com n'appelle pas les méthodes de ces interfaces à l'aide de méthodes, mais à l'aide de proceed.
 
 public interface IClientDataToCom {
-	
+    
 
-	/**
-	 * This method will set the ClientDataManger ObservableList<AUserEntity> currentUsers
-	 * -> it will not add the localuser to currentUsers if existing in the connectedUserList parameter
-	 * @param connectedUserList
-	 */
+    /**
+     * This method will set the ClientDataManger ObservableList<AUserEntity> currentUsers
+     * -> it will not add the localuser to currentUsers if existing in the connectedUserList parameter
+     * @param connectedUserList
+     */
     void displayUsersList(final List<PublicUserEntity> connectedUserList);          //Affiche (récupère pour affichege IHM) la liste des PublicUserEntity connectés
 
     /**
@@ -52,6 +51,10 @@ public interface IClientDataToCom {
 
     void endGameByLeaving();
 
+    /**
+     * TODO: unnecessary
+     * @param message message
+     */
     void notify(final String message);
 
     void initGame(final GameEntity game);                                           //La GameEntity est créé sur le serveur. Cette méthode initialise l'instance de la GameEntity sur le client
@@ -75,5 +78,4 @@ public interface IClientDataToCom {
     DataClientManager getInstanceDataClientManager();
 
     void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
-	
 }
