@@ -2,8 +2,6 @@ package com.utc.api13.client.com;
 
 import java.util.UUID;
 
-import org.junit.rules.DisableOnDebug;
-
 import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
@@ -11,6 +9,7 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.messages.AllUserMessage;
 import com.utc.api13.commun.messages.ConnectMessage;
 import com.utc.api13.commun.messages.DisconnectMessage;
+import com.utc.api13.commun.messages.PublicUserMessage;
 
 public class ClientComToDataImpl implements IClientComToData {
 
@@ -144,8 +143,9 @@ public class ClientComToDataImpl implements IClientComToData {
 
 
 	@Override
-	public void getUserInfo(UUID iduser) {
-		// TODO Auto-generated method stub
+	public void getUserInfo(UUID iduser){
+
+		comClientManagerInstance.sendMessage(new PublicUserMessage(iduser,new UUID(0,0)));
 		
 	}
 

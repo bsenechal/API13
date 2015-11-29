@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 
 import com.utc.api13.client.com.ComClientManager;
+import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.server.com.ComServerManager;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -30,6 +31,7 @@ public class OneUserMessage extends Message {
 	@Override
 	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
 		// TODO Auto-generated method stub
+		
 		
 	}
 
