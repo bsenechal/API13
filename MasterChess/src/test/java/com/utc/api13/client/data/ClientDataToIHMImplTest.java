@@ -13,7 +13,7 @@ import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 
 /**
- * @author Benoît
+ * @author DATA
  *
  */
 public class ClientDataToIHMImplTest {
@@ -61,5 +61,13 @@ public class ClientDataToIHMImplTest {
 	    Assert.assertNotNull("The current game shouldn't be null", dataClientManager.getClientDataToIHMImpl().getCurrentGame());
 	    Assert.assertEquals("Current game should be equal to " + game.toString(), dataClientManager.getClientDataToIHMImpl().getCurrentGame(), game);
 	}
+	
+	@Test
+	public void getLocalUserTest() {
+	    PrivateUserEntity localUser = new PrivateUserEntity();
+	    dataClientManager.setUserLocal(localUser);   
+	    
+	    Assert.assertNotNull("The local user shouldn't be null", dataClientManager.getClientDataToIHMImpl().getLocalUser());
+        Assert.assertEquals("Current game should be equal to " + localUser.toString(), dataClientManager.getClientDataToIHMImpl().getLocalUser(), localUser);
+	}
 }
-
