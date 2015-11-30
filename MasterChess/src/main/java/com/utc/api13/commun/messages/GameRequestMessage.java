@@ -31,8 +31,7 @@ public class GameRequestMessage extends Message {
 	}
 	@Override
 	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-		comServerManager.getIServerDataToCom().sendProposition(getSender(), getReceiver(), chattable, observable);
-		//TODO voir avec data pour envoyer le message directement
+		comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
 	}
 	
 	public boolean isChattable() {

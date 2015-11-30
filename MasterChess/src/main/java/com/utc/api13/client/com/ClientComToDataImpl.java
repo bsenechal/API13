@@ -14,6 +14,7 @@ import com.utc.api13.commun.messages.ConnectMessage;
 import com.utc.api13.commun.messages.DisconnectMessage;
 import com.utc.api13.commun.messages.GameRequestMessage;
 import com.utc.api13.commun.messages.PublicUserMessage;
+import com.utc.api13.commun.messages.RequestAnswerMessage;
 
 public class ClientComToDataImpl implements IClientComToData {
 
@@ -171,14 +172,19 @@ public class ClientComToDataImpl implements IClientComToData {
 	 */
 	public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable,
 			PublicUserEntity user) {
-		// TODO Auto-generated method stub
 		comClientManagerInstance.sendMessage(new GameRequestMessage(sender, reciever, chattable, observable));
 	}
 
-
+	/**
+	 * Repond a une proposition de partie
+	 * @param chattable : peut-on utiliser le chat pendant la partie
+	 * @param observable : peut-on observer la partie
+	 * @param answer : reponse du joueur
+	 * 
+	 * @see com.utc.api13.client.com.interfaces.IClientComToData#answerProposition(java.util.UUID, java.util.UUID, boolean, boolean, boolean)
+	 */
 	@Override
 	public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer) {
-		// TODO Auto-generated method stub
-		
+		comClientManagerInstance.sendMessage(new RequestAnswerMessage(sender, reciever, chattable, observable, answer));
 	}
 }
