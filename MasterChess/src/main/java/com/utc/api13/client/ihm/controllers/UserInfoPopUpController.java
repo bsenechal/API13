@@ -39,9 +39,6 @@ public class UserInfoPopUpController {
 		
 	public void setMainApp(AppClient app) {
 		this.mainApp=app; 
-		/*this.myIClientToIHM.getUserInfo(iduser); 
-		 
-		 */
 		//initialiser avec login de l'user connecté : ATTENTE DATA 
 	}
 }

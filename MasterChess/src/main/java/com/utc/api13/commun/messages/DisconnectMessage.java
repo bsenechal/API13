@@ -10,39 +10,31 @@ import com.utc.api13.server.com.ComServerManager;
 
 import io.netty.channel.ChannelHandlerContext;
 
-public class ConnectMessage extends Message {
+public class DisconnectMessage extends Message {
 	private static final Logger logger = Logger.getLogger(ConnectMessage.class);
-	private PublicUserEntity pubUser;
+	private UUID idPubUser;
 	
 	/**
 	 * @param sender
 	 * @param receiver
 	 * @param pubUser
 	 */
-	public ConnectMessage(UUID sender, UUID receiver, PublicUserEntity pubUser) {
+	public DisconnectMessage(UUID sender, UUID receiver, UUID idPubUser) {
 		super(sender, receiver);
-		this.pubUser = pubUser;
-	}
-	
-	public PublicUserEntity getPubUser() {
-		return pubUser;
+		this.idPubUser = sender;
 	}
 
-	public void setPubUser(PublicUserEntity pubUser) {
-		this.pubUser = pubUser;
-	}
 
 	@Override
 	public void proceed(ChannelHandlerContext ctx,ComClientManager comClientManager) {
-		// TODO manque méthide dans interfaceDataToComm
 		//comClientManager.getIClientDataToCom().
 	}
 
 
 	@Override
 	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-		comServerManager.linkUserToChannelHandlerContext(pubUser.getId(), ctx);
-		comServerManager.getIServerDataToCom().notifyConnections(pubUser);
+		comServerManager.unlinkUserToChannelHandlerContext(idPubUser);
+		comServerManager.getIServerDataToCom().disconnect(idPubUser);
 		AllUserMessage msg = new AllUserMessage(new UUID(0, 0), null);
 		comServerManager.broadcastMessage(msg);
 	}

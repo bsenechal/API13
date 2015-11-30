@@ -25,7 +25,7 @@ public class HeartBeat extends Message {
 	}
 	@Override
 	public void proceed(ChannelHandlerContext ctx,ComClientManager comClientManager) {
-		logger.info("Hello message received from server, answering Hello");
+		//logger.info("Hello message received from server, answering Hello");
     	ctx.writeAndFlush(new HeartBeat(new UUID(0, 0), new UUID(0, 0), null));
 	}
 	public InetAddress getPing() {
@@ -37,7 +37,7 @@ public class HeartBeat extends Message {
 	@Override
 	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
 		// TODO Auto-generated method stub
-		logger.info("Hello message received, peer is alive !");
+		//logger.info("Hello message received, peer is alive !");
 	}
 	
 }

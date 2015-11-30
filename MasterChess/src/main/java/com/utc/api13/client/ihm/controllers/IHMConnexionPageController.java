@@ -101,4 +101,3 @@ public class IHMConnexionPageController {
 	}
 	
 }
->>>>>>> 09d405d58ba12f2d642681cc260352ed7ddaf662

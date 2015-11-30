@@ -12,9 +12,18 @@ import com.utc.api13.commun.IErrorType;
 public enum ErrorTypeEnum implements IErrorType{
 
 	/**
-	 * functional for code for login failure
+	 * functional code for login failure
 	 */
-	LOGIN_FAILED("data.login.failed");
+	LOGIN_FAILED("data.login.failed"),
+	
+	/**
+	 * When the object in the import file is not a private user
+	 */
+	NON_PRIVATE_USER("data.user.notPrivate"),
+	/**
+	 * When the imported user exist already
+	 */
+	DUPLICATED_USER("data.user.duplicated");
     private final String code;
     private ErrorTypeEnum(String code){
         this.code = code;

@@ -65,7 +65,7 @@ public class ComClientManager {
 		
 		if(channel != null){	
 			channel.writeAndFlush(msg);
-			logger.debug("A message has been sent to : " + msg.getReceiver());
+			logger.debug("A " + msg.getClass().getSimpleName() + " has been sent to server :" );
 		}else throw new ExceptionInInitializerError();
 	}
 	

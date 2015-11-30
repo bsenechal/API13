@@ -14,6 +14,12 @@ public abstract class ADataEntity implements Serializable {
     private UUID id;
     
     /**
+     * Constructeur initialisant l'id de l'entity
+     */
+    public ADataEntity(){
+    	id = UUID.randomUUID();
+    }
+    /**
 	 * Permet de récupérer l'identifiant de l'entity
 	 * @return l'identifiant de l'entity
 	 */

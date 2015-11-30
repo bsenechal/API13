@@ -10,7 +10,8 @@ public class PrivateUserEntity extends AUserEntity {
     private static final long serialVersionUID = -5408789931031693916L;
     private String password;
 	private String imagePath;
-	private List<GameEntity> observedGames;
+	//List of saved games by the local user
+	private List<GameEntity> savedGames;
 	private GameEntity game;
 	
 	/**
@@ -40,14 +41,14 @@ public class PrivateUserEntity extends AUserEntity {
 	/**
 	 * @return the observedGame
 	 */
-	public List<GameEntity> getObservedGames() {
-		return observedGames;
+	public List<GameEntity> getSavedGames() {
+		return savedGames;
 	}
 	/**
 	 * @param observedGame the observedGame to set
 	 */
-	public void setObservedGames(List<GameEntity> observedGames) {
-		this.observedGames = observedGames;
+	public void setSavedGames(List<GameEntity> observedGames) {
+		this.savedGames = observedGames;
 	}
 	/**
 	 * @return the game

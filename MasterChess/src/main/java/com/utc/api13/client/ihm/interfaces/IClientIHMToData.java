@@ -36,5 +36,4 @@ public interface IClientIHMToData {
 	 * Display distant profile 
 	 */
 	public void displayProfile(PublicUserEntity u); 
-	
 }
