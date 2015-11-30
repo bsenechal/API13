@@ -67,10 +67,24 @@ public class IHMGamePageController {
 	}
 	
 	
-	public void setManager(IHMManager ihmManager){
-		this.IHMManager = ihmManager;
-		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getIClientDataToIHM(); 
-	}
+	public void setControllerContext(IHMManager ihmManager) 
+    {
+        this.IHMManager = ihmManager;
+        if (ihmManager != null)
+            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+        setListenersOnLoad();
+        setBindingsOnLoad();
+    }
+
+    public void setListenersOnLoad() 
+    {
+
+    }
+
+    public void setBindingsOnLoad() 
+    {
+    }
+    
 	public void setMainApp(AppClient app) {
 		this.mainApp=app; 
 		final ChessBoardNode cb =new ChessBoardNode();

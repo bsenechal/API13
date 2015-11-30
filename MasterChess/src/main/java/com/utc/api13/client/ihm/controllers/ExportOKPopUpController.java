@@ -37,9 +37,22 @@ public class ExportOKPopUpController {
 		this.popUpLabel3.setText(path);	      
 	}
 	
-	public void setManager(IHMManager ihmManager){
-		this.IHMManager = ihmManager;
-		if(ihmManager!=null) this.myIClientToIHM=this.IHMManager.getIClientDataToIHM(); 
-	}
+	public void setControllerContext(IHMManager ihmManager) 
+    {
+        this.IHMManager = ihmManager;
+        if (ihmManager != null)
+            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+        setListenersOnLoad();
+        setBindingsOnLoad();
+    }
+
+    public void setListenersOnLoad() 
+    {
+
+    }
+
+    public void setBindingsOnLoad() 
+    {
+    }
 }
 	
