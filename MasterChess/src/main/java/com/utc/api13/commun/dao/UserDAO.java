@@ -1,6 +1,10 @@
 package com.utc.api13.commun.dao;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -11,12 +15,13 @@ import com.utc.api13.commun.exceptions.DataAccessException;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 import com.utc.api13.commun.utils.StorageUtils;
+import java.nio.file.Files;
 
 
 public class UserDAO{
 
 
-    public void save(PrivateUserEntity user) throws DataAccessException {
+    public void save(PrivateUserEntity user) throws TechnicalException {
 	    StorageUtils.write(user);
     }
 
@@ -94,6 +99,14 @@ public class UserDAO{
     		}
     	}
     	return null;
+    }
+    
+    public Path copy(String source, String target, CopyOption... options) throws TechnicalException {
+    	try {
+			return Files.copy(Paths.get(source), Paths.get(target), options);
+		} catch (IOException e) {
+			throw new TechnicalException("Error while copying the file " + source + " to " + target, e);
+		}
     }
 }
 

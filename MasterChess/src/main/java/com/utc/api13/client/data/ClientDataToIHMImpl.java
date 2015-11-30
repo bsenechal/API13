@@ -281,7 +281,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	}
 
 	@Override
-	public File exportProfile() {
+	public File exportProfile() throws TechnicalException {
 		return userService.exportProfile(dataClientManager.getUserLocal());
 	}
 

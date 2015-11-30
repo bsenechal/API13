@@ -3,7 +3,12 @@ package com.utc.api13.client.data.services;
 
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.CopyOption;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +22,8 @@ import com.utc.api13.commun.exceptions.TechnicalException;
 
 public class UserService{
 	private final static UserDAO userDAO = new UserDAO();
+	
+	private static final boolean IS_WINDOWS = System.getProperty( "os.name" ).contains( "indow" );
 	
 	
 	/**
@@ -97,10 +104,14 @@ public class UserService{
 	 * Gets the storage file of given user
 	 * @param user user
 	 * @return file
+	 * @throws TechnicalException Error while copying file to export directory
 	 */
-	public File exportProfile(PrivateUserEntity user) {
-		URL url = UserService.class.getClassLoader().getResource("user" + File.separator + user.getLogin() + "_" + user.getId());
-		return new File(url.getFile());
+	public File exportProfile(PrivateUserEntity user) throws TechnicalException {
+		URL source = UserService.class.getClassLoader().getResource("user/" + user.getLogin() + "_" + user.getId() + ".ser");
+		String exportDirectory = System.getProperty("user.dir") + File.separator + "export" + File.separator + user.getLogin() + "_" + user.getId() + ".ser";
+		String sourceFile = IS_WINDOWS ? source.getPath().substring(1) : source.getPath();
+		Path targetFile = userDAO.copy(sourceFile, exportDirectory, StandardCopyOption.REPLACE_EXISTING);
+		return new File(targetFile.toString());
 	}
 
 }
