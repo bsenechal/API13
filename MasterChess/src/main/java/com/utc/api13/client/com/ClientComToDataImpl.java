@@ -1,7 +1,6 @@
 package com.utc.api13.client.com;
 
 import java.util.UUID;
-import org.junit.rules.DisableOnDebug;
 
 import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.commun.entities.GameEntity;
