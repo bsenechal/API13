@@ -37,9 +37,24 @@ public class UserInfoPopUpController {
 	public void initialize() {
 	}
 		
-	public void setMainApp(AppClient app) {
+	public void setMainApp(AppClient app /*,UUID idUser*/) {
 		this.mainApp=app; 
-		//initialiser avec login de l'user connecté : ATTENTE DATA 
+		
+		/*l'interface ne renvoie pas le bon type, il nous faut un user. ATTENTE DATA 
+		 
+		 PrivateUserEntity u = this.myIClientToIHM.getUserInfo(idUser); 
+		 this.userInfoLogin.setText(u.getLogin()); 
+	    this.userInfoFirstName.setText(u.getFirstName()); 
+	    this.userInfoLastName.setText(u.getLastName()); 
+	    this.userInfoWon.setText(Integer.toString(u.getNbWon()));
+	    this.userInfoLost.setText(Integer.toString(u.getNbLost()));
+	    this.userInfoPlayed.setText(Integer.toString(u.getNbPlayed()));
+		 */ 
+	}
+	
+	public void setManager(IHMManager ihmManager){
+		this.IHMManager = ihmManager;
+		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getIClientDataToIHM(); 
 	}
 }
 	
