@@ -12,6 +12,7 @@ import com.utc.api13.commun.messages.AllUserMessage;
 import com.utc.api13.commun.messages.ChatMessage;
 import com.utc.api13.commun.messages.ConnectMessage;
 import com.utc.api13.commun.messages.DisconnectMessage;
+import com.utc.api13.commun.messages.GameRequestMessage;
 import com.utc.api13.commun.messages.PublicUserMessage;
 
 public class ClientComToDataImpl implements IClientComToData {
@@ -161,10 +162,17 @@ public class ClientComToDataImpl implements IClientComToData {
 
 
 	@Override
+	/**
+	 * Envoie une proposition de sender à receiver
+	 * @param chattable : peut-on utiliser le chat pendant la partie
+	 * @param observable : peut-on observer la partie
+	 * 
+	 * @see com.utc.api13.client.com.interfaces.IClientComToData#sendProposition(java.util.UUID, java.util.UUID, boolean, boolean, com.utc.api13.commun.entities.PublicUserEntity)
+	 */
 	public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable,
 			PublicUserEntity user) {
 		// TODO Auto-generated method stub
-		
+		comClientManagerInstance.sendMessage(new GameRequestMessage(sender, reciever, chattable, observable));
 	}
 
 
