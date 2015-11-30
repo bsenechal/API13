@@ -9,6 +9,12 @@ import com.utc.api13.server.com.ComServerManager;
 
 public interface IServeurComToData {
 
+	/*****************************************************************/
+	/*****************************************************************/
+	// on a plus besoin de cette classe, ne rien modifier SVP
+	// Xiaowei ZHANG
+	/*****************************************************************/
+	/*****************************************************************/
 	public void multicastMove(PublicUserEntity users, UUID idPlayer, MoveEntity move);
 
 	public void multicastFinished(GameEntity game);
