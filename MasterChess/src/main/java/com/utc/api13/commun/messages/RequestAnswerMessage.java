@@ -19,6 +19,8 @@ public class RequestAnswerMessage extends Message {
 	private boolean observable;
 	private boolean answer;
 	private GameEntity ge;
+	
+	private static final String REJECTION_MESSAGE = "Your request has been refused";
 	/**
 	 * @param sender
 	 * @param receiver
@@ -32,16 +34,21 @@ public class RequestAnswerMessage extends Message {
 	}
 	@Override
 	public void proceed(ChannelHandlerContext ctx,ComClientManager comClientManager) {
-		comClientManager.getIClientDataToCom().initGame(this.ge);
+		if(answer){
+			comClientManager.getIClientDataToCom().initGame(this.ge);
+		}else{
+			comClientManager.getIClientDataToCom().notify(REJECTION_MESSAGE);
+		}
 	}
 	@Override
 	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-		this.ge = comServerManager.getIServerDataToCom().createGame(getSender(), getReceiver(), chattable, observable);
-		//On retourne l'info a l'utilisateur
-		comServerManager.sendMessage(ctx.channel(), this);
+		if(answer){
+			this.ge = comServerManager.getIServerDataToCom().createGame(getSender(), getReceiver(), chattable, observable);
+			//On retourne l'info a l'utilisateur
+			comServerManager.sendMessage(ctx.channel(), this);
+		}
 		//On envoie aussi le message a l'autre joueur
 		comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
-		
 	}
 	public boolean isChattable() {
 		return chattable;
