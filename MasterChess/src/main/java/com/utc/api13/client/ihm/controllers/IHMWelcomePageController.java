@@ -8,7 +8,9 @@ import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.commun.entities.PublicUserEntity;
 
+import javafx.collections.ListChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +22,7 @@ import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -104,8 +107,8 @@ public class IHMWelcomePageController {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/userInfoPopUp.fxml"));
 		root = (Pane) fxmlLoader.load();
 		UserInfoPopUpController controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager); 
         controller.setMainApp(this.mainApp);
-        controller.setManager(this.IHMManager); 
 		stage.setScene(new Scene(root));
 		stage.setTitle("User Information");
 		stage.initModality(Modality.APPLICATION_MODAL); 
@@ -127,8 +130,8 @@ public class IHMWelcomePageController {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/myInfoPopUp.fxml"));
 		root = (Pane) fxmlLoader.load();
 		MyInfoPopUpController controller = fxmlLoader.getController();
-        controller.setMainApp(this.mainApp);
-        controller.setManager(this.IHMManager);
+		controller.setControllerContext(this.IHMManager);
+		controller.setMainApp(this.mainApp);
 		stage.setScene(new Scene(root));
 		stage.setTitle("My Information");
 		stage.initModality(Modality.APPLICATION_MODAL); 
@@ -160,7 +163,7 @@ public class IHMWelcomePageController {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/exportOKPopUp.fxml"));
 		root = (Pane) fxmlLoader.load();
 		ExportOKPopUpController controller = fxmlLoader.getController();
-		controller.setManager(this.IHMManager);
+		controller.setControllerContext(this.IHMManager);
         controller.setMainApp(this.mainApp, path);
 		stage.setScene(new Scene(root));
 		stage.setTitle("Export success");
@@ -179,10 +182,48 @@ public class IHMWelcomePageController {
 	public void setListSavedGames() {
 		
 	}
-	public void setManager(IHMManager ihmManager){
-		this.IHMManager = ihmManager;
-		if(ihmManager!=null) this.myIClientToIHM=this.IHMManager.getIClientDataToIHM(); 
-	}
+	public void setControllerContext(IHMManager ihmManager) {
+        this.IHMManager = ihmManager;
+        if (ihmManager != null)
+            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+        setListenersOnLoad();
+        setBindingsOnLoad();
+    }
+
+    public void setListenersOnLoad() {
+        // Demande de la liste des users
+        // -------------------------------
+        myIClientToIHM.getUserList().addListener // add listener on observableList in DATA
+        (
+                new ListChangeListener<PublicUserEntity>() 
+                {
+                    @Override
+                    public void onChanged(javafx.collections.ListChangeListener.Change<? extends PublicUserEntity> c) 
+                    {
+                        connectedUserTable.setItems(myIClientToIHM.getUserList());
+                    }
+                }
+         );
+        myIClientToIHM.getUsers(); // ask for list of user to DATA
+
+        // Demande de la liste des jeux
+        // -------------------------------
+        
+
+        // Demande de la liste des parties sauvegardées
+        // -------------------------------
+        
+
+    }
+    
+    public void setBindingsOnLoad() 
+    {
+        //liste des users
+        //---------------
+        connectedUserLogin.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("Login"));
+        connectedUserStatus.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("Status"));
+        connectedUserStat.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("NbWon"));
+    }
 	
 
 }

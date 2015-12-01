@@ -37,7 +37,7 @@ public class ExportOKPopUpController {
 		this.popUpLabel3.setText(path);	      
 	}
 	
-	public void setManager(IHMManager ihmManager){
+	public void setControllerContext(IHMManager ihmManager){
 		this.IHMManager = ihmManager;
 		if(ihmManager!=null) this.myIClientToIHM=this.IHMManager.getIClientDataToIHM(); 
 	}

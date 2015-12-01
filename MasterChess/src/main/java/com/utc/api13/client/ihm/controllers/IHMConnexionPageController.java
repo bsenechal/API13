@@ -65,7 +65,7 @@ public class IHMConnexionPageController {
 		root = (Pane) fxmlLoader.load();
 		IHMWelcomePageController controller = fxmlLoader.getController();
         controller.setMainApp(mainApp);
-        controller.setManager(IHMManager);
+        controller.setControllerContext(IHMManager);
 		Scene scene = new Scene(root, 800, 600);
 		stage.setTitle("Connexion to MasterChess");
 		stage.setScene(scene);
