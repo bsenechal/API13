@@ -1,15 +1,18 @@
 package com.utc.api13.client.com;
 
 import java.util.UUID;
-import org.junit.rules.DisableOnDebug;
 
 import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.messages.AllUserMessage;
+import com.utc.api13.commun.messages.ChatMessage;
 import com.utc.api13.commun.messages.ConnectMessage;
 import com.utc.api13.commun.messages.DisconnectMessage;
+import com.utc.api13.commun.messages.GameRequestMessage;
+import com.utc.api13.commun.messages.PublicUserMessage;
+import com.utc.api13.commun.messages.RequestAnswerMessage;
 
 public class ClientComToDataImpl implements IClientComToData {
 
@@ -103,7 +106,7 @@ public class ClientComToDataImpl implements IClientComToData {
 	@Override
 	public void sendTextChat(String text, UUID idPartie) {
 		// TODO Auto-generated method stub
-		
+		comClientManagerInstance.sendMessage(new ChatMessage(null, null, idPartie, text));		
 	}
 
 	@Override
@@ -143,8 +146,9 @@ public class ClientComToDataImpl implements IClientComToData {
 
 
 	@Override
-	public void getUserInfo(UUID iduser) {
-		// TODO Auto-generated method stub
+	public void getUserInfo(UUID iduser){
+
+		comClientManagerInstance.sendMessage(new PublicUserMessage(null,new UUID(0,0),iduser));
 		
 	}
 
@@ -157,16 +161,28 @@ public class ClientComToDataImpl implements IClientComToData {
 
 
 	@Override
+	/**
+	 * Envoie une proposition de sender à receiver
+	 * @param chattable : peut-on utiliser le chat pendant la partie
+	 * @param observable : peut-on observer la partie
+	 * 
+	 * @see com.utc.api13.client.com.interfaces.IClientComToData#sendProposition(java.util.UUID, java.util.UUID, boolean, boolean, com.utc.api13.commun.entities.PublicUserEntity)
+	 */
 	public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable,
 			PublicUserEntity user) {
-		// TODO Auto-generated method stub
-		
+		comClientManagerInstance.sendMessage(new GameRequestMessage(sender, reciever, chattable, observable));
 	}
 
-
+	/**
+	 * Repond a une proposition de partie
+	 * @param chattable : peut-on utiliser le chat pendant la partie
+	 * @param observable : peut-on observer la partie
+	 * @param answer : reponse du joueur
+	 * 
+	 * @see com.utc.api13.client.com.interfaces.IClientComToData#answerProposition(java.util.UUID, java.util.UUID, boolean, boolean, boolean)
+	 */
 	@Override
 	public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer) {
-		// TODO Auto-generated method stub
-		
+		comClientManagerInstance.sendMessage(new RequestAnswerMessage(sender, reciever, chattable, observable, answer));
 	}
 }

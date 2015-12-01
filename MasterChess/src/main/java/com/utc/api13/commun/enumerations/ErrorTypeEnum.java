@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.utc.api13.commun.enumerations;
 
 import com.utc.api13.commun.IErrorType;

@@ -1,5 +1,6 @@
 package com.utc.api13.client.ihm.controllers;
 
+import java.io.File;
 import java.io.IOException;
 
 import com.utc.api13.client.AppClient;
@@ -20,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class IHMConnexionPageController {
@@ -63,6 +65,7 @@ public class IHMConnexionPageController {
 		root = (Pane) fxmlLoader.load();
 		IHMWelcomePageController controller = fxmlLoader.getController();
         controller.setMainApp(mainApp);
+        controller.setControllerContext(IHMManager);
 		Scene scene = new Scene(root, 800, 600);
 		stage.setTitle("Connexion to MasterChess");
 		stage.setScene(scene);
@@ -72,11 +75,21 @@ public class IHMConnexionPageController {
 	}
 	@FXML
 	private void onImportClicked(Event event) {
-	    
-	}
-	@FXML
-	private void onExportClicked(Event event) {
-	    
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Import my profile");
+		File f = fileChooser.showOpenDialog(new Stage());
+		if (f != null) {
+			try {
+				myIClientToIHM.importProfile(f, true);
+			}			
+			catch (FunctionalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TechnicalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	@FXML
 	private void onSignUpClicked(Event event) {

@@ -262,7 +262,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      */
 	@Override
 	public PrivateUserEntity getLocalUser() {
-	    Assert.notNull(this.dataClientManager.getUserLocal(),"[ClientDataToIHMImpl][getLocalUser()] Local user in dataClientManager shouldn't be null" );
 		return this.dataClientManager.getUserLocal();
 	}
 
