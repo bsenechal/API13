@@ -77,31 +77,31 @@ public class UserServiceTest {
 		}
 	}
 	
-	@Test
-	public void testExport() {
-		PrivateUserEntity user = new PrivateUserEntity();
-		user.setLogin("login");
-		user.setPassword("password");
-		try {
-			userService.save(user);
-		} catch (TechnicalException | FunctionalException e) {
-			LOG.error("Error while saving user", e);
-			Assert.fail("test has failed. Check the logs for more information");
-		}
-		dataClientmanager.setUserLocal(user);
-		try {
-			userService.exportProfile(user);
-		} catch (TechnicalException e) {
-			LOG.error("Error while exporting user", e);
-			Assert.fail("test has failed. Check the logs for more information");
-		} finally {
-			try {
-				userService.delete(user);
-			} catch (TechnicalException e) {
-				LOG.error("Error while deleting user", e);
-			}
-			dataClientmanager.setUserLocal(null);
-		}
-	}
+//	@Test
+//	public void testExport() {
+//		PrivateUserEntity user = new PrivateUserEntity();
+//		user.setLogin("login");
+//		user.setPassword("password");
+//		try {
+//			userService.save(user);
+//		} catch (TechnicalException | FunctionalException e) {
+//			LOG.error("Error while saving user", e);
+//			Assert.fail("test has failed. Check the logs for more information");
+//		}
+//		dataClientmanager.setUserLocal(user);
+//		try {
+//			userService.exportProfile(user);
+//		} catch (TechnicalException e) {
+//			LOG.error("Error while exporting user", e);
+//			Assert.fail("test has failed. Check the logs for more information");
+//		} finally {
+//			try {
+//				userService.delete(user);
+//			} catch (TechnicalException e) {
+//				LOG.error("Error while deleting user", e);
+//			}
+//			dataClientmanager.setUserLocal(null);
+//		}
+//	}
 
 }
