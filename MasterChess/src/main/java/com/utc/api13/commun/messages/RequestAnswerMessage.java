@@ -2,8 +2,6 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
-import org.apache.log4j.Logger;
-
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.server.com.ComServerManager;
@@ -11,36 +9,63 @@ import com.utc.api13.server.com.ComServerManager;
 import io.netty.channel.ChannelHandlerContext;
 
 public class RequestAnswerMessage extends Message {
-	private static final Logger logger = Logger.getLogger(RequestAnswerMessage.class);
-	UUID gameId;
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5244707144483762561L;
+	private boolean chattable;
+	private boolean observable;
+	private boolean answer;
+	private GameEntity ge;
+	
+	private static final String REJECTION_MESSAGE = "Your request has been refused";
 	/**
 	 * @param sender
 	 * @param receiver
 	 * @param gameId
 	 */
-	public RequestAnswerMessage(UUID sender, UUID receiver, UUID gameId) {
+	public RequestAnswerMessage(UUID sender, UUID receiver,boolean chattable,boolean observable,boolean answer) {
 		super(sender, receiver);
-		this.gameId = gameId;
+		this.chattable = chattable;
+		this.observable = observable;
+		this.answer = answer;
 	}
 	@Override
 	public void proceed(ChannelHandlerContext ctx,ComClientManager comClientManager) {
-		// TODO Auto-generated method stub
-
-	}
-	public UUID getGameId() {
-		return gameId;
-	}
-	public void setGameId(UUID gameId) {
-		this.gameId = gameId;
+		if(answer){
+			comClientManager.getIClientDataToCom().initGame(this.ge);
+		}else{
+			comClientManager.getIClientDataToCom().notify(REJECTION_MESSAGE);
+		}
 	}
 	@Override
 	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-		GameEntity game=new GameEntity();
-		game.setId(gameId);
-		//TODO ajouter les 2 players dans game.setWhitePlayer();
+		if(answer){
+			this.ge = comServerManager.getIServerDataToCom().createGame(getSender(), getReceiver(), chattable, observable);
+			//On retourne l'info a l'utilisateur
+			comServerManager.sendMessage(ctx.channel(), this);
+		}
+		//On envoie aussi le message a l'autre joueur
+		comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
 	}
-	
-
+	public boolean isChattable() {
+		return chattable;
+	}
+	public void setChattable(boolean chattable) {
+		this.chattable = chattable;
+	}
+	public boolean isObservable() {
+		return observable;
+	}
+	public void setObservable(boolean observable) {
+		this.observable = observable;
+	}
+	public boolean isAnswer() {
+		return answer;
+	}
+	public void setAnswer(boolean answer) {
+		this.answer = answer;
+	}
 }
