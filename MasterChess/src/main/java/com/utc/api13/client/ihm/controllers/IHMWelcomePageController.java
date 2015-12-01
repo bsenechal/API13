@@ -9,6 +9,7 @@ import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.exceptions.TechnicalException;
 
 import javafx.collections.ListChangeListener;
 import javafx.event.Event;
@@ -81,7 +82,16 @@ public class IHMWelcomePageController {
 	}
 	@FXML
 	public void onExportClicked() throws IOException {
-		File exportFile=this.myIClientToIHM.exportProfile(); 
+	
+	    File exportFile = null;
+        try {
+            exportFile = this.myIClientToIHM.exportProfile();
+        } catch (TechnicalException e1) {
+            // TODO Faire la gestion d'erreur
+            // ATTENTION ! En cas d'erreur, exportFile reste null donc la fonction exportFile.toPath() va générer une nullPointerException 
+            // Il faut donc le gérer :)
+            e1.printStackTrace();
+        } 
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		directoryChooser.setTitle("Export to ...");
         File selectedDirectory = directoryChooser.showDialog(new Stage()); 
