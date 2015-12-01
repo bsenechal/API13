@@ -94,7 +94,7 @@ public class UserService{
 	 * @throws FunctionalException when the stored object is not a private user
 	 * @throws TechnicalException exception when reading file
 	 */
-	public void importProfile(File file, boolean force) throws FunctionalException, TechnicalException {
+	public void importProfile(final File file, boolean force) throws FunctionalException, TechnicalException {
 		//Read object in file and check if it is a private user with an id
 		PrivateUserEntity privateUser = userDAO.getUserFromFile(file);
 		//Check if the user already exists
@@ -120,6 +120,17 @@ public class UserService{
 		String sourceFile = IS_WINDOWS ? source.getPath().substring(1) : source.getPath();
 		Path targetFile = userDAO.copy(sourceFile, exportDirectory, StandardCopyOption.REPLACE_EXISTING);
 		return new File(targetFile.toString());
+	}
+	
+	/**
+     * Gets the user with the given id from storage
+     * @param userIdid of user
+     * @return returns the found user or null when non found
+     * @throws FunctionalException when the stored object is not a private user
+     * @throws TechnicalException exception when reading file
+     */
+	public PrivateUserEntity getById(UUID userId) throws FunctionalException, TechnicalException {
+		return userDAO.getById(userId);
 	}
 
 }
