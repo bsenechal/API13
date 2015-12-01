@@ -34,15 +34,17 @@ public class StorageUtils{
      * If the user has not been stored yet, a new file is created and the user is serialized<br/>
      * In the other case, the existing file is overwritten
      * @param user user to store
-     * @throws DataAccessException input/output exception
+     * @throws TechnicalException when storage file cannot be created
      */
-    public static void write(final PrivateUserEntity user)throws DataAccessException{
+    public static void write(final PrivateUserEntity user)throws TechnicalException{
         Assert.notNull(user, "[StorageUtils] User shouldn't be null");
         try {
         	String filePath = PATH.getAbsolutePath()+File.separator+user.getLogin()+"_"+user.getId()+".ser";
         	//First let's try to create the file
         	File file = new File(filePath);
-        	file.createNewFile();
+        	if(!file.createNewFile()) {
+        		throw new TechnicalException("user storage file cannot be created");
+        	}
         	//let's write in the content whether the file existed already or not
             oos = new ObjectOutputStream(new FileOutputStream(filePath));
             oos.writeObject(user);

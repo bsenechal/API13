@@ -180,8 +180,9 @@ public interface IClientDataToIHM {
   	/**
   	 * Exports the local user profile so that the user will be able to import it in an other app
   	 * @return file containing the user profile
+  	 * @throws TechnicalException error while copying exported file to export directory
   	 */
-  	public File exportProfile();
+  	public File exportProfile() throws TechnicalException;
     
   //TODO
   //Si le  (IClientDataToCom.)printProposition()  ne renvoie pas directement la réponse à com pour dire si un User à accepté la partie, il faudra créer la méthode de réponse 
