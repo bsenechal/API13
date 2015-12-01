@@ -3,6 +3,7 @@ package com.utc.api13.client.ihm.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Optional;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -10,7 +11,10 @@ import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.commun.entities.PublicUserEntity;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,7 +49,8 @@ public class IHMWelcomePageController {
 
 	private AppClient mainApp;
 	private IClientDataToIHM myIClientToIHM; 
-	
+	private ObservableList<PublicUserEntity> listUserPublic;
+
 	@FXML
 	BorderPane mainBorderPane; 
 	@FXML
@@ -166,6 +171,8 @@ public class IHMWelcomePageController {
 		this.mainApp=app; 
 		PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
 		this.connectedUserLabel.setText(u.getLogin()); 
+		setListenersOnLoad();
+		setBindingsOnLoad();
 	}
 	
 	public void exportOK(String path) throws IOException {
@@ -205,7 +212,8 @@ public class IHMWelcomePageController {
     public void setListenersOnLoad() {
         // Demande de la liste des users
         // -------------------------------
-        myIClientToIHM.getUserList().addListener // add listener on observableList in DATA
+    	this.listUserPublic= myIClientToIHM.getUserList();
+       this.listUserPublic.addListener // add listener on observableList in DATA
         (
                 new ListChangeListener<PublicUserEntity>() 
                 {
@@ -216,6 +224,8 @@ public class IHMWelcomePageController {
                     }
                 }
          );
+    	
+        connectedUserTable.setItems(this.listUserPublic);
         myIClientToIHM.getUsers(); // ask for list of user to DATA
 
         // Demande de la liste des jeux
@@ -224,8 +234,18 @@ public class IHMWelcomePageController {
 
         // Demande de la liste des parties sauvegardées
         // -------------------------------
-        
+    	connectedUserTable.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
 
+			@Override
+			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+				// TODO Auto-generated method stub
+
+				Optional.ofNullable(listUserPublic.get((int)newValue)).ifPresent(user->
+					myIClientToIHM.getUserInfo(user.getId())	
+				);
+			}
+    		
+		});
     }
     
     public void setBindingsOnLoad() 
@@ -238,5 +258,7 @@ public class IHMWelcomePageController {
     }
 	
 
+
 }
+
 

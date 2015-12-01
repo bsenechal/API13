@@ -3,9 +3,7 @@ package com.utc.api13.client.ihm;
 import java.io.IOException;
 import java.util.UUID;
 
-import com.utc.api13.client.ihm.controllers.IHMCreateProfileController;
 import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
-import com.utc.api13.client.ihm.controllers.MyInfoPopUpController;
 import com.utc.api13.client.ihm.controllers.UserInfoPopUpController;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
 //github.com/bsenechal/API13.git
