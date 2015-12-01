@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.exceptions.FunctionalException;
@@ -22,6 +23,11 @@ public class UserServiceTest {
 	 * UserService instance
 	 */
 	private final UserService userService = new UserService();
+	
+	/**
+	 * data client manager
+	 */
+	DataClientManager dataClientmanager = new DataClientManager();
 	
 	/**
 	 * Class logger
@@ -68,6 +74,33 @@ public class UserServiceTest {
 					LOG.error("Error while deleting", e);
 				}
 			}
+		}
+	}
+	
+	@Test
+	public void testExport() {
+		PrivateUserEntity user = new PrivateUserEntity();
+		user.setLogin("login");
+		user.setPassword("password");
+		try {
+			userService.save(user);
+		} catch (TechnicalException | FunctionalException e) {
+			LOG.error("Error while saving user", e);
+			Assert.fail("test has failed. Check the logs for more information");
+		}
+		dataClientmanager.setUserLocal(user);
+		try {
+			userService.exportProfile(user);
+		} catch (TechnicalException e) {
+			LOG.error("Error while exporting user", e);
+			Assert.fail("test has failed. Check the logs for more information");
+		} finally {
+			try {
+				userService.delete(user);
+			} catch (TechnicalException e) {
+				LOG.error("Error while deleting user", e);
+			}
+			dataClientmanager.setUserLocal(null);
 		}
 	}
 
