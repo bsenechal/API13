@@ -1,6 +1,7 @@
 package com.utc.api13.client.ihm.controllers; 
 
 import com.utc.api13.client.AppClient;
+import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 
@@ -33,12 +34,10 @@ public class MyInfoPopUpController {
 		
 	@FXML
 	public void onModifyProfileClicked() {
-		
+		//lier avec fenetre de modif
 	}
 		
 	public MyInfoPopUpController() { 
-		this.IHMManager = new IHMManager(); 
-		this.myIClientToIHM=IHMManager.getIClientDataToIHM(); 
 		initialize(); 
 	}
 		
@@ -47,7 +46,31 @@ public class MyInfoPopUpController {
 		
 	public void setMainApp(AppClient app) {
 		this.mainApp=app; 
-	      //initialiser avec login de l'user connecté : ATTENTE DATA 
+		PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
+	    this.userInfoLogin.setText(u.getLogin()); 
+	    this.userInfoFirstName.setText(u.getFirstName()); 
+	    this.userInfoLastName.setText(u.getLastName()); 
+	    this.userInfoWon.setText(Integer.toString(u.getNbWon()));
+	    this.userInfoLost.setText(Integer.toString(u.getNbLost()));
+	    this.userInfoPlayed.setText(Integer.toString(u.getNbPlayed()));
 	}
+	
+	public void setControllerContext(IHMManager ihmManager) 
+    {
+        this.IHMManager = ihmManager;
+        if (ihmManager != null)
+            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+        setListenersOnLoad();
+        setBindingsOnLoad();
+    }
+
+    public void setListenersOnLoad() 
+    {
+
+    }
+
+    public void setBindingsOnLoad() 
+    {
+    }
 }
 	
