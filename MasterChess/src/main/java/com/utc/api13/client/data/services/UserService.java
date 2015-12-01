@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.util.Assert;
+
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.Erreur;
 import com.utc.api13.commun.dao.UserDAO;
@@ -56,8 +58,14 @@ public class UserService{
 	 * @throws FunctionalException functional exception
 	 */
 	private void validateInstance(final PrivateUserEntity u) throws TechnicalException, FunctionalException{
-		//TODO: needed validation before saving
-	};
+		Assert.notNull(u, "[UserService] user shouldn't be null");
+		//Check uid, login and paswword
+		if (u.getId() == null || u.getLogin() == null || u.getPassword() == null) {
+			List<Erreur> erreurs = new ArrayList<>();
+			erreurs.add(new Erreur(ErrorTypeEnum.MISSING_INFO));
+			throw new FunctionalException(erreurs );
+		}
+	}
 	
 	
 

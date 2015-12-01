@@ -23,7 +23,11 @@ public enum ErrorTypeEnum implements IErrorType{
 	/**
 	 * When the imported user exist already
 	 */
-	DUPLICATED_USER("data.user.duplicated");
+	DUPLICATED_USER("data.user.duplicated"),
+	/**
+	 * When the uid and/or the login and/or the password are missing
+	 */
+	MISSING_INFO("data.user.missingInfo");
     private final String code;
     private ErrorTypeEnum(String code){
         this.code = code;
