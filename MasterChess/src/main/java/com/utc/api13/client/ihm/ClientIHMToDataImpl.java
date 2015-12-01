@@ -1,7 +1,12 @@
 package com.utc.api13.client.ihm;
 
+import java.io.IOException;
 import java.util.UUID;
 
+import com.utc.api13.client.ihm.controllers.IHMCreateProfileController;
+import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
+import com.utc.api13.client.ihm.controllers.MyInfoPopUpController;
+import com.utc.api13.client.ihm.controllers.UserInfoPopUpController;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
 //github.com/bsenechal/API13.git
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -16,7 +21,18 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     @Override
     public void displayProfile(PublicUserEntity u) {
-        // TODO Auto-generated method stub
+    //	onUserInfoClicked
+    	IHMWelcomePageController profileController=new IHMWelcomePageController();
+    	UserInfoPopUpController userDistantController=new UserInfoPopUpController();
+    	userDistantController.displayProfile(u);
+    	
+		profileController.setIHMManager(this.myIHMManager);
+		try {
+			profileController.onUserInfoClicked();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
     }
 

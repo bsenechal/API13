@@ -35,6 +35,14 @@ import javafx.stage.Stage;
 
 public class IHMWelcomePageController {
 	private IHMManager IHMManager; 
+	
+	public IHMManager getIHMManager() {
+		return IHMManager;
+	}
+	public void setIHMManager(IHMManager iHMManager) {
+		IHMManager = iHMManager;
+	}
+
 	private AppClient mainApp;
 	private IClientDataToIHM myIClientToIHM; 
 	
@@ -72,7 +80,11 @@ public class IHMWelcomePageController {
 	private void onNotifClicked(Event event) {
 	}
 	@FXML
-	public void onModifyProfileClicked() { 
+	public void onModifyProfileClicked() throws IOException { 
+		MyInfoPopUpController profileController=new MyInfoPopUpController();
+		profileController.setIHMManager(this.IHMManager);
+		profileController.onModifyProfileClicked();
+		
 	}
 	@FXML
 	public void onLogOutClicked() {

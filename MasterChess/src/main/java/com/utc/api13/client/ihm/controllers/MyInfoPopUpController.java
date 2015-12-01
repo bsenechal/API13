@@ -1,17 +1,25 @@
 package com.utc.api13.client.ihm.controllers; 
 
+import java.io.IOException;
+
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 
 public class MyInfoPopUpController {
@@ -33,10 +41,33 @@ public class MyInfoPopUpController {
 	Hyperlink modifyLink; 
 		
 	@FXML
-	public void onModifyProfileClicked() {
-		//lier avec fenetre de modif
-	}
+	public void onModifyProfileClicked() throws IOException {
 		
+		Stage stage; 
+		Parent root;
+		stage = new Stage();
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/createProfilePage.fxml"));
+		root = (Pane) fxmlLoader.load();
+		
+		IHMCreateProfileController controller = fxmlLoader.getController();
+		controller.setControllerContext(this.IHMManager);
+		controller.setMainApp(this.mainApp);
+		stage.setScene(new Scene(root));
+		stage.setTitle("My Profile");
+		stage.initModality(Modality.APPLICATION_MODAL); 
+		stage.showAndWait();
+		
+		
+	}
+	 
+	public IHMManager getIHMManager() {
+		return IHMManager;
+	}
+
+	public void setIHMManager(IHMManager iHMManager) {
+		IHMManager = iHMManager;
+	}
+
 	public MyInfoPopUpController() { 
 		initialize(); 
 	}
@@ -53,6 +84,7 @@ public class MyInfoPopUpController {
 	    this.userInfoWon.setText(Integer.toString(u.getNbWon()));
 	    this.userInfoLost.setText(Integer.toString(u.getNbLost()));
 	    this.userInfoPlayed.setText(Integer.toString(u.getNbPlayed()));
+	    
 	}
 	
 	public void setControllerContext(IHMManager ihmManager) 
