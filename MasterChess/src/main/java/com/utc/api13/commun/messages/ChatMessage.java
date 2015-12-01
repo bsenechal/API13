@@ -1,10 +1,13 @@
 package com.utc.api13.commun.messages;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
 
 import com.utc.api13.client.com.ComClientManager;
+import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.server.com.ComServerManager;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -16,16 +19,19 @@ public class ChatMessage extends Message {
 	*/
 	private static final long serialVersionUID = -55526017055065873L;
 	private static final Logger logger = Logger.getLogger(ChatMessage.class);
-	String message;
+	UUID partie; // game in which the message will be sent
+	String message; // message to be sent
+	
 
 	/**
 	 * @param sender
 	 * @param receiver
 	 * @param message
 	 */
-	public ChatMessage(UUID sender, UUID receiver, String message) {
+	public ChatMessage(UUID sender, UUID receiver, UUID game, String message) {
 		super(sender, receiver);
 		this.message = message;
+		this.partie = game;
 	}
 
 	public String getMessage() {
@@ -37,21 +43,17 @@ public class ChatMessage extends Message {
 	}
 
 	@Override
-	public void proceed(ChannelHandlerContext ctx,ComClientManager comClientManager) {
-//		System.out.println(this.getMessage());
-		//Trouver le game et ajouter le message
-
+	public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
+		// Display the message received
+		comClientManager.getIClientDataToCom().displayMessage(message);
 	}
 
 	@Override
 	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-		
-//		try {
-//			ServerHanlder.getInstance().replyAll(ctx,new ChatMessage(new UUID(0, 0), new UUID(0, 0), message ));
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		// Get users attending the game !
+		List<PublicUserEntity> list = comServerManager.getIServerDataToCom().getUsersByGame(partie);
+		// Send the message to all listed users 
+		comServerManager.multicastMessageByUsers(list, this);		
 	}
 
 }

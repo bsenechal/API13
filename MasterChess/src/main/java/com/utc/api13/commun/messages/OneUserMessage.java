@@ -31,6 +31,7 @@ public class OneUserMessage extends Message {
 	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
 		// TODO Auto-generated method stub
 		
+		
 	}
 
 }
