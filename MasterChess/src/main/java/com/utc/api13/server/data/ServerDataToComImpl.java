@@ -18,7 +18,7 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
 /**
- * @author Benoît
+ * @author DATA
  *
  */
 public class ServerDataToComImpl implements IServerDataToCom {
@@ -222,5 +222,12 @@ public class ServerDataToComImpl implements IServerDataToCom {
         super();
         Assert.notNull(dataServerManager, "[ServerDataToComImpl][Constructor] dataServerManager shouldn't be null"); 
         this.dataServerManager = dataServerManager;
+    }
+
+
+    @Override
+    public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
