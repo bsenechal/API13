@@ -8,6 +8,7 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.server.com.ComServerManager;
 
 public interface IServeurComToData {
+
 	/*****************************************************************/
 	/*****************************************************************/
 	// on a plus besoin de cette classe, ne rien modifier SVP

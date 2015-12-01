@@ -5,7 +5,9 @@ package com.utc.api13.commun.exceptions;
  */
 public class TechnicalException extends Exception {
 
-	/**
+    private static final long serialVersionUID = 1011978773846554134L;
+
+    /**
      * Constructeur de la classe. : ApplicationException()
      */
     public TechnicalException() {

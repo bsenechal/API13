@@ -1,8 +1,6 @@
 package com.utc.api13.commun.utils;
 
-import java.io.EOFException;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InvalidClassException;
@@ -10,111 +8,82 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import com.utc.api13.commun.entities.ADataEntity;
-import com.utc.api13.commun.exceptions.DataAccessException;
+import org.springframework.util.Assert;
 
-public class StorageUtils<T extends ADataEntity>{
-	private ObjectOutputStream oos;
-    private ObjectInputStream ois;
-    private NoHeaderObjectOutputStream noHeaderOos;
-    private String file;
+import java.io.File;
+
+import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.commun.Erreur;
+import com.utc.api13.commun.enumerations.ErrorTypeEnum;
+import com.utc.api13.commun.exceptions.DataAccessException;
+import com.utc.api13.commun.exceptions.FunctionalException;
+import com.utc.api13.commun.exceptions.TechnicalException;
+
+public class StorageUtils{
+	private static File PATH = new File(StorageUtils.class.getClassLoader().getResource("user").getFile());
+	
+	private static ObjectOutputStream oos;
+    private static ObjectInputStream ois;
+    
+
     
     /**
-     * Constructeur
-     * @param file fichier à parser
+     * Stores a user in a file<br/> 
+     * If the user has not been stored yet, a new file is created and the user is serialized<br/>
+     * In the other case, the existing file is overwritten
+     * @param user user to store
+     * @throws DataAccessException input/output exception
      */
-    public StorageUtils(String file){
-        this.file = getClass().getClassLoader().getResource(file).getFile();
-    }
-    
-    
-    /**
-     * écrit un entity à la fin du fichier
-     * @param entity entity à écrire dans le fichier
-     * @throws DataAccessException erreur lors de l'accès aux données
-     */
-    public void write(T entity)throws DataAccessException{
+    public static void write(final PrivateUserEntity user)throws DataAccessException{
+        Assert.notNull(user, "[StorageUtils] User shouldn't be null");
         try {
-        	if(readAll().size() == 0) {
-	            oos = new ObjectOutputStream(new FileOutputStream(file));
-	            oos.writeObject(entity);
-        	} else {
-        		noHeaderOos = new NoHeaderObjectOutputStream(new FileOutputStream(file, true));
-        		noHeaderOos.writeObject(entity);
+        	String filePath = PATH.getAbsolutePath()+File.separator+user.getLogin()+"_"+user.getId()+".ser";
+        	//First let's try to create the file
+        	File file = new File(filePath);
+        	file.createNewFile();
+        	//let's write in the content whether the file existed already or not
+            oos = new ObjectOutputStream(new FileOutputStream(filePath));
+            oos.writeObject(user);
+        } catch (IOException ex) {
+            throw new DataAccessException("Error while writing entity", ex);
+        } finally{
+        	if(oos != null){
+	        	try {
+	        		oos.flush();
+	        		oos.close(); 
+	            } catch (IOException ex) {
+	                throw new DataAccessException("Error while closing output stream", ex);
+	            }
         	}
-        } catch (IOException ex) {
-            throw new DataAccessException("Error while writing entity", ex);
-        } finally{
-           
-                try {
-	            	 if(oos != null){
-	            		 oos.flush();
-	            		 oos.close();
-	            	 } else if(noHeaderOos != null) {
-	            		 noHeaderOos.flush();
-	            		 noHeaderOos.close();
-                    }
-                } catch (IOException ex) {
-                    throw new DataAccessException("Error while closing output stream", ex);
-                }
         }
     }
     
+
     /**
-     * 2crit la liste des entity passée en paramètre à la fin du fichier
-     * @param entities liste des entity à écrire
-     * @throws DataAccessException erreur d'accès aux données
+     * Reads a user from file
+     * @param fileName the file name (login + _ + uuid of the user)
+     * @return read user
+     * @throws TechnicalException 
      */
-    public void writeAll(List<T> entities) throws DataAccessException {
-    	try{
-            oos = new ObjectOutputStream(new FileOutputStream(file));
-            noHeaderOos = new NoHeaderObjectOutputStream(new FileOutputStream(file, true));
-            Iterator<T> iterator = entities.iterator();
-            if(iterator.hasNext()) {
-	            oos.writeObject(iterator.next());
-	            oos.close();
-            }
-            while(iterator.hasNext()){
-             noHeaderOos.writeObject(iterator.next());   
-            }
-        } catch (IOException ex) {
-            throw new DataAccessException("Error while writing entity", ex);
-        } finally{
-            
-            try {
-            	if(oos != null){
-	                oos.flush();
-	                oos.close();
-            	} else if(noHeaderOos != null){
-            		noHeaderOos.flush();
-            		noHeaderOos.close();
-                }
-            } catch (IOException ex) {
-                throw new DataAccessException("Error while closing output stream", ex);
-            }
-            
-        }
-    }
-    /**
-     * Permet de stocker dans le fichier un objet<br/>Ici ce sera un objet héritant de Entity
-     * @return l'entity lu à partir du fichier
-     * @throws DataAccessException 
-     */
-    public T read()throws DataAccessException{
+    public static PrivateUserEntity read(final String fileName)throws TechnicalException{
         try {
+        	File file = new File(PATH.getAbsolutePath() +File.separator + fileName);
+        	if(!file.exists()) {
+        		throw new TechnicalException("The file you are trying to read doesn't exist");
+        	}
+        	
             ois = new ObjectInputStream(new FileInputStream(file));
-            return (T) ois.readObject();
+            return (PrivateUserEntity) ois.readObject();
         } catch (InvalidClassException icx) {
             throw new DataAccessException("The class " + icx.classname + " has changed since the serialization of object", icx);
         } catch (StreamCorruptedException scx){
-            throw new DataAccessException("The file " + file + " is corrupted. Do not modify storage files!", scx);
+            throw new DataAccessException("The file " + PATH+File.separator+fileName + " is corrupted. Do not modify storage files!", scx);
         } catch (ClassNotFoundException cnx) {
             throw new DataAccessException("The entity you are trying to deserialize doest not have a valid class", cnx);
         } catch (IOException iox) {
-            throw new DataAccessException("Error while reading object from the file " + file, iox);
+            throw new DataAccessException("Error while reading object from the file " + PATH+File.separator+fileName, iox);
         }  finally{
             if(oos != null){
                 try {
@@ -126,38 +95,51 @@ public class StorageUtils<T extends ADataEntity>{
         }
     }
     
-    public List<T> readAll() throws DataAccessException{
-        List<T> entities = new ArrayList<T>();
-        try{
-            ois = new ObjectInputStream(new FileInputStream(file));
-            while(true) {
-                entities.add((T)ois.readObject());
-            }
-        } catch (EOFException eox){
-                return entities;
-        } catch (IOException iox) {
-            throw new DataAccessException("Error while reading object from the file " + file, iox);
-        } catch (ClassNotFoundException cnx) {
-            throw new DataAccessException("The entity you are trying to deserialize doest not have a valid class", cnx);
-        } finally {
-            try {
-            	if(ois != null) {
-            		ois.close();
-            	}
-            } catch (IOException ex) {
-                throw new DataAccessException("Error while closing output stream", ex);
-            }
-        }
+    
+    /**
+     * Delete the file with given name
+     * @param fileName file to delete
+     * @throws TechnicalException when deletion fails
+     */
+    public static void delete(final String fileName) throws TechnicalException{
+    	String filePath = PATH.getAbsolutePath() + File.separator + fileName + ".ser";
+        File file = new File(filePath);
+		if(!file.delete()) {
+			throw new TechnicalException("Delete operation has failed");
+		}
     }
     
-    public void clearFile() throws DataAccessException {
-        try {
-            new FileOutputStream(file).close();
-        } catch (FileNotFoundException fnfx) {
-            throw new DataAccessException("The file " + file + " was not found", fnfx);
-        } catch (IOException ex) {
-            throw new DataAccessException("Error while closing output stream", ex);
-        }
+    /**
+     * 
+     * @return Returns the list of files in the storage directory
+     */
+    public static File[] getAllFiles(){
+    	File[] listofFiles = PATH.listFiles();
+    	File[] NO_FILES = {};
+    	return listofFiles == null ? NO_FILES : listofFiles;
+    }
+    
+    /**
+     * Method used to import a user in the app
+     * Reads the user stored in the given file
+     * @param file file
+     * @return the user stored in the file
+     * @throws FunctionalException when the stored object is not a private user
+     * @throws TechnicalException exception when reading file
+     */
+    public static PrivateUserEntity readUserFromFile(File file) throws FunctionalException, TechnicalException {
+    	try {
+			ois = new ObjectInputStream(new FileInputStream(file));
+			Object ob = ois.readObject();
+			if(!(ob instanceof PrivateUserEntity)){
+				List<Erreur> erreurs = new ArrayList<>();
+				erreurs.add(new Erreur(ErrorTypeEnum.NON_PRIVATE_USER));
+				throw new FunctionalException(erreurs);
+			}
+			return (PrivateUserEntity)ob;
+		} catch (IOException | ClassNotFoundException e) {
+			throw new TechnicalException("Error while reading object from file", e);
+		}
     }
 
 }
