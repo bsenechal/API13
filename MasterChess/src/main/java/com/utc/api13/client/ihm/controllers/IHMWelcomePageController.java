@@ -11,6 +11,7 @@ import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 import javafx.beans.value.ChangeListener;
@@ -102,7 +103,12 @@ public class IHMWelcomePageController {
     @FXML
     public void onLogOutClicked() throws IOException{
         // NB : pas d'exception prévu par data = normal ??
-        this.myIClientToIHM.disconnect();
+        try {
+            this.myIClientToIHM.disconnect();
+        } catch (TechnicalException | FunctionalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         Stage stage;
         Parent root;
         stage = new Stage();

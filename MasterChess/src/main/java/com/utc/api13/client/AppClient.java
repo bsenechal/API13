@@ -3,11 +3,8 @@ package com.utc.api13.client;
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
-import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.controllers.IHMConnexionPageController;
-import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
-import com.utc.api13.commun.entities.PublicUserEntity;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
