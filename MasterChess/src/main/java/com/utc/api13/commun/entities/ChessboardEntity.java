@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class ChessboardEntity extends ADataEntity {
- 
+
     private static final long serialVersionUID = -2495824863031165639L;
     private static final int MIN_COLUMN = 1;
     private static final int MAX_COLUMN = 8;
     private static final int MIN_LINE = 1;
     private static final int MAX_LINE = 8;
-    
+
     private static List<PositionEntity> cases;
-    
+
     /**
      * @return the cases
      */
@@ -21,18 +21,19 @@ public final class ChessboardEntity extends ADataEntity {
     }
 
     /**
-     * @param cases the cases to set
+     * @param cases
+     *            the cases to set
      */
     public void setCases(final List<PositionEntity> cases) {
         ChessboardEntity.cases = cases;
     }
-    
+
     public ChessboardEntity() {
         super();
         cases = new ArrayList<PositionEntity>();
-        
-        for (int x = MIN_COLUMN ; x < MAX_COLUMN ; x++) {
-            for (int y = MIN_LINE ; y < MAX_LINE ; y++) {
+
+        for (int x = MIN_COLUMN; x < MAX_COLUMN; x++) {
+            for (int y = MIN_LINE; y < MAX_LINE; y++) {
                 cases.add(new PositionEntity(x, y));
             }
         }

@@ -9,55 +9,53 @@ import com.utc.api13.server.com.interfaces.IServeurComToData;
 
 public class ServeurComToDataImpl implements IServeurComToData {
 
-	ComServerManager comServerManagerInstance;
-	
+    ComServerManager comServerManagerInstance;
 
-	/*****************************************************************/
-	/*****************************************************************/
-	// on a plus besoin de cette classe, ne rien modifier SVP
-	//   Xiaowei ZHANG
-	/*****************************************************************/
-	/*****************************************************************/
-	
-	/**
-	 * @param comServerManagerInstance
-	 */
-	public ServeurComToDataImpl(ComServerManager comServerManagerInstance) {
-		this.comServerManagerInstance = comServerManagerInstance;
-	}
+    /*****************************************************************/
+    /*****************************************************************/
+    // on a plus besoin de cette classe, ne rien modifier SVP
+    // Xiaowei ZHANG
+    /*****************************************************************/
+    /*****************************************************************/
 
-	@Override
-	public void multicastMove(PublicUserEntity users, UUID idPlayer, MoveEntity move) {
+    /**
+     * @param comServerManagerInstance
+     */
+    public ServeurComToDataImpl(ComServerManager comServerManagerInstance) {
+        this.comServerManagerInstance = comServerManagerInstance;
+    }
 
-	}
+    @Override
+    public void multicastMove(PublicUserEntity users, UUID idPlayer, MoveEntity move) {
 
-	@Override
-	public void multicastFinished(GameEntity game) {
+    }
 
-	}
+    @Override
+    public void multicastFinished(GameEntity game) {
 
-	@Override
-	public void multicastNewPlayer(PublicUserEntity pubPlayer) {
+    }
 
-		//comServerManagerInstance.sendMessage(channel, msg);
-	}
+    @Override
+    public void multicastNewPlayer(PublicUserEntity pubPlayer) {
 
-	/**
-	 * @return the comServerManagerInstance
-	 */
-	@Override
-	public ComServerManager getComServerManagerInstance() {
-		return comServerManagerInstance;
-	}
+        // comServerManagerInstance.sendMessage(channel, msg);
+    }
 
-	/**
-	 * @param comServerManagerInstance the comServerManagerInstance to set
-	 */
-	@Override
-	public void setComServerManagerInstance(ComServerManager comServerManagerInstance) {
-		this.comServerManagerInstance = comServerManagerInstance;
-	}
+    /**
+     * @return the comServerManagerInstance
+     */
+    @Override
+    public ComServerManager getComServerManagerInstance() {
+        return comServerManagerInstance;
+    }
 
-	
+    /**
+     * @param comServerManagerInstance
+     *            the comServerManagerInstance to set
+     */
+    @Override
+    public void setComServerManagerInstance(ComServerManager comServerManagerInstance) {
+        this.comServerManagerInstance = comServerManagerInstance;
+    }
 
 }

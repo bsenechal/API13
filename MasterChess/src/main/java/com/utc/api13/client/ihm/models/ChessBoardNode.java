@@ -15,9 +15,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-
 public class ChessBoardNode {
-	private final JPanel gui = new JPanel(new BorderLayout(3, 3));
+    private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JButton[][] chessBoardSquares = new JButton[8][8];
     private JPanel chessBoard;
     private static final String COLS = "ABCDEFGH";
@@ -33,7 +32,7 @@ public class ChessBoardNode {
         gui.add(chessBoard);
 
         // create the chess board squares
-        Insets buttonMargin = new Insets(0,0,0,0);
+        Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int ii = 0; ii < chessBoardSquares.length; ii++) {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
                 JButton b = new JButton();
@@ -43,7 +42,7 @@ public class ChessBoardNode {
                 ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
                 b.setIcon(icon);
                 if ((jj % 2 == 1 && ii % 2 == 1)
-                        //) {
+                        // ) {
                         || (jj % 2 == 0 && ii % 2 == 0)) {
                     b.setBackground(Color.WHITE);
                 } else {
@@ -53,21 +52,20 @@ public class ChessBoardNode {
             }
         }
 
-        //fill the chess board
+        // fill the chess board
         chessBoard.add(new JLabel(""));
         // fill the top row
         for (int ii = 0; ii < 8; ii++) {
-            chessBoard.add(new JLabel(COLS.substring(ii, ii + 1),SwingConstants.CENTER));
+            chessBoard.add(new JLabel(COLS.substring(ii, ii + 1), SwingConstants.CENTER));
         }
         // fill the black non-pawn piece row
         for (int ii = 0; ii < 8; ii++) {
             for (int jj = 0; jj < 8; jj++) {
                 switch (jj) {
-                    case 0:
-                        chessBoard.add(new JLabel("" + (ii + 1),
-                                SwingConstants.CENTER));
-                    default:
-                        chessBoard.add(chessBoardSquares[jj][ii]);
+                case 0:
+                    chessBoard.add(new JLabel("" + (ii + 1), SwingConstants.CENTER));
+                default:
+                    chessBoard.add(chessBoardSquares[jj][ii]);
                 }
             }
         }
