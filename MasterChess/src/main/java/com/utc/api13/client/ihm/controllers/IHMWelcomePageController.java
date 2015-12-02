@@ -216,7 +216,7 @@ public class IHMWelcomePageController {
     public void setMainApp(AppClient app) {
         this.mainApp = app;
         PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
-        this.connectedUsersLabel.setText(u.getLogin());
+        this.userLabel.setText(u.getLogin());
         setListenersOnLoad();
         setBindingsOnLoad();
     }
