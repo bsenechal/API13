@@ -127,20 +127,31 @@ public class IHMConnexionPageController {
             } // à tester à l'intégration
         }
 
-        Stage stage;
-        Parent root;
-        stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
-        root = (Pane) fxmlLoader.load();
-        IHMWelcomePageController controller = fxmlLoader.getController();
-        controller.setMainApp(mainApp);
-        controller.setControllerContext(IHMManager);
-        Scene scene = new Scene(root, 800, 600);
-        stage.setTitle("Connection to MasterChess");
-        stage.setScene(scene);
+        // TODO : Gérer les exceptions avec le logger
+        try {
+            myIClientToIHM.connect(login, pw);
+            Stage stage;
+            Parent root;
+            stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+            root = (Pane) fxmlLoader.load();
+            IHMWelcomePageController controller = fxmlLoader.getController();
+            controller.setControllerContext(IHMManager);
+            controller.setMainApp(mainApp);
+            Scene scene = new Scene(root, 800, 600);
+            stage.setTitle("Connexion to MasterChess");
+            stage.setScene(scene);
+            mainApp.getCurrentStage().close();
+            mainApp.setCurrentStage(stage);// to have the current to be able to close after
+            stage.show();
+        } catch (FunctionalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (TechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } // à tester à l'intégration
 
-        mainApp.stage.close();
-        stage.show();
     }
 
     @FXML
@@ -162,51 +173,26 @@ public class IHMConnexionPageController {
     }
 
     @FXML
-    private void onSignUpClicked(Event event) throws IOException {
-        MyInfoPopUpController controller = new MyInfoPopUpController();
-        
-        controller.setNewProfile(true);
-       controller.setIHMManager(IHMManager);
-        controller.onModifyProfileClicked();
-       
-    }
-    public void setMainApp(AppClient app) {
-        this.mainApp=app; 
+    private void onSignUpClicked(Event event) {
 
- }
+    }
 
     public IHMConnexionPageController() {
         initialize();
     }
 
-   
+    public void setMainApp(AppClient app) {
+        this.mainApp = app;
+    }
+
     public void initialize() {
         // bindings
     }
 
-    public void setManager(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
-        if (ihmManager != null)
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
-    }
-    
     public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null)
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
-        //setListenersOnLoad();
-        //setBindingsOnLoad();
     }
 
-
-    public void setListenersOnLoad() 
-    {
-    
-    }
-
-
-    public void setBindingsOnLoad() 
-    {
-    }
 }
-

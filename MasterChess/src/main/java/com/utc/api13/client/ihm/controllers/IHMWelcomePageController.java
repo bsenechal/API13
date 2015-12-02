@@ -121,8 +121,10 @@ public class IHMWelcomePageController {
         Scene scene = new Scene(root, 800, 600);
         stage.setTitle("Connexion to MasterChess");
         stage.setScene(scene);
-        AppClient.stage.close();
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
         stage.show();
+        
     }
 
     @FXML
