@@ -115,7 +115,11 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 */
 	@Override
 	public void displayResult(UUID idPlayer, MoveEntity move) {
-		// TODO Auto-generated method stub
+		//move the Piece on the local Game :
+		move.getPiece().movePiece(move, instanceDataClientManager.getCurrentGame());
+		
+		//TODO : Ulysse : display on IHM -> shouldn't currentGame be an observable ? if not :
+		//instanceDataClientManager.getIClientIHMToData().refreshChessBoard();
 
 	}
 

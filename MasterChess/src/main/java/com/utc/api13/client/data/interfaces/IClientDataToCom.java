@@ -57,6 +57,13 @@ public interface IClientDataToCom {
                                                         // la liste des
                                                         // GameEntity en cours
 
+    /**
+     * This method will update the local currentGame with the server validated move
+     * & it will trigger an board update on IHM
+     * @author ulyss_000
+     * @param idPlayer
+     * @param move
+     */
     void displayResult(final UUID idPlayer, final MoveEntity move);
 
     void sendMessageToChat(final MessageEntity message);
