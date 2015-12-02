@@ -1,6 +1,7 @@
 package com.utc.api13.client.ihm.controllers; 
 
 import java.io.File;
+import java.util.Optional;
 
 import org.apache.log4j.Logger;
 
@@ -113,7 +114,11 @@ public class IHMCreateProfileController {
 	    this.passwordTextView.setText(u.getPassword()); 
 	    this.firstNameTextView.setText(u.getFirstName());
 	    this.lastNameTextView.setText(u.getLastName());
-	    changeProfilePicture.setImage(new Image(u.getImagePath()));
+	    
+	    Optional.ofNullable(u.getImagePath()).ifPresent(link->
+	    	changeProfilePicture.setImage(new Image(link))
+	    	);
+	    
 	}
 	
 	public void setControllerContext(IHMManager ihmManager) 
