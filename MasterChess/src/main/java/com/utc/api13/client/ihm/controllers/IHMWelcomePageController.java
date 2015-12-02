@@ -63,7 +63,7 @@ public class IHMWelcomePageController {
     @FXML
     ImageView iconHelp, iconParam, iconProfile, iconNotif, infoTest;
     @FXML
-    Label title, currentGamesLabel, savedGamesLabel, connectedUserLabel;
+    Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel;
     @FXML
     Text userLabel;
     @FXML
