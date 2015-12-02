@@ -152,6 +152,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         // Store the new one
 
         userService.save(user);
+        
         this.dataClientManager.setUserLocal(user);
         // notify the server
         dataClientManager.getIClientComToData().sendUserUpdates(new PublicUserEntity(user));

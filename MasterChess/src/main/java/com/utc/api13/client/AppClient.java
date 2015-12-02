@@ -39,7 +39,6 @@ public class AppClient extends Application {
         ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
         comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
         comClientManager.launchAppCom("172.25.2.106", 8000);
-        
         PrivateUserEntity user = new PrivateUserEntity("pierre", "pass");
         dataClientManager.setUserLocal(user);
         dataClientManager.getUserService().save(user);
