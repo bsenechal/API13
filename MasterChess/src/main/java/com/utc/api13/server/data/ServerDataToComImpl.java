@@ -227,7 +227,18 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
     @Override
     public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable) {
-        // TODO Auto-generated method stub
-        return null;
+        PublicUserEntity whitePlayer = getUserInfo(j1);
+        PublicUserEntity blackPlayer = getUserInfo(j2);
+        Assert.notNull(whitePlayer, "[ServerDataToComImpl][createGame] player 1 is not online"); 
+        Assert.notNull(blackPlayer, "[ServerDataToComImpl][createGame] player 2 is not online"); 
+		//Create a game
+		GameEntity newGame = new GameEntity();
+		newGame.setBlackPlayer(blackPlayer);
+		newGame.setWhitePlayer(whitePlayer);
+		newGame.setIsOservable(observable);
+		newGame.setIsChattable(chattable);
+		//Add to the list of current games
+		dataServerManager.getCurrentGames().add(newGame);
+        return newGame;
     }
 }

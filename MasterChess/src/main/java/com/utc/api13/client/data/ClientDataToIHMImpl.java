@@ -5,6 +5,7 @@ package com.utc.api13.client.data;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,9 +54,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	}
 
 	@Override
-	public void getUserInfo(final UUID iduser) {
-		//TODO
-		//dataClientManager.getIClientComToData().getUserInfo(idUser);
+	public void getUserInfo(final UUID idUser) {
+		dataClientManager.getIClientComToData().getUserInfo(idUser);
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 
 	@Override
-	public void disconnect() {		
+	public void disconnect() throws TechnicalException, FunctionalException {		
 	    Assert.notNull(gameService, "[ClientDataToIHMImpl][disconnect] GameService shouldn't be null");
 	    
 	    if (dataClientManager.getCurrentGame() != null){
@@ -93,6 +93,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     			requestPlayerForLeaving();
     		}
 	    }
+	    userService.save(dataClientManager.getUserLocal());
 		dataClientManager.setUserLocal(null);
 	}
 
@@ -195,32 +196,21 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	    Assert.notNull(dataClientManager.getUserLocal().getSavedGames(), "[ClientDataToIHMImpl][saveGame] SavedGames shouldn't be null");
 	            
 		dataClientManager.getUserLocal().getSavedGames().add(dataClientManager.getCurrentGame());
-		//TODO: Ulysse à Amadou : est-ce qu'il vaut mieux pas aussi sauvegarder l'user à ce moment là ?
 		userService.save(dataClientManager.getUserLocal());
 	}
 
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToIHM#getCurrentGame()
-	 */
+
 	@Override
 	public GameEntity getCurrentGame() {
 		return dataClientManager.getCurrentGame();
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#createProposition(java.
-	 * util.UUID, boolean, boolean)
-	 */
+	
 	@Override
 	public void createProposition(UUID uidReciever, boolean chattable, boolean observable) {
-		// TODO Auto-generated method stub
-
+		//TODO: c'est le quoi le paramètre supp user??
+		dataClientManager.getIClientComToData().sendProposition(dataClientManager.getUserLocal().getId(), uidReciever, chattable, observable, null);
 	}
 
 	/*
@@ -266,11 +256,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	}
 
 	@Override
-	public void sendResponse(UUID idUser, boolean answer) {
-		if(answer) {
-			//Créer un game et l'ajouter à la liste des games
-			//Ajouter sur le server
-		}
+	public void sendResponse(UUID idUser, boolean answer) throws TechnicalException {
+		//TODO: la méthode com ne devrait pas prendre un user mais plutôt un uid
+//		dataClientManager.getIClientComToData().sendAnswer(answer, idUser);
 		
 	}
 
@@ -290,5 +278,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 		this.importProfile(file, false);
 		
 	}
+	
+	@Override
+    public ObservableList<GameEntity> getGamesList() {
+        return dataClientManager.getCurrentGames();
+    }
 }
 

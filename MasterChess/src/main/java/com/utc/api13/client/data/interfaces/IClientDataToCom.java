@@ -57,7 +57,12 @@ public interface IClientDataToCom {
      */
     void notify(final String message);
 
-    void initGame(final GameEntity game);                                           //La GameEntity est créé sur le serveur. Cette méthode initialise l'instance de la GameEntity sur le client
+    /**
+     * La GameEntity est créé sur le serveur.<br/>
+     * Cette méthode initialise l'instance de la GameEntity sur le client
+     * @param game game créé sur le serveur
+     */
+    void initGame(final GameEntity game);                                           
 
     void newObserver(final UUID idObserver);
 

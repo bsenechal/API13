@@ -71,7 +71,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	@Override
 	public void displayProfile(PublicUserEntity user) {
-		//instanceDataClientManager.displayProfile(user)
+		instanceDataClientManager.getIClientIHMToData().displayProfile(user);
 
 	}
 
@@ -151,17 +151,13 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#initGame(com.utc.api13
-	 * .commun.entities.GameEntity)
-	 */
+
 	@Override
 	public void initGame(GameEntity game) {
-		// TODO Auto-generated method stub
-
+		//Set the current game
+		instanceDataClientManager.setCurrentGame(game);
+		//Ask the IHM module to display the Chessboard
+		instanceDataClientManager.getIClientIHMToData().displayChessBoard();
 	}
 
 	/*
@@ -203,23 +199,15 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#sendProposition(java.
-	 * util.UUID, java.util.UUID, boolean, boolean)
-	 */
+
 	@Override
 	public void sendProposition(UUID uidSender, UUID uidReciever, boolean observable, boolean chattable) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void printProposition(UUID uidSender, boolean observable, boolean chattable) {
-		// TODO à faire
-
+		instanceDataClientManager.getIClientIHMToData().displayProposition(uidSender, observable, chattable);
 	}
 
 	/*
@@ -248,8 +236,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	@Override
 	public void displayMessage(String message) {
-		// TODO Auto-generated method stub
-		//dataClientManager.getClientIHMToData.displayMessage(message)
+		instanceDataClientManager.getIClientIHMToData().displayMessage(message);
 
 	}
 
