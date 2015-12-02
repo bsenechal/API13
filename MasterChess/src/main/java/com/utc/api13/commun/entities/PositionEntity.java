@@ -5,6 +5,16 @@ public class PositionEntity extends ADataEntity {
     private static final long serialVersionUID = -9132052141494726494L;
     private int positionX;
     private int positionY;
+    
+    /**
+     * @param positionX
+     * @param positionY
+     */
+    public PositionEntity(int positionX, int positionY) {
+        super();
+        this.positionX = positionX;
+        this.positionY = positionY;
+    }
 
     /**
      * @return the positionX
@@ -33,16 +43,6 @@ public class PositionEntity extends ADataEntity {
      *            the positionY to set
      */
     public void setPositionY(int positionY) {
-        this.positionY = positionY;
-    }
-
-    /**
-     * @param positionX
-     * @param positionY
-     */
-    public PositionEntity(int positionX, int positionY) {
-        super();
-        this.positionX = positionX;
         this.positionY = positionY;
     }
 }

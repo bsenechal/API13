@@ -22,6 +22,13 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     private DataClientManager instanceDataClientManager;
 
+    public ClientDataToComImpl(DataClientManager instanceDataClientManager) {
+        super();
+        Assert.notNull(instanceDataClientManager,
+                "[ClientDataToComImpl][Constructor] dataClientManager shouldn't be null");
+        this.instanceDataClientManager = instanceDataClientManager;
+    }
+    
     /*
      * (non-Javadoc)
      * 
@@ -250,12 +257,5 @@ public class ClientDataToComImpl implements IClientDataToCom {
         // TODO Auto-generated method stub
         // dataClientManager.getClientIHMToData.displayMessage(message)
 
-    }
-
-    public ClientDataToComImpl(DataClientManager instanceDataClientManager) {
-        super();
-        Assert.notNull(instanceDataClientManager,
-                "[ClientDataToComImpl][Constructor] dataClientManager shouldn't be null");
-        this.instanceDataClientManager = instanceDataClientManager;
     }
 }
