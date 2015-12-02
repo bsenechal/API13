@@ -100,9 +100,22 @@ public class IHMWelcomePageController {
     }
 
     @FXML
-    public void onLogOutClicked() {
+    public void onLogOutClicked() throws IOException{
         // NB : pas d'exception prévu par data = normal ??
         this.myIClientToIHM.disconnect();
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
+        root = (Pane) fxmlLoader.load();
+        IHMConnexionPageController controller = fxmlLoader.getController();
+        controller.setControllerContext(IHMManager);
+        controller.setMainApp(mainApp);
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("Connexion to MasterChess");
+        stage.setScene(scene);
+        AppClient.stage.close();
+        stage.show();
     }
 
     @FXML
