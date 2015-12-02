@@ -35,11 +35,11 @@ public class ObserverRequestMessage extends Message {
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         // TODO Auto-generated method stub
     	this.sender = comServerManager.findUserIdFromChannelHandlerContext(ctx);
-//    	comServerManager.getIServerDataToCom().newObserver(game, this.sender );
+    	comServerManager.getIServerDataToCom().newObserver(game, this.sender );
     	// récupérer le gameEntity
-//    	GameEntity gameE = comServerManager.getIServerDataToCom().getGameById(game);
+    	GameEntity gameE = comServerManager.getIServerDataToCom().getGameById(game);
     	// Envoyer la réponse au demandeur !
-//    	comServerManager.sendMessage(ctx.channel(), new ObserverAnswerMessage(new UUID(0, 0), GameEntity !!));
+    	comServerManager.sendMessage(ctx.channel(), new ObserverAnswerMessage(new UUID(0, 0), new UUID(0, 0), gameE));
     	
     	// A tous les participants à la partie : new Observer
 //    	comServerManager.multicastMessageByIds(gameE.getAllParticipants(), this);

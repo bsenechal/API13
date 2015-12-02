@@ -50,14 +50,13 @@ public class UserUpdateMessage extends Message {
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         // On the server, updates the connected users list
     	boolean result = false;
-    	// A décommenter dès que le changement a été fait
-//    	try {
-//			result = comServerManager.getIServerDataToCom().saveUserData(usr);
-//		} catch (TechnicalException e) {
-//			e.printStackTrace();
-//		} catch (FunctionalException e) {
-//			e.printStackTrace();
-//		}
+    	try {
+			result = comServerManager.getIServerDataToCom().saveUserData(usr);
+		} catch (TechnicalException e) {
+			e.printStackTrace();
+		} catch (FunctionalException e) {
+			e.printStackTrace();
+		}
     	if(result){
     		this.result_message = UPDATE_SUCCESSFUL;
     	}
