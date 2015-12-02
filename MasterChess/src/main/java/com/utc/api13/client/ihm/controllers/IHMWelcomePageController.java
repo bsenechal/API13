@@ -3,15 +3,20 @@ package com.utc.api13.client.ihm.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Optional;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,9 +41,19 @@ import javafx.stage.Stage;
 
 public class IHMWelcomePageController {
 	private IHMManager IHMManager; 
+	
+	public IHMManager getIHMManager() {
+		return IHMManager;
+	}
+	public void setIHMManager(IHMManager iHMManager) {
+		IHMManager = iHMManager;
+	}
+
 	private AppClient mainApp;
 	private IClientDataToIHM myIClientToIHM; 
-	
+	private ObservableList<PublicUserEntity> listUserPublic;
+	private ObservableList<GameEntity> listCurrentGames;
+
 	@FXML
 	BorderPane mainBorderPane; 
 	@FXML
@@ -73,7 +88,11 @@ public class IHMWelcomePageController {
 	private void onNotifClicked(Event event) {
 	}
 	@FXML
-	public void onModifyProfileClicked() { 
+	public void onModifyProfileClicked() throws IOException { 
+		MyInfoPopUpController profileController=new MyInfoPopUpController();
+		profileController.setIHMManager(this.IHMManager);
+		profileController.onModifyProfileClicked();
+		
 	}
 	@FXML
 	public void onLogOutClicked() {
@@ -82,14 +101,11 @@ public class IHMWelcomePageController {
 	}
 	@FXML
 	public void onExportClicked() throws IOException {
-	
-	    File exportFile = null;
+		File exportFile = null;
         try {
             exportFile = this.myIClientToIHM.exportProfile();
         } catch (TechnicalException e1) {
-            // TODO Faire la gestion d'erreur
-            // ATTENTION ! En cas d'erreur, exportFile reste null donc la fonction exportFile.toPath() va générer une nullPointerException 
-            // Il faut donc le gérer :)
+            // TODO Faire la gestion d'erreur 
             e1.printStackTrace();
         } 
 		DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -98,6 +114,7 @@ public class IHMWelcomePageController {
         
         if(selectedDirectory != null){
 	        try {
+	            // Attention : si la gestion d'erreur n'est pas faite, exportFile est null et on a une belle NullPointerException
 	        	Files.copy(exportFile.toPath(), selectedDirectory.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING,
 	                java.nio.file.StandardCopyOption.COPY_ATTRIBUTES); 
 	        }
@@ -164,6 +181,8 @@ public class IHMWelcomePageController {
 		this.mainApp=app; 
 		PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
 		this.connectedUserLabel.setText(u.getLogin()); 
+		setListenersOnLoad();
+		setBindingsOnLoad();
 	}
 	
 	public void exportOK(String path) throws IOException {
@@ -192,6 +211,7 @@ public class IHMWelcomePageController {
 	public void setListSavedGames() {
 		
 	}
+	
 	public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null)
@@ -203,7 +223,8 @@ public class IHMWelcomePageController {
     public void setListenersOnLoad() {
         // Demande de la liste des users
         // -------------------------------
-        myIClientToIHM.getUserList().addListener // add listener on observableList in DATA
+    	this.listUserPublic= myIClientToIHM.getUserList();
+       this.listUserPublic.addListener // add listener on observableList in DATA
         (
                 new ListChangeListener<PublicUserEntity>() 
                 {
@@ -214,16 +235,42 @@ public class IHMWelcomePageController {
                     }
                 }
          );
+    	
+        connectedUserTable.setItems(this.listUserPublic);
         myIClientToIHM.getUsers(); // ask for list of user to DATA
 
         // Demande de la liste des jeux
         // -------------------------------
-        
+        /*this.listCurrentGames= myIClientToIHM.getGameList();
+        this.listCurrentGames.addListener // add listener on observableList in DATA
+         (
+                 new ListChangeListener<GameEntity>() 
+                 {
+                     @Override
+                     public void onChanged(javafx.collections.ListChangeListener.Change<? extends GameEntity> c) 
+                     {
+                         currentGamesTable.setItems(myIClientToIHM.getGameList());
+                     }
+                 }
+          );
+         
+        listCurrentGames.setItems(this.listCurrentGames);
+        myIClientToIHM.getCurrentGame(); // ask for list of game to DATA*/
 
         // Demande de la liste des parties sauvegardées
         // -------------------------------
-        
+    	connectedUserTable.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
 
+			@Override
+			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+				// TODO Auto-generated method stub
+
+				Optional.ofNullable(listUserPublic.get((int)newValue)).ifPresent(user->
+					myIClientToIHM.getUserInfo(user.getId())	
+				);
+			}
+    		
+		});
     }
     
     public void setBindingsOnLoad() 
@@ -233,8 +280,16 @@ public class IHMWelcomePageController {
         connectedUserLogin.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("Login"));
         connectedUserStatus.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("Status"));
         connectedUserStat.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("NbWon"));
+        
+        //liste des jeux en cours
+        //---------------
+        /*currentGamesId.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("Login")); ID????
+        currentGamesPlayer1.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("whitePlayer"));
+        currentGamesPlayer2.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("blackPlayer"));
+        currentGamesTime.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, Date>("creationDate"));*/
+        
     }
-	
-
+    
 }
+
 
