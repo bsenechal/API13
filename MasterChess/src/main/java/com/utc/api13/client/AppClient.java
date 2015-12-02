@@ -3,7 +3,9 @@ package com.utc.api13.client;
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.ihm.IHMManager;
-import com.utc.api13.client.ihm.controllers.IHMGamePageController;
+
+import com.utc.api13.client.ihm.controllers.IHMConnexionPageController;
+
 import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
 
 import javafx.application.Application;
@@ -45,11 +47,11 @@ public class AppClient extends Application {
          * JAVAFX STAGE <<<<<<<<<<<<<<<<<<<<<<<
          */
         this.stage = stage;
-        //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/gamePage.fxml"));
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+
         Pane root = (Pane) fxmlLoader.load();
-        //IHMWelcomePageController controller = fxmlLoader.getController();
-        IHMGamePageController controller = fxmlLoader.getController();
+        IHMWelcomePageController controller = fxmlLoader.getController();
         controller.setControllerContext(ihmManager);
         controller.setMainApp(this);
         Scene scene = new Scene(root, 800, 600);
