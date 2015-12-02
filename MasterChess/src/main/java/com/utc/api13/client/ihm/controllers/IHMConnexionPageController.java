@@ -49,12 +49,11 @@ public class IHMConnexionPageController {
     private void onSignInClicked(Event event) throws IOException {
         String login = loginTextView.getText();
         String pw = passwordTextView.getText();
-        String sv = serverAddressTextView.getText(); 
-        Integer port = Integer.parseInt(portTextView.getText().isEmpty()? "0":portTextView.getText()); 
-       
-        
-        if (sv==null || port==null) {
-            
+        String sv = serverAddressTextView.getText();
+        Integer port = Integer.parseInt(portTextView.getText().isEmpty() ? "0" : portTextView.getText());
+
+        if (sv == null || port == null) {
+
             // TODO : Gérer les exceptions avec le logger
             try {
                 myIClientToIHM.connect(login, pw);
@@ -72,10 +71,10 @@ public class IHMConnexionPageController {
                 stage.setTitle("User Information");
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
-            } 
-            
+            }
+
             catch (TechnicalException e) {
-                // message erreur technique 
+                // message erreur technique
                 Stage stage;
                 Parent root;
                 stage = new Stage();
@@ -88,15 +87,15 @@ public class IHMConnexionPageController {
                 stage.setTitle("User Information");
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
-            } 
+            }
         }
-        
-        else  { 
+
+        else {
             // TODO : Gérer les exceptions avec le logger
-            try {  
+            try {
                 myIClientToIHM.connect(login, pw);
-            } 
-            
+            }
+
             catch (FunctionalException e) {
                 Stage stage;
                 Parent root;
@@ -110,8 +109,8 @@ public class IHMConnexionPageController {
                 stage.setTitle("User Information");
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
-            } 
-            
+            }
+
             catch (TechnicalException e) {
                 Stage stage;
                 Parent root;
@@ -143,7 +142,8 @@ public class IHMConnexionPageController {
             stage.setTitle("Connexion to MasterChess");
             stage.setScene(scene);
             mainApp.getCurrentStage().close();
-            mainApp.setCurrentStage(stage);// to have the current to be able to close after
+            mainApp.setCurrentStage(stage);// to have the current to be able to
+                                           // close after
             stage.show();
         } catch (FunctionalException e) {
             // TODO Auto-generated catch block
@@ -174,7 +174,12 @@ public class IHMConnexionPageController {
     }
 
     @FXML
-    private void onSignUpClicked(Event event) {
+    private void onSignUpClicked(Event event) throws IOException {
+        MyInfoPopUpController controller = new MyInfoPopUpController();
+
+        controller.setNewProfile(true);
+        controller.setIHMManager(IHMManager);
+        controller.onModifyProfileClicked();
 
     }
 
