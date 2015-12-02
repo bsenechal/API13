@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
-import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.APieceEntity;
+import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;

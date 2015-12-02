@@ -10,63 +10,77 @@ public class MoveEntity extends ADataEntity {
     private PositionEntity fromPosition;
     private PositionEntity toPosition;
     private APieceEntity piece;
-    
+
     /**
      * @return the date
      */
     public Date getDate() {
         return date;
     }
+
     /**
-     * @param date the date to set
+     * @param date
+     *            the date to set
      */
     public void setDate(Date date) {
         this.date = date;
     }
+
     /**
      * @return the game
      */
     public GameEntity getGame() {
         return game;
     }
+
     /**
-     * @param game the game to set
+     * @param game
+     *            the game to set
      */
     public void setGame(GameEntity game) {
         this.game = game;
     }
+
     /**
      * @return the fromPosition
      */
     public PositionEntity getFromPosition() {
         return fromPosition;
     }
+
     /**
-     * @param fromPosition the fromPosition to set
+     * @param fromPosition
+     *            the fromPosition to set
      */
     public void setFromPosition(PositionEntity fromPosition) {
         this.fromPosition = fromPosition;
     }
+
     /**
      * @return the toPosition
      */
     public PositionEntity getToPosition() {
         return toPosition;
     }
+
     /**
-     * @param toPosition the toPosition to set
+     * @param toPosition
+     *            the toPosition to set
      */
     public void setToPosition(PositionEntity toPosition) {
         this.toPosition = toPosition;
     }
+
     /**
      * @return the piece
      */
     public APieceEntity getPiece() {
         return piece;
     }
+
     /**
-     * @param piece the piece to set
+     * @param piece
+     *            the piece to set
      */
     public void setPiece(APieceEntity piece) {
         this.piece = piece;

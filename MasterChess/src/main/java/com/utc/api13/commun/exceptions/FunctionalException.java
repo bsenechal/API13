@@ -6,7 +6,8 @@ import java.util.List;
 import com.utc.api13.commun.Erreur;
 
 /**
- * Exception fonctionnelle, elle représente les exceptions fonctionnelles à montrer à l'utilisateur
+ * Exception fonctionnelle, elle représente les exceptions fonctionnelles à
+ * montrer à l'utilisateur
  *
  */
 
@@ -27,12 +28,13 @@ public class FunctionalException extends Exception {
     }
 
     public FunctionalException(List<Erreur> erreurs) {
-		super();
-		this.erreurs = erreurs;
-	}
+        super();
+        this.erreurs = erreurs;
+    }
 
-	/**
+    /**
      * Retourne la liste des erreurs
+     * 
      * @return la liste des erreurs
      */
     public List<Erreur> getErreurs() {
@@ -43,7 +45,7 @@ public class FunctionalException extends Exception {
      * 
      * @return true sssi cette instance ne contient aucune erreur
      */
-    public boolean hasError(){
+    public boolean hasError() {
         return !erreurs.isEmpty();
     }
 }

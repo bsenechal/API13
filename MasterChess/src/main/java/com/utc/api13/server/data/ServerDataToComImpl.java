@@ -57,7 +57,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public void notifyConnections(final PublicUserEntity player) {
-        Assert.notNull(dataServerManager.getCurrentUsers(), "[ServerDataToComImpl][notifyConnections] currentUsers shouldn't be null"); 
+        Assert.notNull(dataServerManager.getCurrentUsers(),
+                "[ServerDataToComImpl][notifyConnections] currentUsers shouldn't be null");
         dataServerManager.getCurrentUsers().add(player);
     }
 

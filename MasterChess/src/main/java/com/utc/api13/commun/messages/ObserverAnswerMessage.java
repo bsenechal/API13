@@ -11,29 +11,27 @@ import com.utc.api13.server.com.ComServerManager;
 import io.netty.channel.ChannelHandlerContext;
 
 public class ObserverAnswerMessage extends Message {
-	private static final Logger logger = Logger.getLogger(ObserverAnswerMessage.class);
+    private static final Logger logger = Logger.getLogger(ObserverAnswerMessage.class);
 
-	/**
-	 * @param sender
-	 * @param receiver
-	 */
-	public ObserverAnswerMessage(UUID sender, UUID receiver) {
-		super(sender, receiver);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param sender
+     * @param receiver
+     */
+    public ObserverAnswerMessage(UUID sender, UUID receiver) {
+        super(sender, receiver);
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public void proceed(ChannelHandlerContext ctx,ComClientManager comClientManager) {
-		// TODO Auto-generated method stub
+    @Override
+    public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
+        // TODO Auto-generated method stub
 
-
+    }
 
 }

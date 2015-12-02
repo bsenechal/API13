@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane fx:id="createProfileBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc.api13.client.ihm.controllers.IHMCreateProfileController">
-   <center>
+   <top>
       <AnchorPane fx:id="createProfileAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="loginLabel" layoutX="180.0" layoutY="161.0" text="Login" />
@@ -29,7 +29,8 @@
                   <Image url="@../pictures/profilePicture-modify.png" />
                </image>
             </ImageView>
+            <Label fx:id="errorInfo" layoutX="150.0" layoutY="4.0" prefHeight="21.0" prefWidth="200.0" textFill="#da1010" />
          </children>
       </AnchorPane>
-   </center>
+   </top>
 </BorderPane>

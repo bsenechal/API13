@@ -5,7 +5,6 @@ package com.utc.api13.client.data;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,7 +45,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public ObservableList<PublicUserEntity> getUserList() {
         return dataClientManager.getCurrentUsers();
     }
-
 
 	@Override
 	public void getUsers() {
@@ -209,7 +207,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	
 	@Override
 	public void createProposition(UUID uidReciever, boolean chattable, boolean observable) {
-		//TODO: c'est le quoi le paramètre supp user??
+		//TODO: c'est quoi le paramètre supp user??
 		dataClientManager.getIClientComToData().sendProposition(dataClientManager.getUserLocal().getId(), uidReciever, chattable, observable, null);
 	}
 

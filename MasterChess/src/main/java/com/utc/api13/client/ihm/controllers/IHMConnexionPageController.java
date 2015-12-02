@@ -25,92 +25,95 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class IHMConnexionPageController {
-	
-	private IHMManager IHMManager; 
-	private AppClient mainApp;
-	private IClientDataToIHM myIClientToIHM;
-	
-	@FXML
-	BorderPane connexionBorderPane;
-	@FXML
-	Label connexionLabel, loginLabel, passwordLabel, serverAddressLabel ; 
-	@FXML
-	AnchorPane connexionAnchorPane; 
-	@FXML
-	Button connexionButton; 
-	@FXML
-	TextField loginTextView, passwordTextView, serverAddressTextView; 
-	@FXML
-	Hyperlink importLink, exportLink, signUpLink; 
-	@FXML
-	private void onSignInClicked(Event event) throws IOException { 
-		String login=loginTextView.getText();  
-		String pw=passwordTextView.getText(); 
-		
-		// TODO : Gérer les exceptions avec le logger
-		try {
-			myIClientToIHM.connect(login, pw);
-		} catch (FunctionalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TechnicalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} //à tester à l'intégration
-		
-		Stage stage; 
-		Parent root;
-		stage = new Stage();
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
-		root = (Pane) fxmlLoader.load();
-		IHMWelcomePageController controller = fxmlLoader.getController();
+
+    private IHMManager IHMManager;
+    private AppClient mainApp;
+    private IClientDataToIHM myIClientToIHM;
+
+    @FXML
+    BorderPane connexionBorderPane;
+    @FXML
+    Label connexionLabel, loginLabel, passwordLabel, serverAddressLabel;
+    @FXML
+    AnchorPane connexionAnchorPane;
+    @FXML
+    Button connexionButton;
+    @FXML
+    TextField loginTextView, passwordTextView, serverAddressTextView;
+    @FXML
+    Hyperlink importLink, exportLink, signUpLink;
+
+    @FXML
+    private void onSignInClicked(Event event) throws IOException {
+        String login = loginTextView.getText();
+        String pw = passwordTextView.getText();
+
+        // TODO : Gérer les exceptions avec le logger
+        try {
+            myIClientToIHM.connect(login, pw);
+        } catch (FunctionalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (TechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } // à tester à l'intégration
+
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+        root = (Pane) fxmlLoader.load();
+        IHMWelcomePageController controller = fxmlLoader.getController();
         controller.setMainApp(mainApp);
         controller.setControllerContext(IHMManager);
-		Scene scene = new Scene(root, 800, 600);
-		stage.setTitle("Connexion to MasterChess");
-		stage.setScene(scene);
-		
-		mainApp.stage.close(); 
-		stage.show();
-	}
-	@FXML
-	private void onImportClicked(Event event) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Import my profile");
-		File f = fileChooser.showOpenDialog(new Stage());
-		if (f != null) {
-			try {
-				myIClientToIHM.importProfile(f, true);
-			}			
-			catch (FunctionalException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (TechnicalException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	@FXML
-	private void onSignUpClicked(Event event) {
-	    
-	}
-	
-	public IHMConnexionPageController() { 
-		initialize(); 
-	}
-	
-	public void setMainApp(AppClient app) {
-		this.mainApp=app; 
-	}
-	
-	public void initialize() {
-		//bindings
-	}
-	
-	public void setManager(IHMManager ihmManager){
-		this.IHMManager = ihmManager;
-		if(ihmManager!=null) this.myIClientToIHM=IHMManager.getIClientDataToIHM(); 
-	}
-	
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("Connexion to MasterChess");
+        stage.setScene(scene);
+
+        mainApp.stage.close();
+        stage.show();
+    }
+
+    @FXML
+    private void onImportClicked(Event event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Import my profile");
+        File f = fileChooser.showOpenDialog(new Stage());
+        if (f != null) {
+            try {
+                myIClientToIHM.importProfile(f, true);
+            } catch (FunctionalException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (TechnicalException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    private void onSignUpClicked(Event event) {
+
+    }
+
+    public IHMConnexionPageController() {
+        initialize();
+    }
+
+    public void setMainApp(AppClient app) {
+        this.mainApp = app;
+    }
+
+    public void initialize() {
+        // bindings
+    }
+
+    public void setManager(IHMManager ihmManager) {
+        this.IHMManager = ihmManager;
+        if (ihmManager != null)
+            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+    }
+
 }

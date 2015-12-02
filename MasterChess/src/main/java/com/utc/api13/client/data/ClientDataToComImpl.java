@@ -25,8 +25,8 @@ public class ClientDataToComImpl implements IClientDataToCom {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * com.utc.api13.client.data.interfaces.IClientToComm#getInstanceDataClientManager()
+     * @see com.utc.api13.client.data.interfaces.IClientToComm#
+     * getInstanceDataClientManager()
      */
     @Override
     public DataClientManager getInstanceDataClientManager() {
@@ -36,8 +36,8 @@ public class ClientDataToComImpl implements IClientDataToCom {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * com.utc.api13.client.data.interfaces.IClientToComm#setInstanceDataClientManager()
+     * @see com.utc.api13.client.data.interfaces.IClientToComm#
+     * setInstanceDataClientManager()
      */
     @Override
     public void setInstanceDataClientManager(DataClientManager instanceDataClientManager) {
@@ -53,9 +53,12 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 */
 	@Override
 	public void displayUsersList(List<PublicUserEntity> connectedUserList) {
-	    Assert.notNull(connectedUserList, "[ClientDataToComImpl][displayUsersList] connectedUserList shouldn't be null");
-	    Assert.notNull(instanceDataClientManager.getUserLocal(), "[ClientDataToComImpl][displayUsersList] UserLocal shouldn't be null");
-	    Assert.notNull(instanceDataClientManager.getCurrentUsers(), "[ClientDataToComImpl][displayUsersList] currentUsers shouldn't be null");
+        Assert.notNull(connectedUserList,
+                "[ClientDataToComImpl][displayUsersList] connectedUserList shouldn't be null");
+        Assert.notNull(instanceDataClientManager.getUserLocal(),
+                "[ClientDataToComImpl][displayUsersList] UserLocal shouldn't be null");
+        Assert.notNull(instanceDataClientManager.getCurrentUsers(),
+                "[ClientDataToComImpl][displayUsersList] currentUsers shouldn't be null");
         
 		connectedUserList.forEach(u -> {
 			if(u.getId().equals(instanceDataClientManager.getUserLocal().getId())){
@@ -91,7 +94,8 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	@Override
 	public void displayAllGames(final List<GameEntity> games) {
-	    Assert.notNull(instanceDataClientManager.getCurrentGames(), "[ClientDataToComImpl][displayAllGames] currentGames shouldn't be null");
+        Assert.notNull(instanceDataClientManager.getCurrentGames(),
+                "[ClientDataToComImpl][displayAllGames] currentGames shouldn't be null");
         
 		instanceDataClientManager.getCurrentGames().clear();
 		instanceDataClientManager.getCurrentGames().addAll(games);
@@ -242,7 +246,8 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     public ClientDataToComImpl(DataClientManager instanceDataClientManager) {
         super();
-        Assert.notNull(instanceDataClientManager, "[ClientDataToComImpl][Constructor] dataClientManager shouldn't be null");
+        Assert.notNull(instanceDataClientManager,
+                "[ClientDataToComImpl][Constructor] dataClientManager shouldn't be null");
         this.instanceDataClientManager = instanceDataClientManager;
     }
 }
