@@ -5,6 +5,12 @@ import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.controllers.IHMConnexionPageController;
 
+
+import com.utc.api13.client.ihm.controllers.IHMConnexionPageController;
+
+import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
+
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,6 +35,7 @@ ComClientManager comClientManager = new ComClientManager();
 DataClientManager dataClientManager = new DataClientManager();
 dataClientManager.setIClientComToData(comClientManager.getClientComToDataImpl());
 dataClientManager.setIClientIHMToData(ihmManager.getClientIHMToDataImpl());
+
 
 ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
 comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
@@ -56,11 +63,13 @@ comClientManager.launchAppCom("localhost", 8000);
 		//comClientManager.close();
 		
 	}
-    public static void main(String[]args){
+  
+
+    public static void main(String[] args) {
+
         launch(args);
     }
+
 }
 
        
-
-  
