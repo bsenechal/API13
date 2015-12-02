@@ -87,7 +87,7 @@ public class IHMGamePageController {
 
     public void setMainApp(AppClient app) {
         this.mainApp = app;
-        final ChessBoardNode cb = new ChessBoardNode(IHMManager);
+        final ChessBoardNode cb = new ChessBoardNode();
 
         /**
          * JFrame f = new JFrame("Chess"); f.add(cb.getGui());

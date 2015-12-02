@@ -34,13 +34,13 @@ public class ChessBoardNode {
     private static final int TAILLE_CASE = 25;
     private JButton[][] chessBoardSquares = new JButton[TAILLE][TAILLE];
 
-    public ChessBoardNode(IHMManager ihmManager) {
+    public ChessBoardNode() {
     	myIhmManager = ihmManager;
         initializeGui();
     }
 
     public final void initializeGui() {
-    	 String dossierIcone = "/pictures/pieces/";
+    	 String dossierIcone = "pictures/pieces/";
  		char[] ordrePiece = { 'T', 'C', 'F', 'D', 'R', 'F', 'C', 'T' };
  		int increment = 1;
  		int ligne = 0;
