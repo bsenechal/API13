@@ -33,13 +33,13 @@ public class IHMConnexionPageController {
     @FXML
     BorderPane connexionBorderPane;
     @FXML
-    Label connexionLabel, loginLabel, passwordLabel, serverAddressLabel;
+    Label connexionLabel, loginLabel, passwordLabel, serverAddressLabel, portLabel;
     @FXML
     AnchorPane connexionAnchorPane;
     @FXML
     Button connexionButton;
     @FXML
-    TextField loginTextView, passwordTextView, serverAddressTextView;
+    TextField loginTextView, passwordTextView, serverAddressTextView, portTextView;
     @FXML
     Hyperlink importLink, exportLink, signUpLink;
 
@@ -47,17 +47,35 @@ public class IHMConnexionPageController {
     private void onSignInClicked(Event event) throws IOException {
         String login = loginTextView.getText();
         String pw = passwordTextView.getText();
-
-        // TODO : Gérer les exceptions avec le logger
-        try {
-            myIClientToIHM.connect(login, pw);
-        } catch (FunctionalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (TechnicalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } // à tester à l'intégration
+        String sv = serverAddressTextView.getText(); 
+        Integer port = Integer.parseInt(portTextView.getText()); 
+        
+        if (sv==null || port==null) {
+        	
+	        // TODO : Gérer les exceptions avec le logger
+	        try {
+	            myIClientToIHM.connect(login, pw);
+	        } catch (FunctionalException e) {
+	            // erreur de login 
+	            
+	        } catch (TechnicalException e) {
+	            // message erreur technique 
+	            
+	        } 
+        }
+        
+        else  { 
+        	// TODO : Gérer les exceptions avec le logger
+	        try {
+	            myIClientToIHM.connect(login, pw, sv, port);
+	        } catch (FunctionalException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        } catch (TechnicalException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        } // à tester à l'intégration
+        }
 
         Stage stage;
         Parent root;
