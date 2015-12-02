@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -236,7 +237,7 @@ public class IHMWelcomePageController {
 
         // Demande de la liste des jeux
         // -------------------------------
-        /*this.listCurrentGames= myIClientToIHM.getGameList();
+        /*this.listCurrentGames= myIClientToIHM.getGamesList();
         this.listCurrentGames.addListener // add listener on observableList in DATA
          (
                  new ListChangeListener<GameEntity>() 
@@ -244,13 +245,13 @@ public class IHMWelcomePageController {
                      @Override
                      public void onChanged(javafx.collections.ListChangeListener.Change<? extends GameEntity> c) 
                      {
-                         currentGamesTable.setItems(myIClientToIHM.getGameList());
+                         currentGamesTable.setItems(myIClientToIHM.getGamesList());
                      }
                  }
           );
          
         listCurrentGames.setItems(this.listCurrentGames);
-        myIClientToIHM.getCurrentGame(); // ask for list of game to DATA*/
+        myIClientToIHM.getAllGames(); // ask for list of game to DATA*/
 
         // Demande de la liste des parties sauvegardées
         // -------------------------------
@@ -278,10 +279,10 @@ public class IHMWelcomePageController {
         
         //liste des jeux en cours
         //---------------
-        /*currentGamesId.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("Login")); ID????
-        currentGamesPlayer1.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("whitePlayer"));
-        currentGamesPlayer2.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("blackPlayer"));
-        currentGamesTime.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, Date>("creationDate"));*/
+        /*currentGamesId.setCellValueFactory(new PropertyValueFactory<GameEntity, UUID>("id")); 
+        currentGamesPlayer1.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("whitePlayer"));
+        currentGamesPlayer2.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("blackPlayer"));
+        currentGamesTime.setCellValueFactory(new PropertyValueFactory<GameEntity, Date>("creationDate"));*/
         
     }
     
