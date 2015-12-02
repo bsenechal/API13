@@ -50,7 +50,8 @@ public class IHMConnexionPageController {
         String login = loginTextView.getText();
         String pw = passwordTextView.getText();
         String sv = serverAddressTextView.getText(); 
-        Integer port = Integer.parseInt(portTextView.getText()); 
+        Integer port = Integer.parseInt(portTextView.getText().isEmpty()? "0":portTextView.getText()); 
+       
         
         if (sv==null || port==null) {
             
