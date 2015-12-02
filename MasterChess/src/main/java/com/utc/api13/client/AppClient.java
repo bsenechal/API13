@@ -50,7 +50,7 @@ public class AppClient extends Application {
         Pane root = (Pane) fxmlLoader.load();
         //IHMWelcomePageController controller = fxmlLoader.getController();
         IHMGamePageController controller = fxmlLoader.getController();
-        //controller.setControllerContext(ihmManager);
+        controller.setControllerContext(ihmManager);
         controller.setMainApp(this);
         Scene scene = new Scene(root, 800, 600);
         scene.getStylesheets().add(getClass().getResource("/css/masterCSS.css").toExternalForm());

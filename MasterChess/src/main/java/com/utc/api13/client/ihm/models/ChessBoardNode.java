@@ -34,7 +34,7 @@ public class ChessBoardNode {
     private static final int TAILLE_CASE = 25;
     private JButton[][] chessBoardSquares = new JButton[TAILLE][TAILLE];
 
-    public ChessBoardNode() {
+    public ChessBoardNode(IHMManager ihmManager) {
     	myIhmManager = ihmManager;
         initializeGui();
     }
