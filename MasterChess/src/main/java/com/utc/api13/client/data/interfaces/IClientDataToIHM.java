@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
-import com.utc.api13.commun.entities.PieceEntity;
+import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
@@ -58,7 +58,7 @@ public interface IClientDataToIHM {
      * @param piece
      * @param position
      */
-    public void move(PieceEntity piece, PositionEntity position);
+    public void move(APieceEntity piece, PositionEntity position);
     
     /**
      * informs the server that the local user is leaving as an observer

@@ -91,7 +91,7 @@ public class UserDAO{
     public PrivateUserEntity getById(UUID userId) throws FunctionalException, TechnicalException{
     	File[] listOfFiles = StorageUtils.getAllFiles();
     	for(File file : listOfFiles){
-    		if(file.getName().endsWith("_" + userId)) {
+    		if(file.getName().endsWith("_" + userId + ".ser")) {
     			PrivateUserEntity user = getUserFromFile(file);
     			if(userId.equals(user.getId())) {
     				return user;

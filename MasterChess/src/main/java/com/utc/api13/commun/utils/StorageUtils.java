@@ -91,7 +91,7 @@ public class StorageUtils{
                 try {
                     ois.close();
                 } catch (IOException ex) {
-                    throw new DataAccessException("Error while closing output stream", ex);
+                    throw new DataAccessException("Error while closing input stream", ex);
                 }
             }
         }
@@ -141,6 +141,14 @@ public class StorageUtils{
 			return (PrivateUserEntity)ob;
 		} catch (IOException | ClassNotFoundException e) {
 			throw new TechnicalException("Error while reading object from file", e);
+		} finally {
+			 if(oos != null){
+	                try {
+	                    ois.close();
+	                } catch (IOException ex) {
+	                    throw new DataAccessException("Error while closing input stream", ex);
+	                }
+	            }
 		}
     }
 
