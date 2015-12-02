@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.GameStatusEnum;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
@@ -54,11 +55,25 @@ public interface IServerDataToCom {
                                                                   // sur le
                                                                   // serveur
 
+    /**
+     * @author ulyss_000
+     * 		This method is used to verify if the move is possible
+     * @param idPlayer
+     * @param move
+     * @return true if the move is possible, else -> false
+     */
+    //TODO : Ulysse : do we need idPlayer since move as the players infos ?
     public boolean computerResult(final int idPlayer, final MoveEntity move);
 
-    public boolean isFinished(final String idGame); // Signale la fin d'une
-                                                    // partie pour supprimer la
-                                                    // GameEntity
+    /**
+     * This method is used to determine if the game is check/checkmate, draw or can simply continue
+     * -> it will delete the game entry if the result is CHECKMATE
+     * -> consequently you have to save the gameID beforehand.
+     * @author ulyss_000
+     * @param idGame
+     * @return GameStatusEnum -> 3 possible status : CHECK, CHECKMATE, DRAW or CONTINUE
+     */
+    public GameStatusEnum isFinished(final UUID idGame); 
 
     /**
      * erase the observer from all current games

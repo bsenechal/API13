@@ -1,6 +1,7 @@
 package com.utc.api13.client.data.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -10,7 +11,9 @@ import org.springframework.util.Assert;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
+import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PositionEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.DataAccessException;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
@@ -51,16 +54,5 @@ public class GameService {
         Assert.notNull(userId, "[GameService][isObserver] userId shouldn't be null");
         return game.getObservers().stream().anyMatch(u -> userId.equals(u.getId()));
     }
-
-    public List<PositionEntity> getAllPositionsByPieces(final List<APieceEntity> pieces) {
-        List<PositionEntity> positions = new ArrayList<PositionEntity>();
-        for (APieceEntity piece : pieces) {
-            positions.add(piece.getPosition());
-        }
-        return positions;
-    }
-
-    public void removePieceByPosition(List<APieceEntity> pieces, final PositionEntity position) {
-        pieces.removeIf(piece -> piece.getPosition().equals(position));
-    }
+    
 }

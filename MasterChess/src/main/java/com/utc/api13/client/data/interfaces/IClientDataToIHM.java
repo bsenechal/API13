@@ -8,6 +8,7 @@ import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.ErrorTypeEnum;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
@@ -56,11 +57,13 @@ public interface IClientDataToIHM {
     public void disconnect() throws TechnicalException, FunctionalException;
     
     /**
+     * @author ulyss_000
      * Moves a piece to the given position
      * @param piece
      * @param position
+     * @throws FunctionalException ErrorTypeEnum.MOVE_IMPOSSIBLE -> Is thrown if the move is not possible !
      */
-    public void move(APieceEntity piece, PositionEntity position);
+    public void move(APieceEntity piece, PositionEntity position) throws FunctionalException;
     
     /**
      * informs the server that the local user is leaving as an observer

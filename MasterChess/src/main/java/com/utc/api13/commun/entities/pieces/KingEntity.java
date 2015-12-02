@@ -1,6 +1,7 @@
 package com.utc.api13.commun.entities.pieces;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.util.Assert;
@@ -8,6 +9,7 @@ import org.springframework.util.Assert;
 import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.ChessboardEntity;
 import com.utc.api13.commun.entities.GameEntity;
+import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
@@ -25,27 +27,23 @@ public class KingEntity extends APieceEntity {
      * @param color
      * @param currentGame
      */
-    public KingEntity(PieceColorEnum color, GameEntity currentGame) {
-        super(color, currentGame);
+    public KingEntity(PieceColorEnum color) {
+        super(color);
         this.setPosition(
                 (color.equals(PieceColorEnum.BLACK) ? new PositionEntity(START_COLUMN_KING, START_LINE_BLACK_KING)
                         : new PositionEntity(START_COLUMN_KING, START_LINE_WHITE_KING)));
     }
 
     @Override
-    public List<PositionEntity> generateAvailableMoves() {
+    public List<PositionEntity> generateAvailableMoves(GameEntity game) {
         Assert.notNull(getPosition(), "[KingEntity][generateAvailableMoves] Position shouldn't be null");
-        Assert.notNull(currentGame.getCurrentPlayer(),
-                "[KingEntity][generateAvailableMoves] current player shouldn't be null");
-        Assert.notNull(currentGame.getWhitePieces(),
-                "[KingEntity][generateAvailableMoves] WhitePieces shouldn't be null");
-        Assert.notNull(currentGame.getBlackPieces(),
-                "[KingEntity][generateAvailableMoves] BlackPieces shouldn't be null");
 
         List<PositionEntity> result = new ArrayList<PositionEntity>();
 
         int positionX = getPosition().getPositionX();
         int positionY = getPosition().getPositionX();
+        
+        GameEntity tmpGame;
 
         // Calcul des positions possibles autour du roi
         for (int x = -1; x < 2; x++) {
@@ -56,14 +54,20 @@ public class KingEntity extends APieceEntity {
                 if (ChessboardEntity.getCases().contains(positionTemp)) {
 
                     // Si on est le joueur noir
-                    if (currentGame.getCurrentPlayer().equals(currentGame.getBlackPlayer())) {
+                    if (game.getCurrentPlayer().equals(game.getBlackPlayer())) {
 
                         // On vérifie que la position n'est pas déjà prise
-                        if (!gameService.getAllPositionsByPieces(currentGame.getBlackPieces()).contains(positionTemp)) {
-                            result.add(positionTemp);
+                        if (!APieceEntity.getAllPositionsByPieces(game.getBlackPieces()).contains(positionTemp)) {
+                        	// On vérifie que cela ne met pas notre roi en échec :
+                        	this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this, null, null), game);
+                        	if(!game.isCheck()){
+                        		result.add(positionTemp);
+                        	}
+                        	this.cancelLastMove(game);
+                            
                         }
                     } else {
-                        if (!gameService.getAllPositionsByPieces(currentGame.getWhitePieces()).contains(positionTemp)) {
+                        if (!APieceEntity.getAllPositionsByPieces(game.getWhitePieces()).contains(positionTemp)) {
                             result.add(positionTemp);
                         }
                     }

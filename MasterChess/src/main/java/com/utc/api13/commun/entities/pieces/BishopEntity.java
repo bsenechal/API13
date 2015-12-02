@@ -22,12 +22,12 @@ public class BishopEntity extends APieceEntity {
     private static final long serialVersionUID = 2036717333681570183L;
 
     public BishopEntity(PieceColorEnum color, GameEntity currentGame) {
-        super(color, currentGame);
+        super(color);
         // TODO Auto-generated constructor stub
     }
 
     @Override
-    public List<PositionEntity> generateAvailableMoves() {
+    public List<PositionEntity> generateAvailableMoves(GameEntity game) {
         // TODO Auto-generated method stub
         return null;
     }

@@ -24,6 +24,9 @@ public enum ErrorTypeEnum implements IErrorType {
                                               * When the uid and/or the login
                                               * and/or the password are missing
                                               */
+    MOVE_IMPOSSIBLE("[DATA][move]The move is not possible"), /**
+     * When the move is not possible
+     */
     MISSING_INFO("data.user.missingInfo");
     private final String code;
 

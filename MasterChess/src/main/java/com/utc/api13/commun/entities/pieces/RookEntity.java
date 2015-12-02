@@ -22,12 +22,12 @@ public class RookEntity extends APieceEntity {
     private static final long serialVersionUID = 2587319077980898398L;
     
     public RookEntity(PieceColorEnum color, GameEntity currentGame) {
-        super(color, currentGame);
+        super(color);
         // TODO Auto-generated constructor stub
     }
 
     @Override
-    public List<PositionEntity> generateAvailableMoves() {
+    public List<PositionEntity> generateAvailableMoves(GameEntity game) {
         // TODO Auto-generated method stub
         return null;
     }

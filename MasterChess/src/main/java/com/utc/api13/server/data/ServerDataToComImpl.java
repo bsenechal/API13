@@ -4,6 +4,7 @@
 package com.utc.api13.server.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -11,10 +12,14 @@ import java.util.stream.Collectors;
 
 import org.springframework.util.Assert;
 
+import com.utc.api13.commun.Erreur;
 //import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.ErrorTypeEnum;
+import com.utc.api13.commun.enumerations.GameStatusEnum;
+import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
 /**
@@ -81,8 +86,26 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public boolean computerResult(int idPlayer, MoveEntity move) {
-        // TODO Auto-generated method stub
-        return false;
+        Assert.notNull(move.getGameID(), "[ServerDataToComImpl][computerResult] gameID shouldn't be null");
+        Assert.notNull(move.getUserID(), "[ServerDataToComImpl][computerResult] userID shouldn't be null"); 
+        Assert.notNull(move.getPiece(), "[ServerDataToComImpl][computerResult] piece shouldn't be null"); 
+        Assert.notNull(move.getFromPosition(), "[ServerDataToComImpl][computerResult] fromPosition shouldn't be null"); 
+        Assert.notNull(move.getToPosition(), "[ServerDataToComImpl][computerResult] toPosition shouldn't be null"); 
+        Assert.notNull(move.getDate(), "[ServerDataToComImpl][computerResult] date shouldn't be null"); 
+        
+        GameEntity game = dataServerManager.getGameById(move.getGameID());
+        Boolean result = move.getPiece().isMovePossible(move,game);
+        if(result){
+        	     	
+        	move.getPiece().deleteDestinationPiece(move,game);
+        	move.getPiece().movePiece(move, game);   	
+        	
+        	//TODO: Ulysse : When do we switch activeplayers ?
+        	       	
+        }
+        
+        return result;
+    	
     }
 
     /*
@@ -93,9 +116,19 @@ public class ServerDataToComImpl implements IServerDataToCom {
      * String)
      */
     @Override
-    public boolean isFinished(String idGame) {
-        // TODO Auto-generated method stub
-        return false;
+    public GameStatusEnum isFinished(UUID idGame) {
+        Assert.notNull(dataServerManager.getGameById(idGame), "[ServerDataToComImpl][isFinished] The specified idGame doesn't have a linked game"); 
+    	
+        //verify game :
+    	GameEntity game = dataServerManager.getGameById(idGame);
+    	GameStatusEnum result = game.isFinished();
+    	
+    	//TODO : Ulysse : isn't it a tad brutal ?
+    	if(result.equals(GameStatusEnum.CHECKMATE) || result.equals(GameStatusEnum.DRAW)){
+    		//Clean the serveur game-entity :
+    		dataServerManager.getCurrentGames().remove(game);
+    	}
+        return result;
     }
 
 
