@@ -22,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class IHMConnexionPageController {
@@ -56,11 +57,35 @@ public class IHMConnexionPageController {
 	        try {
 	            myIClientToIHM.connect(login, pw);
 	        } catch (FunctionalException e) {
-	            // erreur de login 
-	            
-	        } catch (TechnicalException e) {
+	            // erreur de login
+	        	Stage stage;
+	            Parent root;
+	            stage = new Stage();
+	            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+	            root = (Pane) fxmlLoader.load();
+	            ErrorController controller = fxmlLoader.getController();
+	            controller.setControllerContext(this.IHMManager);
+	            controller.setMainApp(this.mainApp, "Wrong connexion information!");
+	            stage.setScene(new Scene(root));
+	            stage.setTitle("User Information");
+	            stage.initModality(Modality.APPLICATION_MODAL);
+	            stage.showAndWait();
+	        } 
+	        
+	        catch (TechnicalException e) {
 	            // message erreur technique 
-	            
+	        	Stage stage;
+	            Parent root;
+	            stage = new Stage();
+	            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+	            root = (Pane) fxmlLoader.load();
+	            ErrorController controller = fxmlLoader.getController();
+	            controller.setControllerContext(this.IHMManager);
+	            controller.setMainApp(this.mainApp, "Technical error!");
+	            stage.setScene(new Scene(root));
+	            stage.setTitle("User Information");
+	            stage.initModality(Modality.APPLICATION_MODAL);
+	            stage.showAndWait();
 	        } 
         }
         
@@ -68,12 +93,36 @@ public class IHMConnexionPageController {
         	// TODO : Gérer les exceptions avec le logger
 	        try {
 	            myIClientToIHM.connect(login, pw, sv, port);
-	        } catch (FunctionalException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	        } catch (TechnicalException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
+	        } 
+	        
+	        catch (FunctionalException e) {
+	        	Stage stage;
+	            Parent root;
+	            stage = new Stage();
+	            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+	            root = (Pane) fxmlLoader.load();
+	            ErrorController controller = fxmlLoader.getController();
+	            controller.setControllerContext(this.IHMManager);
+	            controller.setMainApp(this.mainApp, "Wrong connexion information!");
+	            stage.setScene(new Scene(root));
+	            stage.setTitle("User Information");
+	            stage.initModality(Modality.APPLICATION_MODAL);
+	            stage.showAndWait();
+	        } 
+	        
+	        catch (TechnicalException e) {
+	        	Stage stage;
+	            Parent root;
+	            stage = new Stage();
+	            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+	            root = (Pane) fxmlLoader.load();
+	            ErrorController controller = fxmlLoader.getController();
+	            controller.setControllerContext(this.IHMManager);
+	            controller.setMainApp(this.mainApp, "Technical error!");
+	            stage.setScene(new Scene(root));
+	            stage.setTitle("User Information");
+	            stage.initModality(Modality.APPLICATION_MODAL);
+	            stage.showAndWait();
 	        } // à tester à l'intégration
         }
 
@@ -132,6 +181,14 @@ public class IHMConnexionPageController {
         this.IHMManager = ihmManager;
         if (ihmManager != null)
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+    }
+    
+    public void setControllerContext(IHMManager ihmManager) {
+        this.IHMManager = ihmManager;
+        if (ihmManager != null)
+            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+        //setListenersOnLoad();
+        //setBindingsOnLoad();
     }
 
 }
