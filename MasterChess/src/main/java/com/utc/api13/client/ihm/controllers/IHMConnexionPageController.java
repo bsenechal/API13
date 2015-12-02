@@ -6,11 +6,9 @@ import java.io.IOException;
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
-import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
-import javafx.collections.ListChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -68,8 +65,8 @@ public class IHMConnexionPageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
         root = (Pane) fxmlLoader.load();
         IHMWelcomePageController controller = fxmlLoader.getController();
-        controller.setControllerContext(IHMManager);
         controller.setMainApp(mainApp);
+        controller.setControllerContext(IHMManager);
         Scene scene = new Scene(root, 800, 600);
         stage.setTitle("Connexion to MasterChess");
         stage.setScene(scene);
@@ -105,26 +102,18 @@ public class IHMConnexionPageController {
         initialize();
     }
 
+    public void setMainApp(AppClient app) {
+        this.mainApp = app;
+    }
+
     public void initialize() {
         // bindings
     }
 
-    public void setControllerContext(IHMManager ihmManager) 
-    {
+    public void setManager(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null)
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
-        setListenersOnLoad();
-        setBindingsOnLoad();
-    }
-
-    public void setListenersOnLoad() 
-    {
-
-    }
-
-    public void setBindingsOnLoad() 
-    {
     }
 
 }
