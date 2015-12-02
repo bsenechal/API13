@@ -273,6 +273,10 @@ public class GameEntity extends ADataEntity {
         this.currentPlayer = currentPlayer;
     }
     
+    /**
+     * 
+     * @return the concatenation of the observer list and the two players
+     */
     public List<PublicUserEntity> getAllParticipants(){
         List<PublicUserEntity> participants = new ArrayList<PublicUserEntity>();
         Collections.copy(participants, this.observers);
