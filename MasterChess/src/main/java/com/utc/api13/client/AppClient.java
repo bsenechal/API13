@@ -47,9 +47,9 @@ public class AppClient extends Application {
 		 * <<<<<<<<<<<<<<<<<<<<<<<
 		 */
 		this.stage = stage;
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
 		Pane root = (Pane) fxmlLoader.load();
-		IHMWelcomePageController controller = fxmlLoader.getController();
+		IHMConnexionPageController controller = fxmlLoader.getController();
 		controller.setControllerContext(ihmManager);
 		controller.setMainApp(this);
 		Scene scene = new Scene(root, 800, 600);

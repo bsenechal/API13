@@ -169,10 +169,12 @@ public class IHMWelcomePageController {
 	
 	public void setMainApp(AppClient app) {
 		this.mainApp=app; 
+		
 		PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
 		this.connectedUserLabel.setText(u.getLogin()); 
 		setListenersOnLoad();
 		setBindingsOnLoad();
+	
 	}
 	
 	public void exportOK(String path) throws IOException {

@@ -25,12 +25,21 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class IHMCreateProfileController {
+public class IHMManageProfileController {
 	private IHMManager IHMManager; 
 	private AppClient mainApp;
 	private IClientDataToIHM myIClientToIHM; 
 	private final Logger log = Logger.getLogger(getClass());
+	private boolean newProfile=false;
 	
+    public boolean isNewProfile() {
+        return newProfile;
+    }
+
+    public void setNewProfile(boolean newProfile) {
+        this.newProfile = newProfile;
+    }
+
     @FXML
     BorderPane createProfileBorderPane; 
     @FXML
@@ -43,17 +52,29 @@ public class IHMCreateProfileController {
     ImageView changeProfilePicture; 
     @FXML
     AnchorPane createProfileAnchorPane; 
+    
     @FXML
     public void onSaveProfileClicked() {
     	
-    	PrivateUserEntity user=this.myIClientToIHM.getLocalUser(); 
+    	 PrivateUserEntity user=null;
+    	if(!newProfile)
+    	  user =this.myIClientToIHM.getLocalUser();
+    	else
+    	    user=new PrivateUserEntity();
+    	    
     	user.setLogin(loginTextView.getText());  
 		user.setPassword(passwordTextView.getText()); 
 		user.setFirstName(firstNameTextView.getText());  
 		user.setLastName(lastNameTextView.getText()); 
 		try {
-			if(errorInfo.getText().length()>0)
-				this.myIClientToIHM.updateProfile(user);
+		//	if(errorInfo.getText().length()>0){
+			    
+			    if(newProfile)
+			       this.myIClientToIHM.createProfile(user);
+			    else
+			        this.myIClientToIHM.updateProfile(user);
+		//	}
+				
 		} catch (TechnicalException e) {
 			// TODO afficher a l'utlisateur l'erreur soit dans une popup ou dans la fenetre courante 
 			log.error(e.getMessage(),e);
@@ -72,7 +93,7 @@ public class IHMCreateProfileController {
 	@FXML
     public void onChangePictureClicked() {
     	
-    	errorInfo.setText("");
+    //	errorInfo.setText("");
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Ouvrir le document");
 		fileChooser.setInitialDirectory(new File("/"));
@@ -86,14 +107,14 @@ public class IHMCreateProfileController {
 				 
 		}catch(Exception e){
 			
-			errorInfo.setText(" erreur chargement Image");
+		//	errorInfo.setText(" erreur chargement Image");
 			e.printStackTrace();
 		}
 		
 	}
     
     
-	public IHMCreateProfileController() { 
+	public IHMManageProfileController() { 
 		
 		// [DATA] : Le code ci-dessous Ne peut pas fonctionner émoticône unsure
 //		IHMManager = new IHMManager(); 
@@ -108,6 +129,7 @@ public class IHMCreateProfileController {
 	
 	public void setMainApp(AppClient app) {
 		
+	    
 		this.mainApp=app; 
 		PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
 	    this.loginTextView.setText(u.getLogin()); 
@@ -140,11 +162,4 @@ public class IHMCreateProfileController {
     }
 	
 }
-//public class ProfileImage extends Image{
-//
-//		private url;
-//	public ProfileImage(String url) {
-//		super(url);
-//		this.url
-//		// TODO Auto-generated constructor stub
-//	}
+

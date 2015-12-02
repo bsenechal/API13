@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import com.utc.api13.client.AppClient;
+import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -97,8 +98,22 @@ public class IHMConnexionPageController {
     }
 
     @FXML
-    private void onSignUpClicked(Event event) {
+    private void onSignUpClicked(Event event) throws IOException {
+       
 
+        MyInfoPopUpController controller = new MyInfoPopUpController();
+        
+        controller.setNewProfile(true);
+       controller.setIHMManager(IHMManager);
+        controller.onModifyProfileClicked();
+       
+    }
+    public void setMainApp(AppClient app) {
+        this.mainApp=app; 
+//        PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
+//        this.connectedUserLabel.setText(u.getLogin()); 
+        setListenersOnLoad();
+        setBindingsOnLoad();
     }
 
     public IHMConnexionPageController() {
