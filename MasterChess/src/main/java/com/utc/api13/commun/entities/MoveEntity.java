@@ -34,6 +34,23 @@ public class MoveEntity extends ADataEntity {
 	}
 
 	/**
+	 * @author ulyss_000
+	 * @param date
+	 * @param fromPosition
+	 * @param toPosition
+	 * @param piece
+	 */
+	public MoveEntity(Date date, PositionEntity fromPosition, PositionEntity toPosition, APieceEntity piece) {
+		super();
+		this.date = date;
+		this.fromPosition = fromPosition;
+		this.toPosition = toPosition;
+		this.piece = piece;
+		this.userID = null;
+		this.gameID = null;
+	}
+
+	/**
 	 * @return the date
 	 */
 	public Date getDate() {

@@ -115,6 +115,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 */
 	@Override
 	public void displayResult(UUID idPlayer, MoveEntity move) {
+		Assert.notNull(instanceDataClientManager.getCurrentGame(), "[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
 		//move the Piece on the local Game :
 		move.getPiece().movePiece(move, instanceDataClientManager.getCurrentGame());
 		

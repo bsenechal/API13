@@ -276,6 +276,20 @@ public class GameEntity extends ADataEntity {
 	public void setCurrentPlayer(PublicUserEntity currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
+	
+	/**
+	 * Will switch current user between user black and user white
+	 * @author ulyss_000
+	 */
+	public void switchCurrentUser(){
+    	//switch active user :
+    	if(this.getBlackPlayer().getId().equals(this.getCurrentPlayer().getId())){
+    		this.setCurrentPlayer(this.getWhitePlayer());
+    	}
+    	else{
+    		this.setCurrentPlayer(this.getBlackPlayer());
+    	}
+	}
 
 	/**
 	 * @author ulyss_000
@@ -354,8 +368,7 @@ public class GameEntity extends ADataEntity {
 		}
 
 		// Check check
-		if (opponentPieces.stream().filter(op -> op.generateAvailableMoves(this).contains(king.getPosition()))
-				.findFirst().orElse(null) == null) {
+		if (this.isCheck()) {
 			check = true;
 			result = GameStatusEnum.CHECK;
 		}

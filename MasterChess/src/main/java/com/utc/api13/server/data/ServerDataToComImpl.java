@@ -123,6 +123,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
     	GameEntity game = dataServerManager.getGameById(idGame);
     	GameStatusEnum result = game.isFinished();
     	
+    	game.switchCurrentUser();
+    	
     	//TODO : Ulysse : isn't it a tad brutal ?
     	if(result.equals(GameStatusEnum.CHECKMATE) || result.equals(GameStatusEnum.DRAW)){
     		//Clean the serveur game-entity :
