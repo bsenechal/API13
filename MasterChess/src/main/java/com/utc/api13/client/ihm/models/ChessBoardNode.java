@@ -3,10 +3,13 @@ package com.utc.api13.client.ihm.models;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -21,6 +24,7 @@ import com.utc.api13.commun.entities.*;
 import com.utc.api13.commun.entities.pieces.BishopEntity;
 import com.utc.api13.commun.entities.pieces.KingEntity;
 import com.utc.api13.commun.entities.pieces.KnightEntity;
+import com.utc.api13.commun.entities.pieces.PawnEntity;
 import com.utc.api13.commun.entities.pieces.QueenEntity;
 import com.utc.api13.commun.entities.pieces.RookEntity;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
@@ -40,7 +44,7 @@ public class ChessBoardNode {
     }
 
     public final void initializeGui() {
-    	 String dossierIcone = "pictures/pieces/";
+    	 String dossierIcone = "/pictures/pieces/";
  		char[] ordrePiece = { 'T', 'C', 'F', 'D', 'R', 'F', 'C', 'T' };
  		int increment = 1;
  		int ligne = 0;
@@ -92,7 +96,13 @@ public class ChessBoardNode {
 		// Je place les icônes des pièces sur leur case respective
 		while (increment >= -1) {
 			for (int ctr = 0; ctr <= 7; ctr++) {
-				chessBoardSquares[ctr][ligne].setIcon(new ImageIcon(dossierIcone + ordrePiece[ctr] + couleur + ".gif"));
+				try {
+				Image img = ImageIO.read(getClass().getResource(dossierIcone + ordrePiece[ctr] + couleur + ".gif"));
+				chessBoardSquares[ctr][ligne].setIcon(new ImageIcon(img));
+				} catch(IOException e) {
+					
+				}
+				
 				
 				switch(ordrePiece[ctr])
 				{
@@ -118,7 +128,13 @@ public class ChessBoardNode {
 				}
 				//mettre à jour structure de data
 				//chessBoardSquares[ctr][ligne].setPiece(tempo);
-				chessBoardSquares[ctr][ligne + increment].setIcon(new ImageIcon(dossierIcone + 'P' + couleur + ".gif"));
+				try {
+					Image img = ImageIO.read(getClass().getResource(dossierIcone + 'P' + couleur + ".gif"));
+					chessBoardSquares[ctr][ligne+increment].setIcon(new ImageIcon(img));
+					} catch(IOException e) {
+						
+					}
+				tempo = new PawnEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, myIhmManager.getIClientDataToIHM().getCurrentGame());
 				//mettre à jour structure de data
 				//e.getCase(ctr, ligne + increment).setPiece(new Pion(ligne < 5 ? "noir" : "blanc"));
 
