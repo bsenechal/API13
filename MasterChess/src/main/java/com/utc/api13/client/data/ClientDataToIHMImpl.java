@@ -93,15 +93,17 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	@Override
 	public void disconnect() throws TechnicalException, FunctionalException {		
 	    Assert.notNull(gameService, "[ClientDataToIHMImpl][disconnect] GameService shouldn't be null");
-	    
+	    //Leave the game
 	    if (dataClientManager.getCurrentGame() != null){
-    		if(gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
-    			observerLeave();
-    		} else {
-    			requestPlayerForLeaving();
-    		}
-	    }
-	    userService.save(dataClientManager.getUserLocal());
+            if(gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
+                observerLeave();
+            } else {
+                requestPlayerForLeaving();
+            }
+        }
+	    //Ask deconnection from server
+	    dataClientManager.getIClientComToData().disconnect(dataClientManager.getUserLocal().getId());
+	    //Set the local user to null
 		dataClientManager.setUserLocal(null);
 	}
 
@@ -123,7 +125,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	@Override
 	public void observerLeave() {
 	    Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][observerLeave] UserLocal shouldn't be null");
-
 		dataClientManager.getIClientComToData().observerLeave(dataClientManager.getUserLocal().getId());
 
 	}
@@ -139,8 +140,23 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 
 	@Override
-	public void otherPlayerLeaving() {
-//		TODO: dataClientManager.getIClientComToData().sendAnswer(answer, dataClientManager.getUserLocal());
+	public void sendAnswerForLeaving(boolean answer) {
+	    //Add game in local user saved game (in case the local user wants to save the game after ending)
+	    dataClientManager.getUserLocal().getSavedGames().add(getCurrentGame());
+	    //if the local user said yes it's a draw for him otherwise a win
+	    dataClientManager.getUserLocal().setNbPlayed(dataClientManager.getUserLocal().getNbPlayed() + 1);
+	    if(answer){
+	        
+	    } else {
+	        dataClientManager.getUserLocal().setNbWon(dataClientManager.getUserLocal().getNbWon() + 1);
+	    }
+	    //End the game
+	    dataClientManager.setCurrentGame(null);
+	    //Inform the local user that game is over with result
+	    
+	    //send information to opponent player
+//		dataClientManager.getIClientComToData().sendAnswerForLeaving(answer, dataClientManager.getUserLocal());
+	    //Inform the server
 
 	}
 

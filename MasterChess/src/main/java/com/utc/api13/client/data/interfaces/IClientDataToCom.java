@@ -114,4 +114,16 @@ public interface IClientDataToCom {
     DataClientManager getInstanceDataClientManager();
 
     void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
+    
+    /**
+     * Adds a new user to the list of local users
+     * @param user user to add
+     */
+    public void notifyConnection(PublicUserEntity user);
+    
+    /**
+     * Delete a user from the list of local users
+     * @param idUser id of user to delete
+     */
+    public void notifyDisconnection(UUID idUser);
 }

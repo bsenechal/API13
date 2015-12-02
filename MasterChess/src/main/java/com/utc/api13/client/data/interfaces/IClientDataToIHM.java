@@ -72,11 +72,12 @@ public interface IClientDataToIHM {
      */
     public void requestPlayerForLeaving();
     
+
     /**
-     * TODO: à revoir
+     * TODO: comment this shit
+     * @param answer
      */
-    
-    public void otherPlayerLeaving();
+    void sendAnswerForLeaving(boolean answer);
     
     /**
      * Updates the info of local user

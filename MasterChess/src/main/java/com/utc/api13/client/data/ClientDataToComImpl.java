@@ -134,9 +134,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	@Override
 	public void requestPlayerForLeaving(UUID uid) {
-		// TODO:
-		// instanceDataClientManager.getIClientIHMToData().requestPlayerForLeaving();
-
+		 instanceDataClientManager.getIClientIHMToData().otherPlayerLeaving();
 	}
 
 	/*
@@ -243,4 +241,16 @@ public class ClientDataToComImpl implements IClientDataToCom {
 		instanceDataClientManager.getIClientIHMToData().displayMessage(message);
 
 	}
+
+    @Override
+    public void notifyConnection(PublicUserEntity user) {
+        instanceDataClientManager.getCurrentUsers().add(user);
+    }
+
+    @Override
+    public void notifyDisconnection(UUID idUser) {
+        instanceDataClientManager.getCurrentUsers().removeIf(u -> idUser.equals(u.getId()));
+        
+    }
+
 }

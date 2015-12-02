@@ -106,8 +106,6 @@ public class ServerDataToComImpl implements IServerDataToCom {
         {
         	game.getObservers().removeIf(u -> idUser.equals(u.getId()));
         });
-        dataServerManager.getCurrentUsers().removeIf(u -> idUser.equals(u.getId()));
-        //TODO: dataServerManager.getIServeurComToData().sendMessageToChat()
 
     }
 
@@ -213,13 +211,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.server.data.interfaces.IServerToComm#disconnect(java.util.
-     * UUID)
-     */
+
     @Override
     public void disconnect(final UUID idUser) {
         Assert.notNull(dataServerManager.getCurrentUsers(), "[ServerDataToComImpl][disconnect] currentUsers shouldn't be null"); 
