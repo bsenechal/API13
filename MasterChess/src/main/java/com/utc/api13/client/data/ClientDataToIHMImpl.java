@@ -41,6 +41,16 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      */
     private GameService gameService;
 
+    public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
+        super();
+        Assert.notNull(instanceDataClientManager,
+                "[ClientDataToIHMImpl][Constructor] dataClientManager shouldn't be null");
+
+        this.dataClientManager = instanceDataClientManager;
+        this.userService = new UserService();
+        this.gameService = new GameService();
+    }
+    
     @Override
     public ObservableList<PublicUserEntity> getUserList() {
         return dataClientManager.getCurrentUsers();
@@ -232,16 +242,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
     }
 
-    public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
-        super();
-        Assert.notNull(instanceDataClientManager,
-                "[ClientDataToIHMImpl][Constructor] dataClientManager shouldn't be null");
-
-        this.dataClientManager = instanceDataClientManager;
-        this.userService = new UserService();
-        this.gameService = new GameService();
-    }
-
     @Override
     public void createProfile(final PrivateUserEntity user) throws TechnicalException, FunctionalException {
         userService.save(user);
@@ -279,5 +279,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public void importProfile(File file) throws FunctionalException, TechnicalException {
         this.importProfile(file, false);
 
+    }
+    
+    @Override
+    public void answerProposition(final UUID uidSender, final UUID uidReciever, final boolean observable, final boolean chattable, boolean answer){
+        //TODO
     }
 }
