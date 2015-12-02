@@ -22,41 +22,80 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MyInfoPopUpController {
-    private IHMManager IHMManager;
-    private AppClient mainApp;
-    private IClientDataToIHM myIClientToIHM;
 
-    @FXML
-    BorderPane userInfoBorderPane;
-    @FXML
-    AnchorPane userInfoAnchorPane;
-    @FXML
-    Label userInfoLogin, userInfoFirstName, userInfoLastName;
-    @FXML
-    TableView userInfoTableView;
-    @FXML
-    TableColumn userInfoWon, userInfoLost, userInfoPlayed;
-    @FXML
-    Hyperlink modifyLink;
+	private IHMManager IHMManager; 
+	private AppClient mainApp;
+	private IClientDataToIHM myIClientToIHM; 
+	private boolean newProfile=false;
+    
+    public boolean isNewProfile() {
+          return newProfile;
+      }
 
-    @FXML
-    public void onModifyProfileClicked() throws IOException {
+      public void setNewProfile(boolean newProfile) {
+          this.newProfile = newProfile;
+      }
+	
+	@FXML
+	BorderPane userInfoBorderPane;  
+	@FXML
+	AnchorPane userInfoAnchorPane; 
+	@FXML
+	Label userInfoLogin, userInfoFirstName, userInfoLastName; 
+	@FXML
+	TableView userInfoTableView; 
+	@FXML
+	TableColumn userInfoWon, userInfoLost, userInfoPlayed; 
+	@FXML
+	Hyperlink modifyLink; 
+		
+	@FXML
+	public void onModifyProfileClicked() throws IOException {
+		
+		Stage stage; 
+		Parent root;
+		stage = new Stage();
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/createProfilePage.fxml"));
+		root = (Pane) fxmlLoader.load();
+		IHMManageProfileController controller = fxmlLoader.getController();
+		controller.setControllerContext(this.IHMManager);
+		if(newProfile){
+		    controller.setNewProfile(newProfile);
+		}
+		    controller.setMainApp(this.mainApp);
+		stage.setScene(new Scene(root));
+		stage.setTitle("My Profile");
+		stage.initModality(Modality.APPLICATION_MODAL); 
+		stage.showAndWait();
+		
+	}
+	 
+	
 
-        Stage stage;
-        Parent root;
-        stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/createProfilePage.fxml"));
-        root = (Pane) fxmlLoader.load();
+	public MyInfoPopUpController() { 
+		initialize(); 
+	}
+		
+	public void initialize() {
+	}
+		
+	public void setMainApp(AppClient app) {
+		this.mainApp=app; 
+		
+		if(!newProfile){
+		PrivateUserEntity u=this.myIClientToIHM.getLocalUser();
+		
+    	    this.userInfoLogin.setText(u.getLogin()); 
+    	    this.userInfoFirstName.setText(u.getFirstName()); 
+    	    this.userInfoLastName.setText(u.getLastName()); 
+    	    this.userInfoWon.setText(Integer.toString(u.getNbWon()));
+    	    this.userInfoLost.setText(Integer.toString(u.getNbLost()));
+    	    this.userInfoPlayed.setText(Integer.toString(u.getNbPlayed()));
+		}
+	    
+	}
 
-        IHMCreateProfileController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
-        controller.setMainApp(this.mainApp);
-        stage.setScene(new Scene(root));
-        stage.setTitle("My Profile");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
-
-    }
+  
 
     public IHMManager getIHMManager() {
         return IHMManager;
@@ -66,26 +105,8 @@ public class MyInfoPopUpController {
         IHMManager = iHMManager;
     }
 
-    public MyInfoPopUpController() {
-        initialize();
-    }
-
-    public void initialize() {
-    }
-
-    public void setMainApp(AppClient app) {
-        this.mainApp = app;
-        PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
-        this.userInfoLogin.setText(u.getLogin());
-        this.userInfoFirstName.setText(u.getFirstName());
-        this.userInfoLastName.setText(u.getLastName());
-        this.userInfoWon.setText(Integer.toString(u.getNbWon()));
-        this.userInfoLost.setText(Integer.toString(u.getNbLost()));
-        this.userInfoPlayed.setText(Integer.toString(u.getNbPlayed()));
-
-    }
-
     public void setControllerContext(IHMManager ihmManager) {
+
         this.IHMManager = ihmManager;
         if (ihmManager != null)
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
