@@ -9,7 +9,8 @@ public class MoveEntity extends ADataEntity {
     private GameEntity game;
     private PositionEntity fromPosition;
     private PositionEntity toPosition;
-    private PieceEntity piece;
+    private APieceEntity piece;
+    
     /**
      * @return the date
      */
@@ -61,13 +62,13 @@ public class MoveEntity extends ADataEntity {
     /**
      * @return the piece
      */
-    public PieceEntity getPiece() {
+    public APieceEntity getPiece() {
         return piece;
     }
     /**
      * @param piece the piece to set
      */
-    public void setPiece(PieceEntity piece) {
+    public void setPiece(APieceEntity piece) {
         this.piece = piece;
     }
 }

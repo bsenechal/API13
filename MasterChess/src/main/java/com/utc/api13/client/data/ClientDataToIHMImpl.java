@@ -16,7 +16,7 @@ import com.utc.api13.client.data.services.GameService;
 import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.Erreur;
 import com.utc.api13.commun.entities.GameEntity;
-import com.utc.api13.commun.entities.PieceEntity;
+import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.enumerations.ErrorTypeEnum;
@@ -105,7 +105,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 * com.utc.api13.commun.entities.PositionEntity)
 	 */
 	@Override
-	public void move(PieceEntity piece, PositionEntity position) {
+	public void move(APieceEntity piece, PositionEntity position) {
 		// TODO Auto-generated method stub
 
 	}
@@ -262,7 +262,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      */
 	@Override
 	public PrivateUserEntity getLocalUser() {
-	    Assert.notNull(this.dataClientManager.getUserLocal(),"[ClientDataToIHMImpl][getLocalUser()] Local user in dataClientManager shouldn't be null" );
 		return this.dataClientManager.getUserLocal();
 	}
 
