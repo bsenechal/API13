@@ -123,7 +123,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
     }
 
     @Override
-    public void saveUserData(final PublicUserEntity user) {
+    public boolean saveUserData(final PublicUserEntity user) {
         Assert.notNull(dataServerManager.getCurrentUsers(),
                 "[ServerDataToComImpl][saveUserData] currentUsers shouldn't be null");
         Map<Boolean, List<PublicUserEntity>> map = dataServerManager.getCurrentUsers().stream()
@@ -131,6 +131,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
         List<PublicUserEntity> currentUsers = map.get(false);
         currentUsers.add(user);
         dataServerManager.setCurrentUsers(currentUsers);
+        return true;
     }
 
     /*
@@ -140,7 +141,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
      * java.util.UUID)
      */
     @Override
-    public void newObserver(int idGame, UUID idUser) {
+    public void newObserver(UUID idGame, UUID idUser) {
         // TODO Auto-generated method stub
 
     }
@@ -229,6 +230,12 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
     @Override
     public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
+    @Override
+    public GameEntity getGameById(UUID IdGame) {
         // TODO Auto-generated method stub
         return null;
     }

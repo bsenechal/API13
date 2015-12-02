@@ -226,6 +226,8 @@ public interface IClientDataToIHM {
      */
     public File exportProfile() throws TechnicalException;
 
+    public void answerProposition(final UUID uidSender, final UUID uidReciever, final boolean observable, final boolean chattable, boolean answer);
+            
     // TODO
     // Si le (IClientDataToCom.)printProposition() ne renvoie pas directement la
     // réponse à com pour dire si un User à accepté la partie, il faudra créer
