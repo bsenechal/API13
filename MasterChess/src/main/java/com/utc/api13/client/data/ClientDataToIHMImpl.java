@@ -41,6 +41,16 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      */
     private GameService gameService;
 
+    public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
+        super();
+        Assert.notNull(instanceDataClientManager,
+                "[ClientDataToIHMImpl][Constructor] dataClientManager shouldn't be null");
+
+        this.dataClientManager = instanceDataClientManager;
+        this.userService = new UserService();
+        this.gameService = new GameService();
+    }
+    
     @Override
     public ObservableList<PublicUserEntity> getUserList() {
         return dataClientManager.getCurrentUsers();
@@ -230,16 +240,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     @Override
     public void sendChatText(final String message) {
         dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
-    }
-
-    public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
-        super();
-        Assert.notNull(instanceDataClientManager,
-                "[ClientDataToIHMImpl][Constructor] dataClientManager shouldn't be null");
-
-        this.dataClientManager = instanceDataClientManager;
-        this.userService = new UserService();
-        this.gameService = new GameService();
     }
 
     @Override
