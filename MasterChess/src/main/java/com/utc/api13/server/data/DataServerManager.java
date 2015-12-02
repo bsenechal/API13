@@ -4,7 +4,6 @@
 package com.utc.api13.server.data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.utc.api13.commun.entities.GameEntity;
@@ -23,6 +22,14 @@ public class DataServerManager {
     private ServerDataToComImpl serverDataToComImpl;
     private List<PublicUserEntity> currentUsers;
     private List<GameEntity> currentGames;
+    
+    public DataServerManager() {
+        super();
+        this.iServeurComToData = null;
+        this.serverDataToComImpl = new ServerDataToComImpl(this);
+        this.currentGames = new ArrayList<GameEntity>();
+        this.currentUsers = new ArrayList<PublicUserEntity>();
+    }
 
     /**
      * @return the IServeurToData
@@ -82,13 +89,5 @@ public class DataServerManager {
      */
     public void setServerDataToComImpl(ServerDataToComImpl serverDataToComImpl) {
         this.serverDataToComImpl = serverDataToComImpl;
-    }
-
-    public DataServerManager() {
-        super();
-        this.iServeurComToData = null;
-        this.serverDataToComImpl = new ServerDataToComImpl(this);
-        this.currentGames = Collections.synchronizedList(new ArrayList<GameEntity>());
-        this.currentUsers = Collections.synchronizedList(new ArrayList<PublicUserEntity>());
     }
 }

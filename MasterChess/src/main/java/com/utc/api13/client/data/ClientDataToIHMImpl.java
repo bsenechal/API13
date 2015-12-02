@@ -41,6 +41,16 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      */
     private GameService gameService;
 
+    public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
+        super();
+        Assert.notNull(instanceDataClientManager,
+                "[ClientDataToIHMImpl][Constructor] dataClientManager shouldn't be null");
+
+        this.dataClientManager = instanceDataClientManager;
+        this.userService = new UserService();
+        this.gameService = new GameService();
+    }
+    
     @Override
     public ObservableList<PublicUserEntity> getUserList() {
         return dataClientManager.getCurrentUsers();
@@ -229,16 +239,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	}
 
 
-    public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
-        super();
-        Assert.notNull(instanceDataClientManager, "[ClientDataToIHMImpl][Constructor] dataClientManager shouldn't be null");
-             
-        this.dataClientManager = instanceDataClientManager;
-        this.userService = new UserService();
-        this.gameService = new GameService();
-    }
-    
-    
     @Override
     public void createProfile(final PrivateUserEntity user) throws TechnicalException, FunctionalException{
         userService.save(user);

@@ -13,21 +13,6 @@ public final class ChessboardEntity extends ADataEntity {
 
     private static List<PositionEntity> cases;
 
-    /**
-     * @return the cases
-     */
-    public static List<PositionEntity> getCases() {
-        return cases;
-    }
-
-    /**
-     * @param cases
-     *            the cases to set
-     */
-    public void setCases(final List<PositionEntity> cases) {
-        ChessboardEntity.cases = cases;
-    }
-
     public ChessboardEntity() {
         super();
         cases = new ArrayList<PositionEntity>();
@@ -37,5 +22,12 @@ public final class ChessboardEntity extends ADataEntity {
                 cases.add(new PositionEntity(x, y));
             }
         }
+    }
+    
+    /**
+     * @return the cases
+     */
+    public static List<PositionEntity> getCases() {
+        return cases;
     }
 }

@@ -19,31 +19,37 @@ import com.utc.api13.commun.entities.PublicUserEntity;
  *
  */
 public class ClientDataToComImpl implements IClientDataToCom {
-    
-    private DataClientManager instanceDataClientManager;
-    
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.utc.api13.client.data.interfaces.IClientToComm#
-     * getInstanceDataClientManager()
-     */
-    @Override
-    public DataClientManager getInstanceDataClientManager() {
-        return this.instanceDataClientManager;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.utc.api13.client.data.interfaces.IClientToComm#
-     * setInstanceDataClientManager()
-     */
-    @Override
-    public void setInstanceDataClientManager(DataClientManager instanceDataClientManager) {
-        this.instanceDataClientManager = instanceDataClientManager;
-    }
-    
+
+	private DataClientManager instanceDataClientManager;
+
+	public ClientDataToComImpl(DataClientManager instanceDataClientManager) {
+		super();
+		Assert.notNull(instanceDataClientManager,
+				"[ClientDataToComImpl][Constructor] dataClientManager shouldn't be null");
+		this.instanceDataClientManager = instanceDataClientManager;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.utc.api13.client.data.interfaces.IClientToComm#
+	 * getInstanceDataClientManager()
+	 */
+	@Override
+	public DataClientManager getInstanceDataClientManager() {
+		return this.instanceDataClientManager;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.utc.api13.client.data.interfaces.IClientToComm#
+	 * setInstanceDataClientManager()
+	 */
+	@Override
+	public void setInstanceDataClientManager(DataClientManager instanceDataClientManager) {
+		this.instanceDataClientManager = instanceDataClientManager;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -53,24 +59,23 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 */
 	@Override
 	public void displayUsersList(List<PublicUserEntity> connectedUserList) {
-        Assert.notNull(connectedUserList,
-                "[ClientDataToComImpl][displayUsersList] connectedUserList shouldn't be null");
-        Assert.notNull(instanceDataClientManager.getUserLocal(),
-                "[ClientDataToComImpl][displayUsersList] UserLocal shouldn't be null");
-        Assert.notNull(instanceDataClientManager.getCurrentUsers(),
-                "[ClientDataToComImpl][displayUsersList] currentUsers shouldn't be null");
-        
+		Assert.notNull(connectedUserList,
+				"[ClientDataToComImpl][displayUsersList] connectedUserList shouldn't be null");
+		Assert.notNull(instanceDataClientManager.getUserLocal(),
+				"[ClientDataToComImpl][displayUsersList] UserLocal shouldn't be null");
+		Assert.notNull(instanceDataClientManager.getCurrentUsers(),
+				"[ClientDataToComImpl][displayUsersList] currentUsers shouldn't be null");
+
 		connectedUserList.forEach(u -> {
-			if(u.getId().equals(instanceDataClientManager.getUserLocal().getId())){
+			if (u.getId().equals(instanceDataClientManager.getUserLocal().getId())) {
 				connectedUserList.remove(u);
 			}
 		});
-	
+
 		instanceDataClientManager.getCurrentUsers().clear();
 		instanceDataClientManager.getCurrentUsers().addAll(connectedUserList);
-		
-	}
 
+	}
 
 	@Override
 	public void displayProfile(PublicUserEntity user) {
@@ -91,12 +96,11 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	}
 
-
 	@Override
 	public void displayAllGames(final List<GameEntity> games) {
-        Assert.notNull(instanceDataClientManager.getCurrentGames(),
-                "[ClientDataToComImpl][displayAllGames] currentGames shouldn't be null");
-        
+		Assert.notNull(instanceDataClientManager.getCurrentGames(),
+				"[ClientDataToComImpl][displayAllGames] currentGames shouldn't be null");
+
 		instanceDataClientManager.getCurrentGames().clear();
 		instanceDataClientManager.getCurrentGames().addAll(games);
 
@@ -115,24 +119,23 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	}
 
-
 	@Override
 	public void sendMessageToChat(MessageEntity message) {
-//		TODO: instanceDataClientManager.sendMessageToChat(message);
+		// TODO: instanceDataClientManager.sendMessageToChat(message);
 
 	}
-
 
 	@Override
 	public void sendAnswerForLeaving(boolean answer) {
-//		TODO: instanceDataClientManager.getIClientIHMToData().displayAnswerForLeaving(answer);
+		// TODO:
+		// instanceDataClientManager.getIClientIHMToData().displayAnswerForLeaving(answer);
 
 	}
 
-
 	@Override
 	public void requestPlayerForLeaving(UUID uid) {
-//		TODO: instanceDataClientManager.getIClientIHMToData().requestPlayerForLeaving();
+		// TODO:
+		// instanceDataClientManager.getIClientIHMToData().requestPlayerForLeaving();
 
 	}
 
@@ -148,19 +151,17 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	}
 
-
 	@Override
 	public void notify(String message) {
-//		instanceDataClientManager.getIClientIHMToData().notify(message);
+		// instanceDataClientManager.getIClientIHMToData().notify(message);
 
 	}
 
-
 	@Override
 	public void initGame(GameEntity game) {
-		//Set the current game
+		// Set the current game
 		instanceDataClientManager.setCurrentGame(game);
-		//Ask the IHM module to display the Chessboard
+		// Ask the IHM module to display the Chessboard
 		instanceDataClientManager.getIClientIHMToData().displayChessBoard();
 	}
 
@@ -203,7 +204,6 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	}
 
-
 	@Override
 	public void sendProposition(UUID uidSender, UUID uidReciever, boolean observable, boolean chattable) {
 
@@ -243,11 +243,4 @@ public class ClientDataToComImpl implements IClientDataToCom {
 		instanceDataClientManager.getIClientIHMToData().displayMessage(message);
 
 	}
-
-    public ClientDataToComImpl(DataClientManager instanceDataClientManager) {
-        super();
-        Assert.notNull(instanceDataClientManager,
-                "[ClientDataToComImpl][Constructor] dataClientManager shouldn't be null");
-        this.instanceDataClientManager = instanceDataClientManager;
-    }
 }

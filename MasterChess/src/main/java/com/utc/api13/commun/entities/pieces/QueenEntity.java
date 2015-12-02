@@ -16,15 +16,15 @@ import com.utc.api13.commun.enumerations.PieceColorEnum;
  */
 public class QueenEntity extends APieceEntity {
 
-    public QueenEntity(PieceColorEnum color, GameEntity currentGame) {
-        super(color, currentGame);
-        // TODO Auto-generated constructor stub
-    }
-
     /**
      * 
      */
     private static final long serialVersionUID = -4412179301301968841L;
+    
+    public QueenEntity(PieceColorEnum color, GameEntity currentGame) {
+        super(color, currentGame);
+        // TODO Auto-generated constructor stub
+    }
 
     @Override
     public List<PositionEntity> generateAvailableMoves() {

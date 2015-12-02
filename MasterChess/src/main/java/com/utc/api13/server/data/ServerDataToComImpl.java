@@ -24,6 +24,16 @@ import com.utc.api13.server.data.interfaces.IServerDataToCom;
 public class ServerDataToComImpl implements IServerDataToCom {
     private DataServerManager dataServerManager;
 
+    /**
+     * @param dataServerManager
+     */
+    public ServerDataToComImpl(DataServerManager dataServerManager) {
+        super();
+        Assert.notNull(dataServerManager, "[ServerDataToComImpl][Constructor] dataServerManager shouldn't be null");
+        this.dataServerManager = dataServerManager;
+    }
+
+    
     /*
      * (non-Javadoc)
      * 
@@ -215,16 +225,6 @@ public class ServerDataToComImpl implements IServerDataToCom {
         Assert.notNull(dataServerManager.getCurrentUsers(), "[ServerDataToComImpl][disconnect] currentUsers shouldn't be null"); 
         dataServerManager.getCurrentUsers().removeIf(user -> user.getId().equals(idUser));
     }
-
-    /**
-     * @param dataServerManager
-     */
-    public ServerDataToComImpl(DataServerManager dataServerManager) {
-        super();
-        Assert.notNull(dataServerManager, "[ServerDataToComImpl][Constructor] dataServerManager shouldn't be null"); 
-        this.dataServerManager = dataServerManager;
-    }
-
 
     @Override
     public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable) {

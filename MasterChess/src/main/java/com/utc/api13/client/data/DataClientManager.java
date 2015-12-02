@@ -30,6 +30,25 @@ public class DataClientManager {
     private GameEntity currentGame;
 
     /**
+     * @param clientDataToComImpl
+     * @param clientDataToIHMImpl
+     * @param iClientComToData
+     * @param userLocal
+     * @param currentUsers
+     * @param currentGames
+     */
+    public DataClientManager() {
+        super();
+        this.clientDataToComImpl = new ClientDataToComImpl(this);
+        this.clientDataToIHMImpl = new ClientDataToIHMImpl(this);
+        this.iClientIHMToData = null;
+        this.iClientComToData = null;
+        this.userLocal = new PrivateUserEntity();
+        this.currentUsers = FXCollections.observableArrayList();
+        this.currentGames = FXCollections.observableArrayList();
+    }
+    
+    /**
      * 
      * @return clientDataToComImpl
      */
@@ -151,24 +170,5 @@ public class DataClientManager {
      */
     public void setCurrentGame(GameEntity currentGame) {
         this.currentGame = currentGame;
-    }
-
-    /**
-     * @param clientDataToComImpl
-     * @param clientDataToIHMImpl
-     * @param iClientComToData
-     * @param userLocal
-     * @param currentUsers
-     * @param currentGames
-     */
-    public DataClientManager() {
-        super();
-        this.clientDataToComImpl = new ClientDataToComImpl(this);
-        this.clientDataToIHMImpl = new ClientDataToIHMImpl(this);
-        this.iClientIHMToData = null;
-        this.iClientComToData = null;
-        this.userLocal = new PrivateUserEntity();
-        this.currentUsers = FXCollections.observableArrayList();
-        this.currentGames = FXCollections.observableArrayList();
     }
 }
