@@ -162,18 +162,24 @@ public class IHMConnexionPageController {
     }
 
     @FXML
-    private void onSignUpClicked(Event event) {
-
+    private void onSignUpClicked(Event event) throws IOException {
+        MyInfoPopUpController controller = new MyInfoPopUpController();
+        
+        controller.setNewProfile(true);
+       controller.setIHMManager(IHMManager);
+        controller.onModifyProfileClicked();
+       
     }
+    public void setMainApp(AppClient app) {
+        this.mainApp=app; 
+
+ }
 
     public IHMConnexionPageController() {
         initialize();
     }
 
-    public void setMainApp(AppClient app) {
-        this.mainApp = app;
-    }
-
+   
     public void initialize() {
         // bindings
     }
@@ -192,5 +198,15 @@ public class IHMConnexionPageController {
         //setBindingsOnLoad();
     }
 
+
+    public void setListenersOnLoad() 
+    {
+    
+    }
+
+
+    public void setBindingsOnLoad() 
+    {
+    }
 }
 
