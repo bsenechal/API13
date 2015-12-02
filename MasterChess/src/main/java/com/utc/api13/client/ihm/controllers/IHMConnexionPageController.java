@@ -68,7 +68,7 @@ public class IHMConnexionPageController {
         controller.setMainApp(mainApp);
         controller.setControllerContext(IHMManager);
         Scene scene = new Scene(root, 800, 600);
-        stage.setTitle("Connexion to MasterChess");
+        stage.setTitle("Connection to MasterChess");
         stage.setScene(scene);
 
         mainApp.stage.close();

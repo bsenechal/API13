@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,11 +16,14 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import com.utc.api13.commun.entities.*;
+
 public class ChessBoardNode {
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
-    private JButton[][] chessBoardSquares = new JButton[8][8];
     private JPanel chessBoard;
     private static final String COLS = "ABCDEFGH";
+    private static final int TAILLE = 8;
+    private JButton[][] chessBoardSquares = new JButton[TAILLE][TAILLE];
 
     public ChessBoardNode() {
         initializeGui();
@@ -37,8 +41,6 @@ public class ChessBoardNode {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
                 JButton b = new JButton();
                 b.setMargin(buttonMargin);
-                // our chess pieces are 64x64 px in size, so we'll
-                // fill this in using a transparent icon..
                 ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
                 b.setIcon(icon);
                 if ((jj % 2 == 1 && ii % 2 == 1)
@@ -69,6 +71,8 @@ public class ChessBoardNode {
                 }
             }
         }
+    	
+        
     }
 
     public final JComponent getChessBoard() {
