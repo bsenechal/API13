@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *Structure de stockage des erreurs
+ * Structure de stockage des erreurs
+ * 
  * @author Amstrong
  */
 public class Erreur {
 
-	/**
+    /**
      * type d'erreur: code fonctionnel correspindant à l'erreur
      */
     private IErrorType errorType;
@@ -21,33 +22,40 @@ public class Erreur {
      * niveau de criticité
      */
     private Level level;
-    
+
     public Erreur(final IErrorType errorType) {
-    	this.errorType = errorType;
-    	this.params = new ArrayList<String>();
-    	this.level = Level.ERROR;
-    }
-    
-    /**
-     * Constructeur
-     * @param errorType code fonctionnel du message d'erreur
-     * @param params paramètres du message d'erreur
-     */
-    public Erreur(final IErrorType errorType, final List<String> params) {
-            this.errorType = errorType;
-            this.params = params;
-            this.level = Level.ERROR;
+        this.errorType = errorType;
+        this.params = new ArrayList<String>();
+        this.level = Level.ERROR;
     }
 
     /**
      * Constructeur
-     * @param errorType code fonctionnel du message d'erreur
-     * @param level le niveau de criticité
-     * @param params paramètres du message d'erreur
+     * 
+     * @param errorType
+     *            code fonctionnel du message d'erreur
+     * @param params
+     *            paramètres du message d'erreur
+     */
+    public Erreur(final IErrorType errorType, final List<String> params) {
+        this.errorType = errorType;
+        this.params = params;
+        this.level = Level.ERROR;
+    }
+
+    /**
+     * Constructeur
+     * 
+     * @param errorType
+     *            code fonctionnel du message d'erreur
+     * @param level
+     *            le niveau de criticité
+     * @param params
+     *            paramètres du message d'erreur
      */
     public Erreur(final IErrorType errorType, Level level, final List<String> params) {
-            this(errorType, params);
-            this.level = level;
+        this(errorType, params);
+        this.level = level;
     }
 
     public IErrorType getErrorType() {
@@ -73,26 +81,28 @@ public class Erreur {
     public void setLevel(Level level) {
         this.level = level;
     }
-    
+
     /**
      * Niveau de criticité de l'erreur
      */
     public enum Level {
-        ERROR(1),
-        WARNING(2),
-        INFO(3);
+        ERROR(1), WARNING(2), INFO(3);
         /**
          * id de l'enum
          */
         private final int id;
+
         /**
          * Constructeur privé
-         * @param id id de l'enum
+         * 
+         * @param id
+         *            id de l'enum
          */
         private Level(int id) {
             this.id = id;
         }
-        public int getId(){
+
+        public int getId() {
             return id;
         }
     };
