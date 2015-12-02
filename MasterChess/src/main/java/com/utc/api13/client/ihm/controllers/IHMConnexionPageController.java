@@ -53,104 +53,94 @@ public class IHMConnexionPageController {
         Integer port = Integer.parseInt(portTextView.getText()); 
         
         if (sv==null || port==null) {
-        	
-	        // TODO : Gérer les exceptions avec le logger
-	        try {
-	            myIClientToIHM.connect(login, pw);
-	        } catch (FunctionalException e) {
-	            // erreur de login
-	        	Stage stage;
-	            Parent root;
-	            stage = new Stage();
-	            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
-	            root = (Pane) fxmlLoader.load();
-	            ErrorController controller = fxmlLoader.getController();
-	            controller.setControllerContext(this.IHMManager);
-	            controller.setMainApp(this.mainApp, "Wrong connexion information!");
-	            stage.setScene(new Scene(root));
-	            stage.setTitle("User Information");
-	            stage.initModality(Modality.APPLICATION_MODAL);
-	            stage.showAndWait();
-	        } 
-	        
-	        catch (TechnicalException e) {
-	            // message erreur technique 
-	        	Stage stage;
-	            Parent root;
-	            stage = new Stage();
-	            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
-	            root = (Pane) fxmlLoader.load();
-	            ErrorController controller = fxmlLoader.getController();
-	            controller.setControllerContext(this.IHMManager);
-	            controller.setMainApp(this.mainApp, "Technical error!");
-	            stage.setScene(new Scene(root));
-	            stage.setTitle("User Information");
-	            stage.initModality(Modality.APPLICATION_MODAL);
-	            stage.showAndWait();
-	        } 
+            
+            // TODO : Gérer les exceptions avec le logger
+            try {
+                myIClientToIHM.connect(login, pw);
+            } catch (FunctionalException e) {
+                // erreur de login
+                Stage stage;
+                Parent root;
+                stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+                root = (Pane) fxmlLoader.load();
+                ErrorController controller = fxmlLoader.getController();
+                controller.setControllerContext(this.IHMManager);
+                controller.setMainApp(this.mainApp, "Wrong connexion information!");
+                stage.setScene(new Scene(root));
+                stage.setTitle("User Information");
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+            } 
+            
+            catch (TechnicalException e) {
+                // message erreur technique 
+                Stage stage;
+                Parent root;
+                stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+                root = (Pane) fxmlLoader.load();
+                ErrorController controller = fxmlLoader.getController();
+                controller.setControllerContext(this.IHMManager);
+                controller.setMainApp(this.mainApp, "Technical error!");
+                stage.setScene(new Scene(root));
+                stage.setTitle("User Information");
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+            } 
         }
         
         else  { 
-        	// TODO : Gérer les exceptions avec le logger
-	        try {  
-	            myIClientToIHM.connect(login, pw);
-	        } 
-	        
-	        catch (FunctionalException e) {
-	        	Stage stage;
-	            Parent root;
-	            stage = new Stage();
-	            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
-	            root = (Pane) fxmlLoader.load();
-	            ErrorController controller = fxmlLoader.getController();
-	            controller.setControllerContext(this.IHMManager);
-	            controller.setMainApp(this.mainApp, "Wrong connexion information!");
-	            stage.setScene(new Scene(root));
-	            stage.setTitle("User Information");
-	            stage.initModality(Modality.APPLICATION_MODAL);
-	            stage.showAndWait();
-	        } 
-	        
-	        catch (TechnicalException e) {
-	        	Stage stage;
-	            Parent root;
-	            stage = new Stage();
-	            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
-	            root = (Pane) fxmlLoader.load();
-	            ErrorController controller = fxmlLoader.getController();
-	            controller.setControllerContext(this.IHMManager);
-	            controller.setMainApp(this.mainApp, "Technical error!");
-	            stage.setScene(new Scene(root));
-	            stage.setTitle("User Information");
-	            stage.initModality(Modality.APPLICATION_MODAL);
-	            stage.showAndWait();
-	        } // à tester à l'intégration
+            // TODO : Gérer les exceptions avec le logger
+            try {  
+                myIClientToIHM.connect(login, pw);
+            } 
+            
+            catch (FunctionalException e) {
+                Stage stage;
+                Parent root;
+                stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+                root = (Pane) fxmlLoader.load();
+                ErrorController controller = fxmlLoader.getController();
+                controller.setControllerContext(this.IHMManager);
+                controller.setMainApp(this.mainApp, "Wrong connexion information!");
+                stage.setScene(new Scene(root));
+                stage.setTitle("User Information");
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+            } 
+            
+            catch (TechnicalException e) {
+                Stage stage;
+                Parent root;
+                stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+                root = (Pane) fxmlLoader.load();
+                ErrorController controller = fxmlLoader.getController();
+                controller.setControllerContext(this.IHMManager);
+                controller.setMainApp(this.mainApp, "Technical error!");
+                stage.setScene(new Scene(root));
+                stage.setTitle("User Information");
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+            } // à tester à l'intégration
         }
 
-        // TODO : Gérer les exceptions avec le logger
-        try {
-            myIClientToIHM.connect(login, pw);
-            Stage stage;
-            Parent root;
-            stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
-            root = (Pane) fxmlLoader.load();
-            IHMWelcomePageController controller = fxmlLoader.getController();
-            controller.setControllerContext(IHMManager);
-            controller.setMainApp(mainApp);
-            Scene scene = new Scene(root, 800, 600);
-            stage.setTitle("Connexion to MasterChess");
-            stage.setScene(scene);
-            mainApp.stage.close();
-            stage.show();
-        } catch (FunctionalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (TechnicalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } // à tester à l'intégration
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+        root = (Pane) fxmlLoader.load();
+        IHMWelcomePageController controller = fxmlLoader.getController();
+        controller.setMainApp(mainApp);
+        controller.setControllerContext(IHMManager);
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("Connection to MasterChess");
+        stage.setScene(scene);
 
+        mainApp.stage.close();
+        stage.show();
     }
 
     @FXML
@@ -172,26 +162,51 @@ public class IHMConnexionPageController {
     }
 
     @FXML
-    private void onSignUpClicked(Event event) {
-
+    private void onSignUpClicked(Event event) throws IOException {
+        MyInfoPopUpController controller = new MyInfoPopUpController();
+        
+        controller.setNewProfile(true);
+       controller.setIHMManager(IHMManager);
+        controller.onModifyProfileClicked();
+       
     }
+    public void setMainApp(AppClient app) {
+        this.mainApp=app; 
+
+ }
 
     public IHMConnexionPageController() {
         initialize();
     }
 
-    public void setMainApp(AppClient app) {
-        this.mainApp = app;
-    }
-
+   
     public void initialize() {
         // bindings
     }
 
-    public void setControllerContext(IHMManager ihmManager) {
+    public void setManager(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null)
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
     }
+    
+    public void setControllerContext(IHMManager ihmManager) {
+        this.IHMManager = ihmManager;
+        if (ihmManager != null)
+            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+        //setListenersOnLoad();
+        //setBindingsOnLoad();
+    }
 
+
+    public void setListenersOnLoad() 
+    {
+    
+    }
+
+
+    public void setBindingsOnLoad() 
+    {
+    }
 }
+
