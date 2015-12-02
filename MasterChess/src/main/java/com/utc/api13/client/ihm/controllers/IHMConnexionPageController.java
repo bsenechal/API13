@@ -62,7 +62,8 @@ public class IHMConnexionPageController {
             Scene scene = new Scene(root, 800, 600);
             stage.setTitle("Connexion to MasterChess");
             stage.setScene(scene);
-            mainApp.stage.close();
+            mainApp.getCurrentStage().close();
+            mainApp.setCurrentStage(stage);// to have the current to be able to close after
             stage.show();
         } catch (FunctionalException e) {
             // TODO Auto-generated catch block
