@@ -31,5 +31,5 @@ public class PawnEntity extends APieceEntity {
         // TODO Auto-generated method stub
         return null;
     }
-  
+
 }
