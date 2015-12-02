@@ -263,7 +263,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	}
 
     @Override
-    public void notifyConnection(PublicUserEntity user) {
+    public void notifyConnection(final PublicUserEntity user) {
         instanceDataClientManager.getCurrentUsers().add(user);
     }
 
