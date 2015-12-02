@@ -160,6 +160,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	@Override
 	public void notify(String message) {
+	    // TODO décommenter
 		// instanceDataClientManager.getIClientIHMToData().notify(message);
 
 	}

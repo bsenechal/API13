@@ -232,10 +232,13 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 		return dataClientManager.getCurrentGame();
 	}
 	
-	
+	/**
+	 * Envoie la proposition sur le serveur
+	 * Un paramètre en trop coté Com, à supprimer quand ils l'auront enlever
+	 */
 	@Override
 	public void createProposition(UUID uidReciever, boolean chattable, boolean observable) {
-		//TODO: c'est quoi le paramètre supp user??
+		//TODO: dernier paramètre à enlever quand Com aura corriger sa fonction
 		dataClientManager.getIClientComToData().sendProposition(dataClientManager.getUserLocal().getId(), uidReciever, chattable, observable, null);
 	}
 
@@ -271,10 +274,13 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 		return this.dataClientManager.getUserLocal();
 	}
 
+	/**
+	 * Envoi la réponse vers le second client
+	 */
 	@Override
-	public void sendResponse(UUID idUser, boolean answer) throws TechnicalException {
+	public void sendResponse(UUID idUser, boolean answer, boolean observable, boolean chattable) throws TechnicalException {
 		//TODO: la méthode com ne devrait pas prendre un user mais plutôt un uid
-//		dataClientManager.getIClientComToData().sendAnswer(answer, idUser);
+		dataClientManager.getIClientComToData().answerProposition(idUser, dataClientManager.getUserLocal().getId(), chattable, observable, answer);
 		
 	}
 

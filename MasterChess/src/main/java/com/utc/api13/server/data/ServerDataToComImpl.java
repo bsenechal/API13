@@ -6,10 +6,12 @@ package com.utc.api13.server.data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.util.Assert;
+
 
 //import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
@@ -220,8 +222,22 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
     @Override
     public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable) {
-        PublicUserEntity whitePlayer = getUserInfo(j1);
-        PublicUserEntity blackPlayer = getUserInfo(j2);
+        
+        PublicUserEntity whitePlayer;
+        PublicUserEntity blackPlayer;
+        
+        /* generate a random number to choose between 0 and 1 to choose who will be the white player and who will be the black player */
+        Random r = new Random();
+        int valeur = 0 + r.nextInt(2 - 0);
+        
+        if(valeur == 1){  
+            whitePlayer = getUserInfo(j1);
+            blackPlayer = getUserInfo(j2);
+        }else{
+            whitePlayer = getUserInfo(j2);
+            blackPlayer = getUserInfo(j1);
+        }
+        
         Assert.notNull(whitePlayer, "[ServerDataToComImpl][createGame] player 1 is not online"); 
         Assert.notNull(blackPlayer, "[ServerDataToComImpl][createGame] player 2 is not online"); 
 		//Create a game

@@ -160,7 +160,7 @@ public interface IClientDataToIHM {
   	 * @param answer true if the proposition is accepted
   	 * @throws TechnicalException exception when extracting bytes from image in local user profile
   	 */
-  	public void sendResponse(UUID idUser, boolean answer) throws TechnicalException;
+  	public void sendResponse(UUID idUser, boolean answer,  boolean observable, boolean chattable) throws TechnicalException;
   	
   	/**
   	 * Imports the profile of the user contained in file into the app
