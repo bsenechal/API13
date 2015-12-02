@@ -212,7 +212,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
     @Override
     public void disconnect(final UUID idUser) {
         Assert.notNull(dataServerManager.getCurrentUsers(), "[ServerDataToComImpl][disconnect] currentUsers shouldn't be null"); 
-        dataServerManager.getCurrentUsers().removeIf(user -> user.getId() == idUser);
+        dataServerManager.getCurrentUsers().removeIf(user -> user.getId().equals(idUser));
     }
 
     /**
