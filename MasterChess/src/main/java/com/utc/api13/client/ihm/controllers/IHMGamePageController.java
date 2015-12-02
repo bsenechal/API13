@@ -87,7 +87,7 @@ public class IHMGamePageController {
 
     public void setMainApp(AppClient app) {
         this.mainApp = app;
-        final ChessBoardNode cb = new ChessBoardNode();
+        final ChessBoardNode cb = new ChessBoardNode(IHMManager);
 
         /**
          * JFrame f = new JFrame("Chess"); f.add(cb.getGui());
@@ -109,10 +109,10 @@ public class IHMGamePageController {
         chatTextArea.setDisable(true);
 
         chessBoardStackPane.getChildren().add(swingNode);
-        PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
+        /**PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
         this.playerLoginLabel.setText(u.getLogin());
         setListenersOnLoad();
-        setBindingsOnLoad();
+        setBindingsOnLoad();*/
 
     }
     public void setListenersOnLoad() {
