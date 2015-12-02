@@ -40,7 +40,7 @@ public class AppClient extends Application {
         comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
         comClientManager.launchAppCom("localhost", 8000);
         
-        PrivateUserEntity user = new PrivateUserEntity("aa", "aa");
+        PrivateUserEntity user = new PrivateUserEntity("bsenecha", "bsenecha");
         dataClientManager.setUserLocal(user);
         dataClientManager.getUserService().save(user);
         
