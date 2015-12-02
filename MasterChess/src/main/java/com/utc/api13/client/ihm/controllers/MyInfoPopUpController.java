@@ -82,8 +82,8 @@ public class MyInfoPopUpController {
 	public void setMainApp(AppClient app) {
 		this.mainApp=app; 
 		
-		if(!newProfile){
-		PrivateUserEntity u=this.myIClientToIHM.getLocalUser();
+		if(newProfile){
+		    PrivateUserEntity u=this.myIClientToIHM.getLocalUser();
 		
     	    this.userInfoLogin.setText(u.getLogin()); 
     	    this.userInfoFirstName.setText(u.getFirstName()); 
