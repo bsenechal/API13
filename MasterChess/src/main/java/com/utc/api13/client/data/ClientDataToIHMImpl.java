@@ -280,4 +280,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         this.importProfile(file, false);
 
     }
+    
+    @Override
+    public void answerProposition(final UUID uidSender, final UUID uidReciever, final boolean observable, final boolean chattable, boolean answer){
+        //TODO
+    }
 }
