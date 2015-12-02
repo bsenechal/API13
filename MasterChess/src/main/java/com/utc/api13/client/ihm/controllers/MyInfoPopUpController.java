@@ -1,4 +1,4 @@
-package com.utc.api13.client.ihm.controllers; 
+package com.utc.api13.client.ihm.controllers;
 
 import java.io.IOException;
 
@@ -21,8 +21,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-
 public class MyInfoPopUpController {
+
 	private IHMManager IHMManager; 
 	private AppClient mainApp;
 	private IClientDataToIHM myIClientToIHM; 
@@ -70,13 +70,7 @@ public class MyInfoPopUpController {
 		
 	}
 	 
-	public IHMManager getIHMManager() {
-		return IHMManager;
-	}
-
-	public void setIHMManager(IHMManager iHMManager) {
-		IHMManager = iHMManager;
-	}
+	
 
 	public MyInfoPopUpController() { 
 		initialize(); 
@@ -100,9 +94,19 @@ public class MyInfoPopUpController {
 		}
 	    
 	}
-	
-	public void setControllerContext(IHMManager ihmManager) 
-    {
+
+  
+
+    public IHMManager getIHMManager() {
+        return IHMManager;
+    }
+
+    public void setIHMManager(IHMManager iHMManager) {
+        IHMManager = iHMManager;
+    }
+
+    public void setControllerContext(IHMManager ihmManager) {
+
         this.IHMManager = ihmManager;
         if (ihmManager != null)
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
@@ -110,13 +114,10 @@ public class MyInfoPopUpController {
         setBindingsOnLoad();
     }
 
-    public void setListenersOnLoad() 
-    {
+    public void setListenersOnLoad() {
 
     }
 
-    public void setBindingsOnLoad() 
-    {
+    public void setBindingsOnLoad() {
     }
 }
-	

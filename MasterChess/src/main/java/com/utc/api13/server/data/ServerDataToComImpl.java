@@ -18,7 +18,7 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
 /**
- * @author Benoît
+ * @author DATA
  *
  */
 public class ServerDataToComImpl implements IServerDataToCom {
@@ -34,18 +34,18 @@ public class ServerDataToComImpl implements IServerDataToCom {
         return null;
     }
 
-
     @Override
     public PublicUserEntity getUserInfo(final UUID idUser) {
-        Assert.notNull(idUser, "[ServerDataToComImpl][getUserInfo] idUser shouldn't be null"); 
-        Assert.notNull(dataServerManager.getCurrentUsers(), "[ServerDataToComImpl][getUserInfo] currentUsers shouldn't be null"); 
-        return dataServerManager.getCurrentUsers().stream().filter(u -> u.getId().equals(idUser)).findFirst().orElse(null);
+        Assert.notNull(idUser, "[ServerDataToComImpl][getUserInfo] idUser shouldn't be null");
+        Assert.notNull(dataServerManager.getCurrentUsers(),
+                "[ServerDataToComImpl][getUserInfo] currentUsers shouldn't be null");
+        return dataServerManager.getCurrentUsers().stream().filter(u -> u.getId().equals(idUser)).findFirst()
+                .orElse(null);
     }
 
- 
     @Override
     public List<GameEntity> getAllGames() {
-       return dataServerManager.getCurrentGames();
+        return dataServerManager.getCurrentGames();
     }
 
     /*
@@ -57,7 +57,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public void notifyConnections(final PublicUserEntity player) {
-        Assert.notNull(dataServerManager.getCurrentUsers(), "[ServerDataToComImpl][notifyConnections] currentUsers shouldn't be null"); 
+        Assert.notNull(dataServerManager.getCurrentUsers(),
+                "[ServerDataToComImpl][notifyConnections] currentUsers shouldn't be null");
         dataServerManager.getCurrentUsers().add(player);
     }
 
@@ -87,16 +88,15 @@ public class ServerDataToComImpl implements IServerDataToCom {
         return false;
     }
 
-
     @Override
     public void observerLeave(final UUID idUser) {
-        Assert.notNull(dataServerManager.getCurrentUsers(), "[ServerDataToComImpl][observerLeave] currentUsers shouldn't be null"); 
-        dataServerManager.getCurrentGames().stream().forEach(game -> 
-        {
-        	game.getObservers().removeIf(u -> idUser.equals(u.getId()));
+        Assert.notNull(dataServerManager.getCurrentUsers(),
+                "[ServerDataToComImpl][observerLeave] currentUsers shouldn't be null");
+        dataServerManager.getCurrentGames().stream().forEach(game -> {
+            game.getObservers().removeIf(u -> idUser.equals(u.getId()));
         });
         dataServerManager.getCurrentUsers().removeIf(u -> idUser.equals(u.getId()));
-        //TODO: dataServerManager.getIServeurComToData().sendMessageToChat()
+        // TODO: dataServerManager.getIServeurComToData().sendMessageToChat()
 
     }
 
@@ -112,11 +112,12 @@ public class ServerDataToComImpl implements IServerDataToCom {
         return null;
     }
 
-
     @Override
     public void saveUserData(final PublicUserEntity user) {
-        Assert.notNull(dataServerManager.getCurrentUsers(), "[ServerDataToComImpl][saveUserData] currentUsers shouldn't be null"); 
-    	Map<Boolean, List<PublicUserEntity>> map = dataServerManager.getCurrentUsers().stream().collect(Collectors.partitioningBy(u -> u.getId().equals(user.getId())));
+        Assert.notNull(dataServerManager.getCurrentUsers(),
+                "[ServerDataToComImpl][saveUserData] currentUsers shouldn't be null");
+        Map<Boolean, List<PublicUserEntity>> map = dataServerManager.getCurrentUsers().stream()
+                .collect(Collectors.partitioningBy(u -> u.getId().equals(user.getId())));
         List<PublicUserEntity> currentUsers = map.get(false);
         currentUsers.add(user);
         dataServerManager.setCurrentUsers(currentUsers);
@@ -159,9 +160,9 @@ public class ServerDataToComImpl implements IServerDataToCom {
         return dataServerManager.getCurrentUsers();
     }
 
-
     public List<PublicUserEntity> getUsersByGame(final UUID idGame) {
-        Assert.notNull(dataServerManager.getCurrentGames(), "[ServerDataToComImpl][getUsersByGame] currentGames shouldn't be null"); 
+        Assert.notNull(dataServerManager.getCurrentGames(),
+                "[ServerDataToComImpl][getUsersByGame] currentGames shouldn't be null");
         List<PublicUserEntity> listUsersByGame = new ArrayList<PublicUserEntity>();
 
         // variable containing the corresponding idGame Game.
@@ -177,7 +178,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
             if (gameFound.getBlackPlayer() != null) {
                 listUsersByGame.add(gameFound.getBlackPlayer());
             }
-            
+
             if (gameFound.getWhitePlayer() != null) {
                 listUsersByGame.add(gameFound.getWhitePlayer());
             }
@@ -211,8 +212,9 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public void disconnect(final UUID idUser) {
-        Assert.notNull(dataServerManager.getCurrentUsers(), "[ServerDataToComImpl][disconnect] currentUsers shouldn't be null"); 
-        dataServerManager.getCurrentUsers().removeIf(user -> user.getId() == idUser);
+        Assert.notNull(dataServerManager.getCurrentUsers(),
+                "[ServerDataToComImpl][disconnect] currentUsers shouldn't be null");
+        dataServerManager.getCurrentUsers().removeIf(user -> user.getId().equals(idUser));
     }
 
     /**
@@ -220,7 +222,13 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     public ServerDataToComImpl(DataServerManager dataServerManager) {
         super();
-        Assert.notNull(dataServerManager, "[ServerDataToComImpl][Constructor] dataServerManager shouldn't be null"); 
+        Assert.notNull(dataServerManager, "[ServerDataToComImpl][Constructor] dataServerManager shouldn't be null");
         this.dataServerManager = dataServerManager;
+    }
+
+    @Override
+    public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
