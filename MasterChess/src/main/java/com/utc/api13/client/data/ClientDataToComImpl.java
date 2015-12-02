@@ -3,6 +3,7 @@
  */
 package com.utc.api13.client.data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,7 +29,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
                 "[ClientDataToComImpl][Constructor] dataClientManager shouldn't be null");
         this.instanceDataClientManager = instanceDataClientManager;
     }
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -65,16 +66,19 @@ public class ClientDataToComImpl implements IClientDataToCom {
                 "[ClientDataToComImpl][displayUsersList] UserLocal shouldn't be null");
         Assert.notNull(instanceDataClientManager.getCurrentUsers(),
                 "[ClientDataToComImpl][displayUsersList] currentUsers shouldn't be null");
+        
+        if (!connectedUserList.isEmpty()) {
+            List<PublicUserEntity> connectedUserListTemp = new ArrayList<PublicUserEntity>();
+            
+            connectedUserList.forEach(u -> {
+                if (!u.getId().equals(instanceDataClientManager.getUserLocal().getId())) {
+                    connectedUserListTemp.add(u);
+                }
+            });
 
-        connectedUserList.forEach(u -> {
-            if (u.getId().equals(instanceDataClientManager.getUserLocal().getId())) {
-                connectedUserList.remove(u);
-            }
-        });
-
-        instanceDataClientManager.getCurrentUsers().clear();
-        instanceDataClientManager.getCurrentUsers().addAll(connectedUserList);
-
+            instanceDataClientManager.getCurrentUsers().clear();
+            instanceDataClientManager.getCurrentUsers().addAll(connectedUserListTemp);
+        }
     }
 
     @Override

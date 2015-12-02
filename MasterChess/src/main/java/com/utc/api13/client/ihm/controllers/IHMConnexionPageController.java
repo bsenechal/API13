@@ -51,6 +51,19 @@ public class IHMConnexionPageController {
         // TODO : Gérer les exceptions avec le logger
         try {
             myIClientToIHM.connect(login, pw);
+            Stage stage;
+            Parent root;
+            stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+            root = (Pane) fxmlLoader.load();
+            IHMWelcomePageController controller = fxmlLoader.getController();
+            controller.setControllerContext(IHMManager);
+            controller.setMainApp(mainApp);
+            Scene scene = new Scene(root, 800, 600);
+            stage.setTitle("Connexion to MasterChess");
+            stage.setScene(scene);
+            mainApp.stage.close();
+            stage.show();
         } catch (FunctionalException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -59,20 +72,6 @@ public class IHMConnexionPageController {
             e.printStackTrace();
         } // à tester à l'intégration
 
-        Stage stage;
-        Parent root;
-        stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
-        root = (Pane) fxmlLoader.load();
-        IHMWelcomePageController controller = fxmlLoader.getController();
-        controller.setMainApp(mainApp);
-        controller.setControllerContext(IHMManager);
-        Scene scene = new Scene(root, 800, 600);
-        stage.setTitle("Connexion to MasterChess");
-        stage.setScene(scene);
-
-        mainApp.stage.close();
-        stage.show();
     }
 
     @FXML
@@ -110,7 +109,7 @@ public class IHMConnexionPageController {
         // bindings
     }
 
-    public void setManager(IHMManager ihmManager) {
+    public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null)
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();

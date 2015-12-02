@@ -14,6 +14,15 @@ public class PrivateUserEntity extends AUserEntity {
     private List<GameEntity> savedGames;
     private GameEntity game;
 
+    
+    /**
+     * @param password
+     */
+    public PrivateUserEntity(String login, String password) {
+        super(login);
+        this.password = password;
+    }
+
     /**
      * @return the password
      */
