@@ -3,12 +3,16 @@ package com.utc.api13.client.ihm.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.commun.entities.ChessboardEntity;
+import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 
 import javafx.beans.value.ChangeListener;
@@ -50,6 +54,7 @@ public class IHMWelcomePageController {
 	private AppClient mainApp;
 	private IClientDataToIHM myIClientToIHM; 
 	private ObservableList<PublicUserEntity> listUserPublic;
+	private ObservableList<GameEntity> listCurrentGames;
 
 	@FXML
 	BorderPane mainBorderPane; 
@@ -201,6 +206,7 @@ public class IHMWelcomePageController {
 	public void setListSavedGames() {
 		
 	}
+	
 	public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null)
@@ -230,7 +236,21 @@ public class IHMWelcomePageController {
 
         // Demande de la liste des jeux
         // -------------------------------
-        
+        /*this.listCurrentGames= myIClientToIHM.getGameList();
+        this.listCurrentGames.addListener // add listener on observableList in DATA
+         (
+                 new ListChangeListener<GameEntity>() 
+                 {
+                     @Override
+                     public void onChanged(javafx.collections.ListChangeListener.Change<? extends GameEntity> c) 
+                     {
+                         currentGamesTable.setItems(myIClientToIHM.getGameList());
+                     }
+                 }
+          );
+         
+        listCurrentGames.setItems(this.listCurrentGames);
+        myIClientToIHM.getCurrentGame(); // ask for list of game to DATA*/
 
         // Demande de la liste des parties sauvegardées
         // -------------------------------
@@ -255,10 +275,16 @@ public class IHMWelcomePageController {
         connectedUserLogin.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("Login"));
         connectedUserStatus.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("Status"));
         connectedUserStat.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("NbWon"));
+        
+        //liste des jeux en cours
+        //---------------
+        /*currentGamesId.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("Login")); ID????
+        currentGamesPlayer1.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("whitePlayer"));
+        currentGamesPlayer2.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("blackPlayer"));
+        currentGamesTime.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, Date>("creationDate"));*/
+        
     }
-	
-
-
+    
 }
 
 
