@@ -234,4 +234,9 @@ public class ServerDataToComImpl implements IServerDataToCom {
 		dataServerManager.getCurrentGames().add(newGame);
         return newGame;
     }
+    
+    @Override
+    public void endGame(UUID idGame) {
+        dataServerManager.getCurrentGames().removeIf(g -> idGame.equals(g.getId()));
+    }
 }

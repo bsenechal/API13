@@ -125,4 +125,10 @@ public interface IServerDataToCom {
     // Méthode pour créer une nouvelle partie :
     public GameEntity createGame(final UUID j1, final UUID j2, final boolean observable, final boolean chattable);
 
+    /**
+     * removes the game with the given id on the server
+     * @param idGame id of game
+     */
+    void endGame(UUID idGame);
+
 }

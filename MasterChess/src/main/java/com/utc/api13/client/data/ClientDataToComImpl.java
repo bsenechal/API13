@@ -127,9 +127,18 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
 	@Override
 	public void sendAnswerForLeaving(boolean answer) {
-		// TODO:
-		// instanceDataClientManager.getIClientIHMToData().displayAnswerForLeaving(answer);
-
+	    //Add game in local user saved game (in case the local user wants to save the game after ending)
+        instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
+        //Modify the played games
+        instanceDataClientManager.getUserLocal().setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
+	    //If answer is no the local user loses the game
+        if(!answer) {
+            instanceDataClientManager.getUserLocal().setNbLost(instanceDataClientManager.getUserLocal().getNbLost() + 1);
+        }
+	    //End the local game
+        UUID idSender = instanceDataClientManager.getUserLocal().getId().equals(instanceDataClientManager.getCurrentGame().getBlackPlayer().getId()) ? instanceDataClientManager.getCurrentGame().getWhitePlayer().getId() : instanceDataClientManager.getCurrentGame().getBlackPlayer().getId();
+		//Display answer to local user
+        instanceDataClientManager.getIClientIHMToData().displayAnswer(idSender, answer);
 	}
 
 	@Override
