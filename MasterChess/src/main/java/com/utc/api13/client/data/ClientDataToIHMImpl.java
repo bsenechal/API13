@@ -41,6 +41,16 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      */
     private GameService gameService;
 
+    public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
+        super();
+        Assert.notNull(instanceDataClientManager,
+                "[ClientDataToIHMImpl][Constructor] dataClientManager shouldn't be null");
+
+        this.dataClientManager = instanceDataClientManager;
+        this.userService = new UserService();
+        this.gameService = new GameService();
+    }
+
     @Override
     public ObservableList<PublicUserEntity> getUserList() {
         return dataClientManager.getCurrentUsers();
@@ -52,9 +62,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     }
 
     @Override
-    public void getUserInfo(final UUID iduser) {
-        // TODO
-        // dataClientManager.getIClientComToData().getUserInfo(idUser);
+    public void getUserInfo(final UUID idUser) {
+        dataClientManager.getIClientComToData().getUserInfo(idUser);
     }
 
     @Override
@@ -81,9 +90,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     }
 
     @Override
-    public void disconnect() {
+    public void disconnect() throws TechnicalException, FunctionalException {
         Assert.notNull(gameService, "[ClientDataToIHMImpl][disconnect] GameService shouldn't be null");
-
+        // Leave the game
         if (dataClientManager.getCurrentGame() != null) {
             if (gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
                 observerLeave();
@@ -91,6 +100,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
                 requestPlayerForLeaving();
             }
         }
+        // Ask deconnection from server
+        dataClientManager.getIClientComToData().disconnect(dataClientManager.getUserLocal().getId());
+        // Set the local user to null
         dataClientManager.setUserLocal(null);
     }
 
@@ -112,7 +124,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public void observerLeave() {
         Assert.notNull(dataClientManager.getUserLocal(),
                 "[ClientDataToIHMImpl][observerLeave] UserLocal shouldn't be null");
-
         dataClientManager.getIClientComToData().observerLeave(dataClientManager.getUserLocal().getId());
 
     }
@@ -127,10 +138,25 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     }
 
     @Override
-    public void otherPlayerLeaving() {
-        // TODO: dataClientManager.getIClientComToData().sendAnswer(answer,
+    public void sendAnswerForLeaving(boolean answer) {
+        // Add game in local user saved game (in case the local user wants to
+        // save the game after ending)
+        dataClientManager.getUserLocal().getSavedGames().add(getCurrentGame());
+        // if the local user said yes no it's a win for him
+        dataClientManager.getUserLocal().setNbPlayed(getLocalUser().getNbPlayed() + 1);
+        if (!answer) {
+            dataClientManager.getUserLocal().setNbWon(getLocalUser().getNbWon() + 1);
+        }
+        // Inform the local user that game is over with result
+        // TODO: à faire
+        // send information to opponent player
+        // dataClientManager.getIClientComToData().sendAnswerForLeaving(answer,
         // dataClientManager.getUserLocal());
-
+        // Inform the server
+        // dataClientManager.getIClientComToData().endGameByLeaving(getCurrentGame().getId(),
+        // getLocalUser().getId());
+        // End the game
+        dataClientManager.setCurrentGame(null);
     }
 
     @Override
@@ -187,33 +213,28 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         Assert.notNull(dataClientManager.getUserLocal().getSavedGames(),
                 "[ClientDataToIHMImpl][saveGame] SavedGames shouldn't be null");
 
-        dataClientManager.getUserLocal().getSavedGames().add(dataClientManager.getCurrentGame());
-        // TODO: Ulysse à Amadou : est-ce qu'il vaut mieux pas aussi sauvegarder
-        // l'user à ce moment là ?
-        userService.save(dataClientManager.getUserLocal());
+        if (dataClientManager.getCurrentGame() != null) {
+            dataClientManager.getUserLocal().getSavedGames().add(dataClientManager.getCurrentGame());
+            userService.save(getLocalUser());
+        } else {
+            userService.save(getLocalUser());
+        }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.utc.api13.client.data.interfaces.IClientToIHM#getCurrentGame()
-     */
     @Override
     public GameEntity getCurrentGame() {
         return dataClientManager.getCurrentGame();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.client.data.interfaces.IClientToIHM#createProposition(java.
-     * util.UUID, boolean, boolean)
+    /**
+     * Envoie la proposition sur le serveur Un paramètre en trop coté Com, à
+     * supprimer quand ils l'auront enlever
      */
     @Override
     public void createProposition(UUID uidReciever, boolean chattable, boolean observable) {
-        // TODO Auto-generated method stub
-
+        // TODO: dernier paramètre à enlever quand Com aura corriger sa fonction
+        dataClientManager.getIClientComToData().sendProposition(dataClientManager.getUserLocal().getId(), uidReciever,
+                chattable, observable, null);
     }
 
     /*
@@ -232,16 +253,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
     }
 
-    public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
-        super();
-        Assert.notNull(instanceDataClientManager,
-                "[ClientDataToIHMImpl][Constructor] dataClientManager shouldn't be null");
-
-        this.dataClientManager = instanceDataClientManager;
-        this.userService = new UserService();
-        this.gameService = new GameService();
-    }
-
     @Override
     public void createProfile(final PrivateUserEntity user) throws TechnicalException, FunctionalException {
         userService.save(user);
@@ -256,12 +267,16 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         return this.dataClientManager.getUserLocal();
     }
 
+    /**
+     * Envoi la réponse vers le second client
+     */
     @Override
-    public void sendResponse(UUID idUser, boolean answer) {
-        if (answer) {
-            // Créer un game et l'ajouter à la liste des games
-            // Ajouter sur le server
-        }
+    public void sendResponse(UUID idUser, boolean answer, boolean observable, boolean chattable)
+            throws TechnicalException {
+        // TODO: la méthode com ne devrait pas prendre un user mais plutôt un
+        // uid
+        dataClientManager.getIClientComToData().answerProposition(idUser, dataClientManager.getUserLocal().getId(),
+                chattable, observable, answer);
 
     }
 
@@ -279,5 +294,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public void importProfile(File file) throws FunctionalException, TechnicalException {
         this.importProfile(file, false);
 
+    }
+
+    @Override
+    public ObservableList<GameEntity> getGamesList() {
+        return dataClientManager.getCurrentGames();
     }
 }

@@ -13,6 +13,7 @@ import com.utc.api13.commun.messages.DisconnectMessage;
 import com.utc.api13.commun.messages.GameRequestMessage;
 import com.utc.api13.commun.messages.PublicUserMessage;
 import com.utc.api13.commun.messages.RequestAnswerMessage;
+import com.utc.api13.commun.messages.UserUpdateMessage;
 
 public class ClientComToDataImpl implements IClientComToData {
 
@@ -50,8 +51,10 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void sendUserUpdates(PublicUserEntity user) {
-        // TODO Auto-generated method stub
-
+        // Called when user updates its profile
+        UserUpdateMessage msg = new UserUpdateMessage(null, new UUID(0, 0));
+        msg.setUsr(user);
+        comClientManagerInstance.sendMessage(msg);
     }
 
     @Override
@@ -66,6 +69,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     }
 
+    /* DEPRECATED !!! */
     @Override
     public void sendAnswer(String answer, PublicUserEntity sender) {
         // TODO Auto-generated method stub

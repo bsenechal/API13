@@ -5,6 +5,7 @@ package com.utc.api13.client.data;
 
 import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -24,10 +25,46 @@ public class DataClientManager {
     private PrivateUserEntity userLocal;
     private ObservableList<PublicUserEntity> currentUsers;
     private ObservableList<GameEntity> currentGames;
+    private UserService userService;
     /**
      * The game the user is playing or observing
      */
     private GameEntity currentGame;
+
+    /**
+     * @param clientDataToComImpl
+     * @param clientDataToIHMImpl
+     * @param iClientComToData
+     * @param userLocal
+     * @param currentUsers
+     * @param currentGames
+     */
+    public DataClientManager() {
+        super();
+        this.clientDataToComImpl = new ClientDataToComImpl(this);
+        this.clientDataToIHMImpl = new ClientDataToIHMImpl(this);
+        this.iClientIHMToData = null;
+        this.iClientComToData = null;
+        this.userLocal = null;
+        this.currentUsers = FXCollections.observableArrayList();
+        this.currentGames = FXCollections.observableArrayList();
+        this.userService = new UserService();
+    }
+
+    /**
+     * @return the userService
+     */
+    public UserService getUserService() {
+        return userService;
+    }
+
+    /**
+     * @param userService
+     *            the userService to set
+     */
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * 
@@ -151,24 +188,5 @@ public class DataClientManager {
      */
     public void setCurrentGame(GameEntity currentGame) {
         this.currentGame = currentGame;
-    }
-
-    /**
-     * @param clientDataToComImpl
-     * @param clientDataToIHMImpl
-     * @param iClientComToData
-     * @param userLocal
-     * @param currentUsers
-     * @param currentGames
-     */
-    public DataClientManager() {
-        super();
-        this.clientDataToComImpl = new ClientDataToComImpl(this);
-        this.clientDataToIHMImpl = new ClientDataToIHMImpl(this);
-        this.iClientIHMToData = null;
-        this.iClientComToData = null;
-        this.userLocal = new PrivateUserEntity();
-        this.currentUsers = FXCollections.observableArrayList();
-        this.currentGames = FXCollections.observableArrayList();
     }
 }

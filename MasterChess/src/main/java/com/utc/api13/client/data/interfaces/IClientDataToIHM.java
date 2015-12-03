@@ -57,8 +57,14 @@ public interface IClientDataToIHM {
 
     /**
      * Signs out the local user from the app
+     * 
+     * @throws FunctionalException
+     *             error while saving the local user: uid and/or login and/or
+     *             password missing
+     * @throws TechnicalException
+     *             error while saving the local user: input/ouput exceptions
      */
-    public void disconnect();
+    public void disconnect() throws TechnicalException, FunctionalException;
 
     /**
      * Moves a piece to the given position
@@ -80,10 +86,11 @@ public interface IClientDataToIHM {
     public void requestPlayerForLeaving();
 
     /**
-     * TODO: à revoir
+     * TODO: comment this shit
+     * 
+     * @param answer
      */
-
-    public void otherPlayerLeaving();
+    void sendAnswerForLeaving(boolean answer);
 
     /**
      * Updates the info of local user
@@ -136,7 +143,7 @@ public interface IClientDataToIHM {
     public GameEntity getCurrentGame();
 
     /**
-     * Creates a game proposition and sends it to the other player
+     * Creates a game proposition and sends it to another player
      * 
      * @param uidReciever
      *            opponent
@@ -180,12 +187,15 @@ public interface IClientDataToIHM {
      * Sends the decision of the local user to the other distant proposer
      * 
      * @param idUser
-     *            id of reciever
+     *            id of player who sent the game proposition
      * @param answer
-     *            answer
+     *            true if the proposition is accepted
+     * @throws TechnicalException
+     *             exception when extracting bytes from image in local user
+     *             profile
      */
-    public void sendResponse(UUID idUser, boolean answer);
-    // TODO : endGameByLeaving
+    public void sendResponse(UUID idUser, boolean answer, boolean observable, boolean chattable)
+            throws TechnicalException;
 
     /**
      * Imports the profile of the user contained in file into the app
@@ -225,6 +235,12 @@ public interface IClientDataToIHM {
      *             error while copying exported file to export directory
      */
     public File exportProfile() throws TechnicalException;
+
+    /**
+     * 
+     * @return Returns the list of observable
+     */
+    ObservableList<GameEntity> getGamesList();
 
     // TODO
     // Si le (IClientDataToCom.)printProposition() ne renvoie pas directement la

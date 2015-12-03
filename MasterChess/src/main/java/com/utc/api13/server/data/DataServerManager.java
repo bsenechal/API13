@@ -23,6 +23,14 @@ public class DataServerManager {
     private List<PublicUserEntity> currentUsers;
     private List<GameEntity> currentGames;
 
+    public DataServerManager() {
+        super();
+        this.iServeurComToData = null;
+        this.serverDataToComImpl = new ServerDataToComImpl(this);
+        this.currentGames = new ArrayList<GameEntity>();
+        this.currentUsers = new ArrayList<PublicUserEntity>();
+    }
+
     /**
      * @return the IServeurToData
      */
@@ -81,13 +89,5 @@ public class DataServerManager {
      */
     public void setServerDataToComImpl(ServerDataToComImpl serverDataToComImpl) {
         this.serverDataToComImpl = serverDataToComImpl;
-    }
-
-    public DataServerManager() {
-        super();
-        this.iServeurComToData = null;
-        this.serverDataToComImpl = new ServerDataToComImpl(this);
-        this.currentGames = new ArrayList<GameEntity>();
-        this.currentUsers = new ArrayList<PublicUserEntity>();
     }
 }

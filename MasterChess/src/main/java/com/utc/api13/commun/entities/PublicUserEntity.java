@@ -4,7 +4,7 @@ import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.exceptions.TechnicalException;
 import com.utc.api13.commun.utils.ImageUtils;
 
-public class PublicUserEntity extends AUserEntity {
+public class PublicUserEntity extends AUserEntity implements Cloneable {
 
     private static final long serialVersionUID = 7421076183167325143L;
     private byte[] image;
