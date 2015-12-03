@@ -16,8 +16,6 @@ public abstract class AUserEntity extends ADataEntity {
     public AUserEntity() {
         super();
     }
-    
-    
 
     /**
      * @param login
@@ -26,8 +24,6 @@ public abstract class AUserEntity extends ADataEntity {
         super();
         this.login = login;
     }
-
-
 
     /**
      * @param login

@@ -34,7 +34,6 @@ public class ServerDataToComImpl implements IServerDataToCom {
         this.dataServerManager = dataServerManager;
     }
 
-    
     /*
      * (non-Javadoc)
      * 
@@ -229,43 +228,46 @@ public class ServerDataToComImpl implements IServerDataToCom {
         dataServerManager.getCurrentUsers().removeIf(user -> user.getId().equals(idUser));
     }
 
-@Override
+    @Override
     public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable) {
-        
+
         PublicUserEntity whitePlayer;
         PublicUserEntity blackPlayer;
-        
-        /* generate a random number to choose between 0 and 1 to choose who will be the white player and who will be the black player */
+
+        /*
+         * generate a random number to choose between 0 and 1 to choose who will
+         * be the white player and who will be the black player
+         */
         Random r = new Random();
         int valeur = 0 + r.nextInt(2 - 0);
-        
-        if(valeur == 1){  
+
+        if (valeur == 1) {
             whitePlayer = getUserInfo(j1);
             blackPlayer = getUserInfo(j2);
-        }else{
+        } else {
             whitePlayer = getUserInfo(j2);
             blackPlayer = getUserInfo(j1);
         }
-        
-        Assert.notNull(whitePlayer, "[ServerDataToComImpl][createGame] player 1 is not online"); 
-        Assert.notNull(blackPlayer, "[ServerDataToComImpl][createGame] player 2 is not online"); 
-		//Create a game
-		GameEntity newGame = new GameEntity();
-		newGame.setBlackPlayer(blackPlayer);
-		newGame.setWhitePlayer(whitePlayer);
-		newGame.setIsOservable(observable);
-		newGame.setIsChattable(chattable);
-		//Add to the list of current games
-		dataServerManager.getCurrentGames().add(newGame);
+
+        Assert.notNull(whitePlayer, "[ServerDataToComImpl][createGame] player 1 is not online");
+        Assert.notNull(blackPlayer, "[ServerDataToComImpl][createGame] player 2 is not online");
+        // Create a game
+        GameEntity newGame = new GameEntity();
+        newGame.setBlackPlayer(blackPlayer);
+        newGame.setWhitePlayer(whitePlayer);
+        newGame.setIsOservable(observable);
+        newGame.setIsChattable(chattable);
+        // Add to the list of current games
+        dataServerManager.getCurrentGames().add(newGame);
         return newGame;
     }
-    
+
     @Override
     public GameEntity getGameById(UUID IdGame) {
         // TODO Auto-generated method stub
         return null;
     }
-    
+
     @Override
     public void endGame(UUID idGame) {
         dataServerManager.getCurrentGames().removeIf(g -> idGame.equals(g.getId()));

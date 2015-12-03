@@ -22,7 +22,7 @@ public class DataServerManager {
     private ServerDataToComImpl serverDataToComImpl;
     private List<PublicUserEntity> currentUsers;
     private List<GameEntity> currentGames;
-    
+
     public DataServerManager() {
         super();
         this.iServeurComToData = null;

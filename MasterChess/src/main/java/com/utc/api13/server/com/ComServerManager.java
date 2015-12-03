@@ -26,11 +26,11 @@ public class ComServerManager {
     private final ConcurrentHashMap<UUID, ChannelHandlerContext> channelHandlerContextMap = new ConcurrentHashMap<UUID, ChannelHandlerContext>();
 
     public void launchAppCom() {
-            try {
-                this.run();
-            } catch (InterruptedException e) {
-                logger.error("[Server][COM] Erreur lors du run " + e.getMessage());
-            }
+        try {
+            this.run();
+        } catch (InterruptedException e) {
+            logger.error("[Server][COM] Erreur lors du run " + e.getMessage());
+        }
     }
 
     public ComServerManager(int port) {

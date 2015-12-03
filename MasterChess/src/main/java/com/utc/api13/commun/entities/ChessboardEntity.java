@@ -23,7 +23,7 @@ public final class ChessboardEntity extends ADataEntity {
             }
         }
     }
-    
+
     /**
      * @return the cases
      */

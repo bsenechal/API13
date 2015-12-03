@@ -77,7 +77,7 @@ public class UserInfoPopUpController {
         this.userInfoWon.setText(Integer.toString(u.getNbWon()));
         this.userInfoLost.setText(Integer.toString(u.getNbLost()));
         this.userInfoPlayed.setText(Integer.toString(u.getNbPlayed()));
-         
+
         try {
             Image image = getJavaFXImage(u.getImage());
             this.userInfoImage.setImage(image);
