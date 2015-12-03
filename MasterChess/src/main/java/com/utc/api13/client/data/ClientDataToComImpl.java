@@ -13,6 +13,7 @@ import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 /**
  * @author Benoît
@@ -247,5 +248,30 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	public void displayMessage(String message) {
 		instanceDataClientManager.getIClientIHMToData().displayMessage(message);
 
+	}
+	
+	@Override
+	public void setFinishedStatus(GameStatusEnum status){
+		Assert.notNull(instanceDataClientManager.getCurrentGames(),
+				"[ClientDataToComImpl][setFinishedStatus] currentGames shouldn't be null");
+		
+		//set the game status :
+		instanceDataClientManager.getCurrentGame().setIsFinished(status);
+		
+		//do treatment accordingly :
+		switch(status){
+		
+			case CHECK:
+			break;
+			case CHECKMATE:
+			break;
+			case DRAW:
+			break;
+			
+			default : 
+			break;
+			
+		}
+		
 	}
 }

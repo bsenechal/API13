@@ -8,6 +8,7 @@ import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 import javafx.collections.ObservableList;
 
@@ -121,4 +122,11 @@ public interface IClientDataToCom {
     DataClientManager getInstanceDataClientManager();
 
     void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
+    
+    /**
+     * This method will set the status of the game / switch active players / give points if necessary
+     * @author ulyss_000
+     * @param status -> the game status (CHECK/CHECKMATE/CONTINUE/DRAW) send by the server
+     */
+    void setFinishedStatus(GameStatusEnum status);
 }

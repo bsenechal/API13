@@ -19,7 +19,7 @@ public class GameEntity extends ADataEntity {
 	private PublicUserEntity whitePlayer;
 	private PublicUserEntity blackPlayer;
 	private PublicUserEntity currentPlayer;
-	private Boolean isFinished;
+	private GameStatusEnum isFinished;
 	private ChessboardEntity chessboardEntity;
 	private List<PublicUserEntity> observers;
 	private List<MoveEntity> movesHistory;
@@ -35,7 +35,7 @@ public class GameEntity extends ADataEntity {
 		this.observers = new ArrayList<PublicUserEntity>();
 		this.chessboardEntity = new ChessboardEntity();
 		this.creationDate = new Date();
-		this.isFinished = Boolean.FALSE;
+		this.isFinished = null;
 		this.isOservable = Boolean.FALSE;
 		this.isChattable = Boolean.FALSE;
 		this.limit = null;
@@ -64,7 +64,7 @@ public class GameEntity extends ADataEntity {
 		this.observers = new ArrayList<PublicUserEntity>();
 		this.chessboardEntity = new ChessboardEntity();
 		this.creationDate = new Date();
-		this.isFinished = Boolean.FALSE;
+		this.isFinished = null;
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class GameEntity extends ADataEntity {
 	/**
 	 * @return the isFinished
 	 */
-	public Boolean getIsFinished() {
+	public GameStatusEnum getIsFinished() {
 		return isFinished;
 	}
 
@@ -168,7 +168,7 @@ public class GameEntity extends ADataEntity {
 	 * @param isFinished
 	 *            the isFinished to set
 	 */
-	public void setIsFinished(Boolean isFinished) {
+	public void setIsFinished(GameStatusEnum isFinished) {
 		this.isFinished = isFinished;
 	}
 
