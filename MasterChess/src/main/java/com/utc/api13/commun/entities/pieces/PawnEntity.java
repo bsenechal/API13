@@ -21,7 +21,7 @@ public class PawnEntity extends APieceEntity {
 	 */
 	private static final long serialVersionUID = -1168464136345780891L;
 
-	public PawnEntity(PieceColorEnum color, GameEntity currentGame) {
+	public PawnEntity(PieceColorEnum color) {
 		super(color);
 		// TODO Auto-generated constructor stub
 	}

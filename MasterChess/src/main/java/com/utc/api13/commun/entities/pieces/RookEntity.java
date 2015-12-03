@@ -21,7 +21,7 @@ public class RookEntity extends APieceEntity {
 	 */
 	private static final long serialVersionUID = 2587319077980898398L;
 
-	public RookEntity(PieceColorEnum color, GameEntity currentGame) {
+	public RookEntity(PieceColorEnum color) {
 		super(color);
 		// TODO Auto-generated constructor stub
 	}

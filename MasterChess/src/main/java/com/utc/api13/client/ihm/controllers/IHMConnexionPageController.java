@@ -1,3 +1,4 @@
+
 package com.utc.api13.client.ihm.controllers;
 
 import java.io.File;
@@ -22,98 +23,143 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class IHMConnexionPageController {
 
-	private IHMManager IHMManager;
-	private AppClient mainApp;
-	private IClientDataToIHM myIClientToIHM;
+    private IHMManager IHMManager;
+    private AppClient mainApp;
+    private IClientDataToIHM myIClientToIHM;
 
-	@FXML
-	BorderPane connexionBorderPane;
-	@FXML
-	Label connexionLabel, loginLabel, passwordLabel, serverAddressLabel;
-	@FXML
-	AnchorPane connexionAnchorPane;
-	@FXML
-	Button connexionButton;
-	@FXML
-	TextField loginTextView, passwordTextView, serverAddressTextView;
-	@FXML
-	Hyperlink importLink, exportLink, signUpLink;
+    @FXML
+    BorderPane connexionBorderPane;
+    @FXML
+    Label connexionLabel, loginLabel, passwordLabel, serverAddressLabel, portLabel;
+    @FXML
+    AnchorPane connexionAnchorPane;
+    @FXML
+    Button connexionButton;
+    @FXML
+    TextField loginTextView, passwordTextView, serverAddressTextView, portTextView;
+    @FXML
+    Hyperlink importLink, exportLink, signUpLink;
 
-	@FXML
-	private void onSignInClicked(Event event) throws IOException {
-		String login = loginTextView.getText();
-		String pw = passwordTextView.getText();
+    @FXML
+    private void onSignInClicked(Event event) throws IOException {
+        String login = loginTextView.getText();
+        String pw = passwordTextView.getText();
+        String sv = serverAddressTextView.getText();
+        Integer port = Integer.parseInt(portTextView.getText().isEmpty() ? "0" : portTextView.getText());
 
-		// TODO : Gérer les exceptions avec le logger
-		try {
-			myIClientToIHM.connect(login, pw);
-		} catch (FunctionalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TechnicalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} // à tester à l'intégration
+        // TODO : Gérer les exceptions avec le logger
 
-		Stage stage;
-		Parent root;
-		stage = new Stage();
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
-		root = (Pane) fxmlLoader.load();
-		IHMWelcomePageController controller = fxmlLoader.getController();
-		controller.setMainApp(mainApp);
-		controller.setControllerContext(IHMManager);
-		Scene scene = new Scene(root, 800, 600);
-		stage.setTitle("Connexion to MasterChess");
-		stage.setScene(scene);
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader;
 
-		mainApp.stage.close();
-		stage.show();
-	}
+        if (sv == null || port == null) {
+            wrongData(true);
+        }
 
-	@FXML
-	private void onImportClicked(Event event) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Import my profile");
-		File f = fileChooser.showOpenDialog(new Stage());
-		if (f != null) {
-			try {
-				myIClientToIHM.importProfile(f, true);
-			} catch (FunctionalException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (TechnicalException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
+        else {
 
-	@FXML
-	private void onSignUpClicked(Event event) {
+            try {
 
-	}
+                myIClientToIHM.connect(login, pw);
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+                root = (Pane) fxmlLoader.load();
+                IHMWelcomePageController controllerRight = fxmlLoader.getController();
+                controllerRight.setControllerContext(IHMManager);
+                controllerRight.setMainApp(mainApp);
+                stage.setTitle("Connexion to MasterChess");
+                stage.setScene(new Scene(root));
+                mainApp.getCurrentStage().close();
+                mainApp.setCurrentStage(stage);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
 
-	public IHMConnexionPageController() {
-		initialize();
-	}
+            }
 
-	public void setMainApp(AppClient app) {
-		this.mainApp = app;
-	}
+            catch (FunctionalException e) {
+                wrongData(true);
 
-	public void initialize() {
-		// bindings
-	}
+            }
 
-	public void setManager(IHMManager ihmManager) {
-		this.IHMManager = ihmManager;
-		if (ihmManager != null)
-			this.myIClientToIHM = IHMManager.getIClientDataToIHM();
-	}
+            catch (TechnicalException e) {
+                wrongData(false);
+
+            }
+        }
+
+        stage.show();
+
+    }
+
+    private void wrongData(boolean bool) throws IOException {
+
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader;
+        // TODO Auto-generated method stub
+        fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+        root = (Pane) fxmlLoader.load();
+        ErrorController controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager);
+        controller.setMainApp(this.mainApp, bool ? "Wrong connexion information!" : "Technical error!");
+        stage.setScene(new Scene(root));
+        stage.setTitle("User Information");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+
+    }
+
+    @FXML
+    private void onImportClicked(Event event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Import my profile");
+        File f = fileChooser.showOpenDialog(new Stage());
+        if (f != null) {
+            try {
+                myIClientToIHM.importProfile(f, true);
+            } catch (FunctionalException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (TechnicalException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    private void onSignUpClicked(Event event) throws IOException {
+        MyInfoPopUpController controller = new MyInfoPopUpController();
+
+        controller.setNewProfile(true);
+        controller.setIHMManager(IHMManager);
+        controller.onModifyProfileClicked();
+
+    }
+
+    public IHMConnexionPageController() {
+        initialize();
+    }
+
+    public void setMainApp(AppClient app) {
+        this.mainApp = app;
+    }
+
+    public void initialize() {
+        // bindings
+    }
+
+    public void setControllerContext(IHMManager ihmManager) {
+        this.IHMManager = ihmManager;
+        if (ihmManager != null)
+            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+    }
 
 }

@@ -21,7 +21,7 @@ public class BishopEntity extends APieceEntity {
 	 */
 	private static final long serialVersionUID = 2036717333681570183L;
 
-	public BishopEntity(PieceColorEnum color, GameEntity currentGame) {
+	public BishopEntity(PieceColorEnum color) {
 		super(color);
 		// TODO Auto-generated constructor stub
 	}

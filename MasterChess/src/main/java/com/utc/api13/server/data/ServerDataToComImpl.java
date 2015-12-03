@@ -6,6 +6,7 @@ package com.utc.api13.server.data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -136,7 +137,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
 		dataServerManager.getCurrentGames().stream().forEach(game -> {
 			game.getObservers().removeIf(u -> idUser.equals(u.getId()));
 		});
-		dataServerManager.getCurrentUsers().removeIf(u -> idUser.equals(u.getId()));
+
 		// TODO: dataServerManager.getIServeurComToData().sendMessageToChat()
 
 	}
@@ -154,7 +155,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	}
 
 	@Override
-	public void saveUserData(final PublicUserEntity user) {
+	public boolean saveUserData(final PublicUserEntity user) {
 		Assert.notNull(dataServerManager.getCurrentUsers(),
 				"[ServerDataToComImpl][saveUserData] currentUsers shouldn't be null");
 		Map<Boolean, List<PublicUserEntity>> map = dataServerManager.getCurrentUsers().stream()
@@ -162,6 +163,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
 		List<PublicUserEntity> currentUsers = map.get(false);
 		currentUsers.add(user);
 		dataServerManager.setCurrentUsers(currentUsers);
+		return true;
 	}
 
 	/*
@@ -171,7 +173,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 * java.util.UUID)
 	 */
 	@Override
-	public void newObserver(int idGame, UUID idUser) {
+	public void newObserver(UUID idGame, UUID idUser) {
 		// TODO Auto-generated method stub
 
 	}
@@ -260,8 +262,25 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
 	@Override
 	public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable) {
-		PublicUserEntity whitePlayer = getUserInfo(j1);
-		PublicUserEntity blackPlayer = getUserInfo(j2);
+
+		PublicUserEntity whitePlayer;
+		PublicUserEntity blackPlayer;
+
+		/*
+		 * generate a random number to choose between 0 and 1 to choose who will
+		 * be the white player and who will be the black player
+		 */
+		Random r = new Random();
+		int valeur = 0 + r.nextInt(2 - 0);
+
+		if (valeur == 1) {
+			whitePlayer = getUserInfo(j1);
+			blackPlayer = getUserInfo(j2);
+		} else {
+			whitePlayer = getUserInfo(j2);
+			blackPlayer = getUserInfo(j1);
+		}
+
 		Assert.notNull(whitePlayer, "[ServerDataToComImpl][createGame] player 1 is not online");
 		Assert.notNull(blackPlayer, "[ServerDataToComImpl][createGame] player 2 is not online");
 		// Create a game
@@ -273,5 +292,16 @@ public class ServerDataToComImpl implements IServerDataToCom {
 		// Add to the list of current games
 		dataServerManager.getCurrentGames().add(newGame);
 		return newGame;
+	}
+
+	@Override
+	public GameEntity getGameById(UUID IdGame) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void endGame(UUID idGame) {
+		dataServerManager.getCurrentGames().removeIf(g -> idGame.equals(g.getId()));
 	}
 }

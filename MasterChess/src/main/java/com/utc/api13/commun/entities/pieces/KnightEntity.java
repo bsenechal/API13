@@ -21,7 +21,7 @@ public class KnightEntity extends APieceEntity {
 	 */
 	private static final long serialVersionUID = 2375251773738605949L;
 
-	public KnightEntity(PieceColorEnum color, GameEntity currentGame) {
+	public KnightEntity(PieceColorEnum color) {
 		super(color);
 		// TODO Auto-generated constructor stub
 	}
