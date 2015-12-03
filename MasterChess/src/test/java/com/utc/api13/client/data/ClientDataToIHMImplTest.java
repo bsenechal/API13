@@ -41,14 +41,14 @@ public class ClientDataToIHMImplTest {
         dataClientManager.setUserLocal(new PrivateUserEntity());
 
         try {
-			dataClientManager.getClientDataToIHMImpl().disconnect();
-		} catch (TechnicalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FunctionalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            dataClientManager.getClientDataToIHMImpl().disconnect();
+        } catch (TechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (FunctionalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         Assert.assertNotNull("dataClientManager shouldn't be null", dataClientManager);
         Assert.assertNull("UserLocal should be null", dataClientManager.getUserLocal());

@@ -53,23 +53,22 @@ public class IHMConnexionPageController {
         Integer port = Integer.parseInt(portTextView.getText().isEmpty() ? "0" : portTextView.getText());
 
         // TODO : Gérer les exceptions avec le logger
-      
+
         Stage stage;
         Parent root;
         stage = new Stage();
         FXMLLoader fxmlLoader;
-      
-       
+
         if (sv == null || port == null) {
-                wrongData(true);   
-            }
-        
+            wrongData(true);
+        }
+
         else {
-       
+
             try {
-               
+
                 myIClientToIHM.connect(login, pw);
-               fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
                 root = (Pane) fxmlLoader.load();
                 IHMWelcomePageController controllerRight = fxmlLoader.getController();
                 controllerRight.setControllerContext(IHMManager);
@@ -82,25 +81,24 @@ public class IHMConnexionPageController {
                 stage.showAndWait();
 
             }
-            
+
             catch (FunctionalException e) {
-                wrongData(true);   
-                
+                wrongData(true);
+
             }
 
             catch (TechnicalException e) {
-                wrongData(false);   
-               
+                wrongData(false);
+
             }
         }
-           
-        
+
         stage.show();
-       
+
     }
 
-    private void wrongData(boolean bool ) throws IOException {
-        
+    private void wrongData(boolean bool) throws IOException {
+
         Stage stage;
         Parent root;
         stage = new Stage();
@@ -110,12 +108,12 @@ public class IHMConnexionPageController {
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
-        controller.setMainApp(this.mainApp, bool ? "Wrong connexion information!": "Technical error!");
+        controller.setMainApp(this.mainApp, bool ? "Wrong connexion information!" : "Technical error!");
         stage.setScene(new Scene(root));
         stage.setTitle("User Information");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
-        
+
     }
 
     @FXML

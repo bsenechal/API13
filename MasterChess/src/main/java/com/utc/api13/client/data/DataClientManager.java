@@ -50,8 +50,7 @@ public class DataClientManager {
         this.currentGames = FXCollections.observableArrayList();
         this.userService = new UserService();
     }
-    
-    
+
     /**
      * @return the userService
      */
@@ -59,14 +58,13 @@ public class DataClientManager {
         return userService;
     }
 
-
     /**
-     * @param userService the userService to set
+     * @param userService
+     *            the userService to set
      */
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
-
 
     /**
      * 

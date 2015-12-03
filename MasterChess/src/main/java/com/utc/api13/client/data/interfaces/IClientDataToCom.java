@@ -9,11 +9,10 @@ import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 
-import javafx.collections.ObservableList;
-
 /**
  * 
  * This interface will be given to the Communication Client module.
+ * 
  * @author ulyss_000
  *
  */
@@ -69,16 +68,20 @@ public interface IClientDataToCom {
 
     /**
      * TODO: unnecessary
-     * @param message message
+     * 
+     * @param message
+     *            message
      */
     void notify(final String message);
 
     /**
      * La GameEntity est créé sur le serveur.<br/>
      * Cette méthode initialise l'instance de la GameEntity sur le client
-     * @param game game créé sur le serveur
+     * 
+     * @param game
+     *            game créé sur le serveur
      */
-    void initGame(final GameEntity game);                                           
+    void initGame(final GameEntity game);
 
     void newObserver(final UUID idObserver);
 
@@ -88,7 +91,10 @@ public interface IClientDataToCom {
 
     void newReplay(final GameEntity game);
 
-    void sendProposition(final UUID uidSender, final UUID uidReciever, final boolean observable, final boolean chattable);      //A quoi sert cette méthode dans les méthodes utilisées par le "retour" de com ?
+    void sendProposition(final UUID uidSender, final UUID uidReciever, final boolean observable,
+            final boolean chattable); // A quoi sert cette méthode dans les
+                                      // méthodes utilisées par le "retour" de
+                                      // com ?
 
     void printProposition(final UUID uidSender, final boolean observable, final boolean chattable); // Affiche
                                                                                                     // la
@@ -114,16 +120,20 @@ public interface IClientDataToCom {
     DataClientManager getInstanceDataClientManager();
 
     void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
-    
+
     /**
      * Adds a new user to the list of local users
-     * @param user user to add
+     * 
+     * @param user
+     *            user to add
      */
     public void notifyConnection(PublicUserEntity user);
-    
+
     /**
      * Delete a user from the list of local users
-     * @param idUser id of user to delete
+     * 
+     * @param idUser
+     *            id of user to delete
      */
     public void notifyDisconnection(UUID idUser);
 }

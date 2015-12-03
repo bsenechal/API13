@@ -52,9 +52,9 @@ public class ClientComToDataImpl implements IClientComToData {
     @Override
     public void sendUserUpdates(PublicUserEntity user) {
         // Called when user updates its profile
-    	UserUpdateMessage msg = new UserUpdateMessage(null, new UUID(0, 0));
-    	msg.setUsr(user);
-    	comClientManagerInstance.sendMessage(msg);
+        UserUpdateMessage msg = new UserUpdateMessage(null, new UUID(0, 0));
+        msg.setUsr(user);
+        comClientManagerInstance.sendMessage(msg);
     }
 
     @Override

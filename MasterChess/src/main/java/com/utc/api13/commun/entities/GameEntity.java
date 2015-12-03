@@ -47,8 +47,8 @@ public class GameEntity extends ADataEntity {
      * @param whitePlayer
      * @param blackPlayer
      */
-    public GameEntity(Boolean idOservable, Boolean isChattable, Date limit,
-            PublicUserEntity whitePlayer, PublicUserEntity blackPlayer) {
+    public GameEntity(Boolean idOservable, Boolean isChattable, Date limit, PublicUserEntity whitePlayer,
+            PublicUserEntity blackPlayer) {
         super();
         this.isOservable = idOservable;
         this.isChattable = isChattable;
@@ -272,12 +272,12 @@ public class GameEntity extends ADataEntity {
     public void setCurrentPlayer(PublicUserEntity currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
-    
+
     /**
      * 
      * @return the concatenation of the observer list and the two players
      */
-    public List<PublicUserEntity> getAllParticipants(){
+    public List<PublicUserEntity> getAllParticipants() {
         List<PublicUserEntity> participants = new ArrayList<PublicUserEntity>();
         Collections.copy(participants, this.observers);
         participants.add(getBlackPlayer());

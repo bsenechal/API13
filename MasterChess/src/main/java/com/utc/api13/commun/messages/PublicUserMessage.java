@@ -16,7 +16,7 @@ public class PublicUserMessage extends Message {
     public PublicUserMessage(UUID sender, UUID receiver, UUID target) {
         super(sender, receiver);
         // TODO Auto-generated constructor stub
-        this.target=target;
+        this.target = target;
     }
 
     @Override
