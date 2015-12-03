@@ -28,8 +28,8 @@ public class ComServerManager {
     public void launchAppCom() {
         try {
             this.run();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (InterruptedException e) {
+            logger.error("[Server][COM] Erreur lors du run " + e.getMessage());
         }
     }
 

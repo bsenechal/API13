@@ -11,6 +11,7 @@ import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 import javafx.beans.value.ChangeListener;
@@ -63,7 +64,7 @@ public class IHMWelcomePageController {
     @FXML
     ImageView iconHelp, iconParam, iconProfile, iconNotif, infoTest;
     @FXML
-    Label title, currentGamesLabel, savedGamesLabel, connectedUserLabel;
+    Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel;
     @FXML
     Text userLabel;
     @FXML
@@ -100,9 +101,29 @@ public class IHMWelcomePageController {
     }
 
     @FXML
-    public void onLogOutClicked() {
+    public void onLogOutClicked() throws IOException {
         // NB : pas d'exception prévu par data = normal ??
-        this.myIClientToIHM.disconnect();
+        try {
+            this.myIClientToIHM.disconnect();
+        } catch (TechnicalException | FunctionalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
+        root = (Pane) fxmlLoader.load();
+        IHMConnexionPageController controller = fxmlLoader.getController();
+        controller.setControllerContext(IHMManager);
+        controller.setMainApp(mainApp);
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("Connexion to MasterChess");
+        stage.setScene(scene);
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
+        stage.show();
+
     }
 
     @FXML
@@ -144,6 +165,7 @@ public class IHMWelcomePageController {
         UserInfoPopUpController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
         controller.setMainApp(this.mainApp);
+
         stage.setScene(new Scene(root));
         stage.setTitle("User Information");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -173,10 +195,6 @@ public class IHMWelcomePageController {
         stage.showAndWait();
     }
 
-    public IHMWelcomePageController() {
-        initialize();
-    }
-
     public void initialize() {
         // bindings
         // TODO Demande de la liste des users connectés
@@ -185,10 +203,14 @@ public class IHMWelcomePageController {
         // getAllGames();
     }
 
+    public IHMWelcomePageController() {
+        initialize();
+    }
+
     public void setMainApp(AppClient app) {
         this.mainApp = app;
         PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
-        this.connectedUserLabel.setText(u.getLogin());
+        this.userLabel.setText(u.getLogin());
         setListenersOnLoad();
         setBindingsOnLoad();
     }
@@ -201,6 +223,7 @@ public class IHMWelcomePageController {
         root = (Pane) fxmlLoader.load();
         ExportOKPopUpController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
+
         controller.setMainApp(this.mainApp, path);
         stage.setScene(new Scene(root));
         stage.setTitle("Export success");
@@ -246,18 +269,19 @@ public class IHMWelcomePageController {
 
         // Demande de la liste des jeux
         // -------------------------------
+
         /*
-         * this.listCurrentGames= myIClientToIHM.getGameList();
+         * this.listCurrentGames= myIClientToIHM.getGamesList();
          * this.listCurrentGames.addListener // add listener on observableList
          * in DATA ( new ListChangeListener<GameEntity>() {
          * 
          * @Override public void
          * onChanged(javafx.collections.ListChangeListener.Change<? extends
          * GameEntity> c) {
-         * currentGamesTable.setItems(myIClientToIHM.getGameList()); } } );
+         * currentGamesTable.setItems(myIClientToIHM.getGamesList()); } } );
          * 
          * listCurrentGames.setItems(this.listCurrentGames);
-         * myIClientToIHM.getCurrentGame(); // ask for list of game to DATA
+         * myIClientToIHM.getAllGames(); // ask for list of game to DATA
          */
 
         // Demande de la liste des parties sauvegardées
@@ -286,13 +310,13 @@ public class IHMWelcomePageController {
         // ---------------
         /*
          * currentGamesId.setCellValueFactory(new
-         * PropertyValueFactory<PublicUserEntity, String>("Login")); ID????
+         * PropertyValueFactory<GameEntity, UUID>("id"));
          * currentGamesPlayer1.setCellValueFactory(new
-         * PropertyValueFactory<PublicUserEntity, String>("whitePlayer"));
+         * PropertyValueFactory<GameEntity, String>("whitePlayer"));
          * currentGamesPlayer2.setCellValueFactory(new
-         * PropertyValueFactory<PublicUserEntity, String>("blackPlayer"));
+         * PropertyValueFactory<GameEntity, String>("blackPlayer"));
          * currentGamesTime.setCellValueFactory(new
-         * PropertyValueFactory<PublicUserEntity, Date>("creationDate"));
+         * PropertyValueFactory<GameEntity, Date>("creationDate"));
          */
 
     }

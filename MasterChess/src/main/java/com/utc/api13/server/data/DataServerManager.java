@@ -5,6 +5,7 @@ package com.utc.api13.server.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -22,7 +23,7 @@ public class DataServerManager {
     private ServerDataToComImpl serverDataToComImpl;
     private List<PublicUserEntity> currentUsers;
     private List<GameEntity> currentGames;
-    
+
     public DataServerManager() {
         super();
         this.iServeurComToData = null;
@@ -90,4 +91,15 @@ public class DataServerManager {
     public void setServerDataToComImpl(ServerDataToComImpl serverDataToComImpl) {
         this.serverDataToComImpl = serverDataToComImpl;
     }
+    
+	/**
+	 * Return Game By ID
+	 * 
+	 * @author ulyss_000
+	 * @param gameID
+	 * @return
+	 */
+	public GameEntity getGameById(UUID gameID) {
+		return this.getCurrentGames().stream().filter(g -> gameID.equals(g.getId())).findFirst().orElse(null);
+	}
 }

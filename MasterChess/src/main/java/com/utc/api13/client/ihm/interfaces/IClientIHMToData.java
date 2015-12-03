@@ -12,27 +12,63 @@ public interface IClientIHMToData {
     // ClientIHMToDataImpl
 
     /**
-     * Display distant profile
+     * This method asks the HMI to display the distant profile sent in parameter
+     * on screen. The HMI must have previously asked Data for this User
+     * information
+     * 
+     * @param u
+     *            a PublicUserEntity object containing all the public
+     *            information on the user, passed in parameter
      */
     public void displayProfile(PublicUserEntity u);
 
     /**
-     * The other player is leaving the game
+     * This method informs the local HMI that the distant player has left the
+     * game
+     * 
+     * @return void
      */
     public void otherPlayerLeaving();
 
     /**
-     * notify the other user someone wants to play
+     * This method notifies the local HMI that another user wants to play. It
+     * informs the HMI of the options selected by the distant user for the game,
+     * in order to display them.
+     * 
+     * @param uidSender
+     *            The unique identifier of the distant user that sends the game
+     *            proposition. HMI has to store it, for future communication
+     *            that will always need that UID.
+     * @param observable
+     *            The observability of the proposed game sent by the distant
+     *            user. True if observable, false otherwise
+     * @param chattable
+     *            Indicates wether or not the chat will be active in the
+     *            proposed game
+     * @return void
      */
     public void displayProposition(UUID uidSender, boolean observable, boolean chattable);
 
     /**
-     * notify the proposer about the answer of the distant user
+     * This method notifies local user (who proposed a game) that distant user
+     * accepted or rejected the proposition of game
+     * 
+     * @param uidSender
+     *            The unique identifier of the distant answer who accepted or
+     *            rejected the game proposition. Allows to identify which user
+     *            answered.
+     * @param observable
+     *            Boolean indicating the answer of the distant user (TRUE ->
+     *            YES, FALSE -> NO)
+     * @return void
      */
     public void displayAnswer(UUID uidSender, boolean observable);
 
     /**
-     * Game launching
+     * Asks the HMI to display the chessboard when both user have accepted the
+     * game, and the game has been created on server
+     * 
+     * @return void
      */
     public void displayChessBoard();
 
@@ -42,18 +78,26 @@ public interface IClientIHMToData {
     public void refreshChessBoard();
 
     /**
-     * when a new chat message is received
+     * Method called when distant user sent a chat message, in order the HMI to
+     * display this new message
+     * 
+     * @param newMessage
+     *            String containing the message received from distant user
      */
     public void displayMessage(String newMessage);
 
     /**
-     * when a new observer is added/removed : the modified list is sent to ihm
-     * by data through the local gameEntity
+     * Asks the HMI to refresh the observer when a new observer is added/removed
+     * : the modified list is sent to ihm by data through the local gameEntity
+     * 
+     * @return void
      */
     public void refreshObserverList();
 
     /**
-     * display the game for an observer -live
+     * Displays the game for an observer -live
+     * 
+     * @return void
      */
     public void displayGameLiveObserver();
     /**

@@ -25,15 +25,15 @@ public class DisconnectMessage extends Message {
 
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
-        // comClientManager.getIClientDataToCom().
+        comClientManager.getIClientDataToCom().notifyDisconnection(idPubUser);
     }
 
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         comServerManager.unlinkUserToChannelHandlerContext(idPubUser);
         comServerManager.getIServerDataToCom().disconnect(idPubUser);
-        AllUserMessage msg = new AllUserMessage(new UUID(0, 0), null);
-        comServerManager.broadcastMessage(msg);
+        this.setSender(this.getReceiver());
+        comServerManager.broadcastMessage(this);
     }
 
 }

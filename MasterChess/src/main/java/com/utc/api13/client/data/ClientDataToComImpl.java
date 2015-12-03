@@ -3,6 +3,7 @@
  */
 package com.utc.api13.client.data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 /**
  * @author Benoît
@@ -28,7 +30,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
                 "[ClientDataToComImpl][Constructor] dataClientManager shouldn't be null");
         this.instanceDataClientManager = instanceDataClientManager;
     }
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -66,20 +68,23 @@ public class ClientDataToComImpl implements IClientDataToCom {
         Assert.notNull(instanceDataClientManager.getCurrentUsers(),
                 "[ClientDataToComImpl][displayUsersList] currentUsers shouldn't be null");
 
-        connectedUserList.forEach(u -> {
-            if (u.getId().equals(instanceDataClientManager.getUserLocal().getId())) {
-                connectedUserList.remove(u);
-            }
-        });
+        if (!connectedUserList.isEmpty()) {
+            List<PublicUserEntity> connectedUserListTemp = new ArrayList<PublicUserEntity>();
 
-        instanceDataClientManager.getCurrentUsers().clear();
-        instanceDataClientManager.getCurrentUsers().addAll(connectedUserList);
+            connectedUserList.forEach(u -> {
+                if (!u.getId().equals(instanceDataClientManager.getUserLocal().getId())) {
+                    connectedUserListTemp.add(u);
+                }
+            });
 
+            instanceDataClientManager.getCurrentUsers().clear();
+            instanceDataClientManager.getCurrentUsers().addAll(connectedUserListTemp);
+        }
     }
 
     @Override
     public void displayProfile(PublicUserEntity user) {
-        // instanceDataClientManager.displayProfile(user)
+        instanceDataClientManager.getIClientIHMToData().displayProfile(user);
 
     }
 
@@ -106,18 +111,25 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.client.data.interfaces.IClientToComm#displayResult(java.
-     * util.UUID, com.utc.api13.commun.entities.MoveEntity)
-     */
-    @Override
-    public void displayResult(UUID idPlayer, MoveEntity move) {
-        // TODO Auto-generated method stub
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.utc.api13.client.data.interfaces.IClientToComm#displayResult(java.
+	 * util.UUID, com.utc.api13.commun.entities.MoveEntity)
+	 */
+	@Override
+	public void displayResult(UUID idPlayer, MoveEntity move) {
+		Assert.notNull(instanceDataClientManager.getCurrentGame(),
+				"[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
+		// move the Piece on the local Game :
+		move.getPiece().movePiece(move, instanceDataClientManager.getCurrentGame());
 
-    }
+		// TODO : Ulysse : display on IHM -> shouldn't currentGame be an
+		// observable ? if not :
+		// instanceDataClientManager.getIClientIHMToData().refreshChessBoard();
+
+	}
 
     @Override
     public void sendMessageToChat(MessageEntity message) {
@@ -127,16 +139,29 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     @Override
     public void sendAnswerForLeaving(boolean answer) {
-        // TODO:
-        // instanceDataClientManager.getIClientIHMToData().displayAnswerForLeaving(answer);
-
+        // Add game in local user saved game (in case the local user wants to
+        // save the game after ending)
+        instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
+        // Modify the played games
+        instanceDataClientManager.getUserLocal()
+                .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
+        // If answer is no the local user loses the game
+        if (!answer) {
+            instanceDataClientManager.getUserLocal()
+                    .setNbLost(instanceDataClientManager.getUserLocal().getNbLost() + 1);
+        }
+        // End the local game
+        UUID idSender = instanceDataClientManager.getUserLocal().getId()
+                .equals(instanceDataClientManager.getCurrentGame().getBlackPlayer().getId())
+                        ? instanceDataClientManager.getCurrentGame().getWhitePlayer().getId()
+                        : instanceDataClientManager.getCurrentGame().getBlackPlayer().getId();
+        // Display answer to local user
+        instanceDataClientManager.getIClientIHMToData().displayAnswer(idSender, answer);
     }
 
     @Override
     public void requestPlayerForLeaving(UUID uid) {
-        // TODO:
-        // instanceDataClientManager.getIClientIHMToData().requestPlayerForLeaving();
-
+        instanceDataClientManager.getIClientIHMToData().otherPlayerLeaving();
     }
 
     /*
@@ -153,21 +178,17 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     @Override
     public void notify(String message) {
+        // TODO décommenter
         // instanceDataClientManager.getIClientIHMToData().notify(message);
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.client.data.interfaces.IClientToComm#initGame(com.utc.api13
-     * .commun.entities.GameEntity)
-     */
     @Override
     public void initGame(GameEntity game) {
-        // TODO Auto-generated method stub
-
+        // Set the current game
+        instanceDataClientManager.setCurrentGame(game);
+        // Ask the IHM module to display the Chessboard
+        instanceDataClientManager.getIClientIHMToData().displayChessBoard();
     }
 
     /*
@@ -209,23 +230,14 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.client.data.interfaces.IClientToComm#sendProposition(java.
-     * util.UUID, java.util.UUID, boolean, boolean)
-     */
     @Override
     public void sendProposition(UUID uidSender, UUID uidReciever, boolean observable, boolean chattable) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void printProposition(UUID uidSender, boolean observable, boolean chattable) {
-        // TODO à faire
-
+    public void printProposition(final UUID uidSender, boolean observable, boolean chattable) {
+        instanceDataClientManager.getIClientIHMToData().displayProposition(uidSender, observable, chattable);
     }
 
     /*
@@ -253,9 +265,43 @@ public class ClientDataToComImpl implements IClientDataToCom {
     }
 
     @Override
-    public void displayMessage(String message) {
-        // TODO Auto-generated method stub
-        // dataClientManager.getClientIHMToData.displayMessage(message)
+    public void displayMessage(final String message) {
+        instanceDataClientManager.getIClientIHMToData().displayMessage(message);
 
     }
+
+    @Override
+    public void notifyConnection(final PublicUserEntity user) {
+        instanceDataClientManager.getCurrentUsers().add(user);
+    }
+
+    @Override
+    public void notifyDisconnection(final UUID idUser) {
+        instanceDataClientManager.getCurrentUsers().removeIf(u -> idUser.equals(u.getId()));
+
+    }
+    
+	@Override
+	public void setFinishedStatus(GameStatusEnum status) {
+		Assert.notNull(instanceDataClientManager.getCurrentGames(),
+				"[ClientDataToComImpl][setFinishedStatus] currentGames shouldn't be null");
+
+		// set the game status :
+		instanceDataClientManager.getCurrentGame().setIsFinished(status);
+
+		// do treatment accordingly :
+		switch (status) {
+
+		case CHECK:
+			break;
+		case CHECKMATE:
+			break;
+		case DRAW:
+			break;
+
+		default:
+			break;
+
+		}
+	}
 }

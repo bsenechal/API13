@@ -18,8 +18,8 @@ import javafx.scene.layout.StackPane;
 
 public class IHMGamePageController {
     private IHMManager IHMManager;
-    private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
+    private AppClient mainApp;
 
     @FXML
     Label chatLabel, otherPlayerLoginLabel, otherPlayerTimeLabel, playerLoginLabel, playerTimeLabel,
@@ -32,6 +32,14 @@ public class IHMGamePageController {
     TextArea chatTextArea, sendTextArea;
     @FXML
     StackPane chessBoardStackPane;
+
+    public IHMManager getIHMManager() {
+        return IHMManager;
+    }
+
+    public void setIHMManager(IHMManager iHMManager) {
+        IHMManager = iHMManager;
+    }
 
     public IHMGamePageController() {
         initialize();
@@ -69,16 +77,9 @@ public class IHMGamePageController {
         setBindingsOnLoad();
     }
 
-    public void setListenersOnLoad() {
-
-    }
-
-    public void setBindingsOnLoad() {
-    }
-
     public void setMainApp(AppClient app) {
         this.mainApp = app;
-        final ChessBoardNode cb = new ChessBoardNode();
+        final ChessBoardNode cb = new ChessBoardNode(IHMManager);
 
         /**
          * JFrame f = new JFrame("Chess"); f.add(cb.getGui());
@@ -100,7 +101,19 @@ public class IHMGamePageController {
         chatTextArea.setDisable(true);
 
         chessBoardStackPane.getChildren().add(swingNode);
+        /**
+         * PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
+         * this.playerLoginLabel.setText(u.getLogin()); setListenersOnLoad();
+         * setBindingsOnLoad();
+         */
 
+    }
+
+    public void setListenersOnLoad() {
+
+    }
+
+    public void setBindingsOnLoad() {
     }
 
 }

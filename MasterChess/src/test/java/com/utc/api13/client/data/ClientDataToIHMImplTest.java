@@ -11,6 +11,8 @@ import org.junit.Test;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.exceptions.FunctionalException;
+import com.utc.api13.commun.exceptions.TechnicalException;
 
 /**
  * @author DATA
@@ -38,7 +40,15 @@ public class ClientDataToIHMImplTest {
     public void disconnectTest() {
         dataClientManager.setUserLocal(new PrivateUserEntity());
 
-        dataClientManager.getClientDataToIHMImpl().disconnect();
+        try {
+            dataClientManager.getClientDataToIHMImpl().disconnect();
+        } catch (TechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (FunctionalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         Assert.assertNotNull("dataClientManager shouldn't be null", dataClientManager);
         Assert.assertNull("UserLocal should be null", dataClientManager.getUserLocal());

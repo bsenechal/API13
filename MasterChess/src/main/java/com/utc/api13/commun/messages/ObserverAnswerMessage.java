@@ -14,8 +14,8 @@ import io.netty.channel.ChannelHandlerContext;
 public class ObserverAnswerMessage extends Message {
     private static final Logger logger = Logger.getLogger(ObserverAnswerMessage.class);
 
-    private GameEntity game; 
-    
+    private GameEntity game;
+
     /**
      * @param sender
      * @param receiver
@@ -28,7 +28,7 @@ public class ObserverAnswerMessage extends Message {
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // TODO Auto-generated method stub
-    	// Appeler InitGame()
+        // Appeler InitGame()
 
     }
 
@@ -37,11 +37,11 @@ public class ObserverAnswerMessage extends Message {
         // Never reaches the server
     }
 
-	public GameEntity getGame() {
-		return game;
-	}
+    public GameEntity getGame() {
+        return game;
+    }
 
-	public void setGame(GameEntity game) {
-		this.game = game;
-	}
+    public void setGame(GameEntity game) {
+        this.game = game;
+    }
 }

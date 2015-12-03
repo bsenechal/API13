@@ -43,7 +43,10 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     @Override
     public void displayProposition(UUID uidSender, boolean observable, boolean chattable) {
         // TODO Auto-generated method stub
-
+        // à la fin, doit appeler la fonction de l'interface de data en
+        // rajoutant observable et chattable
+        // myIHMManager.getIClientDataToIHM().sendResponse(idUser, answer,
+        // observable, chattable);
     }
 
     @Override

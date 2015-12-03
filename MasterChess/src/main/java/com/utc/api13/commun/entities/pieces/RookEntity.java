@@ -16,20 +16,20 @@ import com.utc.api13.commun.enumerations.PieceColorEnum;
  */
 public class RookEntity extends APieceEntity {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 2587319077980898398L;
-    
-    public RookEntity(PieceColorEnum color, GameEntity currentGame) {
-        super(color, currentGame);
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2587319077980898398L;
 
-    @Override
-    public List<PositionEntity> generateAvailableMoves() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	public RookEntity(PieceColorEnum color) {
+		super(color);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public List<PositionEntity> generateAvailableMoves(GameEntity game) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

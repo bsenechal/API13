@@ -8,6 +8,7 @@ import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 /**
  * 
@@ -56,7 +57,15 @@ public interface IClientDataToCom {
                                                         // la liste des
                                                         // GameEntity en cours
 
-    void displayResult(final UUID idPlayer, final MoveEntity move);
+	/**
+	 * This method will update the local currentGame with the server validated
+	 * move & it will trigger an board update on IHM
+	 * 
+	 * @author ulyss_000
+	 * @param idPlayer
+	 * @param move
+	 */
+	void displayResult(final UUID idPlayer, final MoveEntity move);
 
     void sendMessageToChat(final MessageEntity message);
 
@@ -74,10 +83,14 @@ public interface IClientDataToCom {
      */
     void notify(final String message);
 
-    void initGame(final GameEntity game); // La GameEntity est créé sur le
-                                          // serveur. Cette méthode initialise
-                                          // l'instance de la GameEntity sur le
-                                          // client
+    /**
+     * La GameEntity est créé sur le serveur.<br/>
+     * Cette méthode initialise l'instance de la GameEntity sur le client
+     * 
+     * @param game
+     *            game créé sur le serveur
+     */
+    void initGame(final GameEntity game);
 
     void newObserver(final UUID idObserver);
 
@@ -116,4 +129,31 @@ public interface IClientDataToCom {
     DataClientManager getInstanceDataClientManager();
 
     void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
+
+    /**
+     * Adds a new user to the list of local users
+     * 
+     * @param user
+     *            user to add
+     */
+    public void notifyConnection(PublicUserEntity user);
+
+    /**
+     * Delete a user from the list of local users
+     * 
+     * @param idUser
+     *            id of user to delete
+     */
+    public void notifyDisconnection(UUID idUser);
+    
+	/**
+	 * This method will set the status of the game / switch active players /
+	 * give points if necessary
+	 * 
+	 * @author ulyss_000
+	 * @param status
+	 *            -> the game status (CHECK/CHECKMATE/CONTINUE/DRAW) send by the
+	 *            server
+	 */
+	void setFinishedStatus(GameStatusEnum status);
 }

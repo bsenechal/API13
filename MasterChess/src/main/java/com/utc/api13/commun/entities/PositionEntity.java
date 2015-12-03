@@ -5,7 +5,7 @@ public class PositionEntity extends ADataEntity {
     private static final long serialVersionUID = -9132052141494726494L;
     private int positionX;
     private int positionY;
-    
+
     /**
      * @param positionX
      * @param positionY
