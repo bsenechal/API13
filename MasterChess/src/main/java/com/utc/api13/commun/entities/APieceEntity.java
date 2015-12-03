@@ -2,12 +2,10 @@ package com.utc.api13.commun.entities;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.util.Assert;
 
-import com.utc.api13.client.data.services.GameService;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
 public abstract class APieceEntity extends ADataEntity {
@@ -51,14 +49,14 @@ public abstract class APieceEntity extends ADataEntity {
 		super();
 		this.color = color;
 	}
-	
-	public void deleteDestinationPiece(final MoveEntity move, GameEntity game){
+
+	public void deleteDestinationPiece(final MoveEntity move, GameEntity game) {
 		Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
 		Assert.notNull(game.getCurrentPlayer(), "[APieceEntity][move] current player shouldn't be null");
 		Assert.notNull(game.getWhitePieces(), "[APieceEntity][move] WhitePieces shouldn't be null");
 		Assert.notNull(game.getBlackPieces(), "[APieceEntity][move] BlackPieces shouldn't be null");
 		Assert.notNull(move, "[APieceEntity][move] move shouldn't be null");
-		
+
 		if (game.getCurrentPlayer().equals(game.getBlackPlayer())) {
 			if (APieceEntity.getAllPositionsByPieces(game.getWhitePieces()).contains(move.getToPosition())) {
 				// Suppression de la pièce dans le jeu de l'adversaire
@@ -83,19 +81,19 @@ public abstract class APieceEntity extends ADataEntity {
 		// Ajout dans l'historique des coups
 		game.getMovesHistory().add(move);
 	}
-	
+
 	public void cancelLastMove(GameEntity game) {
 		Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
 		Assert.notNull(game.getMovesHistory(), "[APieceEntity][move] MovesHistory shouldn't be null");
-		
+
 		MoveEntity lastMove = game.getMovesHistory().stream().max(new Comparator<MoveEntity>() {
 			@Override
 			public int compare(MoveEntity o1, MoveEntity o2) {
 				return o1.getDate().compareTo(o2.getDate());
 			}
-			
+
 		}).get();
-		
+
 		// annulation du dernier mouvement
 		setPosition(lastMove.getFromPosition());
 

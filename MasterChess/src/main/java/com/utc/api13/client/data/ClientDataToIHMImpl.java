@@ -32,31 +32,31 @@ import javafx.collections.ObservableList;
  *
  */
 public class ClientDataToIHMImpl implements IClientDataToIHM {
-    private DataClientManager dataClientManager;
-    /**
-     * users service
-     */
-    private UserService userService;
-    
-    /**
-     * game service
-     */
-    private GameService gameService;
+	private DataClientManager dataClientManager;
+	/**
+	 * users service
+	 */
+	private UserService userService;
 
-    public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
-        super();
-        Assert.notNull(instanceDataClientManager,
-                "[ClientDataToIHMImpl][Constructor] dataClientManager shouldn't be null");
+	/**
+	 * game service
+	 */
+	private GameService gameService;
 
-        this.dataClientManager = instanceDataClientManager;
-        this.userService = new UserService();
-        this.gameService = new GameService();
-    }
-    
-    @Override
-    public ObservableList<PublicUserEntity> getUserList() {
-        return dataClientManager.getCurrentUsers();
-    }
+	public ClientDataToIHMImpl(DataClientManager instanceDataClientManager) {
+		super();
+		Assert.notNull(instanceDataClientManager,
+				"[ClientDataToIHMImpl][Constructor] dataClientManager shouldn't be null");
+
+		this.dataClientManager = instanceDataClientManager;
+		this.userService = new UserService();
+		this.gameService = new GameService();
+	}
+
+	@Override
+	public ObservableList<PublicUserEntity> getUserList() {
+		return dataClientManager.getCurrentUsers();
+	}
 
 	@Override
 	public void getUsers() {
@@ -75,35 +75,34 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public void connect(final String login, final String password) throws FunctionalException, TechnicalException {
-	    Assert.notNull(userService, "[ClientDataToIHMImpl][connect] userService shouldn't be null");
+		Assert.notNull(userService, "[ClientDataToIHMImpl][connect] userService shouldn't be null");
 
-		//Check the login and password
+		// Check the login and password
 		PrivateUserEntity privateUser = userService.getByLoginAndPassword(login, password);
-		if(privateUser == null) {
+		if (privateUser == null) {
 			List<Erreur> erreurs = new ArrayList<>();
 			erreurs.add(new Erreur(ErrorTypeEnum.LOGIN_FAILED));
 			throw new FunctionalException(erreurs);
 		}
-		//Save the local user
+		// Save the local user
 		dataClientManager.setUserLocal(privateUser);
-		//Notify the server
+		// Notify the server
 		PublicUserEntity publicUser = new PublicUserEntity(privateUser);
 		dataClientManager.getIClientComToData().notifyConnection(publicUser);
 	}
 
-
 	@Override
-	public void disconnect() throws TechnicalException, FunctionalException {		
-	    Assert.notNull(gameService, "[ClientDataToIHMImpl][disconnect] GameService shouldn't be null");
-	    
-	    if (dataClientManager.getCurrentGame() != null){
-    		if(gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
-    			observerLeave();
-    		} else {
-    			requestPlayerForLeaving();
-    		}
-	    }
-	    userService.save(dataClientManager.getUserLocal());
+	public void disconnect() throws TechnicalException, FunctionalException {
+		Assert.notNull(gameService, "[ClientDataToIHMImpl][disconnect] GameService shouldn't be null");
+
+		if (dataClientManager.getCurrentGame() != null) {
+			if (gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
+				observerLeave();
+			} else {
+				requestPlayerForLeaving();
+			}
+		}
+		userService.save(dataClientManager.getUserLocal());
 		dataClientManager.setUserLocal(null);
 	}
 
@@ -117,63 +116,61 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	 */
 	@Override
 	public void move(APieceEntity piece, PositionEntity position) throws FunctionalException {
-	    Assert.notNull(dataClientManager.getCurrentGame(), "[ClientDataToIHMImpl][move] CurrentGame shouldn't be null");
-	    Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][move] UserLocal shouldn't be null");
-	    
-	    MoveEntity move = new MoveEntity(null, piece.getPosition(), position, piece, null,null);
+		Assert.notNull(dataClientManager.getCurrentGame(), "[ClientDataToIHMImpl][move] CurrentGame shouldn't be null");
+		Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][move] UserLocal shouldn't be null");
 
-	    if(piece.isMovePossible(move, dataClientManager.getCurrentGame())){
-	    	move.setDate(new Date());
-	    	move.setUserID(dataClientManager.getUserLocal().getId());
-	    	move.setGameID(dataClientManager.getCurrentGame().getId());
-	    	dataClientManager.getIClientComToData().validateMove(dataClientManager.getUserLocal().getId(), move);
-	    }
-	    else{
-	    	List<Erreur> erreurs = new ArrayList<>();
-	    	erreurs.add(new Erreur(ErrorTypeEnum.MOVE_IMPOSSIBLE));
-	    	throw new FunctionalException(erreurs);
-	    }
+		MoveEntity move = new MoveEntity(null, piece.getPosition(), position, piece, null, null);
+
+		if (piece.isMovePossible(move, dataClientManager.getCurrentGame())) {
+			move.setDate(new Date());
+			move.setUserID(dataClientManager.getUserLocal().getId());
+			move.setGameID(dataClientManager.getCurrentGame().getId());
+			dataClientManager.getIClientComToData().validateMove(dataClientManager.getUserLocal().getId(), move);
+		} else {
+			List<Erreur> erreurs = new ArrayList<>();
+			erreurs.add(new Erreur(ErrorTypeEnum.MOVE_IMPOSSIBLE));
+			throw new FunctionalException(erreurs);
+		}
 	}
-
 
 	@Override
 	public void observerLeave() {
-	    Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][observerLeave] UserLocal shouldn't be null");
+		Assert.notNull(dataClientManager.getUserLocal(),
+				"[ClientDataToIHMImpl][observerLeave] UserLocal shouldn't be null");
 
 		dataClientManager.getIClientComToData().observerLeave(dataClientManager.getUserLocal().getId());
 
 	}
 
-
 	@Override
 	public void requestPlayerForLeaving() {
-	    Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][requestPlayerForLeaving] UserLocal shouldn't be null");
-		//TODO: le second paramètre, c'est fait pour quoi?
+		Assert.notNull(dataClientManager.getUserLocal(),
+				"[ClientDataToIHMImpl][requestPlayerForLeaving] UserLocal shouldn't be null");
+		// TODO: le second paramètre, c'est fait pour quoi?
 		dataClientManager.getIClientComToData().requestPlayerForLeaving(dataClientManager.getUserLocal().getId(), true);
 
 	}
 
-
 	@Override
 	public void otherPlayerLeaving() {
-//		TODO: dataClientManager.getIClientComToData().sendAnswer(answer, dataClientManager.getUserLocal());
+		// TODO: dataClientManager.getIClientComToData().sendAnswer(answer,
+		// dataClientManager.getUserLocal());
 
 	}
 
 	@Override
 	public void updateProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException {
-	    Assert.notNull(user, "[ClientDataToIHMImpl][updateProfile] user shouldn't be null");
-        
-		//delete the existing info
+		Assert.notNull(user, "[ClientDataToIHMImpl][updateProfile] user shouldn't be null");
+
+		// delete the existing info
 		userService.deleteById(user.getId());
-		//Store the new one
-		
+		// Store the new one
+
 		userService.save(user);
 		this.dataClientManager.setUserLocal(user);
-		//notify the server
+		// notify the server
 		dataClientManager.getIClientComToData().sendUserUpdates(new PublicUserEntity(user));
 	}
-
 
 	/*
 	 * (non-Javadoc)
@@ -186,14 +183,11 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 		// TODO Auto-generated method stub
 	}
 
-
-
 	@Override
 	public void watchGame(UUID idGame) {
 		// TODO Auto-generated method stub
 
 	}
-
 
 	@Override
 	public void chargeReplay(UUID idGame) {
@@ -212,29 +206,26 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	}
 
-
-	
 	@Override
 	public void saveGame() throws TechnicalException, FunctionalException {
-	    Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][saveGame] UserLocal shouldn't be null");
-	    Assert.notNull(dataClientManager.getUserLocal().getSavedGames(), "[ClientDataToIHMImpl][saveGame] SavedGames shouldn't be null");
-	            
+		Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][saveGame] UserLocal shouldn't be null");
+		Assert.notNull(dataClientManager.getUserLocal().getSavedGames(),
+				"[ClientDataToIHMImpl][saveGame] SavedGames shouldn't be null");
+
 		dataClientManager.getUserLocal().getSavedGames().add(dataClientManager.getCurrentGame());
 		userService.save(dataClientManager.getUserLocal());
 	}
-
-
 
 	@Override
 	public GameEntity getCurrentGame() {
 		return dataClientManager.getCurrentGame();
 	}
-	
-	
+
 	@Override
 	public void createProposition(UUID uidReciever, boolean chattable, boolean observable) {
-		//TODO: c'est quoi le paramètre supp user??
-		dataClientManager.getIClientComToData().sendProposition(dataClientManager.getUserLocal().getId(), uidReciever, chattable, observable, null);
+		// TODO: c'est quoi le paramètre supp user??
+		dataClientManager.getIClientComToData().sendProposition(dataClientManager.getUserLocal().getId(), uidReciever,
+				chattable, observable, null);
 	}
 
 	/*
@@ -248,22 +239,20 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	}
 
-
 	@Override
 	public void sendChatText(final String message) {
 		dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
 	}
 
+	@Override
+	public void createProfile(final PrivateUserEntity user) throws TechnicalException, FunctionalException {
+		userService.save(user);
+	}
 
-    @Override
-    public void createProfile(final PrivateUserEntity user) throws TechnicalException, FunctionalException{
-        userService.save(user);
-    }
-
-    /**
-     * @author Hugo R-L
-     * @return PrivateUserEntity LocalUser
-     */
+	/**
+	 * @author Hugo R-L
+	 * @return PrivateUserEntity LocalUser
+	 */
 	@Override
 	public PrivateUserEntity getLocalUser() {
 		return this.dataClientManager.getUserLocal();
@@ -271,13 +260,14 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
 	@Override
 	public void sendResponse(UUID idUser, boolean answer) throws TechnicalException {
-		//TODO: la méthode com ne devrait pas prendre un user mais plutôt un uid
-//		dataClientManager.getIClientComToData().sendAnswer(answer, idUser);
-		
+		// TODO: la méthode com ne devrait pas prendre un user mais plutôt un
+		// uid
+		// dataClientManager.getIClientComToData().sendAnswer(answer, idUser);
+
 	}
 
 	@Override
-	public void importProfile(File file, boolean force) throws FunctionalException, TechnicalException{
+	public void importProfile(File file, boolean force) throws FunctionalException, TechnicalException {
 		userService.importProfile(file, force);
 	}
 
@@ -286,16 +276,14 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 		return userService.exportProfile(dataClientManager.getUserLocal());
 	}
 
-
 	@Override
 	public void importProfile(File file) throws FunctionalException, TechnicalException {
 		this.importProfile(file, false);
-		
-	}
-	
-	@Override
-    public ObservableList<GameEntity> getGamesList() {
-        return dataClientManager.getCurrentGames();
-    }
-}
 
+	}
+
+	@Override
+	public ObservableList<GameEntity> getGamesList() {
+		return dataClientManager.getCurrentGames();
+	}
+}

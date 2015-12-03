@@ -10,32 +10,32 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 public class ExportOKPopUpController {
-    private IHMManager IHMManager;
-    private AppClient mainApp;
-    private IClientDataToIHM myIClientToIHM;
+	private IHMManager IHMManager;
+	private AppClient mainApp;
+	private IClientDataToIHM myIClientToIHM;
 
-    @FXML
-    BorderPane popUpBorderPane;
-    @FXML
-    AnchorPane popUpAnchorPane;
-    @FXML
-    Label popUpLabel1, popUpLabel2, popUpLabel3;
+	@FXML
+	BorderPane popUpBorderPane;
+	@FXML
+	AnchorPane popUpAnchorPane;
+	@FXML
+	Label popUpLabel1, popUpLabel2, popUpLabel3;
 
-    public ExportOKPopUpController() {
-        initialize();
-    }
+	public ExportOKPopUpController() {
+		initialize();
+	}
 
-    public void initialize() {
-    }
+	public void initialize() {
+	}
 
-    public void setMainApp(AppClient app, String path) {
-        this.mainApp = app;
-        this.popUpLabel3.setText(path);
-    }
+	public void setMainApp(AppClient app, String path) {
+		this.mainApp = app;
+		this.popUpLabel3.setText(path);
+	}
 
-    public void setControllerContext(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
-        if (ihmManager != null)
-            this.myIClientToIHM = this.IHMManager.getIClientDataToIHM();
-    }
+	public void setControllerContext(IHMManager ihmManager) {
+		this.IHMManager = ihmManager;
+		if (ihmManager != null)
+			this.myIClientToIHM = this.IHMManager.getIClientDataToIHM();
+	}
 }

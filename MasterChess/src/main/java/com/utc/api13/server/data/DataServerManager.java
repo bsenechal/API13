@@ -16,89 +16,90 @@ import com.utc.api13.server.com.interfaces.IServeurComToData;
  *
  */
 public class DataServerManager {
-    // Interface COM
-    private IServeurComToData iServeurComToData;
+	// Interface COM
+	private IServeurComToData iServeurComToData;
 
-    // Interface DATA
-    private ServerDataToComImpl serverDataToComImpl;
-    private List<PublicUserEntity> currentUsers;
-    private List<GameEntity> currentGames;
-    
-    public DataServerManager() {
-        super();
-        this.iServeurComToData = null;
-        this.serverDataToComImpl = new ServerDataToComImpl(this);
-        this.currentGames = new ArrayList<GameEntity>();
-        this.currentUsers = new ArrayList<PublicUserEntity>();
-    }
+	// Interface DATA
+	private ServerDataToComImpl serverDataToComImpl;
+	private List<PublicUserEntity> currentUsers;
+	private List<GameEntity> currentGames;
 
-    /**
-     * @return the IServeurToData
-     */
-    public IServeurComToData getIServeurComToData() {
-        return iServeurComToData;
-    }
+	public DataServerManager() {
+		super();
+		this.iServeurComToData = null;
+		this.serverDataToComImpl = new ServerDataToComImpl(this);
+		this.currentGames = new ArrayList<GameEntity>();
+		this.currentUsers = new ArrayList<PublicUserEntity>();
+	}
 
-    /**
-     * @param IServeurComToData
-     *            the IServeurToData to set
-     */
-    public void setIServeurComToData(IServeurComToData IServeurComToData) {
-        this.iServeurComToData = IServeurComToData;
-    }
+	/**
+	 * @return the IServeurToData
+	 */
+	public IServeurComToData getIServeurComToData() {
+		return iServeurComToData;
+	}
 
-    /**
-     * @return the currentUsers
-     */
-    public List<PublicUserEntity> getCurrentUsers() {
-        return currentUsers;
-    }
+	/**
+	 * @param IServeurComToData
+	 *            the IServeurToData to set
+	 */
+	public void setIServeurComToData(IServeurComToData IServeurComToData) {
+		this.iServeurComToData = IServeurComToData;
+	}
 
-    /**
-     * @param currentUsers
-     *            the currentUsers to set
-     */
-    public void setCurrentUsers(final List<PublicUserEntity> currentUsers) {
-        this.currentUsers = currentUsers;
-    }
+	/**
+	 * @return the currentUsers
+	 */
+	public List<PublicUserEntity> getCurrentUsers() {
+		return currentUsers;
+	}
 
-    /**
-     * @return the currentGames
-     */
-    public List<GameEntity> getCurrentGames() {
-        return currentGames;
-    }
+	/**
+	 * @param currentUsers
+	 *            the currentUsers to set
+	 */
+	public void setCurrentUsers(final List<PublicUserEntity> currentUsers) {
+		this.currentUsers = currentUsers;
+	}
 
-    /**
-     * @param currentGames
-     *            the currentGames to set
-     */
-    public void setCurrentGames(final List<GameEntity> currentGames) {
-        this.currentGames = currentGames;
-    }
+	/**
+	 * @return the currentGames
+	 */
+	public List<GameEntity> getCurrentGames() {
+		return currentGames;
+	}
 
-    /**
-     * @return the serverToCommImpl
-     */
-    public ServerDataToComImpl getServerDataToComImpl() {
-        return serverDataToComImpl;
-    }
+	/**
+	 * @param currentGames
+	 *            the currentGames to set
+	 */
+	public void setCurrentGames(final List<GameEntity> currentGames) {
+		this.currentGames = currentGames;
+	}
 
-    /**
-     * @param serverDataToComImpl
-     *            the serverToCommImpl to set
-     */
-    public void setServerDataToComImpl(ServerDataToComImpl serverDataToComImpl) {
-        this.serverDataToComImpl = serverDataToComImpl;
-    }
-    
-    /**
-     * Return Game By ID
-     * @author ulyss_000
-     * @param gameID
-     * @return
-     */
-    public GameEntity getGameById(UUID gameID){
-    	return this.getCurrentGames().stream().filter(g -> gameID.equals(g.getId())).findFirst().orElse(null);
-    }
+	/**
+	 * @return the serverToCommImpl
+	 */
+	public ServerDataToComImpl getServerDataToComImpl() {
+		return serverDataToComImpl;
+	}
+
+	/**
+	 * @param serverDataToComImpl
+	 *            the serverToCommImpl to set
+	 */
+	public void setServerDataToComImpl(ServerDataToComImpl serverDataToComImpl) {
+		this.serverDataToComImpl = serverDataToComImpl;
+	}
+
+	/**
+	 * Return Game By ID
+	 * 
+	 * @author ulyss_000
+	 * @param gameID
+	 * @return
+	 */
+	public GameEntity getGameById(UUID gameID) {
+		return this.getCurrentGames().stream().filter(g -> gameID.equals(g.getId())).findFirst().orElse(null);
+	}
 }

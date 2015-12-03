@@ -13,45 +13,45 @@ import io.netty.channel.ChannelHandlerContext;
 
 public class ChatMessage extends Message {
 
-    /**
-    * 
-    */
-    private static final long serialVersionUID = -55526017055065873L;
-    private static final Logger logger = Logger.getLogger(ChatMessage.class);
-    UUID partie; // game in which the message will be sent
-    String message; // message to be sent
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = -55526017055065873L;
+	private static final Logger logger = Logger.getLogger(ChatMessage.class);
+	UUID partie; // game in which the message will be sent
+	String message; // message to be sent
 
-    /**
-     * @param sender
-     * @param receiver
-     * @param message
-     */
-    public ChatMessage(UUID sender, UUID receiver, UUID game, String message) {
-        super(sender, receiver);
-        this.message = message;
-        this.partie = game;
-    }
+	/**
+	 * @param sender
+	 * @param receiver
+	 * @param message
+	 */
+	public ChatMessage(UUID sender, UUID receiver, UUID game, String message) {
+		super(sender, receiver);
+		this.message = message;
+		this.partie = game;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-    @Override
-    public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
-        // Display the message received
-        comClientManager.getIClientDataToCom().displayMessage(message);
-    }
+	@Override
+	public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
+		// Display the message received
+		comClientManager.getIClientDataToCom().displayMessage(message);
+	}
 
-    @Override
-    public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-        // Get users attending the game !
-        List<PublicUserEntity> list = comServerManager.getIServerDataToCom().getUsersByGame(partie);
-        // Send the message to all listed users
-        comServerManager.multicastMessageByUsers(list, this);
-    }
+	@Override
+	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
+		// Get users attending the game !
+		List<PublicUserEntity> list = comServerManager.getIServerDataToCom().getUsersByGame(partie);
+		// Send the message to all listed users
+		comServerManager.multicastMessageByUsers(list, this);
+	}
 
 }

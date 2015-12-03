@@ -8,47 +8,47 @@ import com.utc.api13.server.com.ComServerManager;
 import io.netty.channel.ChannelHandlerContext;
 
 public class GameRequestMessage extends Message {
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 978459564519511506L;
-    private boolean chattable;
-    private boolean observable;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 978459564519511506L;
+	private boolean chattable;
+	private boolean observable;
 
-    /**
-     * @param sender
-     * @param receiver
-     * @param gameId
-     */
-    public GameRequestMessage(UUID sender, UUID receiver, boolean chattable, boolean observable) {
-        super(sender, receiver);
-        this.chattable = chattable;
-        this.observable = observable;
-    }
+	/**
+	 * @param sender
+	 * @param receiver
+	 * @param gameId
+	 */
+	public GameRequestMessage(UUID sender, UUID receiver, boolean chattable, boolean observable) {
+		super(sender, receiver);
+		this.chattable = chattable;
+		this.observable = observable;
+	}
 
-    @Override
-    public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
-        comClientManager.getIClientDataToCom().printProposition(getSender(), observable, chattable);
-    }
+	@Override
+	public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
+		comClientManager.getIClientDataToCom().printProposition(getSender(), observable, chattable);
+	}
 
-    @Override
-    public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-        comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
-    }
+	@Override
+	public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
+		comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
+	}
 
-    public boolean isChattable() {
-        return chattable;
-    }
+	public boolean isChattable() {
+		return chattable;
+	}
 
-    public void setChattable(boolean chattable) {
-        this.chattable = chattable;
-    }
+	public void setChattable(boolean chattable) {
+		this.chattable = chattable;
+	}
 
-    public boolean isObservable() {
-        return observable;
-    }
+	public boolean isObservable() {
+		return observable;
+	}
 
-    public void setObservable(boolean observable) {
-        this.observable = observable;
-    }
+	public void setObservable(boolean observable) {
+		this.observable = observable;
+	}
 }

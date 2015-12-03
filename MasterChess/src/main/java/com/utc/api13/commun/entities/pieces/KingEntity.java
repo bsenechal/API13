@@ -43,8 +43,6 @@ public class KingEntity extends APieceEntity {
 		int positionX = getPosition().getPositionX();
 		int positionY = getPosition().getPositionX();
 
-		GameEntity tmpGame;
-
 		// Calcul des positions possibles autour du roi
 		for (int x = -1; x < 2; x++) {
 			for (int y = -1; y < 2; y++) {

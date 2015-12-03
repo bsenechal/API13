@@ -11,17 +11,17 @@ import com.utc.api13.commun.exceptions.TechnicalException;
 
 public class ImageUtils {
 
-    public static byte[] extractBytes(String imagePath) throws TechnicalException {
-        BufferedImage bufferedImage;
-        try {
-            if (imagePath != null) {
-                bufferedImage = ImageIO.read(new File(imagePath));
-                DataBufferByte data = (DataBufferByte) bufferedImage.getRaster().getDataBuffer();
-                return data.getData();
-            }
-        } catch (IOException e) {
-            throw new TechnicalException("Error while reading image", e);
-        }
-        return null;
-    }
+	public static byte[] extractBytes(String imagePath) throws TechnicalException {
+		BufferedImage bufferedImage;
+		try {
+			if (imagePath != null) {
+				bufferedImage = ImageIO.read(new File(imagePath));
+				DataBufferByte data = (DataBufferByte) bufferedImage.getRaster().getDataBuffer();
+				return data.getData();
+			}
+		} catch (IOException e) {
+			throw new TechnicalException("Error while reading image", e);
+		}
+		return null;
+	}
 }

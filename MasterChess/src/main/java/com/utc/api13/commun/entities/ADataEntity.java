@@ -11,33 +11,33 @@ import java.util.UUID;
  */
 public abstract class ADataEntity implements Serializable {
 
-    private static final long serialVersionUID = 6762511056153784212L;
-    private UUID id;
+	private static final long serialVersionUID = 6762511056153784212L;
+	private UUID id;
 
-    /**
-     * Constructeur initialisant l'id de l'entity
-     */
-    public ADataEntity() {
-        id = UUID.randomUUID();
-    }
+	/**
+	 * Constructeur initialisant l'id de l'entity
+	 */
+	public ADataEntity() {
+		id = UUID.randomUUID();
+	}
 
-    /**
-     * Permet de récupérer l'identifiant de l'entity
-     * 
-     * @return l'identifiant de l'entity
-     */
-    public UUID getId() {
-        return id;
-    }
+	/**
+	 * Permet de récupérer l'identifiant de l'entity
+	 * 
+	 * @return l'identifiant de l'entity
+	 */
+	public UUID getId() {
+		return id;
+	}
 
-    /**
-     * Permet de setter l'identifiant de l'entity
-     * 
-     * @param id
-     *            identifiant de l'entity
-     */
-    public void setId(final UUID id) {
-        this.id = id;
-    }
+	/**
+	 * Permet de setter l'identifiant de l'entity
+	 * 
+	 * @param id
+	 *            identifiant de l'entity
+	 */
+	public void setId(final UUID id) {
+		this.id = id;
+	}
 
 }

@@ -276,19 +276,19 @@ public class GameEntity extends ADataEntity {
 	public void setCurrentPlayer(PublicUserEntity currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
-	
+
 	/**
 	 * Will switch current user between user black and user white
+	 * 
 	 * @author ulyss_000
 	 */
-	public void switchCurrentUser(){
-    	//switch active user :
-    	if(this.getBlackPlayer().getId().equals(this.getCurrentPlayer().getId())){
-    		this.setCurrentPlayer(this.getWhitePlayer());
-    	}
-    	else{
-    		this.setCurrentPlayer(this.getBlackPlayer());
-    	}
+	public void switchCurrentUser() {
+		// switch active user :
+		if (this.getBlackPlayer().getId().equals(this.getCurrentPlayer().getId())) {
+			this.setCurrentPlayer(this.getWhitePlayer());
+		} else {
+			this.setCurrentPlayer(this.getBlackPlayer());
+		}
 	}
 
 	/**

@@ -8,19 +8,19 @@ import com.utc.api13.server.data.DataServerManager;
 
 public class AppServer {
 
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        ComServerManager comServerManager = new ComServerManager(8000);
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		ComServerManager comServerManager = new ComServerManager(8000);
 
-        DataServerManager dataServerManager = new DataServerManager();
+		DataServerManager dataServerManager = new DataServerManager();
 
-        dataServerManager.setIServeurComToData(comServerManager.getServeurComToDataImpl());
+		dataServerManager.setIServeurComToData(comServerManager.getServeurComToDataImpl());
 
-        comServerManager.setIServerDataToCom(dataServerManager.getServerDataToComImpl());
+		comServerManager.setIServerDataToCom(dataServerManager.getServerDataToComImpl());
 
-        comServerManager.launchAppCom();
-    }
+		comServerManager.launchAppCom();
+	}
 
 }

@@ -16,20 +16,20 @@ import com.utc.api13.commun.enumerations.PieceColorEnum;
  */
 public class PawnEntity extends APieceEntity {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -1168464136345780891L;
-    
-    public PawnEntity(PieceColorEnum color, GameEntity currentGame) {
-        super(color);
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1168464136345780891L;
 
-    @Override
-    public List<PositionEntity> generateAvailableMoves(GameEntity game) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	public PawnEntity(PieceColorEnum color, GameEntity currentGame) {
+		super(color);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public List<PositionEntity> generateAvailableMoves(GameEntity game) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

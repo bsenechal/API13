@@ -22,81 +22,81 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MyInfoPopUpController {
-    private IHMManager IHMManager;
-    private AppClient mainApp;
-    private IClientDataToIHM myIClientToIHM;
+	private IHMManager IHMManager;
+	private AppClient mainApp;
+	private IClientDataToIHM myIClientToIHM;
 
-    @FXML
-    BorderPane userInfoBorderPane;
-    @FXML
-    AnchorPane userInfoAnchorPane;
-    @FXML
-    Label userInfoLogin, userInfoFirstName, userInfoLastName;
-    @FXML
-    TableView userInfoTableView;
-    @FXML
-    TableColumn userInfoWon, userInfoLost, userInfoPlayed;
-    @FXML
-    Hyperlink modifyLink;
+	@FXML
+	BorderPane userInfoBorderPane;
+	@FXML
+	AnchorPane userInfoAnchorPane;
+	@FXML
+	Label userInfoLogin, userInfoFirstName, userInfoLastName;
+	@FXML
+	TableView userInfoTableView;
+	@FXML
+	TableColumn userInfoWon, userInfoLost, userInfoPlayed;
+	@FXML
+	Hyperlink modifyLink;
 
-    @FXML
-    public void onModifyProfileClicked() throws IOException {
+	@FXML
+	public void onModifyProfileClicked() throws IOException {
 
-        Stage stage;
-        Parent root;
-        stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/createProfilePage.fxml"));
-        root = (Pane) fxmlLoader.load();
+		Stage stage;
+		Parent root;
+		stage = new Stage();
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/createProfilePage.fxml"));
+		root = (Pane) fxmlLoader.load();
 
-        IHMCreateProfileController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
-        controller.setMainApp(this.mainApp);
-        stage.setScene(new Scene(root));
-        stage.setTitle("My Profile");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+		IHMCreateProfileController controller = fxmlLoader.getController();
+		controller.setControllerContext(this.IHMManager);
+		controller.setMainApp(this.mainApp);
+		stage.setScene(new Scene(root));
+		stage.setTitle("My Profile");
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.showAndWait();
 
-    }
+	}
 
-    public IHMManager getIHMManager() {
-        return IHMManager;
-    }
+	public IHMManager getIHMManager() {
+		return IHMManager;
+	}
 
-    public void setIHMManager(IHMManager iHMManager) {
-        IHMManager = iHMManager;
-    }
+	public void setIHMManager(IHMManager iHMManager) {
+		IHMManager = iHMManager;
+	}
 
-    public MyInfoPopUpController() {
-        initialize();
-    }
+	public MyInfoPopUpController() {
+		initialize();
+	}
 
-    public void initialize() {
-    }
+	public void initialize() {
+	}
 
-    public void setMainApp(AppClient app) {
-        this.mainApp = app;
-        PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
-        this.userInfoLogin.setText(u.getLogin());
-        this.userInfoFirstName.setText(u.getFirstName());
-        this.userInfoLastName.setText(u.getLastName());
-        this.userInfoWon.setText(Integer.toString(u.getNbWon()));
-        this.userInfoLost.setText(Integer.toString(u.getNbLost()));
-        this.userInfoPlayed.setText(Integer.toString(u.getNbPlayed()));
+	public void setMainApp(AppClient app) {
+		this.mainApp = app;
+		PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
+		this.userInfoLogin.setText(u.getLogin());
+		this.userInfoFirstName.setText(u.getFirstName());
+		this.userInfoLastName.setText(u.getLastName());
+		this.userInfoWon.setText(Integer.toString(u.getNbWon()));
+		this.userInfoLost.setText(Integer.toString(u.getNbLost()));
+		this.userInfoPlayed.setText(Integer.toString(u.getNbPlayed()));
 
-    }
+	}
 
-    public void setControllerContext(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
-        if (ihmManager != null)
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
-        setListenersOnLoad();
-        setBindingsOnLoad();
-    }
+	public void setControllerContext(IHMManager ihmManager) {
+		this.IHMManager = ihmManager;
+		if (ihmManager != null)
+			this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+		setListenersOnLoad();
+		setBindingsOnLoad();
+	}
 
-    public void setListenersOnLoad() {
+	public void setListenersOnLoad() {
 
-    }
+	}
 
-    public void setBindingsOnLoad() {
-    }
+	public void setBindingsOnLoad() {
+	}
 }

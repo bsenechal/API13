@@ -17,158 +17,158 @@ import javafx.collections.ObservableList;
  *
  */
 public class DataClientManager {
-    private ClientDataToComImpl clientDataToComImpl;
-    private ClientDataToIHMImpl clientDataToIHMImpl;
-    private IClientComToData iClientComToData;
-    private IClientIHMToData iClientIHMToData;
-    private PrivateUserEntity userLocal;
-    private ObservableList<PublicUserEntity> currentUsers;
-    private ObservableList<GameEntity> currentGames;
-    /**
-     * The game the user is playing or observing
-     */
-    private GameEntity currentGame;
+	private ClientDataToComImpl clientDataToComImpl;
+	private ClientDataToIHMImpl clientDataToIHMImpl;
+	private IClientComToData iClientComToData;
+	private IClientIHMToData iClientIHMToData;
+	private PrivateUserEntity userLocal;
+	private ObservableList<PublicUserEntity> currentUsers;
+	private ObservableList<GameEntity> currentGames;
+	/**
+	 * The game the user is playing or observing
+	 */
+	private GameEntity currentGame;
 
-    /**
-     * @param clientDataToComImpl
-     * @param clientDataToIHMImpl
-     * @param iClientComToData
-     * @param userLocal
-     * @param currentUsers
-     * @param currentGames
-     */
-    public DataClientManager() {
-        super();
-        this.clientDataToComImpl = new ClientDataToComImpl(this);
-        this.clientDataToIHMImpl = new ClientDataToIHMImpl(this);
-        this.iClientIHMToData = null;
-        this.iClientComToData = null;
-        this.userLocal = new PrivateUserEntity();
-        this.currentUsers = FXCollections.observableArrayList();
-        this.currentGames = FXCollections.observableArrayList();
-    }
-    
-    /**
-     * 
-     * @return clientDataToComImpl
-     */
-    public ClientDataToComImpl getClientDataToComImpl() {
-        return clientDataToComImpl;
-    }
+	/**
+	 * @param clientDataToComImpl
+	 * @param clientDataToIHMImpl
+	 * @param iClientComToData
+	 * @param userLocal
+	 * @param currentUsers
+	 * @param currentGames
+	 */
+	public DataClientManager() {
+		super();
+		this.clientDataToComImpl = new ClientDataToComImpl(this);
+		this.clientDataToIHMImpl = new ClientDataToIHMImpl(this);
+		this.iClientIHMToData = null;
+		this.iClientComToData = null;
+		this.userLocal = new PrivateUserEntity();
+		this.currentUsers = FXCollections.observableArrayList();
+		this.currentGames = FXCollections.observableArrayList();
+	}
 
-    /**
-     * @param clientDataToComImpl
-     *            the clientToCommImpl to set
-     */
-    public void setClientDataToComImpl(ClientDataToComImpl clientDataToComImpl) {
-        this.clientDataToComImpl = clientDataToComImpl;
-    }
+	/**
+	 * 
+	 * @return clientDataToComImpl
+	 */
+	public ClientDataToComImpl getClientDataToComImpl() {
+		return clientDataToComImpl;
+	}
 
-    /**
-     * @return the clientToIHMImpl
-     */
-    public ClientDataToIHMImpl getClientDataToIHMImpl() {
-        return clientDataToIHMImpl;
-    }
+	/**
+	 * @param clientDataToComImpl
+	 *            the clientToCommImpl to set
+	 */
+	public void setClientDataToComImpl(ClientDataToComImpl clientDataToComImpl) {
+		this.clientDataToComImpl = clientDataToComImpl;
+	}
 
-    /**
-     * @param clientDataToIHMImpl
-     *            the clientToIHMImpl to set
-     */
-    public void setClientDataToIHMImpl(ClientDataToIHMImpl clientDataToIHMImpl) {
-        this.clientDataToIHMImpl = clientDataToIHMImpl;
-    }
+	/**
+	 * @return the clientToIHMImpl
+	 */
+	public ClientDataToIHMImpl getClientDataToIHMImpl() {
+		return clientDataToIHMImpl;
+	}
 
-    /**
-     * @return the userLocal
-     */
-    public PrivateUserEntity getUserLocal() {
-        return userLocal;
-    }
+	/**
+	 * @param clientDataToIHMImpl
+	 *            the clientToIHMImpl to set
+	 */
+	public void setClientDataToIHMImpl(ClientDataToIHMImpl clientDataToIHMImpl) {
+		this.clientDataToIHMImpl = clientDataToIHMImpl;
+	}
 
-    /**
-     * @param PrivateUserEntity
-     *            the userLocal to set
-     */
-    public void setUserLocal(PrivateUserEntity userLocal) {
-        this.userLocal = userLocal;
-    }
+	/**
+	 * @return the userLocal
+	 */
+	public PrivateUserEntity getUserLocal() {
+		return userLocal;
+	}
 
-    /**
-     * @return the currentUsers
-     */
-    public ObservableList<PublicUserEntity> getCurrentUsers() {
-        return currentUsers;
-    }
+	/**
+	 * @param PrivateUserEntity
+	 *            the userLocal to set
+	 */
+	public void setUserLocal(PrivateUserEntity userLocal) {
+		this.userLocal = userLocal;
+	}
 
-    /**
-     * @param currentUsers
-     *            the currentUsers to set
-     */
-    public void setCurrentUsers(ObservableList<PublicUserEntity> currentUsers) {
-        this.currentUsers = currentUsers;
-    }
+	/**
+	 * @return the currentUsers
+	 */
+	public ObservableList<PublicUserEntity> getCurrentUsers() {
+		return currentUsers;
+	}
 
-    /**
-     * @return the currentGames
-     */
-    public ObservableList<GameEntity> getCurrentGames() {
-        return currentGames;
-    }
+	/**
+	 * @param currentUsers
+	 *            the currentUsers to set
+	 */
+	public void setCurrentUsers(ObservableList<PublicUserEntity> currentUsers) {
+		this.currentUsers = currentUsers;
+	}
 
-    /**
-     * @param currentGames
-     *            the currentGames to set
-     */
-    public void setCurrentGames(ObservableList<GameEntity> currentGames) {
-        this.currentGames = currentGames;
-    }
+	/**
+	 * @return the currentGames
+	 */
+	public ObservableList<GameEntity> getCurrentGames() {
+		return currentGames;
+	}
 
-    /**
-     * @return the iClientToData
-     */
-    public IClientComToData getIClientComToData() {
-        return iClientComToData;
-    }
+	/**
+	 * @param currentGames
+	 *            the currentGames to set
+	 */
+	public void setCurrentGames(ObservableList<GameEntity> currentGames) {
+		this.currentGames = currentGames;
+	}
 
-    /**
-     * @param iClientToData
-     *            the iClientToData to set
-     */
-    public void setIClientComToData(IClientComToData iClientToData) {
-        this.iClientComToData = iClientToData;
-    }
+	/**
+	 * @return the iClientToData
+	 */
+	public IClientComToData getIClientComToData() {
+		return iClientComToData;
+	}
 
-    /**
-     * @return the iIHMFromData
-     */
-    public IClientIHMToData getIClientIHMToData() {
-        return iClientIHMToData;
-    }
+	/**
+	 * @param iClientToData
+	 *            the iClientToData to set
+	 */
+	public void setIClientComToData(IClientComToData iClientToData) {
+		this.iClientComToData = iClientToData;
+	}
 
-    /**
-     * @param iClientIHMToData
-     *            the iIHMFromData to set
-     */
-    public void setIClientIHMToData(IClientIHMToData iClientIHMToData) {
-        this.iClientIHMToData = iClientIHMToData;
-    }
+	/**
+	 * @return the iIHMFromData
+	 */
+	public IClientIHMToData getIClientIHMToData() {
+		return iClientIHMToData;
+	}
 
-    /**
-     * 
-     * @return Returns the current game the local user is playing or observing
-     */
-    public GameEntity getCurrentGame() {
-        return currentGame;
-    }
+	/**
+	 * @param iClientIHMToData
+	 *            the iIHMFromData to set
+	 */
+	public void setIClientIHMToData(IClientIHMToData iClientIHMToData) {
+		this.iClientIHMToData = iClientIHMToData;
+	}
 
-    /**
-     * Set the game the user is playing or observing
-     * 
-     * @param currentGame
-     *            current game
-     */
-    public void setCurrentGame(GameEntity currentGame) {
-        this.currentGame = currentGame;
-    }
+	/**
+	 * 
+	 * @return Returns the current game the local user is playing or observing
+	 */
+	public GameEntity getCurrentGame() {
+		return currentGame;
+	}
+
+	/**
+	 * Set the game the user is playing or observing
+	 * 
+	 * @param currentGame
+	 *            current game
+	 */
+	public void setCurrentGame(GameEntity currentGame) {
+		this.currentGame = currentGame;
+	}
 }

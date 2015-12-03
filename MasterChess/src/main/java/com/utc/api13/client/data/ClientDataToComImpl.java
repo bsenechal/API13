@@ -116,12 +116,14 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	 */
 	@Override
 	public void displayResult(UUID idPlayer, MoveEntity move) {
-		Assert.notNull(instanceDataClientManager.getCurrentGame(), "[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
-		//move the Piece on the local Game :
+		Assert.notNull(instanceDataClientManager.getCurrentGame(),
+				"[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
+		// move the Piece on the local Game :
 		move.getPiece().movePiece(move, instanceDataClientManager.getCurrentGame());
-		
-		//TODO : Ulysse : display on IHM -> shouldn't currentGame be an observable ? if not :
-		//instanceDataClientManager.getIClientIHMToData().refreshChessBoard();
+
+		// TODO : Ulysse : display on IHM -> shouldn't currentGame be an
+		// observable ? if not :
+		// instanceDataClientManager.getIClientIHMToData().refreshChessBoard();
 
 	}
 
@@ -249,29 +251,29 @@ public class ClientDataToComImpl implements IClientDataToCom {
 		instanceDataClientManager.getIClientIHMToData().displayMessage(message);
 
 	}
-	
+
 	@Override
-	public void setFinishedStatus(GameStatusEnum status){
+	public void setFinishedStatus(GameStatusEnum status) {
 		Assert.notNull(instanceDataClientManager.getCurrentGames(),
 				"[ClientDataToComImpl][setFinishedStatus] currentGames shouldn't be null");
-		
-		//set the game status :
+
+		// set the game status :
 		instanceDataClientManager.getCurrentGame().setIsFinished(status);
-		
-		//do treatment accordingly :
-		switch(status){
-		
-			case CHECK:
+
+		// do treatment accordingly :
+		switch (status) {
+
+		case CHECK:
 			break;
-			case CHECKMATE:
+		case CHECKMATE:
 			break;
-			case DRAW:
+		case DRAW:
 			break;
-			
-			default : 
+
+		default:
 			break;
-			
+
 		}
-		
+
 	}
 }
