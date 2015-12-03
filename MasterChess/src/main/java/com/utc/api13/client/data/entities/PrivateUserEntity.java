@@ -2,7 +2,6 @@ package com.utc.api13.client.data.entities;
 
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
@@ -16,10 +15,22 @@ public class PrivateUserEntity extends AUserEntity {
     private List<GameEntity> savedGames;
     private GameEntity game;
     private Map<String, Integer> connections;
-    
-    
-    //TODO Lors du merge de l'integ et donc de l'ajout du constructeur ajouter la ligne suivante 
-    //connections = new HashMap<String,Integer>();
+
+    // TODO Lors du merge de l'integ et donc de l'ajout du constructeur ajouter
+    // la ligne suivante
+    // connections = new HashMap<String,Integer>();
+
+    public PrivateUserEntity() {
+        super();
+    }
+
+    /**
+     * @param password
+     */
+    public PrivateUserEntity(String login, String password) {
+        super(login, password);
+        this.password = password;
+    }
 
     /**
      * @return the password
@@ -80,8 +91,7 @@ public class PrivateUserEntity extends AUserEntity {
     public void setGame(GameEntity game) {
         this.game = game;
     }
-    
-    
+
     /**
      * @return the connections map (serveur and port)
      */
@@ -90,12 +100,11 @@ public class PrivateUserEntity extends AUserEntity {
     }
 
     /**
-     * @param Map<IP serveur, port serveur>
-     *            the used connections by the user
+     * @param Map<IP
+     *            serveur, port serveur> the used connections by the user
      */
     public void setConnections(Map<String, Integer> connections) {
         this.connections = connections;
     }
 
 }
-

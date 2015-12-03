@@ -3,6 +3,7 @@
  */
 package com.utc.api13.client.data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,64 +21,67 @@ import com.utc.api13.commun.entities.PublicUserEntity;
  */
 public class ClientDataToComImpl implements IClientDataToCom {
 
-	private DataClientManager instanceDataClientManager;
+    private DataClientManager instanceDataClientManager;
 
-	public ClientDataToComImpl(DataClientManager instanceDataClientManager) {
-		super();
-		Assert.notNull(instanceDataClientManager,
-				"[ClientDataToComImpl][Constructor] dataClientManager shouldn't be null");
-		this.instanceDataClientManager = instanceDataClientManager;
-	}
+    public ClientDataToComImpl(DataClientManager instanceDataClientManager) {
+        super();
+        Assert.notNull(instanceDataClientManager,
+                "[ClientDataToComImpl][Constructor] dataClientManager shouldn't be null");
+        this.instanceDataClientManager = instanceDataClientManager;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToComm#
-	 * getInstanceDataClientManager()
-	 */
-	@Override
-	public DataClientManager getInstanceDataClientManager() {
-		return this.instanceDataClientManager;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.utc.api13.client.data.interfaces.IClientToComm#
+     * getInstanceDataClientManager()
+     */
+    @Override
+    public DataClientManager getInstanceDataClientManager() {
+        return this.instanceDataClientManager;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.utc.api13.client.data.interfaces.IClientToComm#
-	 * setInstanceDataClientManager()
-	 */
-	@Override
-	public void setInstanceDataClientManager(DataClientManager instanceDataClientManager) {
-		this.instanceDataClientManager = instanceDataClientManager;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.utc.api13.client.data.interfaces.IClientToComm#
+     * setInstanceDataClientManager()
+     */
+    @Override
+    public void setInstanceDataClientManager(DataClientManager instanceDataClientManager) {
+        this.instanceDataClientManager = instanceDataClientManager;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToComm#displayUsersList()
-	 */
-	@Override
-	public void displayUsersList(List<PublicUserEntity> connectedUserList) {
-		Assert.notNull(connectedUserList,
-				"[ClientDataToComImpl][displayUsersList] connectedUserList shouldn't be null");
-		Assert.notNull(instanceDataClientManager.getUserLocal(),
-				"[ClientDataToComImpl][displayUsersList] UserLocal shouldn't be null");
-		Assert.notNull(instanceDataClientManager.getCurrentUsers(),
-				"[ClientDataToComImpl][displayUsersList] currentUsers shouldn't be null");
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.utc.api13.client.data.interfaces.IClientToComm#displayUsersList()
+     */
+    @Override
+    public void displayUsersList(List<PublicUserEntity> connectedUserList) {
+        Assert.notNull(connectedUserList,
+                "[ClientDataToComImpl][displayUsersList] connectedUserList shouldn't be null");
+        Assert.notNull(instanceDataClientManager.getUserLocal(),
+                "[ClientDataToComImpl][displayUsersList] UserLocal shouldn't be null");
+        Assert.notNull(instanceDataClientManager.getCurrentUsers(),
+                "[ClientDataToComImpl][displayUsersList] currentUsers shouldn't be null");
+        
+        if (!connectedUserList.isEmpty()) {
+            List<PublicUserEntity> connectedUserListTemp = new ArrayList<PublicUserEntity>();
+            
+            connectedUserList.forEach(u -> {
+                if (!u.getId().equals(instanceDataClientManager.getUserLocal().getId())) {
+                    connectedUserListTemp.add(u);
+                }
+            });
 
-		connectedUserList.forEach(u -> {
-			if (u.getId().equals(instanceDataClientManager.getUserLocal().getId())) {
-				connectedUserList.remove(u);
-			}
-		});
+            instanceDataClientManager.getCurrentUsers().clear();
+            instanceDataClientManager.getCurrentUsers().addAll(connectedUserListTemp);
+        }
+    }
 
-		instanceDataClientManager.getCurrentUsers().clear();
-		instanceDataClientManager.getCurrentUsers().addAll(connectedUserList);
-
-	}
-
-	@Override
+		@Override
 	public void displayProfile(PublicUserEntity user) {
 		instanceDataClientManager.getIClientIHMToData().displayProfile(user);
 
@@ -218,7 +222,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	}
 
 	@Override
-	public void printProposition(UUID uidSender, boolean observable, boolean chattable) {
+	public void printProposition(final UUID uidSender, boolean observable, boolean chattable) {
 		instanceDataClientManager.getIClientIHMToData().displayProposition(uidSender, observable, chattable);
 	}
 
@@ -247,20 +251,19 @@ public class ClientDataToComImpl implements IClientDataToCom {
 	}
 
 	@Override
-	public void displayMessage(String message) {
+	public void displayMessage(final String message) {
 		instanceDataClientManager.getIClientIHMToData().displayMessage(message);
 
 	}
 
     @Override
-    public void notifyConnection(PublicUserEntity user) {
+    public void notifyConnection(final PublicUserEntity user) {
         instanceDataClientManager.getCurrentUsers().add(user);
     }
 
     @Override
-    public void notifyDisconnection(UUID idUser) {
+    public void notifyDisconnection(final UUID idUser) {
         instanceDataClientManager.getCurrentUsers().removeIf(u -> idUser.equals(u.getId()));
         
     }
-
 }

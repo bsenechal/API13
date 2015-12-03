@@ -306,4 +306,3 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         return dataClientManager.getCurrentGames();
     }
 }
-

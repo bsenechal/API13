@@ -2,8 +2,12 @@ package com.utc.api13.client;
 
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.client.data.DataClientManager;
+import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.client.ihm.controllers.IHMConnexionPageController;
 import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
+import com.utc.api13.commun.entities.PublicUserEntity;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +21,8 @@ import javafx.stage.Stage;
  */
 public class AppClient extends Application {
     public static Stage stage;
+    private Stage currentStage;
+    
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -34,8 +40,11 @@ public class AppClient extends Application {
 
         ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
         comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
-        comClientManager.launchAppCom("localhost", 8000);
-
+        comClientManager.launchAppCom("172.25.2.106", 8000);
+        PrivateUserEntity user = new PrivateUserEntity("madiou", "diallo");
+        dataClientManager.setUserLocal(user);
+        dataClientManager.getUserService().save(user);
+        
         /**
          * >>>>>>>>>>>>>>>>>>>>>>>
          */
@@ -44,11 +53,12 @@ public class AppClient extends Application {
          * JAVAFX STAGE <<<<<<<<<<<<<<<<<<<<<<<
          */
         this.stage = stage;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
         Pane root = (Pane) fxmlLoader.load();
-        IHMWelcomePageController controller = fxmlLoader.getController();
+        IHMConnexionPageController controller = fxmlLoader.getController();
         controller.setControllerContext(ihmManager);
         controller.setMainApp(this);
+        this.setCurrentStage(stage);
         Scene scene = new Scene(root, 800, 600);
         scene.getStylesheets().add(getClass().getResource("/css/masterCSS.css").toExternalForm());
         stage.setTitle("Connexion");
@@ -63,8 +73,16 @@ public class AppClient extends Application {
         // comClientManager.close();
 
     }
-
+    
     // private static final Logger LOGGER = Logger.getLogger(AppClient.class);
+
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
+    }
 
     public static void main(String[] args) {
         launch(args);

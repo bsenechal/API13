@@ -34,16 +34,15 @@ public class ConnectMessage extends Message {
 
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
-        // TODO manque méthide dans interfaceDataToComm
-        // comClientManager.getIClientDataToCom().
+    	comClientManager.getIClientDataToCom().notifyConnection(pubUser);
     }
 
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         comServerManager.linkUserToChannelHandlerContext(pubUser.getId(), ctx);
         comServerManager.getIServerDataToCom().notifyConnections(pubUser);
-        AllUserMessage msg = new AllUserMessage(new UUID(0, 0), null);
-        comServerManager.broadcastMessage(msg);
+        this.setSender(this.getReceiver());
+        comServerManager.broadcastMessage(this);
     }
 
 }
