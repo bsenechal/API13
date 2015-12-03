@@ -131,15 +131,17 @@ public class IHMManageProfileController {
 		
 	    
 		this.mainApp=app; 
-		PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
-	    this.loginTextView.setText(u.getLogin()); 
-	    this.passwordTextView.setText(u.getPassword()); 
-	    this.firstNameTextView.setText(u.getFirstName());
-	    this.lastNameTextView.setText(u.getLastName());
-	    
-	    Optional.ofNullable(u.getImagePath()).ifPresent(link->
-	    	changeProfilePicture.setImage(new Image(link))
-	    	);
+		if(!newProfile){
+    		PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
+    	    this.loginTextView.setText(u.getLogin()); 
+    	    this.passwordTextView.setText(u.getPassword()); 
+    	    this.firstNameTextView.setText(u.getFirstName());
+    	    this.lastNameTextView.setText(u.getLastName());
+    	    
+    	    Optional.ofNullable(u.getImagePath()).ifPresent(link->
+    	    	changeProfilePicture.setImage(new Image(link))
+    	    	);
+		}
 	    
 	}
 	

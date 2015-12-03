@@ -3,6 +3,7 @@
  */
 package com.utc.api13.client.data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,7 +29,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
                 "[ClientDataToComImpl][Constructor] dataClientManager shouldn't be null");
         this.instanceDataClientManager = instanceDataClientManager;
     }
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -65,23 +66,26 @@ public class ClientDataToComImpl implements IClientDataToCom {
                 "[ClientDataToComImpl][displayUsersList] UserLocal shouldn't be null");
         Assert.notNull(instanceDataClientManager.getCurrentUsers(),
                 "[ClientDataToComImpl][displayUsersList] currentUsers shouldn't be null");
+        
+        if (!connectedUserList.isEmpty()) {
+            List<PublicUserEntity> connectedUserListTemp = new ArrayList<PublicUserEntity>();
+            
+            connectedUserList.forEach(u -> {
+                if (!u.getId().equals(instanceDataClientManager.getUserLocal().getId())) {
+                    connectedUserListTemp.add(u);
+                }
+            });
 
-        connectedUserList.forEach(u -> {
-            if (u.getId().equals(instanceDataClientManager.getUserLocal().getId())) {
-                connectedUserList.remove(u);
-            }
-        });
-
-        instanceDataClientManager.getCurrentUsers().clear();
-        instanceDataClientManager.getCurrentUsers().addAll(connectedUserList);
-
+            instanceDataClientManager.getCurrentUsers().clear();
+            instanceDataClientManager.getCurrentUsers().addAll(connectedUserListTemp);
+        }
     }
 
-    @Override
-    public void displayProfile(PublicUserEntity user) {
-        // instanceDataClientManager.displayProfile(user)
+	@Override
+	public void displayProfile(PublicUserEntity user) {
+		instanceDataClientManager.getIClientIHMToData().displayProfile(user);
 
-    }
+	}
 
     /*
      * (non-Javadoc)
@@ -132,12 +136,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     }
 
-    @Override
-    public void requestPlayerForLeaving(UUID uid) {
-        // TODO:
-        // instanceDataClientManager.getIClientIHMToData().requestPlayerForLeaving();
-
-    }
+	@Override
+	public void requestPlayerForLeaving(UUID uid) {
+		 instanceDataClientManager.getIClientIHMToData().otherPlayerLeaving();
+	}
 
     /*
      * (non-Javadoc)
@@ -164,11 +166,13 @@ public class ClientDataToComImpl implements IClientDataToCom {
      * com.utc.api13.client.data.interfaces.IClientToComm#initGame(com.utc.api13
      * .commun.entities.GameEntity)
      */
-    @Override
-    public void initGame(GameEntity game) {
-        // TODO Auto-generated method stub
-
-    }
+	@Override
+	public void initGame(GameEntity game) {
+		// Set the current game
+		instanceDataClientManager.setCurrentGame(game);
+		// Ask the IHM module to display the Chessboard
+		instanceDataClientManager.getIClientIHMToData().displayChessBoard();
+	}
 
     /*
      * (non-Javadoc)
@@ -222,11 +226,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     }
 
-    @Override
-    public void printProposition(UUID uidSender, boolean observable, boolean chattable) {
-        // TODO à faire
-
-    }
+	@Override
+	public void printProposition(UUID uidSender, boolean observable, boolean chattable) {
+		instanceDataClientManager.getIClientIHMToData().displayProposition(uidSender, observable, chattable);
+	}
 
     /*
      * (non-Javadoc)
@@ -252,10 +255,21 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     }
 
-    @Override
-    public void displayMessage(String message) {
-        // TODO Auto-generated method stub
-        // dataClientManager.getClientIHMToData.displayMessage(message)
 
+	@Override
+	public void displayMessage(String message) {
+		instanceDataClientManager.getIClientIHMToData().displayMessage(message);
+
+	}
+
+    @Override
+    public void notifyConnection(final PublicUserEntity user) {
+        instanceDataClientManager.getCurrentUsers().add(user);
+    }
+
+    @Override
+    public void notifyDisconnection(UUID idUser) {
+        instanceDataClientManager.getCurrentUsers().removeIf(u -> idUser.equals(u.getId()));
+        
     }
 }

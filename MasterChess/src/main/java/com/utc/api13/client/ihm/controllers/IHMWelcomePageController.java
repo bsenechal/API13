@@ -12,6 +12,7 @@ import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 import javafx.beans.value.ChangeListener;
@@ -101,9 +102,29 @@ public class IHMWelcomePageController {
     }
 
     @FXML
-    public void onLogOutClicked() {
+    public void onLogOutClicked() throws IOException{
         // NB : pas d'exception prévu par data = normal ??
-        this.myIClientToIHM.disconnect();
+        try {
+            this.myIClientToIHM.disconnect();
+        } catch (TechnicalException | FunctionalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
+        root = (Pane) fxmlLoader.load();
+        IHMConnexionPageController controller = fxmlLoader.getController();
+        controller.setControllerContext(IHMManager);
+        controller.setMainApp(mainApp);
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("Connexion to MasterChess");
+        stage.setScene(scene);
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
+        stage.show();
+        
     }
 
     @FXML
@@ -195,7 +216,7 @@ public class IHMWelcomePageController {
     public void setMainApp(AppClient app) {
         this.mainApp = app;
         PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
-        this.connectedUsersLabel.setText(u.getLogin());
+        this.userLabel.setText(u.getLogin());
         setListenersOnLoad();
         setBindingsOnLoad();
     }

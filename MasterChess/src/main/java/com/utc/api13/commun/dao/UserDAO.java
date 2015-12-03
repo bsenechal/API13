@@ -35,7 +35,7 @@ public class UserDAO {
     public void deleteById(final UUID userId) {
         File[] listOfFiles = StorageUtils.getAllFiles();
         for (File file : listOfFiles) {
-            if (file.getName().endsWith("_" + userId)) {
+            if (file.getName().endsWith("_" + userId + ".ser")) {
                 file.delete();
             }
         }

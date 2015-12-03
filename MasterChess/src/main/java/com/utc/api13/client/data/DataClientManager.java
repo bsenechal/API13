@@ -5,6 +5,7 @@ package com.utc.api13.client.data;
 
 import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -24,6 +25,7 @@ public class DataClientManager {
     private PrivateUserEntity userLocal;
     private ObservableList<PublicUserEntity> currentUsers;
     private ObservableList<GameEntity> currentGames;
+    private UserService userService;
     /**
      * The game the user is playing or observing
      */
@@ -43,11 +45,29 @@ public class DataClientManager {
         this.clientDataToIHMImpl = new ClientDataToIHMImpl(this);
         this.iClientIHMToData = null;
         this.iClientComToData = null;
-        this.userLocal = new PrivateUserEntity();
+        this.userLocal = null;
         this.currentUsers = FXCollections.observableArrayList();
         this.currentGames = FXCollections.observableArrayList();
+        this.userService = new UserService();
     }
     
+    
+    /**
+     * @return the userService
+     */
+    public UserService getUserService() {
+        return userService;
+    }
+
+
+    /**
+     * @param userService the userService to set
+     */
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+
     /**
      * 
      * @return clientDataToComImpl
