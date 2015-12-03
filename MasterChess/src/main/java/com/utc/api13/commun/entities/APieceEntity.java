@@ -1,94 +1,142 @@
 package com.utc.api13.commun.entities;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.util.Assert;
 
-import com.utc.api13.client.data.services.GameService;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
 public abstract class APieceEntity extends ADataEntity {
 
-    private static final long serialVersionUID = 6842864968035495956L;
-    private PieceColorEnum color;
-    private PositionEntity position;
-    protected GameEntity currentGame;
-    protected GameService gameService;
+	private static final long serialVersionUID = 6842864968035495956L;
+	private PieceColorEnum color;
+	private PositionEntity position;
 
-    /**
-     * @param color
-     * @param currentGame
-     */
-    public APieceEntity(PieceColorEnum color, GameEntity currentGame) {
-        super();
-        this.color = color;
-        this.currentGame = currentGame;
-        this.gameService = new GameService();
-    }
+	/**
+	 * get the list of positions of a specified list of pieces
+	 * 
+	 * @param List<APieceEntity>
+	 *            pieces
+	 * @return static List<PositionEntity>
+	 */
+	public static List<PositionEntity> getAllPositionsByPieces(final List<APieceEntity> pieces) {
+		List<PositionEntity> positions = new ArrayList<PositionEntity>();
+		for (APieceEntity piece : pieces) {
+			positions.add(piece.getPosition());
+		}
+		return positions;
+	}
 
-    public void move(final MoveEntity move) {
-        Assert.notNull(currentGame, "[APieceEntity][move] current game shouldn't be null");
-        Assert.notNull(currentGame.getCurrentPlayer(), "[APieceEntity][move] current player shouldn't be null");
-        Assert.notNull(currentGame.getWhitePieces(), "[APieceEntity][move] WhitePieces shouldn't be null");
-        Assert.notNull(currentGame.getBlackPieces(), "[APieceEntity][move] BlackPieces shouldn't be null");
-        Assert.notNull(move, "[APieceEntity][move] move shouldn't be null");
-        Assert.notNull(currentGame.getMovesHistory(), "[APieceEntity][move] MovesHistory shouldn't be null");
+	/**
+	 * remove a piece by its postion in a list of pieces
+	 * 
+	 * @param List<APieceEntity>
+	 *            pieces
+	 * @param final
+	 *            PositionEntity position
+	 */
+	public static void removePieceByPosition(List<APieceEntity> pieces, final PositionEntity position) {
+		pieces.removeIf(piece -> piece.getPosition().equals(position));
+	}
 
-        if (isMovePossible(move)) {
-            if (currentGame.getCurrentPlayer().equals(currentGame.getBlackPlayer())) {
-                if (gameService.getAllPositionsByPieces(currentGame.getWhitePieces()).contains(move.getToPosition())) {
-                    // Suppression de la pièce dans le jeu de l'adversaire
-                    gameService.removePieceByPosition(currentGame.getWhitePieces(), move.getToPosition());
-                }
-            } else {
-                if (gameService.getAllPositionsByPieces(currentGame.getBlackPieces()).contains(move.getToPosition())) {
-                    // Suppression de la pièce dans le jeu de l'adversaire
-                    gameService.removePieceByPosition(currentGame.getBlackPieces(), move.getToPosition());
-                }
-            }
+	/**
+	 * @param color
+	 * @param currentGame
+	 */
+	public APieceEntity(PieceColorEnum color) {
+		super();
+		this.color = color;
+	}
 
-            // Déplacement de la pièce
-            setPosition(move.getToPosition());
+	public void deleteDestinationPiece(final MoveEntity move, GameEntity game) {
+		Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
+		Assert.notNull(game.getCurrentPlayer(), "[APieceEntity][move] current player shouldn't be null");
+		Assert.notNull(game.getWhitePieces(), "[APieceEntity][move] WhitePieces shouldn't be null");
+		Assert.notNull(game.getBlackPieces(), "[APieceEntity][move] BlackPieces shouldn't be null");
+		Assert.notNull(move, "[APieceEntity][move] move shouldn't be null");
 
-            // Ajout dans l'historique des coups
-            currentGame.getMovesHistory().add(move);
-        }
-    }
+		if (game.getCurrentPlayer().equals(game.getBlackPlayer())) {
+			if (APieceEntity.getAllPositionsByPieces(game.getWhitePieces()).contains(move.getToPosition())) {
+				// Suppression de la pièce dans le jeu de l'adversaire
+				APieceEntity.removePieceByPosition(game.getWhitePieces(), move.getToPosition());
+			}
+		} else {
+			if (APieceEntity.getAllPositionsByPieces(game.getBlackPieces()).contains(move.getToPosition())) {
+				// Suppression de la pièce dans le jeu de l'adversaire
+				APieceEntity.removePieceByPosition(game.getBlackPieces(), move.getToPosition());
+			}
+		}
+	}
 
-    public boolean isMovePossible(final MoveEntity move) {
-        Assert.notNull(move, "[APieceEntity][isMovePossible] move shouldn't be null");
-        return (generateAvailableMoves().contains(move.getToPosition())) ? true : false;
-    }
+	public void movePiece(final MoveEntity move, GameEntity game) {
+		Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
+		Assert.notNull(move, "[APieceEntity][move] move shouldn't be null");
+		Assert.notNull(game.getMovesHistory(), "[APieceEntity][move] MovesHistory shouldn't be null");
 
-    public abstract List<PositionEntity> generateAvailableMoves();
+		// Déplacement de la pièce
+		setPosition(move.getToPosition());
 
-    /**
-     * @return the position
-     */
-    public PositionEntity getPosition() {
-        return position;
-    }
+		// Ajout dans l'historique des coups
+		game.getMovesHistory().add(move);
+	}
 
-    /**
-     * @param position
-     *            the position to set
-     */
-    public void setPosition(PositionEntity position) {
-        this.position = position;
-    }
+	public void cancelLastMove(GameEntity game) {
+		Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
+		Assert.notNull(game.getMovesHistory(), "[APieceEntity][move] MovesHistory shouldn't be null");
 
-    /**
-     * @return the color
-     */
-    public PieceColorEnum getColor() {
-        return color;
-    }
+		MoveEntity lastMove = game.getMovesHistory().stream().max(new Comparator<MoveEntity>() {
+			@Override
+			public int compare(MoveEntity o1, MoveEntity o2) {
+				return o1.getDate().compareTo(o2.getDate());
+			}
 
-    /**
-     * @param color
-     *            the color to set
-     */
-    public void setColor(PieceColorEnum color) {
-        this.color = color;
-    }
+		}).get();
+
+		// annulation du dernier mouvement
+		setPosition(lastMove.getFromPosition());
+
+		// Enlever de l'historique
+		game.getMovesHistory().remove(lastMove);
+	}
+
+	public boolean isMovePossible(final MoveEntity move, final GameEntity game) {
+		Assert.notNull(move, "[APieceEntity][isMovePossible] move shouldn't be null");
+		Assert.notNull(game, "[APieceEntity][isMovePossible] game shouldn't be null");
+
+		return (generateAvailableMoves(game).contains(move.getToPosition())) ? true : false;
+	}
+
+	public abstract List<PositionEntity> generateAvailableMoves(GameEntity game);
+
+	/**
+	 * @return the position
+	 */
+	public PositionEntity getPosition() {
+		return position;
+	}
+
+	/**
+	 * @param position
+	 *            the position to set
+	 */
+	public void setPosition(PositionEntity position) {
+		this.position = position;
+	}
+
+	/**
+	 * @return the color
+	 */
+	public PieceColorEnum getColor() {
+		return color;
+	}
+
+	/**
+	 * @param color
+	 *            the color to set
+	 */
+	public void setColor(PieceColorEnum color) {
+		this.color = color;
+	}
 }

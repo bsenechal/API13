@@ -103,28 +103,23 @@ public class ChessBoardNode {
 
                 switch (ordrePiece[ctr]) {
                 case 'T':
-                    tempo = new RookEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE,
-                            myIhmManager.getIClientDataToIHM().getCurrentGame());
+                    tempo = new RookEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                     break;
 
                 case 'C':
-                    tempo = new KnightEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE,
-                            myIhmManager.getIClientDataToIHM().getCurrentGame());
+                    tempo = new KnightEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                     break;
 
                 case 'F':
-                    tempo = new BishopEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE,
-                            myIhmManager.getIClientDataToIHM().getCurrentGame());
+                    tempo = new BishopEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                     break;
 
                 case 'D':
-                    tempo = new QueenEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE,
-                            myIhmManager.getIClientDataToIHM().getCurrentGame());
+                    tempo = new QueenEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                     break;
 
                 case 'R':
-                    tempo = new KingEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE,
-                            myIhmManager.getIClientDataToIHM().getCurrentGame());
+                    tempo = new KingEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                     break;
                 }
                 // mettre à jour structure de data
@@ -135,8 +130,7 @@ public class ChessBoardNode {
                 } catch (IOException e) {
 
                 }
-                tempo = new PawnEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE,
-                        myIhmManager.getIClientDataToIHM().getCurrentGame());
+                tempo = new PawnEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                 // mettre à jour structure de data
                 // e.getCase(ctr, ligne + increment).setPiece(new Pion(ligne < 5
                 // ? "noir" : "blanc"));

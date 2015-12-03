@@ -14,6 +14,7 @@ import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 /**
  * @author Benoît
@@ -110,18 +111,25 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.client.data.interfaces.IClientToComm#displayResult(java.
-     * util.UUID, com.utc.api13.commun.entities.MoveEntity)
-     */
-    @Override
-    public void displayResult(UUID idPlayer, MoveEntity move) {
-        // TODO Auto-generated method stub
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.utc.api13.client.data.interfaces.IClientToComm#displayResult(java.
+	 * util.UUID, com.utc.api13.commun.entities.MoveEntity)
+	 */
+	@Override
+	public void displayResult(UUID idPlayer, MoveEntity move) {
+		Assert.notNull(instanceDataClientManager.getCurrentGame(),
+				"[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
+		// move the Piece on the local Game :
+		move.getPiece().movePiece(move, instanceDataClientManager.getCurrentGame());
 
-    }
+		// TODO : Ulysse : display on IHM -> shouldn't currentGame be an
+		// observable ? if not :
+		// instanceDataClientManager.getIClientIHMToData().refreshChessBoard();
+
+	}
 
     @Override
     public void sendMessageToChat(MessageEntity message) {
@@ -272,4 +280,28 @@ public class ClientDataToComImpl implements IClientDataToCom {
         instanceDataClientManager.getCurrentUsers().removeIf(u -> idUser.equals(u.getId()));
 
     }
+    
+	@Override
+	public void setFinishedStatus(GameStatusEnum status) {
+		Assert.notNull(instanceDataClientManager.getCurrentGames(),
+				"[ClientDataToComImpl][setFinishedStatus] currentGames shouldn't be null");
+
+		// set the game status :
+		instanceDataClientManager.getCurrentGame().setIsFinished(status);
+
+		// do treatment accordingly :
+		switch (status) {
+
+		case CHECK:
+			break;
+		case CHECKMATE:
+			break;
+		case DRAW:
+			break;
+
+		default:
+			break;
+
+		}
+	}
 }
