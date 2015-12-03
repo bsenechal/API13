@@ -24,7 +24,11 @@ public enum ErrorTypeEnum implements IErrorType {
                                               * When the uid and/or the login
                                               * and/or the password are missing
                                               */
-    MISSING_INFO("data.user.missingInfo");
+    MISSING_INFO("data.user.missingInfo"),
+    /**
+     * When the asked move is not possible :
+     */
+	MOVE_IMPOSSIBLE("The specified move is not possible");
     private final String code;
 
     private ErrorTypeEnum(String code) {
