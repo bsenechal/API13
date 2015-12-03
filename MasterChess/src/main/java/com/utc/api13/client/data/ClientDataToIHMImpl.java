@@ -143,21 +143,19 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	public void sendAnswerForLeaving(boolean answer) {
 	    //Add game in local user saved game (in case the local user wants to save the game after ending)
 	    dataClientManager.getUserLocal().getSavedGames().add(getCurrentGame());
-	    //if the local user said yes it's a draw for him otherwise a win
-	    dataClientManager.getUserLocal().setNbPlayed(dataClientManager.getUserLocal().getNbPlayed() + 1);
-	    if(answer){
-	        
-	    } else {
-	        dataClientManager.getUserLocal().setNbWon(dataClientManager.getUserLocal().getNbWon() + 1);
+	    //if the local user said yes no it's a win for him
+	    dataClientManager.getUserLocal().setNbPlayed(getLocalUser().getNbPlayed() + 1);
+	    if(!answer){
+	        dataClientManager.getUserLocal().setNbWon(getLocalUser().getNbWon() + 1);
 	    }
-	    //End the game
-	    dataClientManager.setCurrentGame(null);
 	    //Inform the local user that game is over with result
-	    
+	    //TODO: à faire
 	    //send information to opponent player
 //		dataClientManager.getIClientComToData().sendAnswerForLeaving(answer, dataClientManager.getUserLocal());
 	    //Inform the server
-
+//	    dataClientManager.getIClientComToData().endGameByLeaving(getCurrentGame().getId(), getLocalUser().getId());
+        //End the game
+        dataClientManager.setCurrentGame(null);
 	}
 
 	@Override
@@ -218,9 +216,13 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 	public void saveGame() throws TechnicalException, FunctionalException {
 	    Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][saveGame] UserLocal shouldn't be null");
 	    Assert.notNull(dataClientManager.getUserLocal().getSavedGames(), "[ClientDataToIHMImpl][saveGame] SavedGames shouldn't be null");
-	            
-		dataClientManager.getUserLocal().getSavedGames().add(dataClientManager.getCurrentGame());
-		userService.save(dataClientManager.getUserLocal());
+	    
+	    if(dataClientManager.getCurrentGame() != null) {
+	        dataClientManager.getUserLocal().getSavedGames().add(dataClientManager.getCurrentGame());
+	        userService.save(getLocalUser());
+	    } else {
+	        userService.save(getLocalUser());
+	    }
 	}
 
 
@@ -304,4 +306,3 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         return dataClientManager.getCurrentGames();
     }
 }
-
