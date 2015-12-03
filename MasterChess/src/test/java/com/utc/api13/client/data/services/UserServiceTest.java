@@ -35,8 +35,7 @@ public class UserServiceTest {
     private final Logger LOG = Logger.getLogger(getClass());
 
     protected PrivateUserEntity getEntityWithoutId() {
-        PrivateUserEntity user = new PrivateUserEntity();
-        user.setLogin("login");
+        PrivateUserEntity user = new PrivateUserEntity("login", "");
         user.setFirstName("first");
         user.setLastName("Last");
         user.setNbPlayed(2);
@@ -54,9 +53,7 @@ public class UserServiceTest {
             foundUser = userService.getByLoginAndPassword("login", "password");
             Assert.assertNull(foundUser);
             // Register the user
-            PrivateUserEntity newUser = new PrivateUserEntity();
-            newUser.setLogin("login");
-            newUser.setPassword("password");
+            PrivateUserEntity newUser = new PrivateUserEntity("login", "password");
             userService.save(newUser);
             // Test after registring
             foundUser = userService.getByLoginAndPassword("login", "password");

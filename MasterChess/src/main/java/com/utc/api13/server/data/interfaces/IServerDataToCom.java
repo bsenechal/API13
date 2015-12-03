@@ -85,14 +85,15 @@ public interface IServerDataToCom {
     public boolean saveUserData(final PublicUserEntity User) throws TechnicalException, FunctionalException;
 
     public void newObserver(final UUID idGame, final UUID idUser); // Un nouvel
-                                                                  // observeur
-                                                                  // se connecte
-                                                                  // à la
-                                                                  // partie.
-                                                                  // Mettre à
-                                                                  // jour la
-                                                                  // List<PublicUserEntity>
-                                                                  // d'observeurs
+                                                                   // observeur
+                                                                   // se
+                                                                   // connecte
+                                                                   // à la
+                                                                   // partie.
+                                                                   // Mettre à
+                                                                   // jour la
+                                                                   // List<PublicUserEntity>
+                                                                   // d'observeurs
 
     public void createReplay(final GameEntity game, final PublicUserEntity user);
 
@@ -125,5 +126,14 @@ public interface IServerDataToCom {
     // Méthode pour créer une nouvelle partie :
     public GameEntity createGame(final UUID j1, final UUID j2, final boolean observable, final boolean chattable);
 
-    public GameEntity getGameById(UUID IdGame);     //Renvoie une GameEntity par l'UID de la Game
+    public GameEntity getGameById(final UUID IdGame); // Renvoie une GameEntity
+                                                      // par l'UID de la Game
+
+    /**
+     * removes the game with the given id on the server
+     * 
+     * @param idGame
+     *            id of game
+     */
+    void endGame(UUID idGame);
 }

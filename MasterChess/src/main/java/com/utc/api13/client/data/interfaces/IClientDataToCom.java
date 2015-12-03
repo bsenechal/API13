@@ -74,10 +74,14 @@ public interface IClientDataToCom {
      */
     void notify(final String message);
 
-    void initGame(final GameEntity game); // La GameEntity est créé sur le
-                                          // serveur. Cette méthode initialise
-                                          // l'instance de la GameEntity sur le
-                                          // client
+    /**
+     * La GameEntity est créé sur le serveur.<br/>
+     * Cette méthode initialise l'instance de la GameEntity sur le client
+     * 
+     * @param game
+     *            game créé sur le serveur
+     */
+    void initGame(final GameEntity game);
 
     void newObserver(final UUID idObserver);
 
@@ -116,4 +120,20 @@ public interface IClientDataToCom {
     DataClientManager getInstanceDataClientManager();
 
     void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
+
+    /**
+     * Adds a new user to the list of local users
+     * 
+     * @param user
+     *            user to add
+     */
+    public void notifyConnection(PublicUserEntity user);
+
+    /**
+     * Delete a user from the list of local users
+     * 
+     * @param idUser
+     *            id of user to delete
+     */
+    public void notifyDisconnection(UUID idUser);
 }

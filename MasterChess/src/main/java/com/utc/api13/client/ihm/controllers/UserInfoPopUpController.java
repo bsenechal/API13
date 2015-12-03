@@ -48,7 +48,7 @@ public class UserInfoPopUpController {
     public void initialize() {
     }
 
-    public void setMainApp(AppClient app /* ,UUID idUser */) {
+    public void setMainApp(AppClient app) {
         this.mainApp = app;
 
     }
@@ -74,12 +74,10 @@ public class UserInfoPopUpController {
         this.userInfoFirstName.setText(u.getFirstName());
         this.userInfoLastName.setText(u.getLastName());
         // TODO Dealing with the Table Won, Lost, Played
+        this.userInfoWon.setText(Integer.toString(u.getNbWon()));
+        this.userInfoLost.setText(Integer.toString(u.getNbLost()));
+        this.userInfoPlayed.setText(Integer.toString(u.getNbPlayed()));
 
-        /*
-         * this.userInfoWon.setText(Integer.toString(u.getNbWon()));
-         * this.userInfoLost.setText(Integer.toString(u.getNbLost()));
-         * this.userInfoPlayed.setText(Integer.toString(u.getNbPlayed()));
-         */
         try {
             Image image = getJavaFXImage(u.getImage());
             this.userInfoImage.setImage(image);

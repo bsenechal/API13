@@ -1,6 +1,7 @@
 package com.utc.api13.commun.entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -270,6 +271,18 @@ public class GameEntity extends ADataEntity {
      */
     public void setCurrentPlayer(PublicUserEntity currentPlayer) {
         this.currentPlayer = currentPlayer;
+    }
+
+    /**
+     * 
+     * @return the concatenation of the observer list and the two players
+     */
+    public List<PublicUserEntity> getAllParticipants() {
+        List<PublicUserEntity> participants = new ArrayList<PublicUserEntity>();
+        Collections.copy(participants, this.observers);
+        participants.add(getBlackPlayer());
+        participants.add(getWhitePlayer());
+        return participants;
     }
 
 }

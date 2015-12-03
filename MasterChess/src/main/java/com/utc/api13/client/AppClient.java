@@ -3,7 +3,7 @@ package com.utc.api13.client;
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.ihm.IHMManager;
-import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
+import com.utc.api13.client.ihm.controllers.IHMConnexionPageController;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +17,7 @@ import javafx.stage.Stage;
  */
 public class AppClient extends Application {
     public static Stage stage;
+    private Stage currentStage;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -44,11 +45,12 @@ public class AppClient extends Application {
          * JAVAFX STAGE <<<<<<<<<<<<<<<<<<<<<<<
          */
         this.stage = stage;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
         Pane root = (Pane) fxmlLoader.load();
-        IHMWelcomePageController controller = fxmlLoader.getController();
+        IHMConnexionPageController controller = fxmlLoader.getController();
         controller.setControllerContext(ihmManager);
         controller.setMainApp(this);
+        this.setCurrentStage(stage);
         Scene scene = new Scene(root, 800, 600);
         scene.getStylesheets().add(getClass().getResource("/css/masterCSS.css").toExternalForm());
         stage.setTitle("Connexion");
@@ -65,6 +67,14 @@ public class AppClient extends Application {
     }
 
     // private static final Logger LOGGER = Logger.getLogger(AppClient.class);
+
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
+    }
 
     public static void main(String[] args) {
         launch(args);
