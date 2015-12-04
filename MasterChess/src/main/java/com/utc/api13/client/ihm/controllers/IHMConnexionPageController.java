@@ -71,8 +71,10 @@ public class IHMConnexionPageController {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
                 root = (Pane) fxmlLoader.load();
                 IHMWelcomePageController controllerRight = fxmlLoader.getController();
+
                 controllerRight.setControllerContext(IHMManager);
                 controllerRight.setMainApp(mainApp);
+
                 stage.setTitle("Connexion to MasterChess");
                 stage.setScene(new Scene(root));
                 mainApp.getCurrentStage().close();
@@ -92,8 +94,6 @@ public class IHMConnexionPageController {
 
             }
         }
-
-        stage.show();
 
     }
 
