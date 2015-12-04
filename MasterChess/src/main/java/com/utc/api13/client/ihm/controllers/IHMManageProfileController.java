@@ -67,8 +67,7 @@ public class IHMManageProfileController {
 		user.setFirstName(firstNameTextView.getText());  
 		user.setLastName(lastNameTextView.getText()); 
 		try {
-		//	if(errorInfo.getText().length()>0){
-			    
+		    
 			    if(newProfile)
 			       this.myIClientToIHM.createProfile(user);
 			    else
@@ -92,8 +91,7 @@ public class IHMManageProfileController {
    
 	@FXML
     public void onChangePictureClicked() {
-    	
-    //	errorInfo.setText("");
+
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Ouvrir le document");
 		fileChooser.setInitialDirectory(new File("/"));
@@ -106,8 +104,7 @@ public class IHMManageProfileController {
 				 this.myIClientToIHM.getLocalUser().setImagePath("file:///"+f.getAbsolutePath()); 
 				 
 		}catch(Exception e){
-			
-		//	errorInfo.setText(" erreur chargement Image");
+
 			e.printStackTrace();
 		}
 		
@@ -115,11 +112,7 @@ public class IHMManageProfileController {
     
     
 	public IHMManageProfileController() { 
-		
-		// [DATA] : Le code ci-dessous Ne peut pas fonctionner émoticône unsure
-//		IHMManager = new IHMManager(); 
-//		myIClientToIHM=IHMManager.getIClientDataToIHM(); 
-
+	
 		initialize();  
 	}
 	

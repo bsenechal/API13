@@ -22,7 +22,16 @@ import javafx.stage.Stage;
 public class AppClient extends Application {
     public static Stage stage;
     private Stage currentStage;
+    public Stage newStage;
     
+
+    public Stage getNewStage() {
+        return new Stage();
+    }
+
+    public void setNewStage(Stage newStage) {
+        this.newStage = newStage;
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -40,8 +49,8 @@ public class AppClient extends Application {
 
         ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
         comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
-        comClientManager.launchAppCom("172.25.2.106", 8000);
-        PrivateUserEntity user = new PrivateUserEntity("madiou", "diallo");
+        comClientManager.launchAppCom("localhost", 8000);
+        PrivateUserEntity user = new PrivateUserEntity("diallo", "diallo");
         dataClientManager.setUserLocal(user);
         dataClientManager.getUserService().save(user);
         
@@ -56,6 +65,7 @@ public class AppClient extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
         Pane root = (Pane) fxmlLoader.load();
         IHMConnexionPageController controller = fxmlLoader.getController();
+       // ihmManager.setAppClient(this);
         controller.setControllerContext(ihmManager);
         controller.setMainApp(this);
         this.setCurrentStage(stage);
@@ -88,4 +98,6 @@ public class AppClient extends Application {
         launch(args);
 
     }
+
+    
 }
