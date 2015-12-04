@@ -14,7 +14,7 @@ public class GameEntity extends ADataEntity {
 
 	private static final long serialVersionUID = -959030856925179648L;
 	private Date creationDate;
-	private Boolean isOservable;
+	private Boolean isObservable;
 	private Boolean isChattable;
 	private Date limit;
 	private PublicUserEntity whitePlayer;
@@ -37,7 +37,7 @@ public class GameEntity extends ADataEntity {
 		this.chessboardEntity = new ChessboardEntity();
 		this.creationDate = new Date();
 		this.isFinished = null;
-		this.isOservable = Boolean.FALSE;
+		this.isObservable = Boolean.FALSE;
 		this.isChattable = Boolean.FALSE;
 		this.limit = null;
 		this.whitePlayer = null;
@@ -55,7 +55,7 @@ public class GameEntity extends ADataEntity {
 	public GameEntity(Boolean idOservable, Boolean isChattable, Date limit, PublicUserEntity whitePlayer,
 			PublicUserEntity blackPlayer) {
 		super();
-		this.isOservable = idOservable;
+		this.isObservable = idOservable;
 		this.isChattable = isChattable;
 		this.limit = limit;
 		this.whitePlayer = whitePlayer;
@@ -86,16 +86,16 @@ public class GameEntity extends ADataEntity {
 	/**
 	 * @return the idOservable
 	 */
-	public Boolean getIdOservable() {
-		return isOservable;
+	public Boolean getIsObservable() {
+		return isObservable;
 	}
 
 	/**
 	 * @param idOservable
 	 *            the idOservable to set
 	 */
-	public void setIdOservable(Boolean idOservable) {
-		this.isOservable = idOservable;
+	public void setIsObservable(Boolean idOservable) {
+		this.isObservable = idOservable;
 	}
 
 	/**
@@ -252,7 +252,7 @@ public class GameEntity extends ADataEntity {
 	 * @return the isOservable
 	 */
 	public Boolean getIsOservable() {
-		return isOservable;
+		return isObservable;
 	}
 
 	/**
@@ -260,7 +260,7 @@ public class GameEntity extends ADataEntity {
 	 *            the isOservable to set
 	 */
 	public void setIsOservable(Boolean isOservable) {
-		this.isOservable = isOservable;
+		this.isObservable = isOservable;
 	}
 
 	/**
