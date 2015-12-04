@@ -1,28 +1,12 @@
 package com.utc.api13.client.ihm;
 
-import java.io.IOException;
 import java.util.UUID;
 
-import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
-import com.utc.api13.client.ihm.controllers.UserInfoPopUpController;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
 //github.com/bsenechal/API13.git
 import com.utc.api13.commun.entities.PublicUserEntity;
 
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class ClientIHMToDataImpl implements IClientIHMToData {
 

@@ -1,6 +1,7 @@
 package com.utc.api13.client.ihm;
 
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+import com.utc.api13.client.ihm.property.ProfilProperty;
 
 public class IHMManager {
 

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
-import java.util.UUID;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -18,7 +17,6 @@ import com.utc.api13.commun.exceptions.TechnicalException;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -41,7 +39,6 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.application.Platform;
 
 public class IHMWelcomePageController {
     private IHMManager IHMManager;
