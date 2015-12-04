@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.client.ihm.property.ProfilProperty;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
@@ -16,6 +18,7 @@ import com.utc.api13.commun.exceptions.TechnicalException;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -38,9 +41,20 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.application.Platform;
 
 public class IHMWelcomePageController {
     private IHMManager IHMManager;
+    private ProfilProperty profile;
+    public static Stage stageI;
+
+    public ProfilProperty getProfile() {
+        return profile;
+    }
+
+    public void setProfile(ProfilProperty profile) {
+        this.profile = profile;
+    }
 
     public IHMManager getIHMManager() {
         return IHMManager;
@@ -164,6 +178,7 @@ public class IHMWelcomePageController {
         root = (Pane) fxmlLoader.load();
         UserInfoPopUpController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
+
         controller.setMainApp(this.mainApp);
 
         stage.setScene(new Scene(root));
@@ -196,11 +211,7 @@ public class IHMWelcomePageController {
     }
 
     public void initialize() {
-        // bindings
-        // TODO Demande de la liste des users connectés
-        // IClientToIHM.getUsers();
-        // TODO Demande de la liste des jeux
-        // getAllGames();
+
     }
 
     public IHMWelcomePageController() {
@@ -211,8 +222,7 @@ public class IHMWelcomePageController {
         this.mainApp = app;
         PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
         this.userLabel.setText(u.getLogin());
-        setListenersOnLoad();
-        setBindingsOnLoad();
+
     }
 
     public void exportOK(String path) throws IOException {
@@ -245,10 +255,20 @@ public class IHMWelcomePageController {
 
     public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
+        if (ihmManager != null) {
+            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            profile = new ProfilProperty();
+
+            this.IHMManager.setProfil(profile);
+            setListenersOnLoad();
+            setBindingsOnLoad();
+        }
+    }
+
+    public void setIHMMandClient(IHMManager ihmManager) {
+        this.IHMManager = ihmManager;
         if (ihmManager != null)
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
-        setListenersOnLoad();
-        setBindingsOnLoad();
     }
 
     public void setListenersOnLoad() {
@@ -288,12 +308,34 @@ public class IHMWelcomePageController {
         // -------------------------------
         connectedUserTable.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
 
+            @SuppressWarnings("unchecked")
             @Override
             public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
                 // TODO Auto-generated method stub
 
                 Optional.ofNullable(listUserPublic.get((int) newValue))
                         .ifPresent(user -> myIClientToIHM.getUserInfo(user.getId()));
+
+                Stage stage;
+                Parent root = null;
+                stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/userInfoPopUp.fxml"));
+                try {
+                    root = (Pane) fxmlLoader.load();
+                    UserInfoPopUpController controller = fxmlLoader.getController();
+                    controller.setControllerContext(IHMManager);
+
+                    controller.setMainApp(mainApp);
+                    controller.setBindings(profile);
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("User Information");
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.showAndWait();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
             }
 
         });
@@ -318,6 +360,10 @@ public class IHMWelcomePageController {
          * currentGamesTime.setCellValueFactory(new
          * PropertyValueFactory<GameEntity, Date>("creationDate"));
          */
+
+    }
+
+    public void displayProfile() {
 
     }
 

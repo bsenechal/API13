@@ -9,6 +9,21 @@ import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
 //github.com/bsenechal/API13.git
 import com.utc.api13.commun.entities.PublicUserEntity;
 
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 public class ClientIHMToDataImpl implements IClientIHMToData {
 
     private IHMManager myIHMManager;
@@ -19,18 +34,18 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     @Override
     public void displayProfile(PublicUserEntity u) {
-        // onUserInfoClicked
-        IHMWelcomePageController profileController = new IHMWelcomePageController();
-        UserInfoPopUpController userDistantController = new UserInfoPopUpController();
-        userDistantController.displayProfile(u);
 
-        profileController.setControllerContext(this.myIHMManager);
-        try {
-            profileController.onUserInfoClicked();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+                myIHMManager.getProfil().loginProperty().set(u.getLogin());
+                myIHMManager.getProfil().firstNameProperty().set(u.getFirstName());
+                myIHMManager.getProfil().lastNameProperty().set(u.getLastName());
+                myIHMManager.getProfil().statPlayerProperty().setAll(u);
+
+            }
+        });
 
     }
 

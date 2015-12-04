@@ -7,8 +7,19 @@ public class IHMManager {
     private IClientDataToIHM myIClientToIHM;
     private ClientIHMToDataImpl myClientIHMToDataImpl;
 
+    private ProfilProperty profil;
+
+    public ProfilProperty getProfil() {
+        return profil;
+    }
+
+    public void setProfil(ProfilProperty profil) {
+        this.profil = profil;
+    }
+
     public IHMManager() {
         this.myClientIHMToDataImpl = new ClientIHMToDataImpl(this);
+
     }
 
     public IClientDataToIHM getIClientDataToIHM() {
@@ -22,5 +33,4 @@ public class IHMManager {
     public ClientIHMToDataImpl getClientIHMToDataImpl() {
         return myClientIHMToDataImpl;
     }
-
 }
