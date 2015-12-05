@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 
@@ -33,6 +34,7 @@ public class ClientDataToComImplTest {
         final int nbUser = 5;
         final PublicUserEntity specificUser = new PublicUserEntity();
 
+        dataClientManager.setUserLocal(new PrivateUserEntity());
         connectedUserList.add(specificUser);
 
         for (int i = 0; i < nbUser - 1; i++) {
@@ -71,5 +73,20 @@ public class ClientDataToComImplTest {
                 dataClientManager.getCurrentGames().size());
         Assert.assertTrue("CurrentGames should contain the game " + specificGame.toString(),
                 dataClientManager.getCurrentGames().contains(specificGame));
+    }
+
+    @Test
+    public void notifyConnection() {
+        final PublicUserEntity user = new PublicUserEntity();
+        final int nbUsers = dataClientManager.getCurrentUsers().size();
+        final int nbUsersExpected = nbUsers + 1;
+
+        dataClientManager.getClientDataToComImpl().notifyConnection(user);
+
+        Assert.assertNotNull("dataClientManager shouldn't be null", dataClientManager);
+        Assert.assertTrue("CurrentUsers should contain the user " + user.toString(),
+                dataClientManager.getCurrentUsers().contains(user));
+        Assert.assertEquals("CurrentUsers should contain " + nbUsersExpected + " users", nbUsersExpected,
+                dataClientManager.getCurrentUsers().size());
     }
 }
