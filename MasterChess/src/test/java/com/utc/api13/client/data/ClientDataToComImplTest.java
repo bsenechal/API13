@@ -89,4 +89,22 @@ public class ClientDataToComImplTest {
         Assert.assertEquals("CurrentUsers should contain " + nbUsersExpected + " users", nbUsersExpected,
                 dataClientManager.getCurrentUsers().size());
     }
+
+    @Test
+    public void notifyDisconnection() {
+        final PublicUserEntity user = new PublicUserEntity();
+
+        dataClientManager.getCurrentUsers().add(user);
+
+        final int nbUsers = dataClientManager.getCurrentUsers().size();
+        final int nbUsersExpected = nbUsers - 1;
+
+        dataClientManager.getClientDataToComImpl().notifyDisconnection(user.getId());
+
+        Assert.assertNotNull("dataClientManager shouldn't be null", dataClientManager);
+        Assert.assertFalse("CurrentUsers shouldn't contain the user " + user.toString(),
+                dataClientManager.getCurrentUsers().contains(user));
+        Assert.assertEquals("CurrentUsers should contain " + nbUsersExpected + " users", nbUsersExpected,
+                dataClientManager.getCurrentUsers().size());
+    }
 }
