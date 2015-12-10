@@ -1,16 +1,10 @@
 /bin/
-
 /target/
-
 .classpath
-
 .project
-
 .metadata
-
 .settings
-.project
 .classpath
-.project
 .recommenders
 /.apt_generated/
+/export/
