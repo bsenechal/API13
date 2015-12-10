@@ -11,6 +11,7 @@ import com.utc.api13.commun.messages.ChatMessage;
 import com.utc.api13.commun.messages.ConnectMessage;
 import com.utc.api13.commun.messages.DisconnectMessage;
 import com.utc.api13.commun.messages.GameRequestMessage;
+import com.utc.api13.commun.messages.ObserverRequestMessage;
 import com.utc.api13.commun.messages.PublicUserMessage;
 import com.utc.api13.commun.messages.RequestAnswerMessage;
 import com.utc.api13.commun.messages.UserUpdateMessage;
@@ -33,7 +34,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void connectAsObserver(UUID game_id) {
-        // TODO Auto-generated method stub
+        comClientManagerInstance.sendMessage(new ObserverRequestMessage(null, new UUID(0, 0), game_id));
         return;
     }
 
@@ -70,11 +71,11 @@ public class ClientComToDataImpl implements IClientComToData {
     }
 
     /* DEPRECATED !!! */
-    @Override
-    public void sendAnswer(String answer, PublicUserEntity sender) {
-        // TODO Auto-generated method stub
-        return;
-    }
+//    @Override
+//    public void sendAnswer(String answer, PublicUserEntity sender) {
+//        // TODO Auto-generated method stub
+//        return;
+//    }
 
     @Override
     public void surrender(UUID uid) {
