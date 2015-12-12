@@ -20,12 +20,17 @@ public class ObserverRequestMessage extends Message {
      * @param sender
      * @param receiver
      */
-    public ObserverRequestMessage(UUID sender, UUID receiver) {
-        super(sender, receiver);
-        // TODO Auto-generated constructor stub
-    }
+//    public ObserverRequestMessage(UUID sender, UUID receiver) {
+//        super(sender, receiver);
+//        // TODO Auto-generated constructor stub
+//    }
 
-    @Override
+    public ObserverRequestMessage(UUID sender, UUID receiver, UUID game_id) {
+		super(sender,receiver);
+		this.game = game_id;
+	}
+
+	@Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // TODO Auto-generated method stub
         comClientManager.getIClientDataToCom().newObserver(sender);
@@ -35,7 +40,7 @@ public class ObserverRequestMessage extends Message {
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         // TODO Auto-generated method stub
         this.sender = comServerManager.findUserIdFromChannelHandlerContext(ctx);
-        comServerManager.getIServerDataToCom().newObserver(game, this.sender);
+        comServerManager.getIServerDataToCom().newObserver(this.game, this.sender);
         // récupérer le gameEntity
         GameEntity gameE = comServerManager.getIServerDataToCom().getGameById(game);
         // Envoyer la réponse au demandeur !
