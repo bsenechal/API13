@@ -1,15 +1,14 @@
 package com.utc.api13.commun.messages;
 
+import io.netty.channel.ChannelHandlerContext;
+
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.commun.entities.GameEntity;
-import com.utc.api13.commun.messages.Message;
 import com.utc.api13.server.com.ComServerManager;
-
-import io.netty.channel.ChannelHandlerContext;
 
 public class ObserverRequestMessage extends Message {
     private static final Logger logger = Logger.getLogger(ObserverRequestMessage.class);
@@ -32,7 +31,7 @@ public class ObserverRequestMessage extends Message {
 
 	@Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
-        // TODO Auto-generated method stub
+        // Informs the client of a new observer connection
         comClientManager.getIClientDataToCom().newObserver(sender);
     }
 
@@ -46,9 +45,8 @@ public class ObserverRequestMessage extends Message {
         // Envoyer la réponse au demandeur !
         comServerManager.sendMessage(ctx.channel(), new ObserverAnswerMessage(new UUID(0, 0), new UUID(0, 0), gameE));
 
-        // A tous les participants à la partie : new Observer
-        // comServerManager.multicastMessageByIds(gameE.getAllParticipants(),
-        // this);
+        // A tous les participants à la partie : new Observer        
+         comServerManager.multicastMessageByUsers(gameE.getAllParticipants(), this);
 
     }
 

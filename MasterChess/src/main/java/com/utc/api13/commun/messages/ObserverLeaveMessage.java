@@ -19,8 +19,8 @@ public class ObserverLeaveMessage extends Message {
 	@Override
 	public void proceed(ChannelHandlerContext ctx,
 			ComClientManager comClientManager) throws Exception {
-		// TODO Auto-generated method stub
-
+		//Pas de traitement possible côté client actuellement
+		//Message de départ d'un observateur ?
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class ObserverLeaveMessage extends Message {
 		// Received on the server : unsubscribe from the game and send to participants
 		comServerManager.getIServerDataToCom().observerLeave(user);
 
-		// Utile de transmettre d'info aux participants ?
+		// Utile de transmettre d'info aux participants ? OUI !
 		// Besion du gameId pour ça !
 	}
 
