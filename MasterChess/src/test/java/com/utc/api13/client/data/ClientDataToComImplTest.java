@@ -120,6 +120,6 @@ public class ClientDataToComImplTest {
         
         dataClientManager.getClientDataToComImpl().initGame(testGame);
         Assert.assertTrue("IsObservable should be true",dataClientManager.getCurrentGame().getIsObservable());
-        Assert.assertEquals("Current white player should be Jean ", "Jean", dataClientManager.getCurrentGame().getWhitePlayer());
+        Assert.assertEquals("Current white player should be Jean ", "Jean", dataClientManager.getCurrentGame().getWhitePlayer().getFirstName());
     }
 }
