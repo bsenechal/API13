@@ -31,15 +31,6 @@ public class UserInfoPopUpController {
     private IClientDataToIHM myIClientToIHM;
     public PublicUserEntity u;
     private Stage currentStage;
-    
-
-    public PublicUserEntity getU() {
-        return u;
-    }
-
-    public void setU(PublicUserEntity u) {
-        this.u = u;
-    }
 
     @FXML
     BorderPane userInfoBorderPane;
@@ -53,6 +44,14 @@ public class UserInfoPopUpController {
     ImageView userInfoImage;
     @FXML
     TableColumn userInfoWon, userInfoLost, userInfoPlayed;
+    
+    public PublicUserEntity getU() {
+        return u;
+    }
+
+    public void setU(PublicUserEntity u) {
+        this.u = u;
+    }
 
     public UserInfoPopUpController() {
 

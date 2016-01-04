@@ -62,61 +62,83 @@ public class IHMManageProfileController {
 
     @FXML
     public void onSaveProfileClicked() throws IOException {
-
-        PrivateUserEntity user = null;
-        if (!newProfile)
-            user = this.myIClientToIHM.getLocalUser();
-        else
-            user = new PrivateUserEntity();
-
-        user.setLogin(loginTextView.getText());
-        user.setPassword(passwordTextView.getText());
-        user.setFirstName(firstNameTextView.getText());
-        user.setLastName(lastNameTextView.getText());
+    	
+    	String login = loginTextView.getText();
+        String pw = passwordTextView.getText();
+        String firstName = firstNameTextView.getText(); 
+        String lastName = lastNameTextView.getText(); 
         
-        Stage stage;
-        Parent root;
-        stage = new Stage();
-        FXMLLoader fxmlLoader;
-        
-        try {
+    	if (login.length()==0 || pw.length()==0 || firstName.length()==0 || lastName.length()==0) {
+            try {  
+         	        error("Error : please fill all the fields!", false); 
+         	    }
+         	    catch(IOException e1) {
+         	    	log.error(e1.getMessage(), e1);
+         	    }
+ 		} 
 
-            if (newProfile)
-                this.myIClientToIHM.createProfile(user);
-            else
-                this.myIClientToIHM.updateProfile(user);
-             
-            
-            fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
-            root = (Pane) fxmlLoader.load();
-            ConfirmationController controller = fxmlLoader.getController();
-            controller.setControllerContext(this.IHMManager);
-            controller.setMainApp(this.mainApp, "Your profile has been saved!");
-            stage.setScene(new Scene(root));
-            stage.setTitle("Your profile");
-            mainApp.getCurrentStage().close();
-            mainApp.setCurrentStage(stage);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
+         else {
 
-        } catch (TechnicalException e) {
-            // TODO afficher a l'utlisateur l'erreur soit dans une popup ou dans
-            // la fenetre courante
-            log.error(e.getMessage(), e);
-            e.printStackTrace();
-        } catch (FunctionalException e) {
-            // TODO Auto-generated catch block
-            for (Erreur erreur : e.getErreurs()) {
-                // TODO gerer les multi langues ant de remplir les fichiers logs
-                log.error(((ErrorTypeEnum) erreur.getErrorType()).getCode());
-            }
-            e.printStackTrace();
-        }
-
+	        PrivateUserEntity user = null;
+	        if (!newProfile)
+	            user = this.myIClientToIHM.getLocalUser();
+	        else
+	            user = new PrivateUserEntity();
+	
+	        user.setLogin(login);
+	        user.setPassword(pw);
+	        user.setFirstName(firstName);
+	        user.setLastName(lastName);
+	        
+	        Stage stage;
+	        Parent root;
+	        stage = new Stage();
+	        FXMLLoader fxmlLoader;
+	        
+	        try {
+	
+	            if (newProfile)
+	                this.myIClientToIHM.createProfile(user);
+	            else
+	                this.myIClientToIHM.updateProfile(user);
+	             
+	            
+	            fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
+	            root = (Pane) fxmlLoader.load();
+	            ConfirmationController controller = fxmlLoader.getController();
+	            controller.setControllerContext(this.IHMManager);
+	            controller.setMainApp(this.mainApp, "Your profile has been saved!");
+	            stage.setScene(new Scene(root));
+	            stage.setTitle("Your profile");
+	            mainApp.getCurrentStage().close();
+	            mainApp.setCurrentStage(stage);
+	            stage.initModality(Modality.APPLICATION_MODAL);
+	            stage.showAndWait();
+	
+	        } catch (TechnicalException e) {
+	            try { 
+	            	error("Error when saving your profile : Technical Exception", true); 
+	            } catch (IOException e1) {
+	            	log.error(e1.getMessage(), e1);
+	            }
+	            log.error(e.getMessage(), e);
+	            
+	        } catch (FunctionalException e) {
+	        	try {
+	        		error("Error when saving your profile : Functional Exception", true); 
+	        	} catch (IOException e1) {
+	        		log.error(e1.getMessage(), e1);
+	        	}
+	            for (Erreur erreur : e.getErreurs()) {
+	                // TODO gerer les multi langues ant de remplir les fichiers logs
+	                log.error(((ErrorTypeEnum) erreur.getErrorType()).getCode());
+            	}
+        	}
+         }
     }
 
     @FXML
-    public void onChangePictureClicked() {
+    public void onChangePictureClicked() throws IOException {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Ouvrir le document");
@@ -130,19 +152,21 @@ public class IHMManageProfileController {
             this.myIClientToIHM.getLocalUser().setImagePath("file:///" + f.getAbsolutePath());
 
         } catch (Exception e) {
-
-            e.printStackTrace();
+        	try {
+        		error("Error when changing your picture", false); 
+        	} catch (IOException e1) {
+        		log.error(e1.getMessage(), e1);
+        	}
+        	log.error(e.getMessage(), e);
         }
 
     }
 
     public IHMManageProfileController() {
-
         initialize();
     }
 
     public void initialize() {
-
     }
 
     public void setMainApp(AppClient app) {
@@ -169,7 +193,6 @@ public class IHMManageProfileController {
     }
 
     public void setListenersOnLoad() {
-
     }
 
     public void setBindingsOnLoad() {
@@ -181,6 +204,24 @@ public class IHMManageProfileController {
 
     public void setCurrentStage(Stage currentStage) {
         this.currentStage = currentStage;
+    }
+    
+    public void error(String message, boolean close) throws IOException {
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+        root = (Pane) fxmlLoader.load();
+        ErrorController controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager);
+        controller.setMainApp(this.mainApp, message);
+        stage.setScene(new Scene(root));
+        stage.setTitle("Error");
+        if (close==true) {
+        	mainApp.getCurrentStage().close();
+        }
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
     }
 
 }
