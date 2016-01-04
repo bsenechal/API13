@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -31,6 +32,7 @@ public class IHMConnexionPageController {
     private IHMManager IHMManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
+    private Stage currentStage;
 
     @FXML
     BorderPane connexionBorderPane;
@@ -41,9 +43,11 @@ public class IHMConnexionPageController {
     @FXML
     Button connexionButton;
     @FXML
-    TextField loginTextView, passwordTextView, serverAddressTextView, portTextView;
+    TextField loginTextView, serverAddressTextView, portTextView;
     @FXML
     Hyperlink importLink, exportLink, signUpLink;
+    @FXML
+    PasswordField passwordTextView; 
 
     @FXML
     private void onSignInClicked(Event event) throws IOException {
@@ -66,7 +70,6 @@ public class IHMConnexionPageController {
         else {
 
             try {
-
                 myIClientToIHM.connect(login, pw);
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
                 root = (Pane) fxmlLoader.load();
@@ -111,6 +114,7 @@ public class IHMConnexionPageController {
         controller.setMainApp(this.mainApp, bool ? "Wrong connexion information!" : "Technical error!");
         stage.setScene(new Scene(root));
         stage.setTitle("User Information");
+        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
 
@@ -140,6 +144,8 @@ public class IHMConnexionPageController {
 
         controller.setNewProfile(true);
         controller.setIHMManager(IHMManager);
+        controller.setControllerContext(IHMManager);
+        controller.setMainApp(mainApp);
         controller.onModifyProfileClicked();
 
     }
@@ -160,6 +166,14 @@ public class IHMConnexionPageController {
         this.IHMManager = ihmManager;
         if (ihmManager != null)
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+    }
+    
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
     }
 
 }

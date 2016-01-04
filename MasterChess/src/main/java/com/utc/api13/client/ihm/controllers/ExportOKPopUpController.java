@@ -8,11 +8,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class ExportOKPopUpController {
     private IHMManager IHMManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
+    private Stage currentStage;
 
     @FXML
     BorderPane popUpBorderPane;
@@ -37,5 +39,13 @@ public class ExportOKPopUpController {
         this.IHMManager = ihmManager;
         if (ihmManager != null)
             this.myIClientToIHM = this.IHMManager.getIClientDataToIHM();
+    }
+    
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
     }
 }

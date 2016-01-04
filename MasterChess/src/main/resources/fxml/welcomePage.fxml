@@ -35,7 +35,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Text fx:id="userLabel" layoutX="409.0" layoutY="35.0" onMouseClicked="#onMyInfoClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="ConnectedPlayerLogin">
+                  <Text fx:id="userLabel" layoutX="463.0" layoutY="35.0" onMouseClicked="#onMyInfoClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="ConnectedPlayer">
                      <font>
                         <Font size="15.0" />
                      </font>

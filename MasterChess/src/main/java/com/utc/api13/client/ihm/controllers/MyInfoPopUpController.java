@@ -30,6 +30,7 @@ public class MyInfoPopUpController {
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private boolean newProfile = false;
+    private Stage currentStage;
 
     public boolean isNewProfile() {
         return newProfile;
@@ -67,6 +68,7 @@ public class MyInfoPopUpController {
         }
         controller.setMainApp(this.mainApp);
         stage.setScene(new Scene(root));
+        mainApp.setCurrentStage(stage);
         stage.setTitle("My Profile");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
@@ -120,5 +122,13 @@ public class MyInfoPopUpController {
     }
 
     public void setBindingsOnLoad() {
+    }
+    
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
     }
 }

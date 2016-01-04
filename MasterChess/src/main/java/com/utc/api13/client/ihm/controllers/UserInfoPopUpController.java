@@ -23,12 +23,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class UserInfoPopUpController {
     private IHMManager IHMManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     public PublicUserEntity u;
+    private Stage currentStage;
+    
 
     public PublicUserEntity getU() {
         return u;
@@ -108,5 +111,13 @@ public class UserInfoPopUpController {
             userInfoTableView.setItems(profile.statPlayerProperty());
         });
 
+    }
+    
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
     }
 }

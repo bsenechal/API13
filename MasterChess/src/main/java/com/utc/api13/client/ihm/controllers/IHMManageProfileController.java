@@ -1,6 +1,7 @@
 package com.utc.api13.client.ihm.controllers;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
@@ -15,6 +16,9 @@ import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -22,7 +26,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class IHMManageProfileController {
@@ -31,6 +37,7 @@ public class IHMManageProfileController {
     private IClientDataToIHM myIClientToIHM;
     private final Logger log = Logger.getLogger(getClass());
     private boolean newProfile = false;
+    private Stage currentStage;
 
     public boolean isNewProfile() {
         return newProfile;
@@ -54,7 +61,7 @@ public class IHMManageProfileController {
     AnchorPane createProfileAnchorPane;
 
     @FXML
-    public void onSaveProfileClicked() {
+    public void onSaveProfileClicked() throws IOException {
 
         PrivateUserEntity user = null;
         if (!newProfile)
@@ -66,13 +73,31 @@ public class IHMManageProfileController {
         user.setPassword(passwordTextView.getText());
         user.setFirstName(firstNameTextView.getText());
         user.setLastName(lastNameTextView.getText());
+        
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader;
+        
         try {
 
             if (newProfile)
                 this.myIClientToIHM.createProfile(user);
             else
                 this.myIClientToIHM.updateProfile(user);
-            // }
+             
+            
+            fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
+            root = (Pane) fxmlLoader.load();
+            ConfirmationController controller = fxmlLoader.getController();
+            controller.setControllerContext(this.IHMManager);
+            controller.setMainApp(this.mainApp, "Your profile has been saved!");
+            stage.setScene(new Scene(root));
+            stage.setTitle("Your profile");
+            mainApp.getCurrentStage().close();
+            mainApp.setCurrentStage(stage);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
 
         } catch (TechnicalException e) {
             // TODO afficher a l'utlisateur l'erreur soit dans une popup ou dans
@@ -148,6 +173,14 @@ public class IHMManageProfileController {
     }
 
     public void setBindingsOnLoad() {
+    }
+    
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
     }
 
 }

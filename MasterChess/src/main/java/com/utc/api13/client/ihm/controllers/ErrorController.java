@@ -6,21 +6,26 @@ import com.utc.api13.client.ihm.IHMManager;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class ErrorController {
 
     private IHMManager IHMManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
-
+    private Stage currentStage;
+    
     @FXML
     BorderPane errorBorderPane;
     @FXML
     Label errorLabel;
     @FXML
     AnchorPane errorAnchorPane;
+    @FXML
+    ImageView errorIcon; 
 
     public ErrorController() {
         initialize();
@@ -55,6 +60,14 @@ public class ErrorController {
 
     public void setBindingsOnLoad() {
 
+    }
+    
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
     }
 
 }

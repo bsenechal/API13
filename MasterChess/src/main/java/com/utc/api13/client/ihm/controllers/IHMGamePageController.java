@@ -15,11 +15,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 public class IHMGamePageController {
     private IHMManager IHMManager;
     private IClientDataToIHM myIClientToIHM;
     private AppClient mainApp;
+    private Stage currentStage;
 
     @FXML
     Label chatLabel, otherPlayerLoginLabel, otherPlayerTimeLabel, playerLoginLabel, playerTimeLabel,
@@ -114,6 +116,14 @@ public class IHMGamePageController {
     }
 
     public void setBindingsOnLoad() {
+    }
+    
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
     }
 
 }

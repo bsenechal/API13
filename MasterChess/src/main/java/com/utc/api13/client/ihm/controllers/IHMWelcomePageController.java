@@ -44,6 +44,7 @@ public class IHMWelcomePageController {
     private IHMManager IHMManager;
     private ProfilProperty profile;
     public static Stage stageI;
+    private Stage currentStage;
 
     public ProfilProperty getProfile() {
         return profile;
@@ -226,17 +227,38 @@ public class IHMWelcomePageController {
         Stage stage;
         Parent root;
         stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/exportOKPopUp.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ExportOKPopUpController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
 
-        controller.setMainApp(this.mainApp, path);
+        controller.setMainApp(this.mainApp, "Successful export!");
         stage.setScene(new Scene(root));
         stage.setTitle("Export success");
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
+    
+    public void exportNOK() throws IOException {
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+        root = (Pane) fxmlLoader.load();
+        ExportOKPopUpController controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager);
+
+        controller.setMainApp(this.mainApp, "Export error!");
+        stage.setScene(new Scene(root));
+        stage.setTitle("Export error");
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+    }
+
 
     public void setListConnectedUser() {
 
@@ -362,6 +384,14 @@ public class IHMWelcomePageController {
 
     public void displayProfile() {
 
+    }
+    
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
     }
 
 }
