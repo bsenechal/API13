@@ -57,13 +57,13 @@ public class IHMConnexionPageController {
         String login = loginTextView.getText();
         String pw = passwordTextView.getText();
         String sv = serverAddressTextView.getText();
-        Integer port = Integer.parseInt(portTextView.getText().isEmpty() ? "0" : portTextView.getText());
+        String portString = portTextView.getText(); 
         Stage stage;
         Parent root;
         stage = new Stage();
         FXMLLoader fxmlLoader;
 
-        if (login.length()==0 || pw.length()==0 || sv.length()==0 || port==0 ) {
+        if (login.length()==0 || pw.length()==0 || sv.length()==0 || portString.length()==0 ) {
            try {  
         	        error("Error : please fill all the fields!"); 
         	    }
@@ -71,10 +71,20 @@ public class IHMConnexionPageController {
         	    	log.error(e1.getMessage(), e1);
         	    }
 		} 
+        
+        else if (!(portTextView.getText().matches("[0-9][0-9][0-9][0-9]") || portTextView.getText().matches("[0-9][0-9][0-9]") || portTextView.getText().matches("[0-9][0-9]") || portTextView.getText().matches("[0-9]"))){
+        	try {
+        		error("Error : please use digits for the port field!"); 
+        	} catch(IOException e1) {
+    	    	log.error(e1.getMessage(), e1);
+    	    }
+        }
 
         else {
 
             try {
+            	Integer port = Integer.parseInt(portString.isEmpty() ? "0" : portTextView.getText());
+            	//TODO : gérer la connexion au serveur avec le port 
                 myIClientToIHM.connect(login, pw);
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
                 root = (Pane) fxmlLoader.load();
