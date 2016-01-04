@@ -183,22 +183,19 @@ public class IHMConnexionPageController {
 
     @FXML
     private void onSignUpClicked(Event event) throws IOException {
-        MyInfoPopUpController controller = new MyInfoPopUpController();
-        controller.setNewProfile(true);
-        controller.setIHMManager(IHMManager);
+    	Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/createProfilePage.fxml"));
+        root = (Pane) fxmlLoader.load();
+        CreateProfileController controller = fxmlLoader.getController();
         controller.setControllerContext(IHMManager);
         controller.setMainApp(mainApp);
-        try {
-        	controller.onModifyProfileClicked();
-        }
-        catch (IOException e) {
-        	try { 
-        		error("Error when modifying your profile"); 
-        	} catch (IOException e1) {
-					log.error(e1.getMessage(), e1);
-				} 
-             log.error(e.getMessage(), e);
-            }
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("My Profile");
+        stage.setScene(scene);
+        mainApp.setCurrentStage(stage);
+        stage.show();
     }
 
     public IHMConnexionPageController() {

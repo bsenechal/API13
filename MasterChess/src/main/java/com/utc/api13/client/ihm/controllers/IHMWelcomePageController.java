@@ -108,20 +108,18 @@ public class IHMWelcomePageController {
 
     @FXML
     public void onModifyProfileClicked() throws IOException {
-        try {
-        	MyInfoPopUpController profileController = new MyInfoPopUpController();
-        	 profileController.setIHMManager(this.IHMManager);
-             profileController.onModifyProfileClicked();
-             
-        }
-        catch (IOException e) {
-        	try {
-        		error("Error when saving your profile : IOException"); 
-        	} catch(IOException e1) {
-    	    	log.error(e1.getMessage(), e1);
-    	    }
-        	log.error(e.getMessage(), e);
-        }
+    	Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/updateProfilePage.fxml"));
+        root = (Pane) fxmlLoader.load();
+        ModifyProfileController controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager);
+        controller.setMainApp(this.mainApp);
+        stage.setScene(new Scene(root));
+        mainApp.setCurrentStage(stage);
+        stage.setTitle("My Profile");
+        stage.show();
     }
 
     @FXML

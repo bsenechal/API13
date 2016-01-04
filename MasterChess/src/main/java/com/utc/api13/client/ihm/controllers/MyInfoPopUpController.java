@@ -1,5 +1,7 @@
 package com.utc.api13.client.ihm.controllers;
 
+import javafx.scene.control.Button; 
+
 import java.io.IOException;
 
 import com.utc.api13.client.AppClient;
@@ -29,16 +31,16 @@ public class MyInfoPopUpController {
     private IHMManager IHMManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
-    private boolean newProfile = false;
+    //private boolean newProfile = false;
     private Stage currentStage;
 
-    public boolean isNewProfile() {
+   /* public boolean isNewProfile() {
         return newProfile;
     }
 
     public void setNewProfile(boolean newProfile) {
         this.newProfile = newProfile;
-    }
+    }*/
 
     @FXML
     BorderPane userInfoBorderPane;
@@ -51,28 +53,22 @@ public class MyInfoPopUpController {
     @FXML
     TableColumn userInfoWon, userInfoLost, userInfoPlayed;
     @FXML
-    Hyperlink modifyLink;
+    Button modifyButton;
 
     @FXML
     public void onModifyProfileClicked() throws IOException {
-
-        Stage stage;
+    	Stage stage;
         Parent root;
         stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/createProfilePage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/updateProfilePage.fxml"));
         root = (Pane) fxmlLoader.load();
-        IHMManageProfileController controller = fxmlLoader.getController();
+        ModifyProfileController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
-        if (newProfile) {
-            controller.setNewProfile(newProfile);
-        }
         controller.setMainApp(this.mainApp);
         stage.setScene(new Scene(root));
         mainApp.setCurrentStage(stage);
-        stage.setTitle("My Profile");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
-
+        stage.setTitle("Update my Profile");
+        stage.show();
     }
 
     public MyInfoPopUpController() {
@@ -85,7 +81,7 @@ public class MyInfoPopUpController {
     public void setMainApp(AppClient app) {
         this.mainApp = app;
 
-        if (!newProfile) {
+        //if (!newProfile) {
             PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
             ObservableList<PrivateUserEntity> statsPlayer = FXCollections.observableArrayList();
             userInfoWon.setCellValueFactory(new PropertyValueFactory<PrivateUserEntity, Integer>("nbWon"));
@@ -96,7 +92,6 @@ public class MyInfoPopUpController {
             this.userInfoFirstName.setText(u.getFirstName());
             this.userInfoLastName.setText(u.getLastName());
             userInfoTableView.setItems(statsPlayer);
-        }
 
     }
 

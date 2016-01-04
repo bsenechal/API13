@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="createProfileBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc.api13.client.ihm.controllers.CreateProfileController">
+<BorderPane fx:id="createProfileBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc.api13.client.ihm.controllers.ModifyProfileController">
    <top>
       <AnchorPane fx:id="createProfileAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -17,7 +17,7 @@
             <TextField fx:id="loginTextView" layoutX="272.0" layoutY="157.0" />
             <TextField fx:id="passwordTextView" layoutX="272.0" layoutY="191.0" />
             <TextField fx:id="firstNameTextView" layoutX="272.0" layoutY="231.0" />
-            <Label fx:id="createProfileLabel" layoutX="152.0" layoutY="63.0" text="Create your Profile">
+            <Label fx:id="createProfileLabel" layoutX="152.0" layoutY="63.0" text="Update your Profile">
                <font>
                   <Font size="18.0" />
                </font>
