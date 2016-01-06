@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane fx:id="answerPropositionBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc.api13.client.ihm.controllers.AnswerPropositionController">
+   <top>
+      <AnchorPane fx:id="answerPropositionAnchorPane" prefHeight="401.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="invintingPlayerLogin" layoutX="212.0" layoutY="151.0" text="Label">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="invitationLabel" layoutX="250.0" layoutY="151.0" text="has just invited you to play chess!" />
+            <Label fx:id="optionsLabel" layoutX="244.0" layoutY="183.0" text="Options choosed :" />
+            <Label fx:id="chosenOptionsLabel" layoutX="354.0" layoutY="183.0" text="Label" />
+            <Button fx:id="yesButton" layoutX="266.0" layoutY="223.0" mnemonicParsing="false" onAction="#onYesClicked" text="Yes" />
+            <Button fx:id="noButton" layoutX="322.0" layoutY="223.0" mnemonicParsing="false" onAction="#onNoClicked" text="No" />
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

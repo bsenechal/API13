@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.utc.api13.client.ihm.controllers.ErrorController;
 import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
+import com.utc.api13.client.ihm.controllers.SendPropositionController;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
 //github.com/bsenechal/API13.git
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -36,7 +37,6 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 myIHMManager.getProfil().lastNameProperty().set(u.getLastName());
                 myIHMManager.getProfil().statPlayerProperty().setAll(u);
                 myIHMManager.getProfil().userUUID().set(u.getId().toString());
-                System.out.println("dans displayProfile"); 
             }
         });
 
@@ -49,12 +49,17 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     }
 
     @Override
-    public void displayProposition(UUID uidSender, boolean observable, boolean chattable) {
+    public void displayProposition(UUID uidSender, boolean observable, boolean chattable /*, boolean timer, String time*/) {
         // TODO Auto-generated method stub
         // à la fin, doit appeler la fonction de l'interface de data en
         // rajoutant observable et chattable
         // myIHMManager.getIClientDataToIHM().sendResponse(idUser, answer,
         // observable, chattable);
+    	
+    	//pb : retrouver le login de l'envoyeur sans fonction qui renvoie le user associé à un uuid
+    	
+    	SendPropositionController.displayProposition(); 
+    	//DOES NOT WORK : static pb 
     }
 
     @Override

@@ -28,8 +28,8 @@ import com.utc.api13.client.ihm.property.ProfilProperty;
 
 public class SendPropositionController {
 
-    private IHMManager IHMManager;
-    private AppClient mainApp;
+    private static IHMManager IHMManager;
+    private static AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
     private final Logger log = Logger.getLogger(getClass());
@@ -70,8 +70,12 @@ public class SendPropositionController {
     		}
     	}
     	else {
-    		this.myIClientToIHM.createProposition(UUID.fromString(this.opponentUUID), chattable,/*timer, time,*/ observable);
-	    	this.onCancelClicked(); 
+    		PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
+    		UUID enquirerUUID = u.getId(); 
+    		this.myIClientToIHM.createProposition(UUID.fromString(this.opponentUUID), /*enquirerUUID,*/ chattable,/*timer, time,*/ observable);
+	    	//dans l'interface : ajouter l'UUID du demandeur, timer, time
+    		
+    		this.onCancelClicked(); 
 	    	try {
 	    		this.confirmation(); 
 	    	} catch (IOException e) {
@@ -124,6 +128,27 @@ public class SendPropositionController {
             mainApp.setCurrentStage(stage);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
+    }
+    
+    public static void displayProposition() {
+    	/*Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = loadProposition(); 
+        root = (Pane) fxmlLoader.load();
+        IHMWelcomePageController controllerRight = fxmlLoader.getController();
+        controllerRight.setControllerContext(IHMManager);
+        controllerRight.setMainApp(mainApp);
+        stage.setTitle("Someone wants to play!");
+        stage.setScene(new Scene(root));
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();*/
+    }
+    
+    public FXMLLoader loadProposition() {
+    	return new FXMLLoader(getClass().getResource("/fxml/answerPropositionPopUp.fxml"));
     }
     
     public void setMainApp(AppClient app, Label oppUUID, Label oppLogin ) {
