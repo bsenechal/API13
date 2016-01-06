@@ -1,12 +1,21 @@
 package com.utc.api13.client.ihm;
 
+import java.io.IOException;
 import java.util.UUID;
 
+import com.utc.api13.client.ihm.controllers.ErrorController;
+import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
 //github.com/bsenechal/API13.git
 import com.utc.api13.commun.entities.PublicUserEntity;
 
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class ClientIHMToDataImpl implements IClientIHMToData {
 
@@ -22,12 +31,12 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-
                 myIHMManager.getProfil().loginProperty().set(u.getLogin());
                 myIHMManager.getProfil().firstNameProperty().set(u.getFirstName());
                 myIHMManager.getProfil().lastNameProperty().set(u.getLastName());
                 myIHMManager.getProfil().statPlayerProperty().setAll(u);
-
+                myIHMManager.getProfil().userUUID().set(u.getId().toString());
+                System.out.println("dans displayProfile"); 
             }
         });
 

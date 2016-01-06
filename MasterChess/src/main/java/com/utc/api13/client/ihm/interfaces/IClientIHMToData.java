@@ -1,5 +1,6 @@
 package com.utc.api13.client.ihm.interfaces;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import com.utc.api13.commun.entities.PublicUserEntity;

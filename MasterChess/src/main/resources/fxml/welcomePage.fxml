@@ -121,7 +121,6 @@
                         <TableColumn fx:id="connectedUserLogin" prefWidth="94.0" resizable="false" text="Login" />
                         <TableColumn fx:id="connectedUserStatus" prefWidth="92.0" resizable="false" text="Status" />
                         <TableColumn fx:id="connectedUserStat" prefWidth="82.0" resizable="false" text="Won/Lost" />
-                        <TableColumn fx:id="connectedUserActionIcon" prefWidth="28.0" resizable="false" />
                      </columns>
                   </TableView>
                   <ScrollBar fx:id="connectedUserScrollbar" layoutX="313.0" layoutY="6.0" orientation="VERTICAL" prefHeight="527.0" prefWidth="14.0" />

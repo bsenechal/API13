@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
@@ -385,7 +386,6 @@ public class IHMWelcomePageController {
                     root = (Pane) fxmlLoader.load();
                     UserInfoPopUpController controller = fxmlLoader.getController();
                     controller.setControllerContext(IHMManager);
-
                     controller.setMainApp(mainApp);
                     controller.setBindings(profile);
                     stage.setScene(new Scene(root));
@@ -449,7 +449,6 @@ public class IHMWelcomePageController {
         controller.setMainApp(this.mainApp, message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
-        mainApp.getCurrentStage().close();
         mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
