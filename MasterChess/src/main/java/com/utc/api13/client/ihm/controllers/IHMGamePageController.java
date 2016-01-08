@@ -6,6 +6,7 @@ import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.models.ChessBoardNode;
+import com.utc.api13.commun.entities.GameEntity;
 
 import javafx.embed.swing.SwingNode;
 import javafx.event.Event;
@@ -79,8 +80,7 @@ public class IHMGamePageController {
         setBindingsOnLoad();
     }
 
-    public void setMainApp(AppClient app, boolean chattable, boolean observable, boolean timer, 
-    		String time, String otherPlayerLogin) {
+    public void setMainApp(AppClient app, GameEntity g) {
         this.mainApp = app;
         final ChessBoardNode cb = new ChessBoardNode(IHMManager);
         //MOMO : PENSER A INITIALISER TOUS LES BONS CHAMPS
