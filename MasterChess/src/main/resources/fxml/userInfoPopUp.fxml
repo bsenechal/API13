@@ -30,7 +30,7 @@
               </columns>
             </TableView>
             <Button fx:id="sendPropositionButton" layoutX="163.0" layoutY="227.0" mnemonicParsing="false" onAction="#sendProposition" text="Play with this player!" />
-            <Label fx:id="userUUID" layoutX="226.0" layoutY="29.0" text="test" />
+            <Label fx:id="userUUID" layoutX="229.0" layoutY="29.0" text="Label" textFill="#f4f4f4" />
          </children>
       </AnchorPane>
    </center>

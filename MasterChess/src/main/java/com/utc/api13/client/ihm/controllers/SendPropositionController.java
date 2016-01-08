@@ -75,20 +75,37 @@ public class SendPropositionController {
     		}
     	}
     	else {
-    		PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
-    		UUID enquirerUUID = u.getId(); 
-    		this.myIClientToIHM.createProposition(UUID.fromString(this.opponentUUID), /*enquirerUUID,*/ chattable,/*timer, time,*/ observable);
-    		this.onCancelClicked(); 
+    		if (!time.matches("[0-9][0-3]:+[0-5][0-9]")) {
+    			try {
+        			error("Please use a 00:00 format!"); 
+        		} catch (IOException e) {
+        			log.error(e.getMessage(), e);
+        		}
+    		}
     		
-	    	try {
-	    		this.confirmation(); 
-	    	} catch (IOException e) {
-				log.error(e.getMessage(), e);
-			}
+    		else {
+	    		PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
+	    		UUID enquirerUUID = u.getId(); 
+	    		
+	    		int timeInt = this.conversionTime(time); 
+	    		this.myIClientToIHM.createProposition(UUID.fromString(this.opponentUUID), /*enquirerUUID,*/ chattable,/*timer, timeInt,*/ observable);
+	    		this.onCancelClicked(); 
+	    		
+		    	try {
+		    		this.confirmation(); 
+		    	} catch (IOException e) {
+					log.error(e.getMessage(), e);
+				}
+    		}
     	}	
     }
     
-    public SendPropositionController() {
+    private int conversionTime(String time) {
+		// A COMPLETER après réponse de data sur l'int voulu : nb de secondes ?
+		return 0;
+	}
+
+	public SendPropositionController() {
         initialize();
     }
     public void initialize() {
