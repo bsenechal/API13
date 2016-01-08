@@ -6,8 +6,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,6 +27,7 @@ import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.client.ihm.property.ErrorProperty;
 import com.utc.api13.client.ihm.property.ProfilProperty;
 
 public class SendPropositionController {
@@ -34,6 +38,7 @@ public class SendPropositionController {
     private Stage currentStage;
     private final Logger log = Logger.getLogger(getClass());
     private String opponentUUID; 
+    private ErrorProperty error;  
     
     
     @FXML
@@ -73,9 +78,8 @@ public class SendPropositionController {
     		PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
     		UUID enquirerUUID = u.getId(); 
     		this.myIClientToIHM.createProposition(UUID.fromString(this.opponentUUID), /*enquirerUUID,*/ chattable,/*timer, time,*/ observable);
-	    	//dans l'interface : ajouter l'UUID du demandeur, timer, time
-    		
     		this.onCancelClicked(); 
+    		
 	    	try {
 	    		this.confirmation(); 
 	    	} catch (IOException e) {
@@ -162,6 +166,37 @@ public class SendPropositionController {
         if (ihmManager != null) {
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
         }
+        error = new ErrorProperty();
+        this.IHMManager.setError(error);
+        this.setListenersOnLoad(); 
     }
 
+	private void setListenersOnLoad() {
+		// TODO Auto-generated method stub
+		
+		// ??? connectedUserTable.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
+
+          /*  @SuppressWarnings("unchecked")
+            @Override
+            public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+                Stage stage;
+                Parent root = null;
+                stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+                try {
+                    root = (Pane) fxmlLoader.load();
+                    ErrorController controller = fxmlLoader.getController();
+                    controller.setControllerContext(IHMManager);
+                    controller.setMainApp(mainApp);
+                    controller.setBindings(error);
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("User Information");
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.showAndWait();
+                } catch (IOException e) {
+                    log.error(e.getMessage(), e);
+                   }
+            }
+        });*/
+    }
 }

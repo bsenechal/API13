@@ -63,7 +63,7 @@ public class IHMWelcomePageController {
     @FXML
     ImageView iconHelp, iconParam, iconProfile, iconNotif, infoTest;
     @FXML
-    Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel;
+    Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel, testEcran;
     @FXML
     Text userLabel;
     @FXML
@@ -78,6 +78,23 @@ public class IHMWelcomePageController {
     SplitMenuButton paramSplitMenuButton;
     @FXML
     ScrollBar currentGamesScrollbar, savedGamesScrollbar, connectedUserScrollbar;
+    
+    @FXML
+    public void testEcranFunction() throws IOException {
+    	//ne pas effacer cette fonction car utile pour tester les écrans déclenchés par data !
+    	/*Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/answerPropositionPopUp.fxml"));
+        root = (Pane) fxmlLoader.load();
+        AnswerPropositionController controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager);
+        controller.setMainApp(this.mainApp, "un joueur", "pas d'options");
+        stage.setScene(new Scene(root));
+        mainApp.setCurrentStage(stage);
+        stage.setTitle("My Profile");
+        stage.show();*/
+    }
     
     public ProfilProperty getProfile() {
         return this.profile;

@@ -79,9 +79,11 @@ public class IHMGamePageController {
         setBindingsOnLoad();
     }
 
-    public void setMainApp(AppClient app) {
+    public void setMainApp(AppClient app, boolean chattable, boolean observable, boolean timer, 
+    		String time, String otherPlayerLogin) {
         this.mainApp = app;
         final ChessBoardNode cb = new ChessBoardNode(IHMManager);
+        //MOMO : PENSER A INITIALISER TOUS LES BONS CHAMPS
 
         /**
          * JFrame f = new JFrame("Chess"); f.add(cb.getGui());

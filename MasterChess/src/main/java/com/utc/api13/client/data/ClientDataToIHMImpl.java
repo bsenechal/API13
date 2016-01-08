@@ -292,7 +292,6 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         // uid
         dataClientManager.getIClientComToData().answerProposition(idUser, dataClientManager.getUserLocal().getId(),
                 chattable, observable, answer);
-
     }
 
     @Override
