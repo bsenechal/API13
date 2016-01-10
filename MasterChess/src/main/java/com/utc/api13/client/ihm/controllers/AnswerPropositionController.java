@@ -40,7 +40,8 @@ public class AnswerPropositionController {
     private boolean chattable; 
     private boolean observable; 
     private boolean timer; 
-    private String time; 
+    private String timeString; 
+    private int timeInt; 
     
     @FXML
     BorderPane answerPropositionBorderPane;
@@ -80,17 +81,20 @@ public class AnswerPropositionController {
         stage.showAndWait();
     }
     
-    public void setMainApp(AppClient app, String login, boolean chattable, boolean timer, boolean observable, String time) {
+    public void setMainApp(AppClient app, String login, boolean chattable, boolean timer, boolean observable, int time) {
         this.mainApp = app;
         this.chattable=chattable; 
         this.timer=timer; 
-        this.time=time; 
+        this.timeInt=time; 
+        int nbSecondes=time%60; 
+        int nbMinutes=time/60; 
+        this.timeString=Integer.toString(nbMinutes)+":"+Integer.toString(nbSecondes); 
         this.observable=observable; 
         
         String options= new String("") ; 
         if (chattable) options=options+"chattable ; "; 
         if (observable) options=options+"observable ; "; 
-        if (timer) options=options+"timer : "+time; 
+        if (timer) options=options+"timer : "+timeString; 
         if (options.length()==0) options="None"; 
         
         this.chosenOptionsLabel.setText(options);
@@ -108,7 +112,7 @@ public class AnswerPropositionController {
     	PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
 		UUID answeringUser = u.getId(); 
 		try {
-			this.myIClientToIHM.sendResponse(answeringUser/*, enquirerUUID*/, answer, observable, chattable/*, timer, time*/);
+			this.myIClientToIHM.sendResponse(answeringUser/*, enquirerUUID*/, answer, observable, chattable/*, timer, timeInt*/);
 		} catch (TechnicalException e) {
 			log.error(e.getMessage(), e);
 			try { 

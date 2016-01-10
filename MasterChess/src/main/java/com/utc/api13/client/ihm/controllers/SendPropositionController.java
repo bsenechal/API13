@@ -66,7 +66,7 @@ public class SendPropositionController {
     	boolean timer = timerCheckBox.isSelected(); 
     	String time = timeTextField.getText(); 
    
-    	if (time==null && timer) time="00:30"; 
+    	if (time.length()==0 && timer) time="00:30"; 
     	else if (time.length()!=0 && !timer) {
     		try {
     			error("Please check timer option if you enter a time!"); 
@@ -86,8 +86,8 @@ public class SendPropositionController {
     		else {
 	    		PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
 	    		UUID enquirerUUID = u.getId(); 
-	    		
-	    		int timeInt = this.conversionTime(time); 
+	    		int timeInt=0; 
+	    		if (timer) timeInt = this.conversionTime(time); 
 	    		this.myIClientToIHM.createProposition(UUID.fromString(this.opponentUUID), /*enquirerUUID,*/ chattable,/*timer, timeInt,*/ observable);
 	    		this.onCancelClicked(); 
 	    		
@@ -101,8 +101,10 @@ public class SendPropositionController {
     }
     
     private int conversionTime(String time) {
-		// A COMPLETER après réponse de data sur l'int voulu : nb de secondes ?
-		return 0;
+		String secondsString=time.substring(3, 5); 
+		String minutesString=time.substring(0, 2); 
+		int seconds=Integer.parseInt(secondsString)+(Integer.parseInt(minutesString)*60);  
+		return seconds;
 	}
 
 	public SendPropositionController() {
