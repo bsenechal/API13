@@ -44,7 +44,7 @@ public class RookEntity extends APieceEntity {
         List<PositionEntity> result = new ArrayList<PositionEntity>();
 
         int positionX = getPosition().getPositionX();
-        int positionY = getPosition().getPositionX();
+        int positionY = getPosition().getPositionY();
 
         // Déplacement sur l'axe x
         for (int x = -7; x < 8; x++) {
