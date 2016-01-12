@@ -60,7 +60,8 @@ public class IHMGamePageController {
 
     @FXML
     private void onSendTextClicked(Event event) {
-
+    	chatTextArea.setText(sendTextArea.getText());
+    	sendTextArea.setText(null);
     }
 
     @FXML
