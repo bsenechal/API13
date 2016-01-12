@@ -15,21 +15,26 @@ import com.utc.api13.commun.enumerations.PieceColorEnum;
  *
  */
 public class QueenEntity extends APieceEntity {
+    private static final int START_COLUMN_QUEEN = 4;
+    private static final int START_LINE_BLACK_QUEEN = 8;
+    private static final int START_LINE_WHITE_QUEEN = 1;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4412179301301968841L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4412179301301968841L;
 
-	public QueenEntity(PieceColorEnum color) {
-		super(color);
-		// TODO Auto-generated constructor stub
-	}
+    public QueenEntity(PieceColorEnum color) {
+        super(color);
+        this.setPosition(
+                (color.equals(PieceColorEnum.BLACK) ? new PositionEntity(START_COLUMN_QUEEN, START_LINE_BLACK_QUEEN)
+                        : new PositionEntity(START_COLUMN_QUEEN, START_LINE_WHITE_QUEEN)));
+    }
 
-	@Override
-	public List<PositionEntity> generateAvailableMoves(GameEntity game) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public List<PositionEntity> generateAvailableMoves(GameEntity game) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

@@ -15,21 +15,24 @@ import com.utc.api13.commun.enumerations.PieceColorEnum;
  *
  */
 public class BishopEntity extends APieceEntity {
+    private static final int START_LINE_BLACK_BISHOP = 8;
+    private static final int START_LINE_WHITE_BISHOP = 1;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2036717333681570183L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2036717333681570183L;
 
-	public BishopEntity(PieceColorEnum color) {
-		super(color);
-		// TODO Auto-generated constructor stub
-	}
+    public BishopEntity(final PieceColorEnum color, final int startColumn) {
+        super(color);
+        this.setPosition((color.equals(PieceColorEnum.BLACK) ? new PositionEntity(startColumn, START_LINE_BLACK_BISHOP)
+                : new PositionEntity(startColumn, START_LINE_WHITE_BISHOP)));
+    }
 
-	@Override
-	public List<PositionEntity> generateAvailableMoves(GameEntity game) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public List<PositionEntity> generateAvailableMoves(GameEntity game) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

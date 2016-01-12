@@ -29,11 +29,11 @@ public class RookEntity extends APieceEntity {
      */
     private static final long serialVersionUID = 2587319077980898398L;
 
-    public RookEntity(PieceColorEnum color, int START_COLUMN_ROOK) {
+    public RookEntity(final PieceColorEnum color, final int startColumn) {
         super(color);
         this.setPosition(
-                (color.equals(PieceColorEnum.BLACK) ? new PositionEntity(START_COLUMN_ROOK, START_LINE_BLACK_ROOK)
-                : new PositionEntity(START_COLUMN_ROOK, START_LINE_WHITE_ROOK)));
+                (color.equals(PieceColorEnum.BLACK) ? new PositionEntity(startColumn, START_LINE_BLACK_ROOK)
+                : new PositionEntity(startColumn, START_LINE_WHITE_ROOK)));
     }
 
 
