@@ -173,7 +173,8 @@ public abstract class APieceEntity extends ADataEntity {
 	 * This method allow us to add a possible position to the result depending
 	 * on a offset (x & y).
 	 * 
-	 * @return boolean -> if true -> the solution implies a kill.
+	 * @return boolean -> if true -> the solution implies a kill or the position is already taken 
+	 * : the piece is stopped and can't go further
 	 * @param game
 	 * @param positionX
 	 * @param positionY
@@ -185,7 +186,7 @@ public abstract class APieceEntity extends ADataEntity {
 	protected boolean addPossibleSolution(final GameEntity game, final int positionX, final int positionY, int x, int y,
 			List<PositionEntity> result) {
 		PositionEntity positionTemp = new PositionEntity(positionX + x, positionY + y);
-		boolean haskilledAnother = false;
+		boolean isStopped = false;
 
 		// On vérifie que la position est bien sur le plateau de jeu
 		if (ChessboardEntity.isCaseOnChessboard(positionTemp)) {
@@ -196,11 +197,13 @@ public abstract class APieceEntity extends ADataEntity {
 				this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
 				// on supprime le piont adverse s'il y en a un a destination
 				APieceEntity tmpOpponentPiece = null;
+				boolean haskilledAnother = false;
 				if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
 					tmpOpponentPiece = game.getOpponentPieces().stream()
 							.filter(piece -> piece.getPosition().equals(positionTemp)).findFirst().orElse(null);
 					game.removePiece(tmpOpponentPiece);
 					haskilledAnother = true;
+					isStopped = true;
 				}
 				if (!game.isCheck()) {
 					result.add(positionTemp);
@@ -210,7 +213,10 @@ public abstract class APieceEntity extends ADataEntity {
 				}
 				this.cancelLastMove(game);
 			}
+			else{
+				isStopped = true;
+			}
 		}
-		return haskilledAnother;
+		return isStopped;
 	}
 }
