@@ -170,7 +170,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
         // Set the current game
         instanceDataClientManager.setCurrentGame(game);
         // Ask the IHM module to display the Chessboard
-        instanceDataClientManager.getIClientIHMToData().displayChessBoard();
+        instanceDataClientManager.getIClientIHMToData().displayChessBoard(game);
     }
 
 

@@ -3,9 +3,11 @@ package com.utc.api13.client.ihm.controllers;
 import javax.swing.SwingUtilities;
 
 import com.utc.api13.client.AppClient;
+import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.models.ChessBoardNode;
+import com.utc.api13.commun.entities.GameEntity;
 
 import javafx.embed.swing.SwingNode;
 import javafx.event.Event;
@@ -15,11 +17,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 public class IHMGamePageController {
     private IHMManager IHMManager;
     private IClientDataToIHM myIClientToIHM;
     private AppClient mainApp;
+    private Stage currentStage;
 
     @FXML
     Label chatLabel, otherPlayerLoginLabel, otherPlayerTimeLabel, playerLoginLabel, playerTimeLabel,
@@ -51,12 +55,14 @@ public class IHMGamePageController {
 
     @FXML
     private void onExcludeChatClicked(Event event) {
-
+    	
     }
 
     @FXML
     private void onSendTextClicked(Event event) {
-
+    	PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
+    	chatTextArea.setText(u.getLogin() + " : " + sendTextArea.getText());
+    	sendTextArea.setText(null);
     }
 
     @FXML
@@ -77,19 +83,10 @@ public class IHMGamePageController {
         setBindingsOnLoad();
     }
 
-    public void setMainApp(AppClient app) {
+    public void setMainApp(AppClient app, GameEntity g) {
         this.mainApp = app;
+        GameEntity game = this.myIClientToIHM.getCurrentGame();
         final ChessBoardNode cb = new ChessBoardNode(IHMManager);
-
-        /**
-         * JFrame f = new JFrame("Chess"); f.add(cb.getGui());
-         * f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-         * f.setLocationByPlatform(true);
-         * 
-         * // ensures the frame is the minimum size it needs to be // in order
-         * display the components within it f.pack(); // ensures the minimum
-         * size is enforced. f.setMinimumSize(f.getSize()); f.setVisible(true);
-         */
         final SwingNode swingNode = new SwingNode();
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -101,11 +98,17 @@ public class IHMGamePageController {
         chatTextArea.setDisable(true);
 
         chessBoardStackPane.getChildren().add(swingNode);
-        /**
-         * PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
-         * this.playerLoginLabel.setText(u.getLogin()); setListenersOnLoad();
-         * setBindingsOnLoad();
-         */
+        
+        // initialisation des différents labels
+        PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
+        int nbObservers = game.getObservers().size();
+        
+        
+        //otherPlayerLoginLabel.setText();
+        //otherPlayerTimeLabel.setText(); 
+        playerLoginLabel.setText(u.getLogin()); 
+        //playerTimeLabel.setText(); 
+        numberObserversLabel.setText(String.valueOf(nbObservers));
 
     }
 
@@ -114,6 +117,14 @@ public class IHMGamePageController {
     }
 
     public void setBindingsOnLoad() {
+    }
+    
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
     }
 
 }

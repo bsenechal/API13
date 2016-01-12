@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
+import java.util.UUID;
+
+import org.apache.log4j.Logger;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -44,27 +47,12 @@ public class IHMWelcomePageController {
     private IHMManager IHMManager;
     private ProfilProperty profile;
     public static Stage stageI;
-
-    public ProfilProperty getProfile() {
-        return profile;
-    }
-
-    public void setProfile(ProfilProperty profile) {
-        this.profile = profile;
-    }
-
-    public IHMManager getIHMManager() {
-        return IHMManager;
-    }
-
-    public void setIHMManager(IHMManager iHMManager) {
-        IHMManager = iHMManager;
-    }
-
+    private Stage currentStage;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private ObservableList<PublicUserEntity> listUserPublic;
     private ObservableList<GameEntity> listCurrentGames;
+    private final Logger log = Logger.getLogger(getClass());
 
     @FXML
     BorderPane mainBorderPane;
@@ -75,7 +63,7 @@ public class IHMWelcomePageController {
     @FXML
     ImageView iconHelp, iconParam, iconProfile, iconNotif, infoTest;
     @FXML
-    Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel;
+    Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel, testEcran;
     @FXML
     Text userLabel;
     @FXML
@@ -90,6 +78,39 @@ public class IHMWelcomePageController {
     SplitMenuButton paramSplitMenuButton;
     @FXML
     ScrollBar currentGamesScrollbar, savedGamesScrollbar, connectedUserScrollbar;
+    
+    @FXML
+    public void testEcranFunction() throws IOException {
+    	//ne pas effacer cette fonction car utile pour tester les écrans déclenchés par data !
+    	/*Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/answerPropositionPopUp.fxml"));
+        root = (Pane) fxmlLoader.load();
+        AnswerPropositionController controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager);
+        controller.setMainApp(this.mainApp, "un joueur", "pas d'options");
+        stage.setScene(new Scene(root));
+        mainApp.setCurrentStage(stage);
+        stage.setTitle("My Profile");
+        stage.show();*/
+    }
+    
+    public ProfilProperty getProfile() {
+        return this.profile;
+    }
+
+    public void setProfile(ProfilProperty profile) {
+        this.profile = profile;
+    }
+
+    public IHMManager getIHMManager() {
+        return this.IHMManager;
+    }
+
+    public void setIHMManager(IHMManager iHMManager) {
+        this.IHMManager = iHMManager;
+    }
 
     @FXML
     private void onHelpClicked(Event event) {
@@ -105,21 +126,42 @@ public class IHMWelcomePageController {
 
     @FXML
     public void onModifyProfileClicked() throws IOException {
-        MyInfoPopUpController profileController = new MyInfoPopUpController();
-        profileController.setIHMManager(this.IHMManager);
-        profileController.onModifyProfileClicked();
-
+    	Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/updateProfilePage.fxml"));
+        root = (Pane) fxmlLoader.load();
+        ModifyProfileController controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager);
+        controller.setMainApp(this.mainApp);
+        stage.setScene(new Scene(root));
+        mainApp.setCurrentStage(stage);
+        stage.setTitle("My Profile");
+        stage.show();
     }
 
     @FXML
     public void onLogOutClicked() throws IOException {
-        // NB : pas d'exception prévu par data = normal ??
         try {
             this.myIClientToIHM.disconnect();
-        } catch (TechnicalException | FunctionalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (TechnicalException e) {
+        	try {
+        		error("Log out error : Technical Exception"); 
+        	} catch(IOException e1) {
+    	    	log.error(e1.getMessage(), e1);
+    	    }
+        	log.error(e.getMessage(), e);
         }
+        
+        catch (FunctionalException e) {
+        	try {
+        		error("Log out error : Functional Exception"); 
+        	} catch(IOException e1) {
+    	    	log.error(e1.getMessage(), e1);
+    	    }
+        	log.error(e.getMessage(), e);
+        }
+        
         Stage stage;
         Parent root;
         stage = new Stage();
@@ -134,7 +176,6 @@ public class IHMWelcomePageController {
         mainApp.getCurrentStage().close();
         mainApp.setCurrentStage(stage);
         stage.show();
-
     }
 
     @FXML
@@ -142,10 +183,16 @@ public class IHMWelcomePageController {
         File exportFile = null;
         try {
             exportFile = this.myIClientToIHM.exportProfile();
-        } catch (TechnicalException e1) {
-            // TODO Faire la gestion d'erreur
-            e1.printStackTrace();
+        } catch (TechnicalException e) {
+        	try {
+        		error("Export error : Technical Exception"); 
+        	}
+        	catch(IOException e1) {
+    	    	log.error(e1.getMessage(), e1);
+    	    }
+        	log.error(e.getMessage(), e);
         }
+        
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Export to ...");
         File selectedDirectory = directoryChooser.showDialog(new Stage());
@@ -157,31 +204,45 @@ public class IHMWelcomePageController {
                 Files.copy(exportFile.toPath(), selectedDirectory.toPath(),
                         java.nio.file.StandardCopyOption.REPLACE_EXISTING,
                         java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
+                exportOK(selectedDirectory.getAbsolutePath());
             } catch (IOException e) {
-                e.printStackTrace();
+                try { 
+                	exportNOK(); 
+                }
+                catch (IOException e1) {
+                	log.error(e1.getMessage(), e1);
+                }
+                log.error(e.getMessage(), e);
             }
-
-            // pop up de confirmation
-            this.exportOK(selectedDirectory.getAbsolutePath());
         }
     }
 
     @FXML
     public void onUserInfoClicked() throws IOException {
-        Stage stage;
-        Parent root;
+    	
+    	Stage stage;
+        Parent root=null;
         stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/userInfoPopUp.fxml"));
-        root = (Pane) fxmlLoader.load();
-        UserInfoPopUpController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
-
-        controller.setMainApp(this.mainApp);
-
-        stage.setScene(new Scene(root));
-        stage.setTitle("User Information");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        
+        try {
+	        root = (Pane) fxmlLoader.load();
+	        UserInfoPopUpController controller = fxmlLoader.getController();
+	        controller.setControllerContext(this.IHMManager);
+	        controller.setMainApp(this.mainApp);
+	        stage.setScene(new Scene(root));
+	        stage.setTitle("User Information");
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.showAndWait();
+    }  catch (IOException e) {
+        	try {
+        		error("Error when loading user info : IOException"); 
+        	}
+        	catch (IOException e1) {
+        		log.error(e1.getMessage(), e1);
+        	}
+        	log.error(e.getMessage(), e);
+        }
     }
 
     @FXML
@@ -203,12 +264,13 @@ public class IHMWelcomePageController {
         controller.setMainApp(this.mainApp);
         stage.setScene(new Scene(root));
         stage.setTitle("My Information");
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
 
     public void initialize() {
-
     }
 
     public IHMWelcomePageController() {
@@ -219,24 +281,44 @@ public class IHMWelcomePageController {
         this.mainApp = app;
         PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
         this.userLabel.setText(u.getLogin());
-
     }
 
     public void exportOK(String path) throws IOException {
         Stage stage;
         Parent root;
         stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/exportOKPopUp.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
-        ExportOKPopUpController controller = fxmlLoader.getController();
+        ConfirmationController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
 
-        controller.setMainApp(this.mainApp, path);
+        controller.setMainApp(this.mainApp, "Successful export!");
         stage.setScene(new Scene(root));
         stage.setTitle("Export success");
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
+    
+    public void exportNOK() throws IOException {
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+        root = (Pane) fxmlLoader.load();
+        ErrorController controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager);
+
+        controller.setMainApp(this.mainApp, "Export error!");
+        stage.setScene(new Scene(root));
+        stage.setTitle("Export error");
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+    }
+
 
     public void setListConnectedUser() {
 
@@ -321,7 +403,6 @@ public class IHMWelcomePageController {
                     root = (Pane) fxmlLoader.load();
                     UserInfoPopUpController controller = fxmlLoader.getController();
                     controller.setControllerContext(IHMManager);
-
                     controller.setMainApp(mainApp);
                     controller.setBindings(profile);
                     stage.setScene(new Scene(root));
@@ -329,12 +410,14 @@ public class IHMWelcomePageController {
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.showAndWait();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
+                    	try {
+							error("Error when loading user info : IOException");
+						} catch (IOException e1) {
+							log.error(e1.getMessage(), e1);
+						} 
+                    	log.error(e.getMessage(), e);
+                    }
             }
-
         });
     }
 
@@ -362,6 +445,30 @@ public class IHMWelcomePageController {
 
     public void displayProfile() {
 
+    }
+    
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
+    }
+    
+    public void error(String message) throws IOException {
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+        root = (Pane) fxmlLoader.load();
+        ErrorController controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager);
+        controller.setMainApp(this.mainApp, message);
+        stage.setScene(new Scene(root));
+        stage.setTitle("Error");
+        mainApp.setCurrentStage(stage);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
     }
 
 }

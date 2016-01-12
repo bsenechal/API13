@@ -1,5 +1,7 @@
 package com.utc.api13.client.ihm.property;
 
+import java.util.UUID;
+
 import com.utc.api13.commun.entities.PublicUserEntity;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -13,6 +15,7 @@ public class ProfilProperty {
     private StringProperty firstName;
     private StringProperty lastName;
     private ObservableList<PublicUserEntity> statPlayer;
+    private StringProperty userUUID; 
    
     public ObservableList<PublicUserEntity> getStatPlayer() {
         return statPlayer;
@@ -27,6 +30,7 @@ public class ProfilProperty {
         firstName=new SimpleStringProperty();
         lastName=new SimpleStringProperty();
         statPlayer = FXCollections.observableArrayList();
+        userUUID=new SimpleStringProperty(); 
     }
    
     public StringProperty loginProperty() {
@@ -37,6 +41,9 @@ public class ProfilProperty {
     }
     public StringProperty lastNameProperty() {
         return lastName;
+    }
+    public StringProperty userUUID() {
+        return userUUID;
     }
     public ObservableList<PublicUserEntity> statPlayerProperty() {
         return statPlayer;
