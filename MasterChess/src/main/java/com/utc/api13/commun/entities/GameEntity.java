@@ -327,18 +327,35 @@ public class GameEntity extends ADataEntity {
             pieces = getWhitePieces();
         }
         
+		// TODO : CORRIGER CA !
+		// Dans la liste de pièces, on ne peut pas récupérer le type classe de
+		// la pièce (donc isInstance(KingEntity.class) est toujours faut et ça
+		// renvoi toujours null
+		return (KingEntity) pieces.stream().filter(bw -> bw.getClass().isInstance(KingEntity.class)).findFirst()
+				.orElse(null);
+	}
+
+	/**
+	 * @author ulyss_000
+	 * @return the current player pieces
+	 */
+	public List<APieceEntity> getCurrentPlayerPieces() {
+		if (this.getCurrentPlayer().getId().equals(this.getBlackPlayer().getId())) {
+			// ActivePlayer is BlackPlayer
+			return this.getBlackPieces();
+
+		} else {
+			// ActivePlayer is WhitePlayer
+			return this.getWhitePieces();
         
-        // TODO : CORRIGER CA !
-        // Dans la liste de pièces, on ne peut pas récupérer le type classe de la pièce (donc isInstance(KingEntity.class) est toujours faut et ça renvoi toujours null
-        return (KingEntity) pieces.stream().filter(bw -> bw.getClass().isInstance(KingEntity.class))
-					.findFirst().orElse(null);
 		}
+	}
 
 	/**
 	 * @author ulyss_000
 	 * @return the other player pieces
 	 */
-	private List<APieceEntity> getOpponentPieces() {
+	public List<APieceEntity> getOpponentPieces() {
 		if (this.getCurrentPlayer().getId().equals(this.getBlackPlayer().getId())) {
 			// ActivePlayer is BlackPlayer
 			return this.getWhitePieces();
@@ -448,4 +465,32 @@ public class GameEntity extends ADataEntity {
 
         return pieces;
     }
+
+	/**
+	 * Add a piece to the game
+	 * 
+	 * @param piece
+	 * @author ulyss_000
+	 */
+	public void addPiece(APieceEntity piece) {
+		if (piece.getColor().equals(PieceColorEnum.BLACK)) {
+			this.blackPieces.add(piece);
+		} else {
+			this.whitePieces.add(piece);
+		}
+	}
+
+	/**
+	 * Removes a piece from the game
+	 * 
+	 * @param piece
+	 * @author ulyss_000
+	 */
+	public void removePiece(APieceEntity piece) {
+		if (piece.getColor().equals(PieceColorEnum.BLACK)) {
+			this.blackPieces.remove(piece);
+		} else {
+			this.whitePieces.add(piece);
+		}
+	}
 }
