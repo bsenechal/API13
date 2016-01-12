@@ -242,8 +242,10 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	 */
 	@Override
 	public void surrender(UUID idPlayer) {
-		// TODO Auto-generated method stub
-
+	    //Get the game played by the user
+	    GameEntity playedGame = dataServerManager.getCurrentGames().stream().filter(game -> game.getBlackPlayer().getId().equals(idPlayer) || game.getWhitePlayer().getId().equals(idPlayer)).findFirst().orElse(null);
+	    //Erase the game from server
+	    endGame(playedGame.getId());
 	}
 
 	/*
