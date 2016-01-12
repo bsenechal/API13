@@ -18,7 +18,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.commun.entities.ChessboardEntity;
 import com.utc.api13.commun.entities.APieceEntity;
+import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.pieces.BishopEntity;
 import com.utc.api13.commun.entities.pieces.KingEntity;
 import com.utc.api13.commun.entities.pieces.KnightEntity;
@@ -53,15 +55,15 @@ public class ChessBoardNode {
         chessBoard.setBorder(new LineBorder(Color.BLACK));
         gui.add(chessBoard);
 
+        // initialisation du ChessBoardEntity de Data
+        ChessboardEntity cbEntity = new ChessboardEntity();
+        
         // create the chess board squares
         Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int ii = 0; ii < chessBoardSquares.length; ii++) {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
                 JButton b = new JButton();
                 b.setMargin(buttonMargin);
-                // ImageIcon icon = new ImageIcon(new BufferedImage(TAILLE_CASE,
-                // TAILLE_CASE, BufferedImage.TYPE_INT_ARGB));
-                // b.setIcon(icon);
                 if ((jj % 2 == 1 && ii % 2 == 1)
                         // ) {
                         || (jj % 2 == 0 && ii % 2 == 0)) {
@@ -122,8 +124,8 @@ public class ChessBoardNode {
                     tempo = new KingEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                     break;
                 }
-                // mettre à jour structure de data
-                // chessBoardSquares[ctr][ligne].setPiece(tempo);
+                
+                
                 try {
                     Image img = ImageIO.read(getClass().getResource(dossierIcone + 'P' + couleur + ".gif"));
                     chessBoardSquares[ctr][ligne + increment].setIcon(new ImageIcon(img));
@@ -132,8 +134,9 @@ public class ChessBoardNode {
                 }
                 tempo = new PawnEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                 // mettre à jour structure de data
-                // e.getCase(ctr, ligne + increment).setPiece(new Pion(ligne < 5
-                // ? "noir" : "blanc"));
+                // référencement de la pièce chez Data
+                PositionEntity position = new PositionEntity(ctr, ligne);
+                tempo.setPosition(position);
 
             }
             couleur = 'B';
