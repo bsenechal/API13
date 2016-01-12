@@ -50,35 +50,7 @@ public class KingEntity extends APieceEntity {
         // Calcul des positions possibles autour du roi
         for (int x = MIN_MOVE_X; x < MAX_MOVE_X; x++) {
             for (int y = MIN_MOVE_Y; y < MAX_MOVE_Y; y++) {
-                PositionEntity positionTemp = new PositionEntity(positionX + x, positionY + y);
-
-                // On vérifie que la position est bien sur le plateau de jeu
-                if (ChessboardEntity.isCaseOnChessboard(positionTemp)) {
-                    // On vérifie que la position n'est pas déjà prise par nos
-                    // pionts
-                    if (APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
-                        // On vérifie que cela ne met pas notre roi en échec
-                        // :
-                        this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
-                        // on supprime le piont adverse s'il y en a un a
-                        // destination
-                        APieceEntity tmpOpponentPiece = null;
-                        boolean killAnother = false;
-                        if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                            tmpOpponentPiece = game.getOpponentPieces().stream()
-                                    .filter(piece -> piece.getPosition().equals(positionTemp)).findFirst().orElse(null);
-                            game.removePiece(tmpOpponentPiece);
-                            killAnother = true;
-                        }
-                        if (!game.isCheck()) {
-                            result.add(positionTemp);
-                        }
-                        if (killAnother) {
-                            game.addPiece(tmpOpponentPiece);
-                        }
-                        this.cancelLastMove(game);
-                    }
-                }
+				addPossibleSolution(game, positionX, positionY, x, y, result);
             }
         }
         return result;
