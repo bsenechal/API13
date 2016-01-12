@@ -20,6 +20,7 @@ import javax.swing.border.LineBorder;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.commun.entities.ChessboardEntity;
 import com.utc.api13.commun.entities.APieceEntity;
+import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.pieces.BishopEntity;
 import com.utc.api13.commun.entities.pieces.KingEntity;
@@ -56,7 +57,9 @@ public class ChessBoardNode {
         gui.add(chessBoard);
 
         // initialisation du ChessBoardEntity de Data
+        GameEntity game = new GameEntity();
         ChessboardEntity cbEntity = new ChessboardEntity();
+        game.setChessboardEntity(cbEntity);
         
         // create the chess board squares
         Insets buttonMargin = new Insets(0, 0, 0, 0);
@@ -133,10 +136,10 @@ public class ChessBoardNode {
 
                 }
                 tempo = new PawnEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
-                // mettre à jour structure de data
-                // référencement de la pièce chez Data
-                PositionEntity position = new PositionEntity(ctr, ligne);
-                tempo.setPosition(position);
+                
+                // référencement de la pièce chez Data => déjà fait dans le constructeur de la pièce
+                //PositionEntity position = new PositionEntity(ctr, ligne);
+               // tempo.setPosition(position);
 
             }
             couleur = 'B';
