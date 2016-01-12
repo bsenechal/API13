@@ -17,6 +17,7 @@ import com.utc.api13.client.data.services.GameService;
 import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.Erreur;
 import com.utc.api13.commun.entities.GameEntity;
+import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
@@ -265,6 +266,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
     @Override
     public void sendChatText(final String message) {
+        Assert.notNull(dataClientManager.getCurrentGame(),"[ClientDataToIHMImpl][sendChatText] current game shouldn't be null");
+        MessageEntity newMessage = new MessageEntity();
+        newMessage.setText(message);
+        //TODO: à revoir, on aura besoin que la méthode prenne un MessageEntity et non un string
         dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
     }
 

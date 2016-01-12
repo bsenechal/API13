@@ -7,7 +7,14 @@ public class MessageEntity extends ADataEntity {
     private static final long serialVersionUID = 4634723100677874653L;
     private Date date;
     private String text;
-    private GameEntity gameEntity;
+
+    /**
+     * Create a new message at the current time
+     */
+    public MessageEntity() {
+        super();
+        this.date = new Date();
+    }
 
     /**
      * @return the date
@@ -37,20 +44,5 @@ public class MessageEntity extends ADataEntity {
      */
     public void setText(String text) {
         this.text = text;
-    }
-
-    /**
-     * @return the gameEntity
-     */
-    public GameEntity getGameEntity() {
-        return gameEntity;
-    }
-
-    /**
-     * @param gameEntity
-     *            the gameEntity to set
-     */
-    public void setGameEntity(GameEntity gameEntity) {
-        this.gameEntity = gameEntity;
     }
 }

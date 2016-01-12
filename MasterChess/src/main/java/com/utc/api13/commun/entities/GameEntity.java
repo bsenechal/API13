@@ -26,6 +26,7 @@ public class GameEntity extends ADataEntity {
 	private List<MoveEntity> movesHistory;
 	private List<APieceEntity> whitePieces;
 	private List<APieceEntity> blackPieces;
+	private List<MessageEntity> messages;
 
 	/**
 	 * 
@@ -43,6 +44,7 @@ public class GameEntity extends ADataEntity {
 		this.whitePlayer = null;
 		this.blackPlayer = null;
 		this.currentPlayer = null;
+		this.messages = new ArrayList<MessageEntity>();
 	}
 
 	/**
@@ -279,6 +281,14 @@ public class GameEntity extends ADataEntity {
 	}
 
 	/**
+	 * 
+	 * @return Returns the list of messages from chat
+	 */
+    public List<MessageEntity> getMessages() {
+        return messages;
+    }
+    
+	/**
 	 * Will switch current user between user black and user white
 	 * 
 	 * @author ulyss_000
@@ -398,5 +408,5 @@ public class GameEntity extends ADataEntity {
         participants.add(getWhitePlayer());
         return participants;
     }
-    
+
 }
