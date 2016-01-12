@@ -1,4 +1,4 @@
-package com.utc.api13.client.ihm.models;
+wpackage com.utc.api13.client.ihm.models;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
