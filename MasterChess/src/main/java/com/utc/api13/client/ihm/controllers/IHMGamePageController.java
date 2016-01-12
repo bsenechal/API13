@@ -55,12 +55,13 @@ public class IHMGamePageController {
 
     @FXML
     private void onExcludeChatClicked(Event event) {
-
+    	
     }
 
     @FXML
     private void onSendTextClicked(Event event) {
-    	chatTextArea.setText(sendTextArea.getText());
+    	PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
+    	chatTextArea.setText(u.getLogin() + " : " + sendTextArea.getText());
     	sendTextArea.setText(null);
     }
 
@@ -84,6 +85,7 @@ public class IHMGamePageController {
 
     public void setMainApp(AppClient app, GameEntity g) {
         this.mainApp = app;
+        GameEntity game = this.myIClientToIHM.getCurrentGame();
         final ChessBoardNode cb = new ChessBoardNode(IHMManager);
         final SwingNode swingNode = new SwingNode();
 
@@ -99,7 +101,7 @@ public class IHMGamePageController {
         
         // initialisation des différents labels
         PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
-        int nbObservers = this.myIClientToIHM.getCurrentGame().getObservers().size();
+        int nbObservers = game.getObservers().size();
         
         
         //otherPlayerLoginLabel.setText();

@@ -2,9 +2,15 @@ package com.utc.api13.client.ihm.models;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Event;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -14,14 +20,19 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.TransferHandler;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.commun.entities.AUserEntity;
 import com.utc.api13.commun.entities.ChessboardEntity;
 import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PositionEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.pieces.BishopEntity;
 import com.utc.api13.commun.entities.pieces.KingEntity;
 import com.utc.api13.commun.entities.pieces.KnightEntity;
@@ -31,6 +42,7 @@ import com.utc.api13.commun.entities.pieces.RookEntity;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
 public class ChessBoardNode {
+	private IClientDataToIHM myIClientToIHM;
     private IHMManager myIhmManager;
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JPanel chessBoard;
@@ -56,11 +68,7 @@ public class ChessBoardNode {
         chessBoard.setBorder(new LineBorder(Color.BLACK));
         gui.add(chessBoard);
 
-        // initialisation du ChessBoardEntity de Data
-        GameEntity game = new GameEntity();
-        ChessboardEntity cbEntity = new ChessboardEntity();
-        game.setChessboardEntity(cbEntity);
-        
+       
         // create the chess board squares
         Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int ii = 0; ii < chessBoardSquares.length; ii++) {
@@ -137,9 +145,6 @@ public class ChessBoardNode {
                 }
                 tempo = new PawnEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                 
-                // référencement de la pièce chez Data => déjà fait dans le constructeur de la pièce
-                //PositionEntity position = new PositionEntity(ctr, ligne);
-               // tempo.setPosition(position);
 
             }
             couleur = 'B';
@@ -155,5 +160,19 @@ public class ChessBoardNode {
     public final JPanel getGui() {
         return gui;
     }
+    
+    public void actionPerformed(ActionEvent e) {
+        //on teste si c'est au joueur de jouer
+    	GameEntity game = this.myIClientToIHM.getCurrentGame();
+    	AUserEntity current = game.getCurrentPlayer();
+    	AUserEntity u = this.myIClientToIHM.getLocalUser();
+        if (current != u)
+          { System.out.println("Ce n'est pas à vous de jouer !!"); }
+        else
+          {
+          
+          }
+    }
+    
 
 }
