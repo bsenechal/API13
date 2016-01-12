@@ -107,4 +107,19 @@ public class ClientDataToComImplTest {
         Assert.assertEquals("CurrentUsers should contain " + nbUsersExpected + " users", nbUsersExpected,
                 dataClientManager.getCurrentUsers().size());
     }
+    
+    
+    @Test
+    public void initGame() {
+        GameEntity testGame = new GameEntity();
+        PublicUserEntity testUser = new PublicUserEntity();
+        testUser.setFirstName("jean");
+        
+        testGame.setIsObservable(true);
+        testGame.setWhitePlayer(testUser);
+        
+        dataClientManager.getClientDataToComImpl().initGame(testGame);
+        Assert.assertTrue("IsObservable should be true",dataClientManager.getCurrentGame().getIsObservable());
+        Assert.assertEquals("Current white player should be Jean ", "Jean", dataClientManager.getCurrentGame().getWhitePlayer().getFirstName());
+    }
 }
