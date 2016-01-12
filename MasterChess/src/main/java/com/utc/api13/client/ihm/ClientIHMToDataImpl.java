@@ -50,18 +50,21 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     }
 
-    @Override
-    public void displayProposition(UUID uidSender, boolean observable, boolean chattable /*, boolean timer, String time*/) {
+    @SuppressWarnings("restriction")
+	@Override
+    public void displayProposition(UUID uidSender, boolean observable, boolean chattable /*, boolean timer, Integer time, String login*/) {
         // TODO Auto-generated method stub
-        // à la fin, doit appeler la fonction de l'interface de data en
-        // rajoutant observable et chattable
-        // myIHMManager.getIClientDataToIHM().sendResponse(idUser, answer,
-        // observable, chattable);
+    	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                //myIHMManager.getProposition().loginAskingPayerProperty().set(login);
+                myIHMManager.getProposition().chattableProperty().set(chattable);
+                //myIHMManager.getProposition().timerProperty().set(timer); 
+                myIHMManager.getProposition().observableProperty().set(observable); 
+                //myIHMManager.getProposition().timeProperty().set(time);
+            }
+        });
     	
-    	//pb : retrouver le login de l'envoyeur sans fonction qui renvoie le user associé à un uuid
-    	
-    	SendPropositionController.displayProposition(); 
-    	//DOES NOT WORK : static pb 
     }
 
     @Override

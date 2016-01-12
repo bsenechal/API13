@@ -5,6 +5,7 @@ import com.utc.api13.client.ihm.property.ConfirmationProperty;
 import com.utc.api13.client.ihm.property.ErrorProperty;
 import com.utc.api13.client.ihm.property.GameProperty;
 import com.utc.api13.client.ihm.property.ProfilProperty;
+import com.utc.api13.client.ihm.property.PropositionProperty;
 
 public class IHMManager {
 
@@ -12,6 +13,7 @@ public class IHMManager {
     private ClientIHMToDataImpl myClientIHMToDataImpl;
 
     private ProfilProperty profil;
+    private PropositionProperty proposition;
     private GameProperty game; 
     private ErrorProperty error;
 	private ConfirmationProperty confirmation; 
@@ -22,6 +24,14 @@ public class IHMManager {
 
     public void setProfil(ProfilProperty profil) {
         this.profil = profil;
+    }
+    
+    public PropositionProperty getProposition() {
+        return this.proposition;
+    }
+
+    public void setProposition(PropositionProperty proposition) {
+        this.proposition = proposition;
     }
     
     public GameProperty getGame() {

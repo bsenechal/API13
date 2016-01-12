@@ -81,7 +81,7 @@ public class AnswerPropositionController {
         stage.showAndWait();
     }
     
-    public void setMainApp(AppClient app, String login, boolean chattable, boolean timer, boolean observable, int time) {
+    public void setMainApp(AppClient app, String login, Boolean chattable, Boolean timer, Boolean observable, int time) {
         this.mainApp = app;
         this.chattable=chattable; 
         this.timer=timer; 
