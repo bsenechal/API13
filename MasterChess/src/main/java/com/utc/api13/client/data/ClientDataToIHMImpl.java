@@ -95,6 +95,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     @Override
     public void disconnect() throws TechnicalException, FunctionalException {
         Assert.notNull(gameService, "[ClientDataToIHMImpl][disconnect] GameService shouldn't be null");
+        Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][disconnect] UserLocal shouldn't be null");
+        
         // Leave the game
         if (dataClientManager.getCurrentGame() != null) {
             if (gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {

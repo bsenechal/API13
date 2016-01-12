@@ -15,20 +15,23 @@ import com.utc.api13.commun.enumerations.PieceColorEnum;
  *
  */
 public class KnightEntity extends APieceEntity {
+    private static final int START_LINE_BLACK_KNIGHT = 8;
+    private static final int START_LINE_WHITE_KNIGHT = 1;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2375251773738605949L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2375251773738605949L;
 
-	public KnightEntity(PieceColorEnum color) {
-		super(color);
-		// TODO Auto-generated constructor stub
-	}
+    public KnightEntity(final PieceColorEnum color, final int startColumn) {
+        super(color);
+        this.setPosition((color.equals(PieceColorEnum.BLACK) ? new PositionEntity(startColumn, START_LINE_BLACK_KNIGHT)
+                : new PositionEntity(startColumn, START_LINE_WHITE_KNIGHT)));
+    }
 
-	@Override
-	public List<PositionEntity> generateAvailableMoves(GameEntity game) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public List<PositionEntity> generateAvailableMoves(GameEntity game) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

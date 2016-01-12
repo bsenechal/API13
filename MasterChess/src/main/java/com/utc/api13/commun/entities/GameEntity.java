@@ -7,8 +7,14 @@ import java.util.List;
 
 import org.springframework.util.Assert;
 
+import com.utc.api13.commun.entities.pieces.BishopEntity;
 import com.utc.api13.commun.entities.pieces.KingEntity;
+import com.utc.api13.commun.entities.pieces.KnightEntity;
+import com.utc.api13.commun.entities.pieces.PawnEntity;
+import com.utc.api13.commun.entities.pieces.QueenEntity;
+import com.utc.api13.commun.entities.pieces.RookEntity;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
+import com.utc.api13.commun.enumerations.PieceColorEnum;
 
 public class GameEntity extends ADataEntity {
 
@@ -44,6 +50,8 @@ public class GameEntity extends ADataEntity {
 		this.whitePlayer = null;
 		this.blackPlayer = null;
 		this.currentPlayer = null;
+        this.blackPieces = generatePieces(PieceColorEnum.BLACK);
+        this.whitePieces = generatePieces(PieceColorEnum.WHITE);
 		this.messages = new ArrayList<MessageEntity>();
 	}
 
@@ -68,6 +76,8 @@ public class GameEntity extends ADataEntity {
 		this.chessboardEntity = new ChessboardEntity();
 		this.creationDate = new Date();
 		this.isFinished = null;
+        this.blackPieces = generatePieces(PieceColorEnum.BLACK);
+        this.whitePieces = generatePieces(PieceColorEnum.WHITE);
 	}
 
 	/**
@@ -306,17 +316,23 @@ public class GameEntity extends ADataEntity {
 	 * @author ulyss_000
 	 * @return the current player king
 	 */
-	private KingEntity getKing() {
+    public KingEntity getKing() {
+        List<APieceEntity> pieces;
+
 		if (this.getCurrentPlayer().getId().equals(this.getBlackPlayer().getId())) {
 			// ActivePlayer is BlackPlayer
-			return (KingEntity) getBlackPieces().stream().filter(bp -> bp.getClass().isInstance(KingEntity.class))
-					.findFirst().orElse(null);
+            pieces = getBlackPieces();
 		} else {
 			// ActivePlayer is WhitePlayer
-			return (KingEntity) getWhitePieces().stream().filter(bw -> bw.getClass().isInstance(KingEntity.class))
+            pieces = getWhitePieces();
+        }
+        
+        
+        // TODO : CORRIGER CA !
+        // Dans la liste de pièces, on ne peut pas récupérer le type classe de la pièce (donc isInstance(KingEntity.class) est toujours faut et ça renvoi toujours null
+        return (KingEntity) pieces.stream().filter(bw -> bw.getClass().isInstance(KingEntity.class))
 					.findFirst().orElse(null);
 		}
-	}
 
 	/**
 	 * @author ulyss_000
@@ -339,9 +355,9 @@ public class GameEntity extends ADataEntity {
 	 */
 	public Boolean isCheck() {
 		Boolean result = false;
-		if (this.getOpponentPieces().stream()
-				.filter(op -> op.generateAvailableMoves(this).contains(this.getKing().getPosition())).findFirst()
-				.orElse(null) == null) {
+        if (this.getOpponentPieces().stream().filter(
+                op -> APieceEntity.isPositionAvailable(op.generateAvailableMoves(this), (this.getKing() != null) ? this.getKing().getPosition() : null))
+                .findFirst().orElse(null) == null) {
 			result = true;
 		}
 		return result;
@@ -409,4 +425,27 @@ public class GameEntity extends ADataEntity {
         return participants;
     }
 
+    private List<APieceEntity> generatePieces(final PieceColorEnum color) {
+        List<APieceEntity> pieces = new ArrayList<APieceEntity>();
+        pieces.add(new KingEntity(color));
+        pieces.add(new QueenEntity(color));
+
+        for (int column : GameEntityConstant.INITIAL_COLUMNS_ROOK) {
+            pieces.add(new RookEntity(color, column));
+        }
+
+        for (int column : GameEntityConstant.INITIAL_COLUMNS_PAWN) {
+            pieces.add(new PawnEntity(color, column));
+        }
+
+        for (int column : GameEntityConstant.INITIAL_COLUMNS_KNIGHT) {
+            pieces.add(new KnightEntity(color, column));
+        }
+
+        for (int column : GameEntityConstant.INITIAL_COLUMNS_BISHOP) {
+            pieces.add(new BishopEntity(color, column));
+        }
+
+        return pieces;
+    }
 }
