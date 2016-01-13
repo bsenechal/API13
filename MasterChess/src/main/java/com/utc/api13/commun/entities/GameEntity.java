@@ -400,17 +400,15 @@ public class GameEntity extends ADataEntity {
 
         // set local variables according to the local player color :
         if (this.getCurrentPlayer().getId().equals(this.getBlackPlayer().getId())) {
-            // ActivePlayer is BlackPlayer
-            king = (KingEntity) getBlackPieces().stream().filter(bp -> bp.getClass().isInstance(KingEntity.class))
-                    .findFirst().orElse(null);
+            // ActivePlayer is WhitePlayer
             opponentPieces = this.getWhitePieces();
         } else {
-            // ActivePlayer is WhitePlayer
-            king = (KingEntity) getWhitePieces().stream().filter(bw -> bw.getClass().isInstance(KingEntity.class))
-                    .findFirst().orElse(null);
+            // ActivePlayer is BlackPlayer
             opponentPieces = this.getBlackPieces();
-
         }
+        
+        king = (KingEntity) opponentPieces.stream().filter(bw -> bw.getClass().isInstance(KingEntity.class))
+                .findFirst().orElse(null);
 
         // Check check
         if (this.isCheck()) {
