@@ -14,10 +14,9 @@ public class KingEntity extends APieceEntity {
     private static final int START_COLUMN_KING = 5;
     private static final int START_LINE_BLACK_KING = 8;
     private static final int START_LINE_WHITE_KING = 1;
-    private static final int MIN_MOVE_X = -1;
-    private static final int MAX_MOVE_X = 1;
-    private static final int MIN_MOVE_Y = -1;
-    private static final int MAX_MOVE_Y = 1;
+    private static final int MIN_MOVE = -1;
+    private static final int MAX_MOVE = 1;
+
 
     /**
      * 
@@ -50,9 +49,9 @@ public class KingEntity extends APieceEntity {
         int positionY = getPosition().getPositionY();
 
         // Calcul des positions possibles autour du roi
-        for (int x = MIN_MOVE_X; x <= MAX_MOVE_X; x++) {
-            for (int y = MIN_MOVE_Y; y <= MAX_MOVE_Y; y++) {
-            	if(x != 0 && y != 0){
+        for (int x = MIN_MOVE; x <= MAX_MOVE; x++) {
+            for (int y = MIN_MOVE; y <= MAX_MOVE; y++) {
+            	if(!(x == 0 && y == 0)){
                     addPossibleSolution(game, positionX, positionY, x, y, result, verifyCheck);
             	}
             }

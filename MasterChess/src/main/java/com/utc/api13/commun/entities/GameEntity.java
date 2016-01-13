@@ -327,9 +327,12 @@ public class GameEntity extends ADataEntity {
 			pieces = getWhitePieces();
 		}
 
-
-		return (KingEntity) pieces.stream().filter(bw -> bw.toString().equals("King")).findFirst()
-				.orElse(null);
+		for(APieceEntity tmpEntity:pieces){
+			if(tmpEntity.toString().equals("King")){
+				return (KingEntity) tmpEntity;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -383,9 +386,12 @@ public class GameEntity extends ADataEntity {
 		for (APieceEntity op : tmp) {
 			List<PositionEntity> tmpP = new ArrayList<PositionEntity>();
 			APieceEntity king = this.getKing();
+			if(king == null){
+				return Boolean.FALSE;
+			}
 			tmpP.addAll(op.generateAvailableMoves(this, Boolean.FALSE));
 			if (!APieceEntity.isPositionAvailable(tmpP,
-					(king != null) ? king.getPosition() : null)) {
+					king.getPosition())) {
 				result = Boolean.TRUE;
 			}
 		}
@@ -427,6 +433,7 @@ public class GameEntity extends ADataEntity {
 			result = GameStatusEnum.CHECK;
 		}
 
+		//TODO : aussi le cas où un pion peut protéger le roi !
 		// Checkmate check :
 		if (check == true) {
 			if (king.generateAvailableMoves(this).isEmpty()) {
@@ -500,7 +507,7 @@ public class GameEntity extends ADataEntity {
 		if (piece.getColor().equals(PieceColorEnum.BLACK)) {
 			this.blackPieces.remove(piece);
 		} else {
-			this.whitePieces.add(piece);
+			this.whitePieces.remove(piece);
 		}
 	}
 }

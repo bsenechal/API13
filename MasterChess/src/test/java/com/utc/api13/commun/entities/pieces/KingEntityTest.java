@@ -72,7 +72,7 @@ public class KingEntityTest {
         List<PositionEntity> availablesPositionsWhiteKing = whiteKing.generateAvailableMoves(game);
         Assert.assertTrue("availablesPositionsWhiteKing should be empty", availablesPositionsWhiteKing.isEmpty());
 
-        game.setCurrentPlayer(blackPlayer);
+        game.setCurrentPlayer(whitePlayer);
 
         List<PositionEntity> availablesPositionsBlackKing = blackKing.generateAvailableMoves(game);
         Assert.assertTrue("availablesPositionsBlackKing should be empty", availablesPositionsBlackKing.isEmpty());
@@ -84,16 +84,16 @@ public class KingEntityTest {
         game.setWhitePieces(new ArrayList<APieceEntity>());
         game.getWhitePieces().add(whiteKing);
 
+
         availablesPositionsBlackKing = blackKing.generateAvailableMoves(game);
         System.out.println("black pieces");
-        for(PositionEntity tmp:availablesPositionsBlackKing){
-        	System.out.println(String.valueOf(tmp.getPositionX()) + "," + String.valueOf(tmp.getPositionY()));
-        }
+        QueenEntityTest.displayChessBoard(availablesPositionsBlackKing);
+        
         availablesPositionsWhiteKing = whiteKing.generateAvailableMoves(game);
         System.out.println("white pieces");
-        for(PositionEntity tmp:availablesPositionsWhiteKing){
-        	System.out.println(String.valueOf(tmp.getPositionX()) + "," + String.valueOf(tmp.getPositionY()));
-        }
+        QueenEntityTest.displayChessBoard(availablesPositionsWhiteKing);
+
+        
         // STACKOVERFLOW !!!!! -_-
         Assert.assertFalse("availablesPositionsBlackKing shouldn't be empty", availablesPositionsBlackKing.isEmpty());
         Assert.assertFalse("availablesPositionsWhiteKing shouldn't be empty", availablesPositionsWhiteKing.isEmpty());
