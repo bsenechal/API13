@@ -1,5 +1,7 @@
 package com.utc.api13.client.ihm.controllers;
 
+import java.util.Optional;
+
 import javax.swing.SwingUtilities;
 
 import com.utc.api13.client.AppClient;
@@ -7,6 +9,7 @@ import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.models.ChessBoardNode;
+import com.utc.api13.client.ihm.property.ChatProperty;
 import com.utc.api13.commun.entities.GameEntity;
 
 import javafx.embed.swing.SwingNode;
@@ -24,6 +27,9 @@ public class IHMGamePageController {
     private IClientDataToIHM myIClientToIHM;
     private AppClient mainApp;
     private Stage currentStage;
+    private ChatProperty chat;
+
+   
 
     @FXML
     Label chatLabel, otherPlayerLoginLabel, otherPlayerTimeLabel, playerLoginLabel, playerTimeLabel,
@@ -60,9 +66,15 @@ public class IHMGamePageController {
 
     @FXML
     private void onSendTextClicked(Event event) {
-        PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
-        chatTextArea.setText(u.getLogin() + " : " + sendTextArea.getText());
-        sendTextArea.setText(null);
+        
+        Optional.ofNullable(sendTextArea.getText()).
+            ifPresent(
+                    sms->{
+                        myIClientToIHM.sendChatText(sms);
+                        String message= chatTextArea.getText();
+                        chat.getMessage().set(message+"\n\n "+ myIClientToIHM.getLocalUser().getLogin()+"-> says :"+sms);
+                    }
+             );
     }
 
     @FXML
@@ -116,6 +128,9 @@ public class IHMGamePageController {
     }
 
     public void setBindingsOnLoad() {
+        
+        chatTextArea.textProperty().bind(chat.getMessage());
+        
     }
 
     public Stage getCurrentStage() {
@@ -124,6 +139,13 @@ public class IHMGamePageController {
 
     public void setCurrentStage(Stage currentStage) {
         this.currentStage = currentStage;
+    }
+    public ChatProperty getChat() {
+        return chat;
+    }
+
+    public void setChat(ChatProperty chat) {
+        this.chat = chat;
     }
 
 }

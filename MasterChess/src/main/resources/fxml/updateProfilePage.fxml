@@ -15,7 +15,6 @@
             <Label fx:id="firstNameLabel" layoutX="180.0" layoutY="235.0" text="First Name" />
             <Button fx:id="saveProfileButton" layoutX="263.0" layoutY="327.0" mnemonicParsing="false" onAction="#onSaveProfileClicked" text="Enregistrer" />
             <TextField fx:id="loginTextView" layoutX="272.0" layoutY="157.0" />
-            <TextField fx:id="passwordTextView" layoutX="272.0" layoutY="191.0" />
             <TextField fx:id="firstNameTextView" layoutX="272.0" layoutY="231.0" />
             <Label fx:id="createProfileLabel" layoutX="152.0" layoutY="63.0" text="Update your Profile">
                <font>
@@ -30,6 +29,7 @@
                </image>
             </ImageView>
             <Label fx:id="errorInfo" layoutX="150.0" layoutY="4.0" prefHeight="21.0" prefWidth="200.0" textFill="#da1010" />
+            <PasswordField fx:id="passwordTextView" layoutX="272.0" layoutY="193.0" />
          </children>
       </AnchorPane>
    </top>

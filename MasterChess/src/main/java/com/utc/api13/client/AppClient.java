@@ -4,7 +4,6 @@ import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.controllers.IHMConnexionPageController;
-import com.utc.api13.client.ihm.controllers.IHMGamePageController;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +28,7 @@ public class AppClient extends Application {
 
         IHMManager ihmManager = new IHMManager();
         ComClientManager comClientManager = new ComClientManager();
+        ihmManager.setMainApp(this);
 
         DataClientManager dataClientManager = new DataClientManager();
         dataClientManager.setIClientComToData(comClientManager.getClientComToDataImpl());
@@ -47,10 +47,8 @@ public class AppClient extends Application {
          */
         this.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
-        
         Pane root = (Pane) fxmlLoader.load();
         IHMConnexionPageController controller = fxmlLoader.getController();
-        
         controller.setControllerContext(ihmManager);
         controller.setMainApp(this);
         this.setCurrentStage(stage);
@@ -83,4 +81,5 @@ public class AppClient extends Application {
         launch(args);
 
     }
+
 }
