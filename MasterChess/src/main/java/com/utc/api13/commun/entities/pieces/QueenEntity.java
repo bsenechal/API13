@@ -25,7 +25,7 @@ public class QueenEntity extends APieceEntity {
 	private static final int START_LINE_BLACK_QUEEN = 8;
 	private static final int START_LINE_WHITE_QUEEN = 1;
 	private static final int MIN_MOVE = -7;
-	private static final int MAX_MOVE = 8;
+	private static final int MAX_MOVE = 7;
 
 	/**
 	 * 
@@ -40,7 +40,7 @@ public class QueenEntity extends APieceEntity {
 	}
 
 	@Override
-	public List<PositionEntity> generateAvailableMoves(GameEntity game) {
+	public List<PositionEntity> generateAvailableMoves(GameEntity game, boolean verifyCheck) {
 		Assert.notNull(getPosition(), "[QueenEntity][generateAvailableMoves] Position shouldn't be null");
 
 		List<PositionEntity> result = new ArrayList<PositionEntity>();
@@ -55,7 +55,7 @@ public class QueenEntity extends APieceEntity {
 				break;
 			}
 		}
-		for (int x = 1; x < MAX_MOVE; x++) {
+		for (int x = 1; x <= MAX_MOVE; x++) {
 			// Horizontal movements
 			if (addPossibleSolution(game, positionX, positionY, x, 0, result)) {
 				break;
@@ -68,7 +68,7 @@ public class QueenEntity extends APieceEntity {
 				break;
 			}
 		}
-		for (int x = 1; x < MAX_MOVE; x++) {
+		for (int x = 1; x <= MAX_MOVE; x++) {
 			// Vertical movements
 			if (addPossibleSolution(game, positionX, positionY, 0, x, result)) {
 				break;
@@ -80,7 +80,7 @@ public class QueenEntity extends APieceEntity {
 				break;
 			}
 		}
-		for (int x = 1; x < MAX_MOVE; x++) {
+		for (int x = 1; x <= MAX_MOVE; x++) {
 			// Sideways 1 movements
 			if (addPossibleSolution(game, positionX, positionY, x, x, result)) {
 				break;
@@ -92,7 +92,7 @@ public class QueenEntity extends APieceEntity {
 				break;
 			}
 		}
-		for (int x = 1; x < MAX_MOVE; x++) {
+		for (int x = 1; x <= MAX_MOVE; x++) {
 			// Sideways 2 movements
 			if (addPossibleSolution(game, positionX, positionY, x, -x, result)) {
 				break;
@@ -101,5 +101,10 @@ public class QueenEntity extends APieceEntity {
 
 		return result;
 	}
+	
+    @Override
+	public  List<PositionEntity> generateAvailableMoves(GameEntity game){
+    	return generateAvailableMoves(game,Boolean.TRUE);
+    }
 
 }

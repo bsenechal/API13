@@ -373,7 +373,7 @@ public class GameEntity extends ADataEntity {
 	public Boolean isCheck() {
 		Boolean result = false;
         if (this.getOpponentPieces().stream().filter(
-                op -> APieceEntity.isPositionAvailable(op.generateAvailableMoves(this), (this.getKing() != null) ? this.getKing().getPosition() : null))
+                op -> APieceEntity.isPositionAvailable(op.generateAvailableMoves(this,Boolean.FALSE), (this.getKing() != null) ? this.getKing().getPosition() : null))
                 .findFirst().orElse(null) == null) {
 			result = true;
 		}

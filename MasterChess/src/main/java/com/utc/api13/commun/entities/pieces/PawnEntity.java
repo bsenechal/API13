@@ -36,7 +36,7 @@ public class PawnEntity extends APieceEntity {
     }
 
     @Override
-    public List<PositionEntity> generateAvailableMoves(GameEntity game) {
+    public List<PositionEntity> generateAvailableMoves(GameEntity game, boolean verifyCheck) {
         APieceEntity tmpOpponentPiece = null;
         PositionEntity positionTemp = null;
         
@@ -153,6 +153,11 @@ public class PawnEntity extends APieceEntity {
         }
 
         return result;
+    }
+    
+    @Override
+	public  List<PositionEntity> generateAvailableMoves(GameEntity game){
+    	return generateAvailableMoves(game,Boolean.TRUE);
     }
 
 }
