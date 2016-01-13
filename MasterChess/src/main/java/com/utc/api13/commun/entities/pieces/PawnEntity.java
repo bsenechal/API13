@@ -34,6 +34,16 @@ public class PawnEntity extends APieceEntity {
         this.setPosition((color.equals(PieceColorEnum.BLACK) ? new PositionEntity(startColumn, START_LINE_BLACK_PAWN)
                 : new PositionEntity(startColumn, START_LINE_WHITE_PAWN)));
     }
+    
+    public PawnEntity(final PieceColorEnum color, final PositionEntity startPosition) {
+        super(color);
+        this.setPosition(startPosition);
+    }
+    
+    @Override
+    public String toString(){
+        return "Pawn";
+    }
 
     @Override
     public List<PositionEntity> generateAvailableMoves(GameEntity game, boolean verifyCheck) {
