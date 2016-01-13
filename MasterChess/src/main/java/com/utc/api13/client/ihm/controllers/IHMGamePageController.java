@@ -61,7 +61,10 @@ public class IHMGamePageController {
 
     @FXML
     private void onExcludeChatClicked(Event event) {
-
+        
+        
+        
+        
     }
 
     @FXML
