@@ -52,25 +52,25 @@ public class BishopEntity extends APieceEntity {
         
         for (int x = -1; x >= MIN_MOVE; x--) {
             // Sideways 1 movements
-            if (addPossibleSolution(game, positionX, positionY, x, x, result)) {
+            if (addPossibleSolution(game, positionX, positionY, x, x, result, verifyCheck)) {
                 break;
             }
         }
         for (int x = 1; x <= MAX_MOVE; x++) {
             // Sideways 1 movements
-            if (addPossibleSolution(game, positionX, positionY, x, x, result)) {
+            if (addPossibleSolution(game, positionX, positionY, x, x, result, verifyCheck)) {
                 break;
             }
         }
         for (int x = -1; x >= MIN_MOVE; x--) {
             // Sideways 2 movements
-            if (addPossibleSolution(game, positionX, positionY, x, -x, result)) {
+            if (addPossibleSolution(game, positionX, positionY, x, -x, result, verifyCheck)) {
                 break;
             }
         }
         for (int x = 1; x <= MAX_MOVE; x++) {
             // Sideways 2 movements
-            if (addPossibleSolution(game, positionX, positionY, x, -x, result)) {
+            if (addPossibleSolution(game, positionX, positionY, x, -x, result, verifyCheck)) {
                 break;
             }
         }
