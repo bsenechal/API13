@@ -327,11 +327,8 @@ public class GameEntity extends ADataEntity {
 			pieces = getWhitePieces();
 		}
 
-		// TODO : CORRIGER CA !
-		// Dans la liste de pièces, on ne peut pas récupérer le type classe de
-		// la pièce (donc isInstance(KingEntity.class) est toujours faut et ça
-		// renvoi toujours null
-		return (KingEntity) pieces.stream().filter(bw -> bw.getClass().isInstance(KingEntity.class)).findFirst()
+
+		return (KingEntity) pieces.stream().filter(bw -> bw.toString().equals("King")).findFirst()
 				.orElse(null);
 	}
 
@@ -384,8 +381,11 @@ public class GameEntity extends ADataEntity {
 		tmp.addAll(this.getOpponentPieces());
 
 		for (APieceEntity op : tmp) {
-			if (APieceEntity.isPositionAvailable(op.generateAvailableMoves(this, Boolean.FALSE),
-					(this.getKing() != null) ? this.getKing().getPosition() : null)) {
+			List<PositionEntity> tmpP = new ArrayList<PositionEntity>();
+			APieceEntity king = this.getKing();
+			tmpP.addAll(op.generateAvailableMoves(this, Boolean.FALSE));
+			if (!APieceEntity.isPositionAvailable(tmpP,
+					(king != null) ? king.getPosition() : null)) {
 				result = Boolean.TRUE;
 			}
 		}
