@@ -74,9 +74,7 @@ public class ChessBoardNode {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
                 JButton b = new JButton();
                 b.setMargin(buttonMargin);
-                if ((jj % 2 == 1 && ii % 2 == 1)
-                        // ) {
-                        || (jj % 2 == 0 && ii % 2 == 0)) {
+                if ((jj % 2 == 1 && ii % 2 == 1) || (jj % 2 == 0 && ii % 2 == 0)) {
                     b.setBackground(Color.WHITE);
                 } else {
                     b.setBackground(Color.BLACK);
@@ -115,15 +113,15 @@ public class ChessBoardNode {
 
                 switch (ordrePiece[ctr]) {
                 case 'T':
-                    tempo = new RookEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
+                    tempo = new RookEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
                     break;
 
                 case 'C':
-                    tempo = new KnightEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
+                    tempo = new KnightEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
                     break;
 
                 case 'F':
-                    tempo = new BishopEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
+                    tempo = new BishopEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
                     break;
 
                 case 'D':
@@ -141,7 +139,7 @@ public class ChessBoardNode {
                 } catch (IOException e) {
 
                 }
-                tempo = new PawnEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
+                tempo = new PawnEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
 
             }
             couleur = 'B';
