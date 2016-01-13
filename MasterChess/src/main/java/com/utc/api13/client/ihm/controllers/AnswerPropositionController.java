@@ -1,4 +1,3 @@
-
 package com.utc.api13.client.ihm.controllers;
 
 import java.io.IOException;
@@ -131,6 +130,12 @@ public class AnswerPropositionController {
     }
     
     public void setBindings(PropositionProperty proposition) {
-    }
+    	invintingPlayerLogin.textProperty().bind(proposition.loginAskingPayerProperty());
+    //	invitationLabel, optionsLabel, chosenOptionsLabel; 
+    	optionsLabel.textProperty().bind(proposition.chattableProperty().asString()); // can be change to String Property
+    
+    	
+    	
 
+    }
 }

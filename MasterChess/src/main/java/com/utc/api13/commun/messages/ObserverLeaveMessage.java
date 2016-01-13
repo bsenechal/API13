@@ -11,18 +11,20 @@ public class ObserverLeaveMessage extends Message {
 
     private UUID user; // ID of the user leaving the game
 
-    public ObserverLeaveMessage(UUID sender, UUID receiver) {
+
+	public ObserverLeaveMessage(UUID sender, UUID receiver) {
         super(sender, receiver);
         this.user = sender; // Utile ?
     }
+	
+	@Override
+	public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) throws Exception {
+		//Pas de traitement possible côté client actuellement
+		//Message de départ d'un observateur ?
+	}
 
-    @Override
-    public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) throws Exception {
-        // TODO Auto-generated method stub
 
-    }
-
-    @Override
+	@Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         // Received on the server : unsubscribe from the game and send to
         // participants
