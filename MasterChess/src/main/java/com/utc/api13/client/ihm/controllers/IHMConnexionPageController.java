@@ -97,7 +97,7 @@ public class IHMConnexionPageController {
                 stage.setScene(new Scene(root));
                 controllerRight.setDisconnectUserByClosingWindow();
                 stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
+                stage.show();
             }
 
             catch (FunctionalException e) {
@@ -134,7 +134,7 @@ public class IHMConnexionPageController {
         stage.setScene(new Scene(root));
         stage.setTitle("User Information");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
     @FXML
@@ -171,7 +171,7 @@ public class IHMConnexionPageController {
         stage.setScene(new Scene(root));
         stage.setTitle("Import success");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
     public void importNOK(String message) throws IOException {
@@ -188,7 +188,7 @@ public class IHMConnexionPageController {
         stage.setScene(new Scene(root));
         stage.setTitle("Import error");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
     @FXML
@@ -246,7 +246,7 @@ public class IHMConnexionPageController {
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
 }

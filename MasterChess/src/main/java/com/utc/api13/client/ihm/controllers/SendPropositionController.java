@@ -136,7 +136,7 @@ public class SendPropositionController {
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
     public void confirmation() throws IOException {
@@ -153,7 +153,7 @@ public class SendPropositionController {
         mainApp.getCurrentStage().close();
         mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
     public FXMLLoader loadProposition() {
