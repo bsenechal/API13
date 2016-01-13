@@ -124,7 +124,7 @@ public interface IClientDataToCom {
      * @param observable
      * @param chattable
      */
-    void printProposition(final UUID uidSender, final boolean observable, final boolean chattable);
+    void printProposition(final UUID uidSender, boolean observable, boolean chattable, boolean timer, Integer timeInt);
 
     void victoryBySurrender();
 

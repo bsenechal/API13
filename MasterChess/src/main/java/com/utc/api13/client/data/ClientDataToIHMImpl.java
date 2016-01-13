@@ -300,8 +300,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
             throws TechnicalException {
         // TODO: la méthode com ne devrait pas prendre un user mais plutôt un
         // uid
-       /* dataClientManager.getIClientComToData().answerProposition(idUser, dataClientManager.getUserLocal().getId(),
-                chattable, observable, answer);*/
+        dataClientManager.getIClientComToData().answerProposition(dataClientManager.getUserLocal().getId(),
+                chattable, observable, answer);
 
     }
 
