@@ -367,28 +367,30 @@ public class GameEntity extends ADataEntity {
 	}
 
 	/**
-     * @author ulyss_000
-     * @return true if the gameentity is in check, false if not
-     */
-    public Boolean isCheck() {
-        Boolean result = Boolean.FALSE;
-//        if (this.getOpponentPieces().stream()
-//                .filter(op -> APieceEntity.isPositionAvailable(op.generateAvailableMoves(this, Boolean.FALSE),
-//                        (this.getKing() != null) ? this.getKing().getPosition() : null))
-//                .findFirst().orElse(null) == null) {
-//            result = true;
-//        }
-        List<APieceEntity> tmp = new ArrayList<APieceEntity>();
-        tmp.addAll(this.getOpponentPieces());
+	 * @author ulyss_000
+	 * @return true if the gameentity is in check, false if not
+	 */
+	public Boolean isCheck() {
+		Boolean result = Boolean.FALSE;
+		// if (this.getOpponentPieces().stream()
+		// .filter(op ->
+		// APieceEntity.isPositionAvailable(op.generateAvailableMoves(this,
+		// Boolean.FALSE),
+		// (this.getKing() != null) ? this.getKing().getPosition() : null))
+		// .findFirst().orElse(null) == null) {
+		// result = true;
+		// }
+		List<APieceEntity> tmp = new ArrayList<APieceEntity>();
+		tmp.addAll(this.getOpponentPieces());
 
-        for(APieceEntity op : tmp){
-        	if(APieceEntity.isPositionAvailable(op.generateAvailableMoves(this, Boolean.FALSE),
-                        (this.getKing() != null) ? this.getKing().getPosition() : null)){
-        		result = Boolean.TRUE;
-        	}
-        }
-        return result;
-    }
+		for (APieceEntity op : tmp) {
+			if (APieceEntity.isPositionAvailable(op.generateAvailableMoves(this, Boolean.FALSE),
+					(this.getKing() != null) ? this.getKing().getPosition() : null)) {
+				result = Boolean.TRUE;
+			}
+		}
+		return result;
+	}
 
 	/**
 	 * Verify the winning status of the game
@@ -410,16 +412,14 @@ public class GameEntity extends ADataEntity {
 		// set local variables according to the local player color :
 		if (this.getCurrentPlayer().getId().equals(this.getBlackPlayer().getId())) {
 			// ActivePlayer is BlackPlayer
-			king = (KingEntity) getBlackPieces().stream().filter(bp -> bp.getClass().isInstance(KingEntity.class))
-					.findFirst().orElse(null);
 			opponentPieces = this.getWhitePieces();
 		} else {
 			// ActivePlayer is WhitePlayer
-			king = (KingEntity) getWhitePieces().stream().filter(bw -> bw.getClass().isInstance(KingEntity.class))
-					.findFirst().orElse(null);
 			opponentPieces = this.getBlackPieces();
 
 		}
+		king = (KingEntity) opponentPieces.stream().filter(bp -> bp.getClass().isInstance(KingEntity.class)).findFirst()
+				.orElse(null);
 
 		// Check check
 		if (this.isCheck()) {
