@@ -20,6 +20,16 @@ public class IHMManager {
     private PropositionProperty proposition;
     private GameProperty game;
     private ErrorProperty error;
+    private ChatProperty chat;
+    
+    public ChatProperty getChat() {
+        return chat;
+    }
+
+    public void setChat(ChatProperty chat) {
+        this.chat = chat;
+    }
+
     private ConfirmationProperty confirmation;
 
     public ProfilProperty getProfil() {
