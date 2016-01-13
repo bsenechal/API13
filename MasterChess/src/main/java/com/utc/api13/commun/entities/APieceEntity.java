@@ -2,6 +2,7 @@ package com.utc.api13.commun.entities;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.util.Assert;
@@ -89,17 +90,8 @@ public abstract class APieceEntity extends ADataEntity {
         Assert.notNull(game.getBlackPieces(), "[APieceEntity][move] BlackPieces shouldn't be null");
         Assert.notNull(move, "[APieceEntity][move] move shouldn't be null");
 
-        if (game.getCurrentPlayer().equals(game.getBlackPlayer())) {
-            if (APieceEntity.getAllPositionsByPieces(game.getWhitePieces()).contains(move.getToPosition())) {
-                // Suppression de la pièce dans le jeu de l'adversaire
-                APieceEntity.removePieceByPosition(game.getWhitePieces(), move.getToPosition());
-            }
-        } else {
-            if (APieceEntity.getAllPositionsByPieces(game.getBlackPieces()).contains(move.getToPosition())) {
-                // Suppression de la pièce dans le jeu de l'adversaire
-                APieceEntity.removePieceByPosition(game.getBlackPieces(), move.getToPosition());
-            }
-        }
+		game.removePiece(move.getPiece());
+
     }
 
     public void movePiece(final MoveEntity move, GameEntity game) {
@@ -109,6 +101,9 @@ public abstract class APieceEntity extends ADataEntity {
 
         // Déplacement de la pièce
         setPosition(move.getToPosition());
+
+		// TODO : Delete adversary pond if needed !!! (managed deleted pond to
+		// allow canceling a move ?)
 
         // Ajout dans l'historique des coups
         game.getMovesHistory().add(move);
@@ -171,4 +166,55 @@ public abstract class APieceEntity extends ADataEntity {
     public void setColor(PieceColorEnum color) {
         this.color = color;
     }
+
+	/**
+	 * This method allow us to add a possible position to the result depending
+	 * on a offset (x & y).
+	 * 
+	 * @return boolean -> if true -> the solution implies a kill or the position is already taken 
+	 * : the piece is stopped and can't go further
+	 * @param game
+	 * @param positionX
+	 * @param positionY
+	 * @param x
+	 * @param y
+	 * @param result
+	 * @author ulyss_000
+	 */
+	protected boolean addPossibleSolution(final GameEntity game, final int positionX, final int positionY, int x, int y,
+			List<PositionEntity> result) {
+		PositionEntity positionTemp = new PositionEntity(positionX + x, positionY + y);
+		boolean isStopped = false;
+
+		// On vérifie que la position est bien sur le plateau de jeu
+		if (ChessboardEntity.isCaseOnChessboard(positionTemp)) {
+			// On vérifie que la position n'est pas déjà prise par nos pionts
+			if (APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
+				// On vérifie que cela ne met pas notre roi en échec
+				// :
+				this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
+				// on supprime le piont adverse s'il y en a un a destination
+				APieceEntity tmpOpponentPiece = null;
+				boolean haskilledAnother = false;
+				if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
+					tmpOpponentPiece = game.getOpponentPieces().stream()
+							.filter(piece -> piece.getPosition().equals(positionTemp)).findFirst().orElse(null);
+					game.removePiece(tmpOpponentPiece);
+					haskilledAnother = true;
+					isStopped = true;
+				}
+				if (!game.isCheck()) {
+					result.add(positionTemp);
+				}
+				if (haskilledAnother) {
+					game.addPiece(tmpOpponentPiece);
+				}
+				this.cancelLastMove(game);
+			}
+			else{
+				isStopped = true;
+			}
+		}
+		return isStopped;
+	}
 }

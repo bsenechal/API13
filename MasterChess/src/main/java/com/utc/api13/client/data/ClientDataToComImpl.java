@@ -246,7 +246,6 @@ public class ClientDataToComImpl implements IClientDataToCom {
     @Override
     public void displayMessage(final String message) {
         instanceDataClientManager.getIClientIHMToData().displayMessage(message);
-
     }
 
 

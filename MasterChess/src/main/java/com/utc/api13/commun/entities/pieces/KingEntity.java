@@ -50,31 +50,7 @@ public class KingEntity extends APieceEntity {
         // Calcul des positions possibles autour du roi
         for (int x = MIN_MOVE_X; x < MAX_MOVE_X; x++) {
             for (int y = MIN_MOVE_Y; y < MAX_MOVE_Y; y++) {
-                PositionEntity positionTemp = new PositionEntity(positionX + x, positionY + y);
-
-                // On vérifie que la position est bien sur le plateau de jeu
-                if (ChessboardEntity.isCaseOnChessboard(positionTemp)) {
-
-                    // Si on est le joueur noir
-                    if (game.getCurrentPlayer().equals(game.getBlackPlayer())) {
-
-                        // On vérifie que la position n'est pas déjà prise
-                        if (APieceEntity.isPositionAvailableFromPieces(game.getBlackPieces(), positionTemp)) {
-                            // On vérifie que cela ne met pas notre roi en échec
-                            // :
-                            this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
-                            if (!game.isCheck()) {
-                                result.add(positionTemp);
-                            }
-                            this.cancelLastMove(game);
-
-                        }
-                    } else {
-                        if (APieceEntity.isPositionAvailableFromPieces(game.getWhitePieces(), positionTemp)) {
-                            result.add(positionTemp);
-                        }
-                    }
-                }
+				addPossibleSolution(game, positionX, positionY, x, y, result);
             }
         }
         return result;

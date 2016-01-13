@@ -17,6 +17,7 @@ import com.utc.api13.client.data.services.GameService;
 import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.Erreur;
 import com.utc.api13.commun.entities.GameEntity;
+import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
@@ -94,8 +95,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     @Override
     public void disconnect() throws TechnicalException, FunctionalException {
         Assert.notNull(gameService, "[ClientDataToIHMImpl][disconnect] GameService shouldn't be null");
-        Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][disconnect] UserLocal shouldn't be null");
-        
+        Assert.notNull(dataClientManager.getUserLocal(),
+                "[ClientDataToIHMImpl][disconnect] UserLocal shouldn't be null");
+
         // Leave the game
         if (dataClientManager.getCurrentGame() != null) {
             if (gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
@@ -110,32 +112,32 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         dataClientManager.setUserLocal(null);
     }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.utc.api13.client.data.interfaces.IClientToIHM#move(com.utc.api13.
-	 * commun.entities.PieceEntity,
-	 * com.utc.api13.commun.entities.PositionEntity)
-	 */
-	@Override
-	public void move(APieceEntity piece, PositionEntity position) throws FunctionalException {
-		Assert.notNull(dataClientManager.getCurrentGame(), "[ClientDataToIHMImpl][move] CurrentGame shouldn't be null");
-		Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][move] UserLocal shouldn't be null");
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.utc.api13.client.data.interfaces.IClientToIHM#move(com.utc.api13.
+     * commun.entities.PieceEntity,
+     * com.utc.api13.commun.entities.PositionEntity)
+     */
+    @Override
+    public void move(APieceEntity piece, PositionEntity position) throws FunctionalException {
+        Assert.notNull(dataClientManager.getCurrentGame(), "[ClientDataToIHMImpl][move] CurrentGame shouldn't be null");
+        Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][move] UserLocal shouldn't be null");
 
-		MoveEntity move = new MoveEntity(null, piece.getPosition(), position, piece, null, null);
+        MoveEntity move = new MoveEntity(null, piece.getPosition(), position, piece, null, null);
 
-		if (piece.isMovePossible(move, dataClientManager.getCurrentGame())) {
-			move.setDate(new Date());
-			move.setUserID(dataClientManager.getUserLocal().getId());
-			move.setGameID(dataClientManager.getCurrentGame().getId());
-			dataClientManager.getIClientComToData().validateMove(dataClientManager.getUserLocal().getId(), move);
-		} else {
-			List<Erreur> erreurs = new ArrayList<>();
-			erreurs.add(new Erreur(ErrorTypeEnum.MOVE_IMPOSSIBLE));
-			throw new FunctionalException(erreurs);
-		}
-	}
+        if (piece.isMovePossible(move, dataClientManager.getCurrentGame())) {
+            move.setDate(new Date());
+            move.setUserID(dataClientManager.getUserLocal().getId());
+            move.setGameID(dataClientManager.getCurrentGame().getId());
+            dataClientManager.getIClientComToData().validateMove(dataClientManager.getUserLocal().getId(), move);
+        } else {
+            List<Erreur> erreurs = new ArrayList<>();
+            erreurs.add(new Erreur(ErrorTypeEnum.MOVE_IMPOSSIBLE));
+            throw new FunctionalException(erreurs);
+        }
+    }
 
     @Override
     public void observerLeave() {
@@ -267,6 +269,12 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
     @Override
     public void sendChatText(final String message) {
+        Assert.notNull(dataClientManager.getCurrentGame(),
+                "[ClientDataToIHMImpl][sendChatText] current game shouldn't be null");
+        MessageEntity newMessage = new MessageEntity();
+        newMessage.setText(message);
+        // TODO: à revoir, on aura besoin que la méthode prenne un MessageEntity
+        // et non un string
         dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
     }
 
@@ -294,6 +302,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         // uid
         dataClientManager.getIClientComToData().answerProposition(idUser, dataClientManager.getUserLocal().getId(),
                 chattable, observable, answer);
+
     }
 
     @Override
