@@ -265,9 +265,9 @@ public class ServerDataToComImpl implements IServerDataToCom {
         dataServerManager.getCurrentUsers().removeIf(user -> user.getId().equals(idUser));
     }
 
-    @Override
-    public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable) {
-
+	@Override
+	public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable, boolean timer, Integer timerInt) {
+		// TODO : traiter le timer et le timerInt ! sa mère le timer !!!
         PublicUserEntity whitePlayer;
         PublicUserEntity blackPlayer;
 

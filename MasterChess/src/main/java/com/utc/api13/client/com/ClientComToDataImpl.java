@@ -11,6 +11,8 @@ import com.utc.api13.commun.messages.ChatMessage;
 import com.utc.api13.commun.messages.ConnectMessage;
 import com.utc.api13.commun.messages.DisconnectMessage;
 import com.utc.api13.commun.messages.GameRequestMessage;
+import com.utc.api13.commun.messages.MoveMessage;
+import com.utc.api13.commun.messages.ObserverLeaveMessage;
 import com.utc.api13.commun.messages.ObserverRequestMessage;
 import com.utc.api13.commun.messages.PublicUserMessage;
 import com.utc.api13.commun.messages.RequestAnswerMessage;
@@ -46,7 +48,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void validateMove(UUID idPlayer, MoveEntity move) {
-        // TODO Auto-generated method stub
+//    	comClientManagerInstance.sendMessage(new MoveValidationMessage(idPlayer, new UUID(0,0), move));
         return;
     }
 
@@ -121,8 +123,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void observerLeave(UUID uid) {
-        // TODO Auto-generated method stub
-
+    	comClientManagerInstance.sendMessage(new ObserverLeaveMessage(uid, new UUID(0, 0)));
     }
 
     @Override
@@ -176,9 +177,9 @@ public class ClientComToDataImpl implements IClientComToData {
      *      java.util.UUID, boolean, boolean,
      *      com.utc.api13.commun.entities.PublicUserEntity)
      */
-    public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable,
-            PublicUserEntity user) {
-        comClientManagerInstance.sendMessage(new GameRequestMessage(sender, reciever, chattable, observable));
+    public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, PublicUserEntity user) {
+    	//TODO
+//        comClientManagerInstance.sendMessage(new GameRequestMessage(sender, reciever, chattable, observable,0));
     }
 
     /**
@@ -196,6 +197,7 @@ public class ClientComToDataImpl implements IClientComToData {
      */
     @Override
     public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer) {
-        comClientManagerInstance.sendMessage(new RequestAnswerMessage(sender, reciever, chattable, observable, answer));
+    	// TODO
+//        comClientManagerInstance.sendMessage(new RequestAnswerMessage(sender, reciever, chattable, observable, answer,0));
     }
 }
