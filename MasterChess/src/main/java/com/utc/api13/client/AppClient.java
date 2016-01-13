@@ -1,4 +1,3 @@
-
 package com.utc.api13.client;
 
 import com.utc.api13.client.com.ComClientManager;
@@ -91,4 +90,5 @@ public class AppClient extends Application {
         launch(args);
 
     }
+
 }

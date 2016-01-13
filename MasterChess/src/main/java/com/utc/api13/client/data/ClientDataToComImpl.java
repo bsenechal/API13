@@ -222,8 +222,8 @@ public class ClientDataToComImpl implements IClientDataToCom {
     }
 
     @Override
-    public void printProposition(final UUID uidSender, boolean observable, boolean chattable) {
-        instanceDataClientManager.getIClientIHMToData().displayProposition(uidSender, observable, chattable);
+    public void printProposition(final UUID uidSender, boolean observable, boolean chattable, boolean timer, Integer timerInt) {
+        instanceDataClientManager.getIClientIHMToData().displayProposition(uidSender, observable, chattable, timer, timerInt);
     }
 
     /*

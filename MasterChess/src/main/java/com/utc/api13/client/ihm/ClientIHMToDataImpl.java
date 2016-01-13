@@ -1,15 +1,11 @@
 package com.utc.api13.client.ihm;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
 import java.util.UUID;
 
-import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.ihm.controllers.AnswerPropositionController;
 import com.utc.api13.client.ihm.controllers.ErrorController;
-import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
-import com.utc.api13.client.ihm.controllers.SendPropositionController;
+import com.utc.api13.client.ihm.controllers.IHMGamePageController;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
 import com.utc.api13.commun.entities.GameEntity;
 //github.com/bsenechal/API13.git
@@ -31,7 +27,8 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         myIHMManager = pIHMManager;
     }
 
-    @Override
+    @SuppressWarnings("restriction")
+	@Override
     public void displayProfile(PublicUserEntity u) {
         Platform.runLater(new Runnable() {
             @Override
@@ -56,26 +53,25 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     public void displayProposition(UUID uidSender, boolean observable,
             boolean chattable , boolean timer, Integer timeInt) {
 
-        // TODO Auto-generated method stub
-
-	    
 	    Platform.runLater(new Runnable() {
             @Override
             public void run() {
 
             	    Stage stage;
                     Parent root = null;
+                    String l=""; 
                     stage = new Stage();
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AnswerPropositionPopUp.fxml"));
                     try {
                            root = (Pane) fxmlLoader.load();
                            AnswerPropositionController controller = fxmlLoader.getController();
                            controller.setControllerContext(myIHMManager);
-                           controller.setMainApp(myIHMManager.getMainApp(), myIHMManager.getIClientDataToIHM().getUserList().stream().filter(u->u.getId()== uidSender).toString(), 
+                           //myIHMManager.getIClientDataToIHM().getUserList().stream()
+                           controller.setMainApp(myIHMManager.getMainApp(), l , 
                                    chattable, timer, 
                                   observable, timeInt);
                            stage.setScene(new Scene(root));
-                           stage.setTitle("User Information");
+                           stage.setTitle("You've got a new game proposition!");
                            stage.initModality(Modality.APPLICATION_MODAL);
                            stage.showAndWait();
                        } catch (IOException e) {
@@ -83,32 +79,61 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                           }
             }
 	    });
-           
-
-
     }
 
-    @Override
+    @SuppressWarnings("restriction")
+	@Override
     public void displayAnswer(UUID uidSender, boolean observable) {
-        // TODO Auto-generated method stub
-
+        // uniquement si réponse négative 
+    	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+		    	Stage stage;
+		        Parent root = null;
+		        stage = new Stage();
+		        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+		        try {
+		               root = (Pane) fxmlLoader.load();
+		               ErrorController controller = fxmlLoader.getController();
+		               controller.setControllerContext(myIHMManager);
+		               controller.setMainApp(myIHMManager.getMainApp(), "Sorry: the player has refused to play!"); 
+		               stage.setScene(new Scene(root));
+		               stage.setTitle("Proposition refused");
+		               stage.initModality(Modality.APPLICATION_MODAL);
+		               stage.showAndWait();
+		           } catch (IOException e) {
+		              e.printStackTrace();
+		              }
+		}
+});
     }
 
-    @Override
+    @SuppressWarnings("restriction")
+	@Override
     public void displayChessBoard(GameEntity g) {
         // TODO Auto-generated method stub
-        /*
-         * Platform.runLater(new Runnable() {
-         * 
-         * @Override public void run() { //trouver l'autre player
-         * myIHMManager.getGame().otherPlayLoginProperty().set();
-         * myIHMManager.getGame().setOtherPlayerUUID(g);
-         * myIHMManager.getGame().setChattableProperty(g.getIsChattable());
-         * myIHMManager.getGame().setObservableProperty(g.getIsOservable());
-         * //myIHMManager.getGame().setTimerProperty(g.getIsTimed());
-         * //myIHMManager.getGame().setTimerProperty().set(g.getTime()); //time
-         * //myIHMManager.getGame().userUUID().set(u.getId().toString()); } });
-         */
+    	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+            	    Stage stage;
+                    Parent root = null;
+                    stage = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/gamePage.fxml"));
+                    try {
+                           root = (Pane) fxmlLoader.load();
+                           IHMGamePageController controller = fxmlLoader.getController();
+                           controller.setControllerContext(myIHMManager);
+                           controller.setMainApp(myIHMManager.getMainApp(), g); 
+                           stage.setScene(new Scene(root));
+                           stage.setTitle("Game!");
+                           stage.initModality(Modality.APPLICATION_MODAL);
+                           stage.showAndWait();
+                       } catch (IOException e) {
+                          e.printStackTrace();
+                          }
+            }
+	    });
     }
 
     @Override
@@ -117,7 +142,8 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     }
 
-    @Override
+    @SuppressWarnings("restriction")
+	@Override
     public void displayError(String errorMessage) {
         // TODO Auto-generated method stub
         Platform.runLater(new Runnable() {
@@ -154,6 +180,13 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     @Override
     public void displayMessage(String newMessage) {
         // TODO Auto-generated method stub
-
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                String sms= myIHMManager.getChat().getMessage().get();
+                myIHMManager.getChat().getMessage().set(sms+"\n"+newMessage);
+            }
+        });
     }
+
 }
