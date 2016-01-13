@@ -20,17 +20,17 @@ public class ObserverRequestMessage extends Message {
      * @param sender
      * @param receiver
      */
-//    public ObserverRequestMessage(UUID sender, UUID receiver) {
-//        super(sender, receiver);
-//        // TODO Auto-generated constructor stub
-//    }
+    // public ObserverRequestMessage(UUID sender, UUID receiver) {
+    // super(sender, receiver);
+    // // TODO Auto-generated constructor stub
+    // }
 
     public ObserverRequestMessage(UUID sender, UUID receiver, UUID game_id) {
-		super(sender,receiver);
-		this.game = game_id;
-	}
+        super(sender, receiver);
+        this.game = game_id;
+    }
 
-	@Override
+    @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // TODO Auto-generated method stub
         comClientManager.getIClientDataToCom().newObserver(sender);

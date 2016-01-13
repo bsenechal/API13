@@ -71,11 +71,11 @@ public class ClientComToDataImpl implements IClientComToData {
     }
 
     /* DEPRECATED !!! */
-//    @Override
-//    public void sendAnswer(String answer, PublicUserEntity sender) {
-//        // TODO Auto-generated method stub
-//        return;
-//    }
+    // @Override
+    // public void sendAnswer(String answer, PublicUserEntity sender) {
+    // // TODO Auto-generated method stub
+    // return;
+    // }
 
     @Override
     public void surrender(UUID uid) {

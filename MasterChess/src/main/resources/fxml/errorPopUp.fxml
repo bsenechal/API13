@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane fx:id="errorBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc.api13.client.ihm.controllers.ErrorController">
    <center>
-      <AnchorPane fx:id="errorAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="errorAnchorPane" prefHeight="400.0" prefWidth="481.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="errorLabel" layoutX="286.0" layoutY="192.0" text="Label" />
+            <ImageView fx:id="errorIcon" fitHeight="66.0" fitWidth="62.0" layoutX="195.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/Icone%20-%20error.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </center>
