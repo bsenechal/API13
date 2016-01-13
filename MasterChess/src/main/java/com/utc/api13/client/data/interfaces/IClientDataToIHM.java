@@ -1,6 +1,7 @@
 package com.utc.api13.client.data.interfaces;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -244,6 +245,17 @@ public interface IClientDataToIHM {
      */
     ObservableList<GameEntity> getGamesList();
 
+    
+    /**
+     * @return Returns the list of PositionEntity
+     */
+    public List<PositionEntity> getAvailablesMoves(int line, int col);
+
+    /**
+     * Play the chosen move
+     */
+    public void playMove(int fromLine, int fromCol, int toLine, int toCol);
+    
     // TODO
     // Si le (IClientDataToCom.)printProposition() ne renvoie pas directement la
     // réponse à com pour dire si un User à accepté la partie, il faudra créer
