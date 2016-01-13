@@ -36,8 +36,8 @@ public class KingEntityTest {
         blackPlayer = new PublicUserEntity();
         game = new GameEntity(Boolean.FALSE, Boolean.FALSE, new Date(), whitePlayer, blackPlayer);
 
-        Assert.assertEquals("Error init King position", game.getBlackPieces().size(), 16);
-        Assert.assertEquals("Error init King position", game.getWhitePieces().size(), 16);
+        Assert.assertEquals("Error init pieces", game.getBlackPieces().size(), 16);
+        Assert.assertEquals("Error init pieces", game.getWhitePieces().size(), 16);
     }
 
     /**
