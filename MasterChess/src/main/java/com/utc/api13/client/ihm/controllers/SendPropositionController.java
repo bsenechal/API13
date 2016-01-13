@@ -77,16 +77,15 @@ public class SendPropositionController {
     	boolean timer = timerCheckBox.isSelected(); 
     	String time = timeTextField.getText(); 
     	
-    	if (time.length()==0 && timer) time="00:30"; 
-    	else if (time.length()!=0 && !timer) {
+    	if (time.length()!=0 && !timer) {
     		try {
     			error("Please check timer option if you enter a time!"); 
     		} catch (IOException e) {
     			log.error(e.getMessage(), e);
     		}
     	}
-    	else {
-    		if (!time.matches("[0-9][0-3]:+[0-5][0-9]")) {
+    	else if (!time.matches("[0-9][0-3]:+[0-5][0-9]")) {
+    		
     			try {
         			error("Please use a 00:00 format!"); 
         		} catch (IOException e) {
@@ -95,6 +94,8 @@ public class SendPropositionController {
     		}
     		
     		else {
+    			if (time.length()==0 && timer) time="00:30"; 
+    			
 	    		PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
 	    		UUID enquirerUUID = u.getId(); 
 	    		int timeInt=0; 
@@ -109,11 +110,8 @@ public class SendPropositionController {
 		    	} catch (IOException e) {
 					log.error(e.getMessage(), e);
 				}
-		    	
-		    	//displayPropositionResult();
     		}
     	}	
-    }
     
     private int conversionTime(String time) {
 		String secondsString=time.substring(3, 5); 
