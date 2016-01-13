@@ -65,7 +65,10 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                            root = (Pane) fxmlLoader.load();
                            AnswerPropositionController controller = fxmlLoader.getController();
                            controller.setControllerContext(myIHMManager);
-                           controller.setMainApp(myIHMManager.getMainApp(), myIHMManager.getIClientDataToIHM().getUserList().stream().filter(u->u.getId()== uidSender).toString(), 
+                           controller.setMainApp(myIHMManager.getMainApp(), 
+                                   myIHMManager.getIClientDataToIHM().getUserList().stream()
+                                   .filter(u->u.getId()== uidSender).map(PublicUserEntity::getLogin)
+                                   .findFirst().orElse("unknowUser"),
                                    chattable, timer, 
                                   observable, timeInt);
                            stage.setScene(new Scene(root));
