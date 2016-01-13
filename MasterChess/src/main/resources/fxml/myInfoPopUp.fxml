@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
@@ -29,7 +30,7 @@
                   <TableColumn fx:id="userInfoPlayed" minWidth="0.0" text="Played" />
               </columns>
             </TableView>
-            <Hyperlink fx:id="modifyLink" layoutX="250.0" layoutY="245.0" onAction="#onModifyProfileClicked" text="Modify my profile" />
+            <Button fx:id="modifyButton" layoutX="174.0" layoutY="243.0" mnemonicParsing="false" onAction="#onModifyProfileClicked" text="Modify my profile" />
          </children>
       </AnchorPane>
    </center>

@@ -56,7 +56,7 @@ public interface IClientComToData {
 
     public void sendProposition(PublicUserEntity player);
 
-    public void sendAnswer(String answer, PublicUserEntity sender);
+    // public void sendAnswer(String answer, PublicUserEntity sender);
 
     public void surrender(UUID uid);
 

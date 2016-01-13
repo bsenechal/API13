@@ -35,7 +35,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Text fx:id="userLabel" layoutX="409.0" layoutY="35.0" onMouseClicked="#onMyInfoClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="ConnectedPlayerLogin">
+                  <Text fx:id="userLabel" layoutX="463.0" layoutY="35.0" onMouseClicked="#onMyInfoClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="ConnectedPlayer">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -83,7 +83,8 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <ScrollBar fx:id="currentGamesScrollbar" layoutX="450.0" layoutY="2.0" orientation="VERTICAL" prefHeight="262.0" prefWidth="14.0" /> 
+                              <ScrollBar fx:id="currentGamesScrollbar" layoutX="450.0" layoutY="2.0" orientation="VERTICAL" prefHeight="262.0" prefWidth="14.0" />
+                              <Label fx:id="testEcran" layoutX="287.0" layoutY="18.0" onMouseClicked="#testEcranFunction" text="testEcran" /> 
                            </children>
                         </AnchorPane>
                       <AnchorPane fx:id="bottomLeftAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="207.0" prefWidth="471.0">
@@ -121,7 +122,6 @@
                         <TableColumn fx:id="connectedUserLogin" prefWidth="94.0" resizable="false" text="Login" />
                         <TableColumn fx:id="connectedUserStatus" prefWidth="92.0" resizable="false" text="Status" />
                         <TableColumn fx:id="connectedUserStat" prefWidth="82.0" resizable="false" text="Won/Lost" />
-                        <TableColumn fx:id="connectedUserActionIcon" prefWidth="28.0" resizable="false" />
                      </columns>
                   </TableView>
                   <ScrollBar fx:id="connectedUserScrollbar" layoutX="313.0" layoutY="6.0" orientation="VERTICAL" prefHeight="527.0" prefWidth="14.0" />

@@ -27,14 +27,13 @@ public class ObserverAnswerMessage extends Message {
 
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
-        // TODO Auto-generated method stub
         // Appeler InitGame()
-
+        comClientManager.getIClientDataToCom().initGame(game);
     }
 
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-        // Never reaches the server
+        // Never goes to the server
     }
 
     public GameEntity getGame() {

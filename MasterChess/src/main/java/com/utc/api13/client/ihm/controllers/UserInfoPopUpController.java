@@ -1,10 +1,14 @@
 package com.utc.api13.client.ihm.controllers;
 
+import javafx.scene.control.Button;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
+
+import org.apache.log4j.Logger;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -16,6 +20,9 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 import javafx.collections.ListChangeListener;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,12 +30,32 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class UserInfoPopUpController {
     private IHMManager IHMManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     public PublicUserEntity u;
+    private Stage currentStage;
+    private final Logger log = Logger.getLogger(getClass());
+
+    @FXML
+    BorderPane userInfoBorderPane;
+    @FXML
+    AnchorPane userInfoAnchorPane;
+    @FXML
+    Label userInfoLogin, userInfoFirstName, userInfoLastName, userUUID;
+    @FXML
+    TableView userInfoTableView;
+    @FXML
+    ImageView userInfoImage;
+    @FXML
+    TableColumn userInfoWon, userInfoLost, userInfoPlayed;
+    @FXML
+    Button sendPropositionButton;
 
     public PublicUserEntity getU() {
         return u;
@@ -37,19 +64,6 @@ public class UserInfoPopUpController {
     public void setU(PublicUserEntity u) {
         this.u = u;
     }
-
-    @FXML
-    BorderPane userInfoBorderPane;
-    @FXML
-    AnchorPane userInfoAnchorPane;
-    @FXML
-    Label userInfoLogin, userInfoFirstName, userInfoLastName;
-    @FXML
-    TableView userInfoTableView;
-    @FXML
-    ImageView userInfoImage;
-    @FXML
-    TableColumn userInfoWon, userInfoLost, userInfoPlayed;
 
     public UserInfoPopUpController() {
 
@@ -99,6 +113,7 @@ public class UserInfoPopUpController {
         userInfoLogin.textProperty().bind(profile.loginProperty());
         userInfoFirstName.textProperty().bind(profile.firstNameProperty());
         userInfoLastName.textProperty().bind(profile.lastNameProperty());
+        userUUID.textProperty().bind(profile.userUUID());
 
         userInfoWon.setCellValueFactory(new PropertyValueFactory<PrivateUserEntity, Integer>("nbWon"));
         userInfoLost.setCellValueFactory(new PropertyValueFactory<PrivateUserEntity, Integer>("nbLost"));
@@ -109,4 +124,56 @@ public class UserInfoPopUpController {
         });
 
     }
+
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
+    }
+
+    public void sendProposition() throws IOException {
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/sendPropositionPopUp.fxml"));
+            root = (Pane) fxmlLoader.load();
+            SendPropositionController controller = fxmlLoader.getController();
+            controller.setControllerContext(this.IHMManager);
+            controller.setMainApp(this.mainApp, userUUID, userInfoLogin);
+            stage.setScene(new Scene(root));
+            stage.setTitle("Error");
+            mainApp.setCurrentStage(stage);
+            mainApp.getCurrentStage().close();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            try {
+                error("Error when loading proposition window : IOException");
+            } catch (IOException e1) {
+                log.error(e1.getMessage(), e1);
+            }
+            log.error(e.getMessage(), e);
+        }
+
+    }
+
+    public void error(String message) throws IOException {
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+        root = (Pane) fxmlLoader.load();
+        ErrorController controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager);
+        controller.setMainApp(this.mainApp, message);
+        stage.setScene(new Scene(root));
+        stage.setTitle("Error");
+        mainApp.setCurrentStage(stage);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+    }
+
 }
