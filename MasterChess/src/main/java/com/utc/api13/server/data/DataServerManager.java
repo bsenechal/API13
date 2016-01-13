@@ -91,15 +91,15 @@ public class DataServerManager {
     public void setServerDataToComImpl(ServerDataToComImpl serverDataToComImpl) {
         this.serverDataToComImpl = serverDataToComImpl;
     }
-    
-	/**
-	 * Return Game By ID
-	 * 
-	 * @author ulyss_000
-	 * @param gameID
-	 * @return
-	 */
-	public GameEntity getGameById(UUID gameID) {
-		return this.getCurrentGames().stream().filter(g -> gameID.equals(g.getId())).findFirst().orElse(null);
-	}
+
+    /**
+     * Return Game By ID
+     * 
+     * @author ulyss_000
+     * @param gameID
+     * @return
+     */
+    public GameEntity getGameById(UUID gameID) {
+        return this.getCurrentGames().stream().filter(g -> gameID.equals(g.getId())).findFirst().orElse(null);
+    }
 }

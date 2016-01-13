@@ -42,7 +42,7 @@ import com.utc.api13.commun.entities.pieces.RookEntity;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
 public class ChessBoardNode {
-	private IClientDataToIHM myIClientToIHM;
+    private IClientDataToIHM myIClientToIHM;
     private IHMManager myIhmManager;
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JPanel chessBoard;
@@ -68,16 +68,13 @@ public class ChessBoardNode {
         chessBoard.setBorder(new LineBorder(Color.BLACK));
         gui.add(chessBoard);
 
-       
         // create the chess board squares
         Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int ii = 0; ii < chessBoardSquares.length; ii++) {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
                 JButton b = new JButton();
                 b.setMargin(buttonMargin);
-                if ((jj % 2 == 1 && ii % 2 == 1)
-                        // ) {
-                        || (jj % 2 == 0 && ii % 2 == 0)) {
+                if ((jj % 2 == 1 && ii % 2 == 1) || (jj % 2 == 0 && ii % 2 == 0)) {
                     b.setBackground(Color.WHITE);
                 } else {
                     b.setBackground(Color.BLACK);
@@ -116,15 +113,15 @@ public class ChessBoardNode {
 
                 switch (ordrePiece[ctr]) {
                 case 'T':
-                    tempo = new RookEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
+                    tempo = new RookEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
                     break;
 
                 case 'C':
-                    tempo = new KnightEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
+                    tempo = new KnightEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
                     break;
 
                 case 'F':
-                    tempo = new BishopEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
+                    tempo = new BishopEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
                     break;
 
                 case 'D':
@@ -135,16 +132,14 @@ public class ChessBoardNode {
                     tempo = new KingEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                     break;
                 }
-                
-                
+
                 try {
                     Image img = ImageIO.read(getClass().getResource(dossierIcone + 'P' + couleur + ".gif"));
                     chessBoardSquares[ctr][ligne + increment].setIcon(new ImageIcon(img));
                 } catch (IOException e) {
 
                 }
-                tempo = new PawnEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
-                
+                tempo = new PawnEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
 
             }
             couleur = 'B';
@@ -160,19 +155,17 @@ public class ChessBoardNode {
     public final JPanel getGui() {
         return gui;
     }
-    
+
     public void actionPerformed(ActionEvent e) {
-        //on teste si c'est au joueur de jouer
-    	GameEntity game = this.myIClientToIHM.getCurrentGame();
-    	AUserEntity current = game.getCurrentPlayer();
-    	AUserEntity u = this.myIClientToIHM.getLocalUser();
-        if (current != u)
-          { System.out.println("Ce n'est pas à vous de jouer !!"); }
-        else
-          {
-          
-          }
+        // on teste si c'est au joueur de jouer
+        GameEntity game = this.myIClientToIHM.getCurrentGame();
+        AUserEntity current = game.getCurrentPlayer();
+        AUserEntity u = this.myIClientToIHM.getLocalUser();
+        if (current != u) {
+            System.out.println("Ce n'est pas à vous de jouer !!");
+        } else {
+
+        }
     }
-    
 
 }
