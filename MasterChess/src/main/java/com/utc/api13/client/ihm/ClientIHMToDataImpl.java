@@ -183,6 +183,13 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     @Override
     public void displayMessage(String newMessage) {
         // TODO Auto-generated method stub
-
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                String sms= myIHMManager.getChat().getMessage().get();
+                myIHMManager.getChat().getMessage().set(sms+"\n"+newMessage);
+            }
+        });
     }
+
 }

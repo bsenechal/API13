@@ -5,13 +5,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-
 import java.beans.EventHandler;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
-
-
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
