@@ -323,4 +323,18 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public ObservableList<GameEntity> getGamesList() {
         return dataClientManager.getCurrentGames();
     }
+
+    @Override
+    public List<PositionEntity> getAvailablesMoves(int line, int col) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void playMove(int fromLine, int fromCol, int toLine, int toCol) {
+        // TODO Auto-generated method stub
+        
+    }
+
+   
 }

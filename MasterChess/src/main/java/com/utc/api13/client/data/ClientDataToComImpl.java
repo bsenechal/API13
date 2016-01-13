@@ -286,4 +286,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
         }
     }
+
+    @Override
+    public void NextTurn(GameStatusEnum isFinished, UUID nextPlayer) {
+        // TODO Auto-generated method stub
+        
+    }
 }
