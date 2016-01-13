@@ -77,10 +77,5 @@ public class RookEntity extends APieceEntity {
     public List<PositionEntity> generateAvailableMoves(GameEntity game) {
         return generateAvailableMoves(game, Boolean.TRUE);
     }
-    
-    @Override
-    public String toString() {
-    	return "Rook";
-    }
 
 }

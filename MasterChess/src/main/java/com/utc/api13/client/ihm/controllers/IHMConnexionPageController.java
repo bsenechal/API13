@@ -95,6 +95,7 @@ public class IHMConnexionPageController {
                 stage.setScene(new Scene(root));
                 mainApp.getCurrentStage().close();
                 mainApp.setCurrentStage(stage);
+                controllerRight.setDisconnectUserByClosingWindow();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
             }

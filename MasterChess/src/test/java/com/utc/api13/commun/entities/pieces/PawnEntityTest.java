@@ -3,7 +3,6 @@
  */
 package com.utc.api13.commun.entities.pieces;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;

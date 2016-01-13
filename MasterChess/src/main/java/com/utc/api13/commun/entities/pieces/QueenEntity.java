@@ -104,8 +104,4 @@ public class QueenEntity extends APieceEntity {
         return generateAvailableMoves(game, Boolean.TRUE);
     }
 
-    @Override
-    public String toString() {
-    	return "Queen";
-    }
 }

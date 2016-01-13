@@ -1,3 +1,4 @@
+
 package com.utc.api13.client;
 
 import com.utc.api13.client.com.ComClientManager;
@@ -28,6 +29,7 @@ public class AppClient extends Application {
 
         IHMManager ihmManager = new IHMManager();
         ComClientManager comClientManager = new ComClientManager();
+        ihmManager.setMainApp(this);
 
         DataClientManager dataClientManager = new DataClientManager();
         dataClientManager.setIClientComToData(comClientManager.getClientComToDataImpl());
