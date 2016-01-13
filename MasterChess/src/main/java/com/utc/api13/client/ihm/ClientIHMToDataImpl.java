@@ -31,7 +31,8 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         myIHMManager = pIHMManager;
     }
 
-    @Override
+    @SuppressWarnings("restriction")
+	@Override
     public void displayProfile(PublicUserEntity u) {
         Platform.runLater(new Runnable() {
             @Override
@@ -54,11 +55,8 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     @SuppressWarnings("restriction")
     @Override
     public void displayProposition(UUID uidSender, boolean observable,
-            boolean chattable /* , boolean timer, Integer time, String login */) {
+            boolean chattable , boolean timer, Integer timeInt) {
 
-        // TODO Auto-generated method stub
-
-	    
 	    Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -73,9 +71,9 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                            controller.setControllerContext(myIHMManager);
                            controller.setMainApp(myIHMManager.getMainApp(), myIHMManager.getIClientDataToIHM().getUserList().stream().filter(u->u.getId()== uidSender).toString(), 
                                    chattable, timer, 
-                                  observable, time);
+                                  observable, timeInt);
                            stage.setScene(new Scene(root));
-                           stage.setTitle("User Information");
+                           stage.setTitle("You've got a new game proposition!");
                            stage.initModality(Modality.APPLICATION_MODAL);
                            stage.showAndWait();
                        } catch (IOException e) {
@@ -83,32 +81,38 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                           }
             }
 	    });
-           
-
-
     }
 
-    @Override
+    @SuppressWarnings("restriction")
+	@Override
     public void displayAnswer(UUID uidSender, boolean observable) {
-        // TODO Auto-generated method stub
-
+        // uniquement si réponse négative 
+    	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+		    	Stage stage;
+		        Parent root = null;
+		        stage = new Stage();
+		        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+		        try {
+		               root = (Pane) fxmlLoader.load();
+		               ErrorController controller = fxmlLoader.getController();
+		               controller.setControllerContext(myIHMManager);
+		               controller.setMainApp(myIHMManager.getMainApp(), "Sorry: the player has refused to play!"); 
+		               stage.setScene(new Scene(root));
+		               stage.setTitle("Proposition refused");
+		               stage.initModality(Modality.APPLICATION_MODAL);
+		               stage.showAndWait();
+		           } catch (IOException e) {
+		              e.printStackTrace();
+		              }
+		}
+});
     }
 
     @Override
     public void displayChessBoard(GameEntity g) {
         // TODO Auto-generated method stub
-        /*
-         * Platform.runLater(new Runnable() {
-         * 
-         * @Override public void run() { //trouver l'autre player
-         * myIHMManager.getGame().otherPlayLoginProperty().set();
-         * myIHMManager.getGame().setOtherPlayerUUID(g);
-         * myIHMManager.getGame().setChattableProperty(g.getIsChattable());
-         * myIHMManager.getGame().setObservableProperty(g.getIsOservable());
-         * //myIHMManager.getGame().setTimerProperty(g.getIsTimed());
-         * //myIHMManager.getGame().setTimerProperty().set(g.getTime()); //time
-         * //myIHMManager.getGame().userUUID().set(u.getId().toString()); } });
-         */
     }
 
     @Override
@@ -117,7 +121,8 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     }
 
-    @Override
+    @SuppressWarnings("restriction")
+	@Override
     public void displayError(String errorMessage) {
         // TODO Auto-generated method stub
         Platform.runLater(new Runnable() {
