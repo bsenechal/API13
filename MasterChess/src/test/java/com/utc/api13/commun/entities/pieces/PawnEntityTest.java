@@ -38,6 +38,26 @@ public class PawnEntityTest {
         Assert.assertEquals("Error init pieces", game.getWhitePieces().size(), 16);
     }
 
+    public static void displayChessBoard(List<PositionEntity> positions) {
+        for (int x = 1; x <= 8; x++) {
+            for (int y = 1; y <= 8; y++) {
+                System.out.print("|");
+                boolean available = Boolean.TRUE;
+                for (PositionEntity pos : positions) {
+                    if (pos.equals(new PositionEntity(y, x))) {
+                        available = Boolean.FALSE;
+                    }
+
+                }
+                if (available) {
+                    System.out.print("O");
+                } else {
+                    System.out.print("X");
+                }
+            }
+            System.out.println("|");
+        }
+    }
     /**
      * @throws java.lang.Exception
      */
@@ -74,8 +94,7 @@ public class PawnEntityTest {
 
         game.setCurrentPlayer(blackPlayer);
 
-        List<PositionEntity> availablesPositionsBlackPawn = blackPawn.generateAvailableMoves(game);
-        Assert.assertFalse("availablesPositionsBlackPawn should not be empty", availablesPositionsBlackPawn.isEmpty());
+        
 
         // On crée 6 pions supplémentaires pour tester les déplacements
         PawnEntity blackFriendPawn = new PawnEntity(PieceColorEnum.BLACK, new PositionEntity(5,6));
@@ -88,6 +107,10 @@ public class PawnEntityTest {
         PawnEntity whiteEnemyPawn2 = new PawnEntity(PieceColorEnum.WHITE, new PositionEntity(4,6));
         PawnEntity whiteEnemyPawn3 = new PawnEntity(PieceColorEnum.WHITE, new PositionEntity(6,6));
         
+        List<PositionEntity> availablesPositionsBlackPawn = blackPawn.generateAvailableMoves(game);
+        Assert.assertFalse("availablesPositionsBlackPawn should not be empty", availablesPositionsBlackPawn.isEmpty());
+        
+        
         game.getBlackPieces().add(blackFriendPawn);
         availablesPositionsBlackPawn = blackPawn.generateAvailableMoves(game);
         Assert.assertTrue("availablesPositionsBlackPawn should be empty", availablesPositionsBlackPawn.isEmpty());
@@ -96,8 +119,8 @@ public class PawnEntityTest {
         game.getWhitePieces().add(whiteEnemyPawn1);
         availablesPositionsBlackPawn = blackPawn.generateAvailableMoves(game);
         Assert.assertTrue("availablesPositionsBlackPawn should be empty", availablesPositionsBlackPawn.isEmpty());
-        game.getBlackPieces().remove(whiteEnemyPawn1);
-
+        game.getWhitePieces().remove(whiteEnemyPawn1);
+        
         game.getWhitePieces().add(whiteEnemyPawn2);
         availablesPositionsBlackPawn = blackPawn.generateAvailableMoves(game);
         Assert.assertFalse("availablesPositionsBlackPawn should not be empty", availablesPositionsBlackPawn.isEmpty());
@@ -108,24 +131,29 @@ public class PawnEntityTest {
         Assert.assertFalse("availablesPositionsBlackPawn should not be empty", availablesPositionsBlackPawn.isEmpty());
         game.getWhitePieces().remove(whiteEnemyPawn3);
         
+        game.setCurrentPlayer(whitePlayer);
+        
+        availablesPositionsWhitePawn = whitePawn.generateAvailableMoves(game);
+        Assert.assertFalse("availablesPositionsWhitePawn should not be empty", availablesPositionsWhitePawn.isEmpty());
+        
         game.getWhitePieces().add(whiteFriendPawn);
         availablesPositionsWhitePawn = whitePawn.generateAvailableMoves(game);
-        Assert.assertTrue("availablesPositionsWhitePawn should be empty", availablesPositionsBlackPawn.isEmpty());
+        Assert.assertTrue("availablesPositionsWhitePawn should be empty", availablesPositionsWhitePawn.isEmpty());
         game.getWhitePieces().remove(whiteFriendPawn);
         
         game.getBlackPieces().add(blackEnemyPawn1);
         availablesPositionsWhitePawn = whitePawn.generateAvailableMoves(game);
-        Assert.assertTrue("availablesPositionsWhitePawn should be empty", availablesPositionsBlackPawn.isEmpty());
+        Assert.assertTrue("availablesPositionsWhitePawn should be empty", availablesPositionsWhitePawn.isEmpty());
         game.getBlackPieces().remove(blackEnemyPawn1);
         
         game.getBlackPieces().add(blackEnemyPawn2);
         availablesPositionsWhitePawn = whitePawn.generateAvailableMoves(game);
-        Assert.assertFalse("availablesPositionsWhitePawn should not be empty", availablesPositionsBlackPawn.isEmpty());
+        Assert.assertFalse("availablesPositionsWhitePawn should not be empty", availablesPositionsWhitePawn.isEmpty());
         game.getBlackPieces().remove(blackEnemyPawn2);
         
         game.getBlackPieces().add(blackEnemyPawn3);
         availablesPositionsWhitePawn = whitePawn.generateAvailableMoves(game);
-        Assert.assertFalse("availablesPositionsWhitePawn should not be empty", availablesPositionsBlackPawn.isEmpty());
+        Assert.assertFalse("availablesPositionsWhitePawn should not be empty", availablesPositionsWhitePawn.isEmpty());
         game.getBlackPieces().remove(blackEnemyPawn3);
 
     }
