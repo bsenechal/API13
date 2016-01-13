@@ -23,110 +23,98 @@ import com.utc.api13.commun.enumerations.PieceColorEnum;
  *
  */
 public class QueenEntityTest {
-    private GameEntity game;
-    private PublicUserEntity blackPlayer;
-    private PublicUserEntity whitePlayer;
-    
-    public static void displayChessBoard(List<PositionEntity> positions){
-        for(int x=1;x<=8;x++){
-        	for(int y=1;y<=8;y++){
-        		System.out.print("|");
-        		boolean available = Boolean.TRUE;
-        		for(PositionEntity pos:positions){
-        			if(pos.equals(new PositionEntity(y, x))){
-        				available = Boolean.FALSE;
-        			}
-        			
-        		}
-        		if(available){
-        			System.out.print("O");
-        		}
-        		else{
-        			System.out.print("X");
-        		}
-        	}
-        	System.out.println("|");
-        }
-    }
+	private GameEntity game;
+	private PublicUserEntity blackPlayer;
+	private PublicUserEntity whitePlayer;
 
-    /**
-     * @throws java.lang.Exception
-     */
-    @Before
-    public void setUp() throws Exception {
-        whitePlayer = new PublicUserEntity();
-        blackPlayer = new PublicUserEntity();
-        game = new GameEntity(Boolean.FALSE, Boolean.FALSE, new Date(), whitePlayer, blackPlayer);
+	public static void displayChessBoard(List<PositionEntity> positions) {
+		for (int x = 1; x <= 8; x++) {
+			for (int y = 1; y <= 8; y++) {
+				System.out.print("|");
+				boolean available = Boolean.TRUE;
+				for (PositionEntity pos : positions) {
+					if (pos.equals(new PositionEntity(y, x))) {
+						available = Boolean.FALSE;
+					}
 
-        Assert.assertEquals("Error init pieces", game.getBlackPieces().size(), 16);
-        Assert.assertEquals("Error init pieces", game.getWhitePieces().size(), 16);
-    }
+				}
+				if (available) {
+					System.out.print("O");
+				} else {
+					System.out.print("X");
+				}
+			}
+			System.out.println("|");
+		}
+	}
 
-    /**
-     * @throws java.lang.Exception
-     */
-    @After
-    public void tearDown() throws Exception {
-    }
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+		whitePlayer = new PublicUserEntity();
+		blackPlayer = new PublicUserEntity();
+		game = new GameEntity(Boolean.FALSE, Boolean.FALSE, new Date(), whitePlayer, blackPlayer);
 
-    /**
-     * Test method for
-     * {@link com.utc.api13.commun.entities.pieces.KingEntity#generateAvailableMoves(com.utc.api13.commun.entities.GameEntity)}
-     * .
-     */
-    @Test
-    public void testGenerateAvailableMoves() {
-        final PositionEntity blackQueenPosition = new PositionEntity(4, 8);
-        final PositionEntity whiteQueenPosition = new PositionEntity(4, 1);
-        QueenEntity whiteQueen = new QueenEntity(PieceColorEnum.WHITE);
-        QueenEntity blackQueen = new QueenEntity(PieceColorEnum.BLACK);
+		Assert.assertEquals("Error init pieces", game.getBlackPieces().size(), 16);
+		Assert.assertEquals("Error init pieces", game.getWhitePieces().size(), 16);
+	}
 
-        Assert.assertEquals("Error init King position", whiteQueen.getPosition().getPositionX(),
-                whiteQueenPosition.getPositionX());
-        Assert.assertEquals("Error init King position", whiteQueen.getPosition().getPositionY(),
-                whiteQueenPosition.getPositionY());
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@After
+	public void tearDown() throws Exception {
+	}
 
-        Assert.assertEquals("Error init King position", blackQueen.getPosition().getPositionX(),
-                blackQueenPosition.getPositionX());
-        Assert.assertEquals("Error init King position", blackQueen.getPosition().getPositionY(),
-                blackQueenPosition.getPositionY());
+	/**
+	 * Test method for
+	 * {@link com.utc.api13.commun.entities.pieces.KingEntity#generateAvailableMoves(com.utc.api13.commun.entities.GameEntity)}
+	 * .
+	 */
+	@Test
+	public void testGenerateAvailableMoves() {
+		final PositionEntity blackQueenPosition = new PositionEntity(4, 8);
+		final PositionEntity whiteQueenPosition = new PositionEntity(4, 1);
+		QueenEntity whiteQueen = new QueenEntity(PieceColorEnum.WHITE);
+		QueenEntity blackQueen = new QueenEntity(PieceColorEnum.BLACK);
 
-        List<PositionEntity> availablesPositionsWhiteQueen = whiteQueen.generateAvailableMoves(game);
-        Assert.assertTrue("availablesPositionsWhiteQueen should be empty", availablesPositionsWhiteQueen.isEmpty());
+		Assert.assertEquals("Error init King position", whiteQueen.getPosition().getPositionX(),
+				whiteQueenPosition.getPositionX());
+		Assert.assertEquals("Error init King position", whiteQueen.getPosition().getPositionY(),
+				whiteQueenPosition.getPositionY());
 
-        game.setCurrentPlayer(blackPlayer);
+		Assert.assertEquals("Error init King position", blackQueen.getPosition().getPositionX(),
+				blackQueenPosition.getPositionX());
+		Assert.assertEquals("Error init King position", blackQueen.getPosition().getPositionY(),
+				blackQueenPosition.getPositionY());
 
-        List<PositionEntity> availablesPositionsBlackQueen = blackQueen.generateAvailableMoves(game);
-        Assert.assertTrue("availablesPositionsBlackQueen should be empty", availablesPositionsBlackQueen.isEmpty());
+		List<PositionEntity> availablesPositionsWhiteQueen = whiteQueen.generateAvailableMoves(game);
+		Assert.assertTrue("availablesPositionsWhiteQueen should be empty", availablesPositionsWhiteQueen.isEmpty());
 
-        // Suppression des pièces autre que la reine
-        game.setBlackPieces(new ArrayList<APieceEntity>());
-        game.getBlackPieces().add(blackQueen);
+		game.setCurrentPlayer(blackPlayer);
 
-        game.setWhitePieces(new ArrayList<APieceEntity>());
-        game.getWhitePieces().add(whiteQueen);
+		List<PositionEntity> availablesPositionsBlackQueen = blackQueen.generateAvailableMoves(game);
+		Assert.assertTrue("availablesPositionsBlackQueen should be empty", availablesPositionsBlackQueen.isEmpty());
 
-        System.out.println(game.getWhitePieces());
-        System.out.println(game.getBlackPieces());
-        availablesPositionsBlackQueen = blackQueen.generateAvailableMoves(game);
-        System.out.println(game.getWhitePieces());
-        System.out.println(game.getBlackPieces());
+		// Suppression des pièces autre que la reine
+		game.setBlackPieces(new ArrayList<APieceEntity>());
+		game.getBlackPieces().add(blackQueen);
 
-        System.out.println("black pieces");
-        displayChessBoard(availablesPositionsBlackQueen);
-        
-//        game.setCurrentPlayer(blackPlayer);
+		game.setWhitePieces(new ArrayList<APieceEntity>());
+		game.getWhitePieces().add(whiteQueen);
 
-        availablesPositionsWhiteQueen = whiteQueen.generateAvailableMoves(game);
-        
-        System.out.println("white pieces");
-        displayChessBoard(availablesPositionsWhiteQueen);
-        
-        System.out.println(game.getBlackPieces());
-        System.out.println(game.getWhitePieces());
-        // STACKOVERFLOW !!!!! -_-
-        Assert.assertFalse("availablesPositionsBlackKing shouldn't be empty", availablesPositionsBlackQueen.isEmpty());
-        Assert.assertFalse("availablesPositionsWhiteKing shouldn't be empty", availablesPositionsWhiteQueen.isEmpty());
-    }
+		availablesPositionsBlackQueen = blackQueen.generateAvailableMoves(game);
+
+		availablesPositionsWhiteQueen = whiteQueen.generateAvailableMoves(game);
+
+		// System.out.println("white pieces");
+		// displayChessBoard(availablesPositionsWhiteQueen);
+
+		// STACKOVERFLOW !!!!! -_-
+		Assert.assertFalse("availablesPositionsBlackKing shouldn't be empty", availablesPositionsBlackQueen.isEmpty());
+		Assert.assertFalse("availablesPositionsWhiteKing shouldn't be empty", availablesPositionsWhiteQueen.isEmpty());
+	}
 
 }

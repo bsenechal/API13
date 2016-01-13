@@ -116,15 +116,31 @@ public interface IClientDataToCom {
                                       // méthodes utilisées par le "retour" de
                                       // com ?
 
-    /**
-     * Affiche la proposition de jeu d'un autre joueur.
-     * "Voulez vous jouer avec moi ?"
-     * 
-     * @param uidSender
-     * @param observable
-     * @param chattable
-     */
-    void printProposition(final UUID uidSender, final boolean observable, final boolean chattable);
+/**
+ * Affiche la proposition de jeu d'un autre joueur.
+ * "Voulez vous jouer avec moi ?"
+ * 
+ * @param uidSender
+ * @param observable
+ * @param chattable
+ * @param timer
+ */
+void printProposition(final UUID uidSender, final boolean observable, final boolean chattable, final boolean timer, final Integer timerInt); // Affiche
+                                                                                                    // la
+                                                                                                    // proposition
+                                                                                                    // de
+                                                                                                    // jeu
+                                                                                                    // d'un
+                                                                                                    // autre
+                                                                                                    // joueur.
+                                                                                                    // "Voulez
+                                                                                                    // vous
+                                                                                                    // jouer
+                                                                                                    // avec
+                                                                                                    // moi
+                                                                                                    // ?"
+
+   
 
     void victoryBySurrender();
 
@@ -162,4 +178,7 @@ public interface IClientDataToCom {
      *            server
      */
     void setFinishedStatus(GameStatusEnum status);
+    
+    public void NextTurn(GameStatusEnum isFinished, UUID nextPlayer);
+
 }

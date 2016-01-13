@@ -86,13 +86,10 @@ public class KingEntityTest {
 
 
         availablesPositionsBlackKing = blackKing.generateAvailableMoves(game);
-        System.out.println("black pieces");
-        QueenEntityTest.displayChessBoard(availablesPositionsBlackKing);
+//        System.out.println("black pieces");
+//        QueenEntityTest.displayChessBoard(availablesPositionsBlackKing);
         
         availablesPositionsWhiteKing = whiteKing.generateAvailableMoves(game);
-        System.out.println("white pieces");
-        QueenEntityTest.displayChessBoard(availablesPositionsWhiteKing);
-
         
         // STACKOVERFLOW !!!!! -_-
         Assert.assertFalse("availablesPositionsBlackKing shouldn't be empty", availablesPositionsBlackKing.isEmpty());
