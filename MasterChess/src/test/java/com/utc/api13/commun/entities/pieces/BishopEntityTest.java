@@ -2,6 +2,7 @@ package com.utc.api13.commun.entities.pieces;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -72,7 +74,17 @@ public class BishopEntityTest {
         Assert.assertTrue("availablesPositionsWhiteBishop should be empty", availablesPositionsWhiteBishop.isEmpty());
 
         
+//        game.getWhitePieces().remove(new PawnEntity(PieceColorEnum.WHITE,2));
+//        System.out.println(whiteBishopFirst.generateAvailableMoves(game));
         
+        game.setBlackPieces(new ArrayList<APieceEntity>());
+        game.getBlackPieces().add(blackBishopFirst);
+
+        game.setWhitePieces(new ArrayList<APieceEntity>());
+        game.getWhitePieces().add(whiteBishopFirst);
+
+        availablesPositionsWhiteBishop = whiteBishopFirst.generateAvailableMoves(game);
+        System.out.println(availablesPositionsWhiteBishop);
     }
 
 }
