@@ -2,6 +2,7 @@ package com.utc.api13.client.ihm;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+import com.utc.api13.client.ihm.property.ChatProperty;
 import com.utc.api13.client.ihm.property.ConfirmationProperty;
 import com.utc.api13.client.ihm.property.ErrorProperty;
 import com.utc.api13.client.ihm.property.GameProperty;
@@ -13,9 +14,6 @@ public class IHMManager {
     private IClientDataToIHM myIClientToIHM;
     private ClientIHMToDataImpl myClientIHMToDataImpl;
     private AppClient mainApp;
-    
-  
-
     private ProfilProperty profil;
     private PropositionProperty proposition;
     private GameProperty game;

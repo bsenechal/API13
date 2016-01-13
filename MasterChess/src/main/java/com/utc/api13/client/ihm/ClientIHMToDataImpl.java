@@ -59,13 +59,15 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
             	    Stage stage;
                     Parent root = null;
+                    String l=""; 
                     stage = new Stage();
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AnswerPropositionPopUp.fxml"));
                     try {
                            root = (Pane) fxmlLoader.load();
                            AnswerPropositionController controller = fxmlLoader.getController();
                            controller.setControllerContext(myIHMManager);
-                           controller.setMainApp(myIHMManager.getMainApp(), myIHMManager.getIClientDataToIHM().getUserList().stream().filter(u->u.getId()== uidSender).toString(), 
+                           //myIHMManager.getIClientDataToIHM().getUserList().stream()
+                           controller.setMainApp(myIHMManager.getMainApp(), l , 
                                    chattable, timer, 
                                   observable, timeInt);
                            stage.setScene(new Scene(root));
