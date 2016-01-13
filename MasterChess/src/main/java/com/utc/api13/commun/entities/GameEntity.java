@@ -20,8 +20,10 @@ public class GameEntity extends ADataEntity {
 
     private static final long serialVersionUID = -959030856925179648L;
     private Date creationDate;
-    private Boolean isObservable;
-    private Boolean isChattable;
+    private boolean isObservable;
+    private boolean isChattable;
+    private boolean timer;
+    private Integer timerInt;
     private Date limit;
     private PublicUserEntity whitePlayer;
     private PublicUserEntity blackPlayer;
@@ -299,6 +301,37 @@ public class GameEntity extends ADataEntity {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * @return the timer
+     */
+    public boolean isTimer() {
+        return timer;
+    }
+
+    /**
+     * @param timer the timer to set
+     */
+    public void setTimer(boolean timer) {
+        this.timer = timer;
+    }
+
+    /**
+     * @return the timerInt
+     */
+    public Integer getTimerInt() {
+        return timerInt;
+    }
+
+    /**
+     * @param timerInt the timerInt to set
+     */
+    public void setTimerInt(Integer timerInt) {
+        this.timerInt = timerInt;
+    }
+
+    /**
+>>>>>>> refs/remotes/origin/master
      * Will switch current user between user black and user white
      * 
      * @author ulyss_000

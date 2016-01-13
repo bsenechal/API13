@@ -37,13 +37,12 @@ public interface IClientComToData {
     /**
      * to send a proposition to a another connected user
      */
-    public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable,
-            PublicUserEntity user);
+    public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean timer, Integer timerInt);
 
     /**
      * to answer a proposition to a another connected user
      */
-    public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer);
+    public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer, boolean timer, Integer timerInt);
 
     /**
      * to request a validation of move.
