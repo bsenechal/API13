@@ -292,13 +292,11 @@ public class ClientDataToComImpl implements IClientDataToCom {
     @Override
     public void nextTurn(final GameStatusEnum status, final UUID nextPlayer) {
         if (GameStatusEnum.CONTINUE.equals(status)) {
-            if (instanceDataClientManager.getCurrentGame().getBlackPlayer().getId().equals(nextPlayer)) {
-                instanceDataClientManager.getCurrentGame()
-                        .setCurrentPlayer(instanceDataClientManager.getCurrentGame().getWhitePlayer());
-            } else {
-                instanceDataClientManager.getCurrentGame()
-                        .setCurrentPlayer(instanceDataClientManager.getCurrentGame().getBlackPlayer());
-            }
+            instanceDataClientManager.getCurrentGame().setCurrentPlayer(
+                    (instanceDataClientManager.getCurrentGame().getBlackPlayer().getId().equals(nextPlayer))
+                            ? instanceDataClientManager.getCurrentGame().getBlackPlayer()
+                            : instanceDataClientManager.getCurrentGame().getWhitePlayer());
         }
+        // TODO : Notifier IHM du changement de joueurs
     }
 }
