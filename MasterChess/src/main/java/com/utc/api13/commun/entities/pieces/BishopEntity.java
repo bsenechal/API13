@@ -84,4 +84,3 @@ public class BishopEntity extends APieceEntity {
     }
 
 }
-
