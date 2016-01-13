@@ -57,5 +57,10 @@ public class KingEntity extends APieceEntity {
         }
         return result;
     }
+    
+    @Override
+    public String toString() {
+    	return "King";
+    }
 
 }
