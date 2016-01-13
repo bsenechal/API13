@@ -77,10 +77,5 @@ public class BishopEntity extends APieceEntity {
         
         return result;
     }
-    
-    @Override
-    public String toString() {
-    	return "Bishop";
-    }
 
 }

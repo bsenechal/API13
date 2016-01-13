@@ -23,7 +23,7 @@ public class GameEntity extends ADataEntity {
 	private Boolean isObservable;
 	private Boolean isChattable;
 	private boolean timer;
-	private Integer timerInt;
+    private Integer timerInt;
 	private Date limit;
 	private PublicUserEntity whitePlayer;
 	private PublicUserEntity blackPlayer;
@@ -300,35 +300,34 @@ public class GameEntity extends ADataEntity {
 		return messages;
 	}
 
-	/**
-	 * @return the timer
-	 */
-	public boolean isTimer() {
-		return timer;
-	}
+    /**
+     * @return the timer
+     */
+    public boolean isTimer() {
+        return timer;
+    }
 
-	/**
-	 * @param timer
-	 *            the timer to set
-	 */
-	public void setTimer(boolean timer) {
-		this.timer = timer;
-	}
+    /**
+     * @param timer the timer to set
+     */
+    public void setTimer(boolean timer) {
+        this.timer = timer;
+    }
 
-	/**
-	 * @return the timerInt
-	 */
-	public Integer getTimerInt() {
-		return timerInt;
-	}
+    /**
+     * @return the timerInt
+     */
+    public Integer getTimerInt() {
+        return timerInt;
+    }
+    
+    /**
+     * @param timerInt the timerInt to set
+     */
+    public void setTimerInt(Integer timerInt) {
+        this.timerInt = timerInt;
+    }
 
-	/**
-	 * @param timerInt
-	 *            the timerInt to set
-	 */
-	public void setTimerInt(Integer timerInt) {
-		this.timerInt = timerInt;
-	}
 
 	/**
 	 * Will switch current user between user black and user white
@@ -359,8 +358,8 @@ public class GameEntity extends ADataEntity {
 			pieces = getWhitePieces();
 		}
 
-		for (APieceEntity tmpEntity : pieces) {
-			if (tmpEntity.toString().equals("King")) {
+		for(APieceEntity tmpEntity:pieces){
+			if(tmpEntity.toString().equals("King")){
 				return (KingEntity) tmpEntity;
 			}
 		}
@@ -403,21 +402,31 @@ public class GameEntity extends ADataEntity {
 	 * @return true if the gameentity is in check, false if not
 	 */
 	public Boolean isCheck() {
+		Boolean result = Boolean.FALSE;
+		// if (this.getOpponentPieces().stream()
+		// .filter(op ->
+		// APieceEntity.isPositionAvailable(op.generateAvailableMoves(this,
+		// Boolean.FALSE),
+		// (this.getKing() != null) ? this.getKing().getPosition() : null))
+		// .findFirst().orElse(null) == null) {
+		// result = true;
+		// }
 		List<APieceEntity> tmp = new ArrayList<APieceEntity>();
 		tmp.addAll(this.getOpponentPieces());
 
 		for (APieceEntity op : tmp) {
 			List<PositionEntity> tmpP = new ArrayList<PositionEntity>();
 			APieceEntity king = this.getKing();
-			if (king == null) {
+			if(king == null){
 				return Boolean.FALSE;
 			}
 			tmpP.addAll(op.generateAvailableMoves(this, Boolean.FALSE));
-			if (!APieceEntity.isPositionAvailable(tmpP, king.getPosition())) {
-				return Boolean.TRUE;
+			if (!APieceEntity.isPositionAvailable(tmpP,
+					king.getPosition())) {
+				result = Boolean.TRUE;
 			}
 		}
-		return Boolean.FALSE;
+		return result;
 	}
 
 	/**
@@ -455,7 +464,7 @@ public class GameEntity extends ADataEntity {
 			result = GameStatusEnum.CHECK;
 		}
 
-		// TODO : aussi le cas où un pion peut protéger le roi !
+		//TODO : aussi le cas où un pion peut protéger le roi !
 		// Checkmate check :
 		if (check == true) {
 			if (king.generateAvailableMoves(this).isEmpty()) {
