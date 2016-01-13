@@ -179,6 +179,6 @@ void printProposition(final UUID uidSender, final boolean observable, final bool
      */
     void setFinishedStatus(GameStatusEnum status);
     
-    public void NextTurn(GameStatusEnum isFinished, UUID nextPlayer);
+    public void nextTurn(final GameStatusEnum isFinished, final UUID nextPlayer);
 
 }
