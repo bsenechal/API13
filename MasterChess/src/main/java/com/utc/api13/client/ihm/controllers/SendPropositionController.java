@@ -99,7 +99,7 @@ public class SendPropositionController {
 	    		UUID enquirerUUID = u.getId(); 
 	    		int timeInt=0; 
 	    		if (timer) timeInt = this.conversionTime(time); 
-	    		this.proposition = new PropositionProperty(u.getLogin(), timeInt, chattable, timer, observable); 
+	    		//this.proposition = new PropositionProperty(u.getLogin(), timeInt, chattable, timer, observable); 
 	    		this.IHMManager.setProposition(this.proposition);
 	    		this.myIClientToIHM.createProposition(UUID.fromString(this.opponentUUID), /*enquirerUUID,*/ chattable,/*timer, timeInt,*/ observable);
 	    		this.onCancelClicked(); 
@@ -109,6 +109,8 @@ public class SendPropositionController {
 		    	} catch (IOException e) {
 					log.error(e.getMessage(), e);
 				}
+		    	
+		    	//displayPropositionResult();
     		}
     	}	
     }
@@ -188,25 +190,29 @@ public class SendPropositionController {
 
 	@SuppressWarnings("restriction")
 private void setListenersOnLoad() {
-			this.sendPropositionButton.setOnAction(evt->{ //ou quand proposition change ?? pour que ça soit apres 
-				 Stage stage;
-	             Parent root = null;
-	             stage = new Stage();
-	             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AnswerPropositionPopUp.fxml"));
-	             try {
-	                    root = (Pane) fxmlLoader.load();
-	                    AnswerPropositionController controller = fxmlLoader.getController();
-	                    controller.setControllerContext(IHMManager);
-	                    controller.setMainApp(mainApp, this.proposition.loginAskingPayerProperty().toString(), 
-	                    		Boolean.valueOf(this.proposition.chattableProperty().toString()), Boolean.valueOf(this.proposition.timerProperty().toString()), 
-	                    		Boolean.valueOf(this.proposition.observableProperty().toString()), Integer.parseInt(this.proposition.timeProperty().toString()));
-	                    stage.setScene(new Scene(root));
-	                    stage.setTitle("User Information");
-	                    stage.initModality(Modality.APPLICATION_MODAL);
-	                    stage.showAndWait();
-	                } catch (IOException e) {
-	                    log.error(e.getMessage(), e);
-	                   }
-	            }); 			
+//			this.sendPropositionButton.setOnAction(evt->{ //ou quand proposition change ?? pour que ça soit apres 
+//				 Stage stage;
+//	             Parent root = null;
+//	             stage = new Stage();
+//	             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AnswerPropositionPopUp.fxml"));
+//	             try {
+//	                    root = (Pane) fxmlLoader.load();
+//	                    AnswerPropositionController controller = fxmlLoader.getController();
+//	                    controller.setControllerContext(IHMManager);
+//	                    controller.setMainApp(mainApp, this.proposition.loginAskingPayerProperty().toString(), 
+//	                    		Boolean.valueOf(this.proposition.chattableProperty().toString()), Boolean.valueOf(this.proposition.timerProperty().toString()), 
+//	                    		Boolean.valueOf(this.proposition.observableProperty().toString()), Integer.parseInt(this.proposition.timeProperty().toString()));
+//	                    stage.setScene(new Scene(root));
+//	                    stage.setTitle("User Information");
+//	                    stage.initModality(Modality.APPLICATION_MODAL);
+//	                    stage.showAndWait();
+//	                } catch (IOException e) {
+//	                    log.error(e.getMessage(), e);
+//	                   }
+//	            }); 			
 	    }
+	public void displayPopup(){
+	    
+	}
+	
 }

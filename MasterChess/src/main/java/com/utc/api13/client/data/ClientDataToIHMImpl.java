@@ -57,7 +57,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public ObservableList<PublicUserEntity> getUserList() {
         return dataClientManager.getCurrentUsers();
     }
-
+    
     @Override
     public void getUsers() {
         dataClientManager.getIClientComToData().getUsers();

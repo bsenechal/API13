@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.client.ihm.controllers.AnswerPropositionController;
 import com.utc.api13.client.ihm.controllers.ErrorController;
 import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
 import com.utc.api13.client.ihm.controllers.SendPropositionController;
@@ -50,21 +51,35 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     }
 
-    @SuppressWarnings("restriction")
+  
 	@Override
     public void displayProposition(UUID uidSender, boolean observable, boolean chattable /*, boolean timer, Integer time, String login*/) {
         // TODO Auto-generated method stub
-    	Platform.runLater(new Runnable() {
+	    
+	    Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                //myIHMManager.getProposition().loginAskingPayerProperty().set(login);
-                myIHMManager.getProposition().chattableProperty().set(chattable);
-                //myIHMManager.getProposition().timerProperty().set(timer); 
-                myIHMManager.getProposition().observableProperty().set(observable); 
-                //myIHMManager.getProposition().timeProperty().set(time);
+            	    Stage stage;
+                    Parent root = null;
+                    stage = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AnswerPropositionPopUp.fxml"));
+                    try {
+                           root = (Pane) fxmlLoader.load();
+                           AnswerPropositionController controller = fxmlLoader.getController();
+                           controller.setControllerContext(myIHMManager);
+                           controller.setMainApp(myIHMManager.getMainApp(), myIHMManager.getIClientDataToIHM().getUserList().stream().filter(u->u.getId()== uidSender).toString(), 
+                                   chattable, timer, 
+                                  observable, time);
+                           stage.setScene(new Scene(root));
+                           stage.setTitle("User Information");
+                           stage.initModality(Modality.APPLICATION_MODAL);
+                           stage.showAndWait();
+                       } catch (IOException e) {
+                          e.printStackTrace();
+                          }
+            
             }
-        });
-    	
+	    });
     }
 
     @Override

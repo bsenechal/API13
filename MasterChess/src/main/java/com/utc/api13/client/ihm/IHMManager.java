@@ -1,5 +1,6 @@
 package com.utc.api13.client.ihm;
 
+import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.property.ConfirmationProperty;
 import com.utc.api13.client.ihm.property.ErrorProperty;
@@ -11,6 +12,9 @@ public class IHMManager {
 
     private IClientDataToIHM myIClientToIHM;
     private ClientIHMToDataImpl myClientIHMToDataImpl;
+    private AppClient mainApp;
+    
+  
 
     private ProfilProperty profil;
     private PropositionProperty proposition;
@@ -74,5 +78,26 @@ public class IHMManager {
 
     public ClientIHMToDataImpl getClientIHMToDataImpl() {
         return myClientIHMToDataImpl;
+    }
+//    public PublicUserEntity findUserByUUID(UUID  id){
+//        PublicUserEntity user =null;
+//        ObservableList<PublicUserEntity>users =this.getIClientDataToIHM().getUserList();
+//        boolean end=true;
+//        for (int i=0,len=users.size();i<len && end;i++){
+//            if (users.get(i).getId()==id){
+//                user=users.get(i);
+//                end=!end;
+//            }
+//            
+//        }
+//        return user;
+//    }
+    
+    public AppClient getMainApp() {
+        return mainApp;
+    }
+
+    public void setMainApp(AppClient mainApp) {
+        this.mainApp = mainApp;
     }
 }

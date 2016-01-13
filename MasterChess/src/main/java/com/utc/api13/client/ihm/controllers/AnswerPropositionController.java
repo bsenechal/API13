@@ -131,18 +131,11 @@ public class AnswerPropositionController {
     
     public void setBindings(PropositionProperty proposition) {
     	invintingPlayerLogin.textProperty().bind(proposition.loginAskingPayerProperty());
-    	//et pour ce qui n'est pas StringProperty ?
-        /*userInfoFirstName.textProperty().bind(profile.firstNameProperty());
-        userInfoLastName.textProperty().bind(profile.lastNameProperty());
-        userUUID.textProperty().bind(profile.userUUID());  
-
-        userInfoWon.setCellValueFactory(new PropertyValueFactory<PrivateUserEntity, Integer>("nbWon"));
-        userInfoLost.setCellValueFactory(new PropertyValueFactory<PrivateUserEntity, Integer>("nbLost"));
-        userInfoPlayed.setCellValueFactory(new PropertyValueFactory<PrivateUserEntity, Integer>("nbPlayed"));
-
-        profile.statPlayerProperty().addListener((ListChangeListener.Change<? extends PublicUserEntity> el) -> {
-            userInfoTableView.setItems(profile.statPlayerProperty());
-        });*/
+    //	invitationLabel, optionsLabel, chosenOptionsLabel; 
+    	optionsLabel.textProperty().bind(proposition.chattableProperty().asString()); // can be change to String Property
+    
+    	
+    	
 
     }
 }
