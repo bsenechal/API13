@@ -14,9 +14,6 @@ public class IHMManager {
     private IClientDataToIHM myIClientToIHM;
     private ClientIHMToDataImpl myClientIHMToDataImpl;
     private AppClient mainApp;
-    
-  
-
     private ProfilProperty profil;
     private PropositionProperty proposition;
     private GameProperty game;

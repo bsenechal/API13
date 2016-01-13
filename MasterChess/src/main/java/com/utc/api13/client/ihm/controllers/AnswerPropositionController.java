@@ -81,7 +81,8 @@ public class AnswerPropositionController {
         stage.showAndWait();
     }
     
-    public void setMainApp(AppClient app, String login, Boolean chattable, Boolean timer, Boolean observable, int time) {
+    @SuppressWarnings("restriction")
+	public void setMainApp(AppClient app, String login, Boolean chattable, Boolean timer, Boolean observable, int time) {
         this.mainApp = app;
         this.chattable=chattable; 
         this.timer=timer; 

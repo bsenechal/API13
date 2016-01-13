@@ -3,6 +3,7 @@ package com.utc.api13.client.ihm;
 import java.io.IOException;
 import java.util.UUID;
 
+import com.utc.api13.client.AppClient;
 import com.utc.api13.client.ihm.controllers.AnswerPropositionController;
 import com.utc.api13.client.ihm.controllers.ErrorController;
 import com.utc.api13.client.ihm.controllers.IHMGamePageController;
@@ -59,18 +60,20 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
             	    Stage stage;
                     Parent root = null;
+                    String l=""; 
                     stage = new Stage();
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AnswerPropositionPopUp.fxml"));
                     try {
                            root = (Pane) fxmlLoader.load();
                            AnswerPropositionController controller = fxmlLoader.getController();
                            controller.setControllerContext(myIHMManager);
+
                            controller.setMainApp(myIHMManager.getMainApp(), 
                                    myIHMManager.getIClientDataToIHM().getUserList().stream()
                                    .filter(u->u.getId()== uidSender).map(PublicUserEntity::getLogin)
-                                   .findFirst().orElse("unknowUser"),
-                                   chattable, timer, 
-                                  observable, timeInt);
+                                   .findFirst().orElse("unknown User"), chattable, timer, 
+                                   observable, timeInt);        
+                             
                            stage.setScene(new Scene(root));
                            stage.setTitle("You've got a new game proposition!");
                            stage.initModality(Modality.APPLICATION_MODAL);
