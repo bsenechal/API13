@@ -14,23 +14,25 @@ public class GameRequestMessage extends Message {
     private static final long serialVersionUID = 978459564519511506L;
     private boolean chattable;
     private boolean observable;
-    private int timer;
+    private Integer timerInt;
+    private boolean timer;
 
     /**
      * @param sender
      * @param receiver
      * @param gameId
      */
-    public GameRequestMessage(UUID sender, UUID receiver, boolean chattable, boolean observable, int timer) {
+    public GameRequestMessage(UUID sender, UUID receiver, boolean chattable, boolean observable, boolean timer, Integer timerInt) {
         super(sender, receiver);
         this.chattable = chattable;
         this.observable = observable;
+        this.timerInt = timerInt;
         this.timer = timer;
     }
 
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
-        comClientManager.getIClientDataToCom().printProposition(getSender(), observable, chattable, timer);
+        comClientManager.getIClientDataToCom().printProposition(getSender(), observable, chattable, timer, timerInt);
     }
 
     @Override
@@ -53,12 +55,34 @@ public class GameRequestMessage extends Message {
     public void setObservable(boolean observable) {
         this.observable = observable;
     }
-    
-    public int getTimer() {
+
+	/**
+	 * @return the timerInt
+	 */
+	public Integer getTimerInt() {
+		return timerInt;
+	}
+
+	/**
+	 * @param timerInt the timerInt to set
+	 */
+	public void setTimerInt(Integer timerInt) {
+		this.timerInt = timerInt;
+	}
+
+	/**
+	 * @return the timer
+	 */
+	public boolean isTimer() {
 		return timer;
 	}
 
-	public void setTimer(int timer) {
+	/**
+	 * @param timer the timer to set
+	 */
+	public void setTimer(boolean timer) {
 		this.timer = timer;
 	}
+    
+    
 }

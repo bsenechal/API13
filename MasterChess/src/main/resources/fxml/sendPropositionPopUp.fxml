@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane fx:id="sendPropositionBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc.api13.client.ihm.controllers.SendPropositionController">
+   <top>
+      <AnchorPane fx:id="sendPropositionAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="playerLabel" layoutX="181.0" layoutY="108.0" text="Your potential opponent : " />
+            <Label fx:id="optionLabel" layoutX="181.0" layoutY="141.0" text="Options : " />
+            <CheckBox fx:id="chatCheckBox" layoutX="284.0" layoutY="141.0" mnemonicParsing="false" text="Chat" />
+            <CheckBox fx:id="timerCheckBox" layoutX="284.0" layoutY="178.0" mnemonicParsing="false" text="Timer" />
+            <CheckBox fx:id="observerCheckBox" layoutX="284.0" layoutY="214.0" mnemonicParsing="false" text="Observers" />
+            <TextField fx:id="timeTextField" layoutX="358.0" layoutY="174.0" prefHeight="25.0" prefWidth="57.0" promptText="00:30" />
+            <Button fx:id="sendPropositionButton" layoutX="181.0" layoutY="272.0" mnemonicParsing="false" onAction="#onSendPropositionClicked" text="Send Proposition" />
+            <Button fx:id="cancelButton" layoutX="315.0" layoutY="272.0" mnemonicParsing="false" onAction="#onCancelClicked" text="Cancel" />
+            <Label fx:id="opponentLogin" layoutX="335.0" layoutY="108.0" text="Label" />
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

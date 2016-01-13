@@ -28,7 +28,7 @@ public class ObserverAnswerMessage extends Message {
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // Appeler InitGame()
-    	comClientManager.getIClientDataToCom().initGame(game);
+        comClientManager.getIClientDataToCom().initGame(game);
     }
 
     @Override

@@ -73,11 +73,11 @@ public class ClientComToDataImpl implements IClientComToData {
     }
 
     /* DEPRECATED !!! */
-//    @Override
-//    public void sendAnswer(String answer, PublicUserEntity sender) {
-//        // TODO Auto-generated method stub
-//        return;
-//    }
+    // @Override
+    // public void sendAnswer(String answer, PublicUserEntity sender) {
+    // // TODO Auto-generated method stub
+    // return;
+    // }
 
     @Override
     public void surrender(UUID uid) {
@@ -177,9 +177,9 @@ public class ClientComToDataImpl implements IClientComToData {
      *      java.util.UUID, boolean, boolean,
      *      com.utc.api13.commun.entities.PublicUserEntity)
      */
-    public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable,
-            PublicUserEntity user) {
-        comClientManagerInstance.sendMessage(new GameRequestMessage(sender, reciever, chattable, observable,0));
+    public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, PublicUserEntity user) {
+    	//TODO
+//        comClientManagerInstance.sendMessage(new GameRequestMessage(sender, reciever, chattable, observable,0));
     }
 
     /**
@@ -197,6 +197,7 @@ public class ClientComToDataImpl implements IClientComToData {
      */
     @Override
     public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer) {
-        comClientManagerInstance.sendMessage(new RequestAnswerMessage(sender, reciever, chattable, observable, answer,0));
+    	// TODO
+//        comClientManagerInstance.sendMessage(new RequestAnswerMessage(sender, reciever, chattable, observable, answer,0));
     }
 }

@@ -43,29 +43,32 @@ public interface IClientDataToCom {
                                                                            // connectés
 
     /**
+     * Affiche un Profil de PublicUserEntity distant
      * 
      * @param user
+     *            utilisateur à afficher
      */
-    void displayProfile(final PublicUserEntity user); // Affiche un Profil de
-                                                      // PublicUserEntity
-                                                      // distant
+    void displayProfile(final PublicUserEntity user);
 
     void print_error(final String error);
 
-    void displayAllGames(final List<GameEntity> games); // Affiche (récupère
-                                                        // pour affichege IHM)
-                                                        // la liste des
-                                                        // GameEntity en cours
+    /**
+     * Affiche (récupère pour affichege IHM) la liste des GameEntity en cours
+     * 
+     * @param games
+     *            liste des games en cours
+     */
+    void displayAllGames(final List<GameEntity> games);
 
-	/**
-	 * This method will update the local currentGame with the server validated
-	 * move & it will trigger an board update on IHM
-	 * 
-	 * @author ulyss_000
-	 * @param idPlayer
-	 * @param move
-	 */
-	void displayResult(final UUID idPlayer, final MoveEntity move);
+    /**
+     * This method will update the local currentGame with the server validated
+     * move & it will trigger an board update on IHM
+     * 
+     * @author ulyss_000
+     * @param idPlayer
+     * @param move
+     */
+    void displayResult(final UUID idPlayer, final MoveEntity move);
 
     void sendMessageToChat(final MessageEntity message);
 
@@ -73,6 +76,10 @@ public interface IClientDataToCom {
 
     void requestPlayerForLeaving(final UUID uid);
 
+    /**
+     * Ends the local game for the observer when one of the player has left<br/>
+     * Method to call only for observer users
+     */
     void endGameByLeaving();
 
     /**
@@ -94,9 +101,13 @@ public interface IClientDataToCom {
 
     void newObserver(final UUID idObserver);
 
-    void newPlayer(final UUID idPlayer); // Etant donné qu'un GameEntity est
-                                         // créé sur le serveur avec deux users,
-                                         // cette méthode semble inutile
+    /**
+     * Etant donné qu'un GameEntity est créé sur le serveur avec deux users<br/>
+     * cette méthode semble inutile
+     * 
+     * @param idPlayer
+     */
+    void newPlayer(final UUID idPlayer);
 
     void newReplay(final GameEntity game);
 
@@ -105,7 +116,16 @@ public interface IClientDataToCom {
                                       // méthodes utilisées par le "retour" de
                                       // com ?
 
-    void printProposition(final UUID uidSender, final boolean observable, final boolean chattable, final int timer); // Affiche
+/**
+ * Affiche la proposition de jeu d'un autre joueur.
+ * "Voulez vous jouer avec moi ?"
+ * 
+ * @param uidSender
+ * @param observable
+ * @param chattable
+ * @param timer
+ */
+void printProposition(final UUID uidSender, final boolean observable, final boolean chattable, final boolean timer, final Integer timerInt); // Affiche
                                                                                                     // la
                                                                                                     // proposition
                                                                                                     // de
@@ -120,6 +140,8 @@ public interface IClientDataToCom {
                                                                                                     // moi
                                                                                                     // ?"
 
+   
+
     void victoryBySurrender();
 
     void endGameBySurrender();
@@ -131,7 +153,7 @@ public interface IClientDataToCom {
     void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
 
     /**
-     * Adds a new user to the list of local users
+     * Adds a new user to the list of local users*
      * 
      * @param user
      *            user to add
@@ -145,15 +167,15 @@ public interface IClientDataToCom {
      *            id of user to delete
      */
     public void notifyDisconnection(UUID idUser);
-    
-	/**
-	 * This method will set the status of the game / switch active players /
-	 * give points if necessary
-	 * 
-	 * @author ulyss_000
-	 * @param status
-	 *            -> the game status (CHECK/CHECKMATE/CONTINUE/DRAW) send by the
-	 *            server
-	 */
-	void setFinishedStatus(GameStatusEnum status);
+
+    /**
+     * This method will set the status of the game / switch active players /
+     * give points if necessary
+     * 
+     * @author ulyss_000
+     * @param status
+     *            -> the game status (CHECK/CHECKMATE/CONTINUE/DRAW) send by the
+     *            server
+     */
+    void setFinishedStatus(GameStatusEnum status);
 }

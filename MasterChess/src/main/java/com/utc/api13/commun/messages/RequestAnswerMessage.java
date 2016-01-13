@@ -16,7 +16,8 @@ public class RequestAnswerMessage extends Message {
     private static final long serialVersionUID = -5244707144483762561L;
     private boolean chattable;
     private boolean observable;
-    private int timer;
+    private Integer timerInt;
+    private boolean timer;
     private boolean answer;
     private GameEntity ge;
 
@@ -27,12 +28,13 @@ public class RequestAnswerMessage extends Message {
      * @param receiver
      * @param gameId
      */
-    public RequestAnswerMessage(UUID sender, UUID receiver, boolean chattable, boolean observable, boolean answer, int timer) {
+    public RequestAnswerMessage(UUID sender, UUID receiver, boolean chattable, boolean observable, boolean answer, boolean timer, Integer timerInt) {
         super(sender, receiver);
         this.chattable = chattable;
         this.observable = observable;
         this.answer = answer;
         this.timer = timer;
+        this.timerInt = timerInt;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class RequestAnswerMessage extends Message {
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         if (answer) {
             this.ge = comServerManager.getIServerDataToCom().createGame(getSender(), getReceiver(), chattable,
-                    observable,timer);
+                    observable,timer,timerInt);
             // On retourne l'info a l'utilisateur
             comServerManager.sendMessage(ctx.channel(), this);
         }
@@ -80,11 +82,15 @@ public class RequestAnswerMessage extends Message {
         this.answer = answer;
     }
 
-	public int getTimer() {
-		return timer;
+	public Integer getTimer() {
+		return timerInt;
 	}
 
-	public void setTimer(int timer) {
+	public void setTimer(Integer timerInt) {
+		this.timerInt = timerInt;
+	}
+
+	public void setTimer(boolean timer) {
 		this.timer = timer;
 	}
     

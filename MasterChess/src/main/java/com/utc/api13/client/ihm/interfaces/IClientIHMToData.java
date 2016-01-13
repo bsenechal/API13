@@ -1,7 +1,9 @@
 package com.utc.api13.client.ihm.interfaces;
 
+import java.io.IOException;
 import java.util.UUID;
 
+import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 
 public interface IClientIHMToData {
@@ -47,7 +49,7 @@ public interface IClientIHMToData {
      *            proposed game
      * @return void
      */
-    public void displayProposition(UUID uidSender, boolean observable, boolean chattable);
+    public void displayProposition(UUID uidSender, boolean observable, boolean chattable, boolean timer, Integer timeInt);
 
     /**
      * This method notifies local user (who proposed a game) that distant user
@@ -70,7 +72,7 @@ public interface IClientIHMToData {
      * 
      * @return void
      */
-    public void displayChessBoard();
+    public void displayChessBoard(GameEntity g);
 
     /**
      * After a piece is moved
@@ -106,6 +108,15 @@ public interface IClientIHMToData {
      */
     // displayAnswerForLeaving(boolean answer)
 
+    /**
+     * when a en error occurs between data and com modules
+     */
+    void displayError(String errorMessage);
+
+    /**
+     * to display confirmation message that everything went ok
+     */
+    void displayConfirmation(String confirmationMessage);
     /*
      * public void didReceiveBoard(); public void
      * didReceiveEndOfGameBySurrender(); public void

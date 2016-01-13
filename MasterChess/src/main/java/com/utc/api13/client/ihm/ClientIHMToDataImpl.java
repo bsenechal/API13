@@ -1,12 +1,27 @@
 package com.utc.api13.client.ihm;
 
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
+import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.client.ihm.controllers.AnswerPropositionController;
+import com.utc.api13.client.ihm.controllers.ErrorController;
+import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
+import com.utc.api13.client.ihm.controllers.SendPropositionController;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
+import com.utc.api13.commun.entities.GameEntity;
 //github.com/bsenechal/API13.git
 import com.utc.api13.commun.entities.PublicUserEntity;
 
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class ClientIHMToDataImpl implements IClientIHMToData {
 
@@ -18,19 +33,16 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     @Override
     public void displayProfile(PublicUserEntity u) {
-
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-
                 myIHMManager.getProfil().loginProperty().set(u.getLogin());
                 myIHMManager.getProfil().firstNameProperty().set(u.getFirstName());
                 myIHMManager.getProfil().lastNameProperty().set(u.getLastName());
                 myIHMManager.getProfil().statPlayerProperty().setAll(u);
-
+                myIHMManager.getProfil().userUUID().set(u.getId().toString());
             }
         });
-
     }
 
     @Override
@@ -39,13 +51,41 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     }
 
+    @SuppressWarnings("restriction")
     @Override
-    public void displayProposition(UUID uidSender, boolean observable, boolean chattable) {
+    public void displayProposition(UUID uidSender, boolean observable,
+            boolean chattable , boolean timer, Integer timeInt) {
+
         // TODO Auto-generated method stub
-        // à la fin, doit appeler la fonction de l'interface de data en
-        // rajoutant observable et chattable
-        // myIHMManager.getIClientDataToIHM().sendResponse(idUser, answer,
-        // observable, chattable);
+
+	    
+	    Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+            	    Stage stage;
+                    Parent root = null;
+                    stage = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AnswerPropositionPopUp.fxml"));
+                    try {
+                           root = (Pane) fxmlLoader.load();
+                           AnswerPropositionController controller = fxmlLoader.getController();
+                           controller.setControllerContext(myIHMManager);
+                           controller.setMainApp(myIHMManager.getMainApp(), myIHMManager.getIClientDataToIHM().getUserList().stream().filter(u->u.getId()== uidSender).toString(), 
+                                   chattable, timer, 
+                                  observable, timeInt);
+                           stage.setScene(new Scene(root));
+                           stage.setTitle("User Information");
+                           stage.initModality(Modality.APPLICATION_MODAL);
+                           stage.showAndWait();
+                       } catch (IOException e) {
+                          e.printStackTrace();
+                          }
+            }
+	    });
+           
+
+
     }
 
     @Override
@@ -55,9 +95,20 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     }
 
     @Override
-    public void displayChessBoard() {
+    public void displayChessBoard(GameEntity g) {
         // TODO Auto-generated method stub
-
+        /*
+         * Platform.runLater(new Runnable() {
+         * 
+         * @Override public void run() { //trouver l'autre player
+         * myIHMManager.getGame().otherPlayLoginProperty().set();
+         * myIHMManager.getGame().setOtherPlayerUUID(g);
+         * myIHMManager.getGame().setChattableProperty(g.getIsChattable());
+         * myIHMManager.getGame().setObservableProperty(g.getIsOservable());
+         * //myIHMManager.getGame().setTimerProperty(g.getIsTimed());
+         * //myIHMManager.getGame().setTimerProperty().set(g.getTime()); //time
+         * //myIHMManager.getGame().userUUID().set(u.getId().toString()); } });
+         */
     }
 
     @Override
@@ -67,9 +118,25 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     }
 
     @Override
-    public void displayMessage(String newMessage) {
+    public void displayError(String errorMessage) {
         // TODO Auto-generated method stub
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                myIHMManager.getError().errorMessageProperty().set(errorMessage);
+            }
+        });
+    }
 
+    @Override
+    public void displayConfirmation(String confirmationMessage) {
+        // TODO Auto-generated method stub
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                myIHMManager.getConfirmation().confirmationMessageProperty().set(confirmationMessage);
+            }
+        });
     }
 
     @Override
@@ -80,6 +147,12 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     @Override
     public void displayGameLiveObserver() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void displayMessage(String newMessage) {
         // TODO Auto-generated method stub
 
     }
