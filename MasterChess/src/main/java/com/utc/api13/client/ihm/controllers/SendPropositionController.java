@@ -67,7 +67,6 @@ public class SendPropositionController {
     
     public void onCancelClicked() {
     	mainApp.getCurrentStage().close();
-    	//pb car le stage davant nest pas svg = pb à la déconnexion à prévoir
     }
     
     public void onSendPropositionClicked() {
@@ -100,7 +99,6 @@ public class SendPropositionController {
 	    		UUID enquirerUUID = u.getId(); 
 	    		int timeInt=0; 
 	    		if (timer) timeInt = this.conversionTime(time); 
-	    		//this.proposition = new PropositionProperty(u.getLogin(), timeInt, chattable, timer, observable); 
 	    		this.IHMManager.setProposition(this.proposition);
 	    		this.myIClientToIHM.createProposition(UUID.fromString(this.opponentUUID), enquirerUUID, chattable, observable, timer, timeInt);
 	    		this.onCancelClicked(); 
