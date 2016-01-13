@@ -8,6 +8,7 @@ import java.util.UUID;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.ihm.controllers.AnswerPropositionController;
 import com.utc.api13.client.ihm.controllers.ErrorController;
+import com.utc.api13.client.ihm.controllers.IHMGamePageController;
 import com.utc.api13.client.ihm.controllers.IHMWelcomePageController;
 import com.utc.api13.client.ihm.controllers.SendPropositionController;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
@@ -110,9 +111,32 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 });
     }
 
-    @Override
+    @SuppressWarnings("restriction")
+	@Override
     public void displayChessBoard(GameEntity g) {
         // TODO Auto-generated method stub
+    	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+            	    Stage stage;
+                    Parent root = null;
+                    stage = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/gamePage.fxml"));
+                    try {
+                           root = (Pane) fxmlLoader.load();
+                           IHMGamePageController controller = fxmlLoader.getController();
+                           controller.setControllerContext(myIHMManager);
+                           controller.setMainApp(myIHMManager.getMainApp(), g); 
+                           stage.setScene(new Scene(root));
+                           stage.setTitle("Game!");
+                           stage.initModality(Modality.APPLICATION_MODAL);
+                           stage.showAndWait();
+                       } catch (IOException e) {
+                          e.printStackTrace();
+                          }
+            }
+	    });
     }
 
     @Override
