@@ -80,14 +80,14 @@ public class QueenEntityTest {
 		QueenEntity whiteQueen = new QueenEntity(PieceColorEnum.WHITE);
 		QueenEntity blackQueen = new QueenEntity(PieceColorEnum.BLACK);
 
-		Assert.assertEquals("Error init King position", whiteQueen.getPosition().getPositionX(),
+		Assert.assertEquals("Error init Queen X position", whiteQueen.getPosition().getPositionX(),
 				whiteQueenPosition.getPositionX());
-		Assert.assertEquals("Error init King position", whiteQueen.getPosition().getPositionY(),
+		Assert.assertEquals("Error init Queen Y position", whiteQueen.getPosition().getPositionY(),
 				whiteQueenPosition.getPositionY());
 
-		Assert.assertEquals("Error init King position", blackQueen.getPosition().getPositionX(),
+		Assert.assertEquals("Error init Queen X position", blackQueen.getPosition().getPositionX(),
 				blackQueenPosition.getPositionX());
-		Assert.assertEquals("Error init King position", blackQueen.getPosition().getPositionY(),
+		Assert.assertEquals("Error init Queen Y position", blackQueen.getPosition().getPositionY(),
 				blackQueenPosition.getPositionY());
 
 		List<PositionEntity> availablesPositionsWhiteQueen = whiteQueen.generateAvailableMoves(game);
@@ -108,13 +108,28 @@ public class QueenEntityTest {
 		availablesPositionsBlackQueen = blackQueen.generateAvailableMoves(game);
 
 		availablesPositionsWhiteQueen = whiteQueen.generateAvailableMoves(game);
+		
+		Assert.assertFalse("availablesPositionsBlackQueen shouldn't be empty", availablesPositionsBlackQueen.isEmpty());
+		Assert.assertFalse("availablesPositionsWhiteQueen shouldn't be empty", availablesPositionsWhiteQueen.isEmpty());
+		
+		Assert.assertTrue("There should be 21 possible positions for the white Queen", availablesPositionsWhiteQueen.size() == 21);
+		Assert.assertTrue("There should be 21 possible positions for the black Queen", availablesPositionsBlackQueen.size() == 21);
 
-		// System.out.println("white pieces");
-		// displayChessBoard(availablesPositionsWhiteQueen);
+		//System.out.println("White Queen + Black queen");
+		//displayChessBoard(availablesPositionsWhiteQueen);
 
-		// STACKOVERFLOW !!!!! -_-
-		Assert.assertFalse("availablesPositionsBlackKing shouldn't be empty", availablesPositionsBlackQueen.isEmpty());
-		Assert.assertFalse("availablesPositionsWhiteKing shouldn't be empty", availablesPositionsWhiteQueen.isEmpty());
-	}
+		//Ajout de pièces bloquantes :
+		PawnEntity whitePawn = new PawnEntity(PieceColorEnum.WHITE,3);
+		game.getWhitePieces().add(whitePawn);
+		PawnEntity blackPawn = new PawnEntity(PieceColorEnum.BLACK,4);
+		game.getBlackPieces().add(blackPawn);
+		
+		availablesPositionsWhiteQueen = whiteQueen.generateAvailableMoves(game);
+		//System.out.println("White Queen + Black queen + two pawn");
+		//displayChessBoard(availablesPositionsWhiteQueen);
+		
+		Assert.assertTrue("There should be 17 possible positions for the white Queen", availablesPositionsWhiteQueen.size() == 17);
+
+		}
 
 }
