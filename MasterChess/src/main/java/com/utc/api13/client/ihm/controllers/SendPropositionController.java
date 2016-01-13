@@ -101,7 +101,7 @@ public class SendPropositionController {
 	    		if (timer) timeInt = this.conversionTime(time); 
 	    		//this.proposition = new PropositionProperty(u.getLogin(), timeInt, chattable, timer, observable); 
 	    		this.IHMManager.setProposition(this.proposition);
-	    		this.myIClientToIHM.createProposition(UUID.fromString(this.opponentUUID), /*enquirerUUID,*/ chattable,/*timer, timeInt,*/ observable);
+	    		this.myIClientToIHM.createProposition(UUID.fromString(this.opponentUUID), enquirerUUID, chattable, observable, timer, timeInt);
 	    		this.onCancelClicked(); 
 	    		
 		    	try {

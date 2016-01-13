@@ -49,7 +49,7 @@ public interface IClientIHMToData {
      *            proposed game
      * @return void
      */
-    public void displayProposition(UUID uidSender, boolean observable, boolean chattable);
+    public void displayProposition(UUID uidSender, boolean observable, boolean chattable, boolean timer, Integer timeInt);
 
     /**
      * This method notifies local user (who proposed a game) that distant user

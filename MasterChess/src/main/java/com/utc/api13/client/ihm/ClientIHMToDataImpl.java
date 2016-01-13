@@ -54,7 +54,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     @SuppressWarnings("restriction")
     @Override
     public void displayProposition(UUID uidSender, boolean observable,
-            boolean chattable /* , boolean timer, Integer time, String login */) {
+            boolean chattable , boolean timer, Integer timeInt) {
 
         // TODO Auto-generated method stub
 
@@ -73,7 +73,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                            controller.setControllerContext(myIHMManager);
                            controller.setMainApp(myIHMManager.getMainApp(), myIHMManager.getIClientDataToIHM().getUserList().stream().filter(u->u.getId()== uidSender).toString(), 
                                    chattable, timer, 
-                                  observable, time);
+                                  observable, timeInt);
                            stage.setScene(new Scene(root));
                            stage.setTitle("User Information");
                            stage.initModality(Modality.APPLICATION_MODAL);
