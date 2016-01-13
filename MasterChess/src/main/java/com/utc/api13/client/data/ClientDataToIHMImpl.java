@@ -251,9 +251,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      */
     @Override
     public void createProposition(UUID uidReciever, UUID enquirerUUID, boolean chattable, boolean observable, boolean timer, Integer timeInt) {
-        // TODO: dernier paramètre à enlever quand Com aura corriger sa fonction
         dataClientManager.getIClientComToData().sendProposition(dataClientManager.getUserLocal().getId(), uidReciever,
-                chattable, observable, null);
+                chattable, observable, timer, timeInt);
     }
 
     /*
