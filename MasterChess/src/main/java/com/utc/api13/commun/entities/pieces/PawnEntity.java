@@ -34,6 +34,16 @@ public class PawnEntity extends APieceEntity {
         this.setPosition((color.equals(PieceColorEnum.BLACK) ? new PositionEntity(startColumn, START_LINE_BLACK_PAWN)
                 : new PositionEntity(startColumn, START_LINE_WHITE_PAWN)));
     }
+    
+    public PawnEntity(final PieceColorEnum color, final PositionEntity startPosition) {
+        super(color);
+        this.setPosition(startPosition);
+    }
+    
+    @Override
+    public String toString(){
+        return "Pawn";
+    }
 
     @Override
     public List<PositionEntity> generateAvailableMoves(GameEntity game, boolean verifyCheck) {
@@ -47,18 +57,8 @@ public class PawnEntity extends APieceEntity {
         int positionX = getPosition().getPositionX();
         int positionY = getPosition().getPositionY();
 
-        if (this.getColor() == PieceColorEnum.WHITE) {
-            // Si position de départ, alors on peut avancer de deux
-            positionTemp = new PositionEntity(positionX, positionY + 2);
-            if (positionX == START_LINE_WHITE_PAWN
-                    && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)
-                    && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
-                if (!game.isCheck()) {
-                    result.add(positionTemp);
-                }
-                this.cancelLastMove(game);
-            }
+        if (this.getColor().equals(PieceColorEnum.WHITE)) {
+            
 
             // mouvement classique
             positionTemp = new PositionEntity(positionX, positionY + 1);
@@ -66,10 +66,26 @@ public class PawnEntity extends APieceEntity {
                     && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)
                     && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
                 this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
-                if (!game.isCheck()) {
-                    result.add(positionTemp);
+                if (verifyCheck){
+                    if (!game.isCheck()) {
+                        result.add(positionTemp);
+                    }
                 }
                 this.cancelLastMove(game);
+                
+                //si position de départ on peut avancer de deux (mais seulement si on peut deja avancer de 1
+                PositionEntity positionTempPlusDeux = new PositionEntity(positionX, positionY + 2);
+                if (positionX == START_LINE_WHITE_PAWN
+                        && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTempPlusDeux)
+                        && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTempPlusDeux)) {
+                    this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTempPlusDeux, this), game);
+                    if(verifyCheck){
+                        if (!game.isCheck()) {
+                            result.add(positionTempPlusDeux);
+                        }
+                    }
+                    this.cancelLastMove(game);
+                }
             }
 
             // ennemis dans les diagonales
@@ -79,12 +95,15 @@ public class PawnEntity extends APieceEntity {
 
                 tmpOpponentPiece = game.getOpponentPieces().stream()
                         .filter(piece -> piece.getPosition().equals(positionTemp2)).findFirst().orElse(null);
-                game.removePiece(tmpOpponentPiece);
-
-                if (!game.isCheck()) {
-                    result.add(positionTemp);
+                if(tmpOpponentPiece != null){
+                    game.removePiece(tmpOpponentPiece);
+                    if(verifyCheck){
+                        if (!game.isCheck()) {
+                            result.add(positionTemp);
+                        }
+                    }
+                    game.addPiece(tmpOpponentPiece);
                 }
-                game.addPiece(tmpOpponentPiece);
                 this.cancelLastMove(game);
 
             }
@@ -94,27 +113,20 @@ public class PawnEntity extends APieceEntity {
 
                 tmpOpponentPiece = game.getOpponentPieces().stream()
                         .filter(piece -> piece.getPosition().equals(positionTemp3)).findFirst().orElse(null);
-                game.removePiece(tmpOpponentPiece);
-
-                if (!game.isCheck()) {
-                    result.add(positionTemp);
-                }
-                game.addPiece(tmpOpponentPiece);
-                this.cancelLastMove(game);
-            }
-
-        } else if (this.getColor() == PieceColorEnum.BLACK) {
-            // si position de départ on peut avancer de deux
-            positionTemp = new PositionEntity(positionX, positionY - 2);
-            if (positionX == START_LINE_BLACK_PAWN
-                    && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)
-                    && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
-                if (!game.isCheck()) {
-                    result.add(positionTemp);
+                if(tmpOpponentPiece != null){
+                    game.removePiece(tmpOpponentPiece);
+                    if(verifyCheck){
+                        if (!game.isCheck()) {
+                            result.add(positionTemp);
+                        }
+                    }
+                    game.addPiece(tmpOpponentPiece);
                 }
                 this.cancelLastMove(game);
             }
+
+        } else if (this.getColor().equals(PieceColorEnum.BLACK)) {
+            
 
             // mouvement classique
             positionTemp = new PositionEntity(positionX, positionY - 1);
@@ -122,10 +134,26 @@ public class PawnEntity extends APieceEntity {
                     && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)
                     && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
                 this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
-                if (!game.isCheck()) {
-                    result.add(positionTemp);
+                if(verifyCheck){
+                    if (!game.isCheck()) {
+                        result.add(positionTemp);
+                    }
                 }
                 this.cancelLastMove(game);
+                
+                //si position de départ on peut avancer de deux (mais seulement si on peut deja avancer de 1
+                PositionEntity positionTempPlusDeux = new PositionEntity(positionX, positionY - 2);
+                if (positionX == START_LINE_BLACK_PAWN
+                        && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTempPlusDeux)
+                        && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTempPlusDeux)) {
+                    this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTempPlusDeux, this), game);
+                    if(verifyCheck){
+                        if (!game.isCheck()) {
+                            result.add(positionTempPlusDeux);
+                        }
+                    }
+                    this.cancelLastMove(game);
+                }
             }
 
             // ennemis dans les diagonales
@@ -136,12 +164,16 @@ public class PawnEntity extends APieceEntity {
 
                 tmpOpponentPiece = game.getOpponentPieces().stream()
                         .filter(piece -> piece.getPosition().equals(positionTemp2)).findFirst().orElse(null);
-                game.removePiece(tmpOpponentPiece);
-
-                if (!game.isCheck()) {
-                    result.add(positionTemp);
+                
+                if(tmpOpponentPiece != null){
+                    game.removePiece(tmpOpponentPiece);
+                    if(verifyCheck){
+                        if (!game.isCheck()) {
+                            result.add(positionTemp);
+                        }
+                    }
+                    game.addPiece(tmpOpponentPiece);
                 }
-                game.addPiece(tmpOpponentPiece);
                 this.cancelLastMove(game);
             }
             PositionEntity positionTemp3 = new PositionEntity(positionX - 1, positionY - 1);
@@ -151,12 +183,15 @@ public class PawnEntity extends APieceEntity {
 
                 tmpOpponentPiece = game.getOpponentPieces().stream()
                         .filter(piece -> piece.getPosition().equals(positionTemp3)).findFirst().orElse(null);
-                game.removePiece(tmpOpponentPiece);
-
-                if (!game.isCheck()) {
-                    result.add(positionTemp);
+                if(tmpOpponentPiece != null){
+                    game.removePiece(tmpOpponentPiece);
+                    if(verifyCheck){
+                        if (!game.isCheck()) {
+                            result.add(positionTemp);
+                        }
+                    }
+                    game.addPiece(tmpOpponentPiece);
                 }
-                game.addPiece(tmpOpponentPiece);
                 this.cancelLastMove(game);
             }
         }

@@ -47,7 +47,11 @@ public class KnightEntity extends APieceEntity {
             if (x != 0) {
                 for (int y = MIN_MOVE; y < MAX_MOVE; y++) {
                     if (y != 0 && Math.abs(x) != Math.abs(y)) {
-
+                        
+                        addPossibleSolution(game, positionX, positionY, x, y, result, verifyCheck);
+                        
+                        /*
+                         
                         PositionEntity positionTemp = new PositionEntity(positionX + x, positionY + y);
 
                         // On vérifie que la position est bien sur le plateau de
@@ -73,6 +77,7 @@ public class KnightEntity extends APieceEntity {
 
                             }
                         }
+                        */
                     }
                 }
             }
@@ -83,5 +88,10 @@ public class KnightEntity extends APieceEntity {
     @Override
     public List<PositionEntity> generateAvailableMoves(GameEntity game) {
         return generateAvailableMoves(game, Boolean.TRUE);
+    }
+    
+    @Override
+    public String toString() {
+    	return "Knight";
     }
 }
