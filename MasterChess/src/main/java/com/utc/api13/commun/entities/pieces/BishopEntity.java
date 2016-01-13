@@ -31,6 +31,11 @@ public class BishopEntity extends APieceEntity {
 
     @Override
     public List<PositionEntity> generateAvailableMoves(GameEntity game) {
+        return generateAvailableMoves(game, Boolean.TRUE);
+    }
+
+    @Override
+    public List<PositionEntity> generateAvailableMoves(GameEntity game, boolean verifyCheck) {
         // TODO Auto-generated method stub
         return null;
     }

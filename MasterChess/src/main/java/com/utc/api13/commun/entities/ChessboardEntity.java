@@ -30,10 +30,10 @@ public final class ChessboardEntity extends ADataEntity {
     public static List<PositionEntity> getCases() {
         return cases;
     }
-    
+
     public static boolean isCaseOnChessboard(final PositionEntity position) {
-        for (PositionEntity positionCase : cases){
-            if (positionCase.equals(position)){
+        for (PositionEntity positionCase : cases) {
+            if (positionCase.equals(position)) {
                 return Boolean.TRUE;
             }
         }

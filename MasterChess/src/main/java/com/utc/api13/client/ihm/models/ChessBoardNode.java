@@ -42,7 +42,7 @@ import com.utc.api13.commun.entities.pieces.RookEntity;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
 public class ChessBoardNode {
-	private IClientDataToIHM myIClientToIHM;
+    private IClientDataToIHM myIClientToIHM;
     private IHMManager myIhmManager;
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JPanel chessBoard;
@@ -68,7 +68,6 @@ public class ChessBoardNode {
         chessBoard.setBorder(new LineBorder(Color.BLACK));
         gui.add(chessBoard);
 
-       
         // create the chess board squares
         Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int ii = 0; ii < chessBoardSquares.length; ii++) {
@@ -135,8 +134,7 @@ public class ChessBoardNode {
                     tempo = new KingEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                     break;
                 }
-                
-                
+
                 try {
                     Image img = ImageIO.read(getClass().getResource(dossierIcone + 'P' + couleur + ".gif"));
                     chessBoardSquares[ctr][ligne + increment].setIcon(new ImageIcon(img));
@@ -144,7 +142,6 @@ public class ChessBoardNode {
 
                 }
                 tempo = new PawnEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
-                
 
             }
             couleur = 'B';
@@ -160,19 +157,17 @@ public class ChessBoardNode {
     public final JPanel getGui() {
         return gui;
     }
-    
+
     public void actionPerformed(ActionEvent e) {
-        //on teste si c'est au joueur de jouer
-    	GameEntity game = this.myIClientToIHM.getCurrentGame();
-    	AUserEntity current = game.getCurrentPlayer();
-    	AUserEntity u = this.myIClientToIHM.getLocalUser();
-        if (current != u)
-          { System.out.println("Ce n'est pas à vous de jouer !!"); }
-        else
-          {
-          
-          }
+        // on teste si c'est au joueur de jouer
+        GameEntity game = this.myIClientToIHM.getCurrentGame();
+        AUserEntity current = game.getCurrentPlayer();
+        AUserEntity u = this.myIClientToIHM.getLocalUser();
+        if (current != u) {
+            System.out.println("Ce n'est pas à vous de jouer !!");
+        } else {
+
+        }
     }
-    
 
 }

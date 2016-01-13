@@ -46,7 +46,9 @@ public class PositionEntity extends ADataEntity {
         this.positionY = positionY;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -58,7 +60,9 @@ public class PositionEntity extends ADataEntity {
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -76,6 +80,5 @@ public class PositionEntity extends ADataEntity {
             return false;
         return true;
     }
-    
-    
+
 }

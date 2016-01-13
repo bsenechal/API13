@@ -78,24 +78,24 @@ public class IHMWelcomePageController {
     SplitMenuButton paramSplitMenuButton;
     @FXML
     ScrollBar currentGamesScrollbar, savedGamesScrollbar, connectedUserScrollbar;
-    
+
     @FXML
     public void testEcranFunction() throws IOException {
-    	//ne pas effacer cette fonction car utile pour tester les écrans déclenchés par data !
-    	/*Stage stage;
-        Parent root;
-        stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/answerPropositionPopUp.fxml"));
-        root = (Pane) fxmlLoader.load();
-        AnswerPropositionController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
-        controller.setMainApp(this.mainApp, "un joueur", "pas d'options");
-        stage.setScene(new Scene(root));
-        mainApp.setCurrentStage(stage);
-        stage.setTitle("My Profile");
-        stage.show();*/
+        // ne pas effacer cette fonction car utile pour tester les écrans
+        // déclenchés par data !
+        /*
+         * Stage stage; Parent root; stage = new Stage(); FXMLLoader fxmlLoader
+         * = new
+         * FXMLLoader(getClass().getResource("/fxml/answerPropositionPopUp.fxml"
+         * )); root = (Pane) fxmlLoader.load(); AnswerPropositionController
+         * controller = fxmlLoader.getController();
+         * controller.setControllerContext(this.IHMManager);
+         * controller.setMainApp(this.mainApp, "un joueur", "pas d'options");
+         * stage.setScene(new Scene(root)); mainApp.setCurrentStage(stage);
+         * stage.setTitle("My Profile"); stage.show();
+         */
     }
-    
+
     public ProfilProperty getProfile() {
         return this.profile;
     }
@@ -126,7 +126,7 @@ public class IHMWelcomePageController {
 
     @FXML
     public void onModifyProfileClicked() throws IOException {
-    	Stage stage;
+        Stage stage;
         Parent root;
         stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/updateProfilePage.fxml"));
@@ -145,23 +145,23 @@ public class IHMWelcomePageController {
         try {
             this.myIClientToIHM.disconnect();
         } catch (TechnicalException e) {
-        	try {
-        		error("Log out error : Technical Exception"); 
-        	} catch(IOException e1) {
-    	    	log.error(e1.getMessage(), e1);
-    	    }
-        	log.error(e.getMessage(), e);
+            try {
+                error("Log out error : Technical Exception");
+            } catch (IOException e1) {
+                log.error(e1.getMessage(), e1);
+            }
+            log.error(e.getMessage(), e);
         }
-        
+
         catch (FunctionalException e) {
-        	try {
-        		error("Log out error : Functional Exception"); 
-        	} catch(IOException e1) {
-    	    	log.error(e1.getMessage(), e1);
-    	    }
-        	log.error(e.getMessage(), e);
+            try {
+                error("Log out error : Functional Exception");
+            } catch (IOException e1) {
+                log.error(e1.getMessage(), e1);
+            }
+            log.error(e.getMessage(), e);
         }
-        
+
         Stage stage;
         Parent root;
         stage = new Stage();
@@ -184,15 +184,14 @@ public class IHMWelcomePageController {
         try {
             exportFile = this.myIClientToIHM.exportProfile();
         } catch (TechnicalException e) {
-        	try {
-        		error("Export error : Technical Exception"); 
-        	}
-        	catch(IOException e1) {
-    	    	log.error(e1.getMessage(), e1);
-    	    }
-        	log.error(e.getMessage(), e);
+            try {
+                error("Export error : Technical Exception");
+            } catch (IOException e1) {
+                log.error(e1.getMessage(), e1);
+            }
+            log.error(e.getMessage(), e);
         }
-        
+
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Export to ...");
         File selectedDirectory = directoryChooser.showDialog(new Stage());
@@ -206,11 +205,10 @@ public class IHMWelcomePageController {
                         java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
                 exportOK(selectedDirectory.getAbsolutePath());
             } catch (IOException e) {
-                try { 
-                	exportNOK(); 
-                }
-                catch (IOException e1) {
-                	log.error(e1.getMessage(), e1);
+                try {
+                    exportNOK();
+                } catch (IOException e1) {
+                    log.error(e1.getMessage(), e1);
                 }
                 log.error(e.getMessage(), e);
             }
@@ -219,29 +217,28 @@ public class IHMWelcomePageController {
 
     @FXML
     public void onUserInfoClicked() throws IOException {
-    	
-    	Stage stage;
-        Parent root=null;
+
+        Stage stage;
+        Parent root = null;
         stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/userInfoPopUp.fxml"));
-        
+
         try {
-	        root = (Pane) fxmlLoader.load();
-	        UserInfoPopUpController controller = fxmlLoader.getController();
-	        controller.setControllerContext(this.IHMManager);
-	        controller.setMainApp(this.mainApp);
-	        stage.setScene(new Scene(root));
-	        stage.setTitle("User Information");
-	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.showAndWait();
-    }  catch (IOException e) {
-        	try {
-        		error("Error when loading user info : IOException"); 
-        	}
-        	catch (IOException e1) {
-        		log.error(e1.getMessage(), e1);
-        	}
-        	log.error(e.getMessage(), e);
+            root = (Pane) fxmlLoader.load();
+            UserInfoPopUpController controller = fxmlLoader.getController();
+            controller.setControllerContext(this.IHMManager);
+            controller.setMainApp(this.mainApp);
+            stage.setScene(new Scene(root));
+            stage.setTitle("User Information");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            try {
+                error("Error when loading user info : IOException");
+            } catch (IOException e1) {
+                log.error(e1.getMessage(), e1);
+            }
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -300,7 +297,7 @@ public class IHMWelcomePageController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
-    
+
     public void exportNOK() throws IOException {
         Stage stage;
         Parent root;
@@ -318,7 +315,6 @@ public class IHMWelcomePageController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
-
 
     public void setListConnectedUser() {
 
@@ -410,13 +406,13 @@ public class IHMWelcomePageController {
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.showAndWait();
                 } catch (IOException e) {
-                    	try {
-							error("Error when loading user info : IOException");
-						} catch (IOException e1) {
-							log.error(e1.getMessage(), e1);
-						} 
-                    	log.error(e.getMessage(), e);
+                    try {
+                        error("Error when loading user info : IOException");
+                    } catch (IOException e1) {
+                        log.error(e1.getMessage(), e1);
                     }
+                    log.error(e.getMessage(), e);
+                }
             }
         });
     }
@@ -446,7 +442,7 @@ public class IHMWelcomePageController {
     public void displayProfile() {
 
     }
-    
+
     public Stage getCurrentStage() {
         return currentStage;
     }
@@ -454,7 +450,7 @@ public class IHMWelcomePageController {
     public void setCurrentStage(Stage currentStage) {
         this.currentStage = currentStage;
     }
-    
+
     public void error(String message) throws IOException {
         Stage stage;
         Parent root;

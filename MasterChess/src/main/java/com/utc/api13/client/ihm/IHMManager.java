@@ -14,9 +14,9 @@ public class IHMManager {
 
     private ProfilProperty profil;
     private PropositionProperty proposition;
-    private GameProperty game; 
+    private GameProperty game;
     private ErrorProperty error;
-	private ConfirmationProperty confirmation; 
+    private ConfirmationProperty confirmation;
 
     public ProfilProperty getProfil() {
         return profil;
@@ -25,7 +25,7 @@ public class IHMManager {
     public void setProfil(ProfilProperty profil) {
         this.profil = profil;
     }
-    
+
     public PropositionProperty getProposition() {
         return this.proposition;
     }
@@ -33,7 +33,7 @@ public class IHMManager {
     public void setProposition(PropositionProperty proposition) {
         this.proposition = proposition;
     }
-    
+
     public GameProperty getGame() {
         return game;
     }
@@ -41,7 +41,7 @@ public class IHMManager {
     public void setGame(GameProperty game) {
         this.game = game;
     }
-    
+
     public ErrorProperty getError() {
         return this.error;
     }
@@ -49,7 +49,7 @@ public class IHMManager {
     public void setError(ErrorProperty error) {
         this.error = error;
     }
-    
+
     public ConfirmationProperty getConfirmation() {
         return this.confirmation;
     }
@@ -57,7 +57,6 @@ public class IHMManager {
     public void setConfirmation(ConfirmationProperty confirmation) {
         this.confirmation = confirmation;
     }
-
 
     public IHMManager() {
         this.myClientIHMToDataImpl = new ClientIHMToDataImpl(this);

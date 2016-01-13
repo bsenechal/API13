@@ -26,7 +26,7 @@ public class ConfirmationController {
     @FXML
     AnchorPane confirmationAnchorPane;
     @FXML
-    ImageView confirmationIcon; 
+    ImageView confirmationIcon;
 
     public ConfirmationController() {
         initialize();
@@ -62,7 +62,7 @@ public class ConfirmationController {
     public void setBindingsOnLoad() {
 
     }
-    
+
     public Stage getCurrentStage() {
         return currentStage;
     }

@@ -34,7 +34,7 @@ public class KnightEntity extends APieceEntity {
     }
 
     @Override
-    public List<PositionEntity> generateAvailableMoves(GameEntity game) {
+    public List<PositionEntity> generateAvailableMoves(GameEntity game, boolean verifyCheck) {
         Assert.notNull(getPosition(), "[KnightEntity][generateAvailableMoves] Position shouldn't be null");
 
         List<PositionEntity> result = new ArrayList<PositionEntity>();
@@ -78,5 +78,10 @@ public class KnightEntity extends APieceEntity {
             }
         }
         return result;
+    }
+
+    @Override
+    public List<PositionEntity> generateAvailableMoves(GameEntity game) {
+        return generateAvailableMoves(game, Boolean.TRUE);
     }
 }

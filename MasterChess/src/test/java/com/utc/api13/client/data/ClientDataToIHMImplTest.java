@@ -30,20 +30,20 @@ import javafx.collections.FXCollections;
 public class ClientDataToIHMImplTest {
     @Mock
     private DataClientManager dataClientManager;
-    
+
     @Mock
     private ClientComToDataImpl clientComToDataImpl;
-    
-    @Mock 
+
+    @Mock
     private ClientDataToIHMImpl clientDataToIHMImpl;
-   
+
     /**
      * @throws java.lang.Exception
      */
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        
+
         dataClientManager = new DataClientManager();
     }
 
@@ -60,14 +60,14 @@ public class ClientDataToIHMImplTest {
         dataClientManager.setUserLocal(privateUser);
         dataClientManager.setIClientComToData(clientComToDataImpl);
         Mockito.doNothing().when(clientComToDataImpl).disconnect(privateUser.getId());
-        
+
         try {
             dataClientManager.getClientDataToIHMImpl().disconnect();
         } catch (TechnicalException technicalException) {
             Assert.fail("Technical error : " + technicalException.getMessage());
         } catch (FunctionalException functionalException) {
             Assert.fail("Functional error : " + functionalException.getMessage());
-        } 
+        }
 
         Assert.assertNotNull("dataClientManager shouldn't be null", dataClientManager);
         Assert.assertNull("UserLocal should be null", dataClientManager.getUserLocal());
@@ -104,28 +104,26 @@ public class ClientDataToIHMImplTest {
         Assert.assertEquals("Current game should be equal to " + localUser.toString(),
                 dataClientManager.getClientDataToIHMImpl().getLocalUser(), localUser);
     }
-    
+
     @Test
-    public void getGamesListTest(){
+    public void getGamesListTest() {
         List<GameEntity> games = new ArrayList<GameEntity>();
         GameEntity specificGame = new GameEntity();
         final int nbGames = 5;
         final int nbGamesExpected = nbGames + 1;
 
         games.add(specificGame);
-        
+
         for (int i = 0; i < nbGames; i++) {
             games.add(new GameEntity());
         }
-        
+
         dataClientManager.setCurrentGames(FXCollections.observableArrayList(games));
-        
-        Assert.assertNotNull("dataClientManager shouldn't be null",
-                dataClientManager);
-        Assert.assertEquals("CurrentGames should contains " + nbGamesExpected + " games" ,
-                nbGames + 1, dataClientManager.getClientDataToIHMImpl().getGamesList().size());
+
+        Assert.assertNotNull("dataClientManager shouldn't be null", dataClientManager);
+        Assert.assertEquals("CurrentGames should contains " + nbGamesExpected + " games", nbGames + 1,
+                dataClientManager.getClientDataToIHMImpl().getGamesList().size());
         Assert.assertTrue("CurrentGames should contains " + specificGame.toString(),
                 dataClientManager.getClientDataToIHMImpl().getGamesList().contains(specificGame));
     }
 }
-
