@@ -261,7 +261,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
 	}
 
 	@Override
-	public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable) {
+	public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable, int timer) {
+		// TODO : traiter le timer ! sa mère le timer !!!
 
 		PublicUserEntity whitePlayer;
 		PublicUserEntity blackPlayer;

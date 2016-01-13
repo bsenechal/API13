@@ -105,7 +105,7 @@ public interface IClientDataToCom {
                                       // méthodes utilisées par le "retour" de
                                       // com ?
 
-    void printProposition(final UUID uidSender, final boolean observable, final boolean chattable); // Affiche
+    void printProposition(final UUID uidSender, final boolean observable, final boolean chattable, final int timer); // Affiche
                                                                                                     // la
                                                                                                     // proposition
                                                                                                     // de

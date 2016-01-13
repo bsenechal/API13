@@ -143,7 +143,7 @@ public interface IServerDataToCom {
 
 	// TODO
 	// Méthode pour créer une nouvelle partie :
-	public GameEntity createGame(final UUID j1, final UUID j2, final boolean observable, final boolean chattable);
+	public GameEntity createGame(final UUID j1, final UUID j2, final boolean observable, final boolean chattable, final int timer);
 
 	public GameEntity getGameById(final UUID IdGame); // Renvoie une GameEntity
 														// par l'UID de la Game

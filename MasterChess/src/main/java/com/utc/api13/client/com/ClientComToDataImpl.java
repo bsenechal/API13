@@ -179,7 +179,7 @@ public class ClientComToDataImpl implements IClientComToData {
      */
     public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable,
             PublicUserEntity user) {
-        comClientManagerInstance.sendMessage(new GameRequestMessage(sender, reciever, chattable, observable));
+        comClientManagerInstance.sendMessage(new GameRequestMessage(sender, reciever, chattable, observable,0));
     }
 
     /**
@@ -197,6 +197,6 @@ public class ClientComToDataImpl implements IClientComToData {
      */
     @Override
     public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer) {
-        comClientManagerInstance.sendMessage(new RequestAnswerMessage(sender, reciever, chattable, observable, answer));
+        comClientManagerInstance.sendMessage(new RequestAnswerMessage(sender, reciever, chattable, observable, answer,0));
     }
 }
