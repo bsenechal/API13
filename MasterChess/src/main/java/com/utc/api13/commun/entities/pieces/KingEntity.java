@@ -52,7 +52,9 @@ public class KingEntity extends APieceEntity {
         // Calcul des positions possibles autour du roi
         for (int x = MIN_MOVE_X; x <= MAX_MOVE_X; x++) {
             for (int y = MIN_MOVE_Y; y <= MAX_MOVE_Y; y++) {
-                addPossibleSolution(game, positionX, positionY, x, y, result, verifyCheck);
+            	if(x != 0 && y != 0){
+                    addPossibleSolution(game, positionX, positionY, x, y, result, verifyCheck);
+            	}
             }
         }
         return result;

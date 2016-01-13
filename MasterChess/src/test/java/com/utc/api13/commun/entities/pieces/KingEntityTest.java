@@ -85,9 +85,15 @@ public class KingEntityTest {
         game.getWhitePieces().add(whiteKing);
 
         availablesPositionsBlackKing = blackKing.generateAvailableMoves(game);
-
+        System.out.println("black pieces");
+        for(PositionEntity tmp:availablesPositionsBlackKing){
+        	System.out.println(String.valueOf(tmp.getPositionX()) + "," + String.valueOf(tmp.getPositionY()));
+        }
         availablesPositionsWhiteKing = whiteKing.generateAvailableMoves(game);
-
+        System.out.println("white pieces");
+        for(PositionEntity tmp:availablesPositionsWhiteKing){
+        	System.out.println(String.valueOf(tmp.getPositionX()) + "," + String.valueOf(tmp.getPositionY()));
+        }
         // STACKOVERFLOW !!!!! -_-
         Assert.assertFalse("availablesPositionsBlackKing shouldn't be empty", availablesPositionsBlackKing.isEmpty());
         Assert.assertFalse("availablesPositionsWhiteKing shouldn't be empty", availablesPositionsWhiteKing.isEmpty());
