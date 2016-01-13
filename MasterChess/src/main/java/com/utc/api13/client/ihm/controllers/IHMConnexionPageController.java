@@ -1,4 +1,3 @@
-
 package com.utc.api13.client.ihm.controllers;
 
 import java.io.File;
@@ -50,41 +49,42 @@ public class IHMConnexionPageController {
     @FXML
     Hyperlink importLink, exportLink, signUpLink;
     @FXML
-    PasswordField passwordTextView; 
+    PasswordField passwordTextView;
 
     @FXML
     private void onSignInClicked(Event event) throws IOException {
         String login = loginTextView.getText();
         String pw = passwordTextView.getText();
         String sv = serverAddressTextView.getText();
-        String portString = portTextView.getText(); 
+        String portString = portTextView.getText();
         Stage stage;
         Parent root;
         stage = new Stage();
         FXMLLoader fxmlLoader;
 
-        if (login.length()==0 || pw.length()==0 || sv.length()==0 || portString.length()==0 ) {
-           try {  
-        	        error("Error : please fill all the fields!"); 
-        	    }
-        	    catch(IOException e1) {
-        	    	log.error(e1.getMessage(), e1);
-        	    }
-		} 
-        
-        else if (!(portTextView.getText().matches("[0-9][0-9][0-9][0-9]") || portTextView.getText().matches("[0-9][0-9][0-9]") || portTextView.getText().matches("[0-9][0-9]") || portTextView.getText().matches("[0-9]"))){
-        	try {
-        		error("Error : please use digits for the port field!"); 
-        	} catch(IOException e1) {
-    	    	log.error(e1.getMessage(), e1);
-    	    }
+        if (login.length() == 0 || pw.length() == 0 || sv.length() == 0 || portString.length() == 0) {
+            try {
+                error("Error : please fill all the fields!");
+            } catch (IOException e1) {
+                log.error(e1.getMessage(), e1);
+            }
+        }
+
+        else if (!(portTextView.getText().matches("[0-9][0-9][0-9][0-9]")
+                || portTextView.getText().matches("[0-9][0-9][0-9]") || portTextView.getText().matches("[0-9][0-9]")
+                || portTextView.getText().matches("[0-9]"))) {
+            try {
+                error("Error : please use digits for the port field!");
+            } catch (IOException e1) {
+                log.error(e1.getMessage(), e1);
+            }
         }
 
         else {
 
             try {
-            	Integer port = Integer.parseInt(portString.isEmpty() ? "0" : portTextView.getText());
-            	//TODO : gérer la connexion au serveur avec le port 
+                Integer port = Integer.parseInt(portString.isEmpty() ? "0" : portTextView.getText());
+                // TODO : gérer la connexion au serveur avec le port
                 myIClientToIHM.connect(login, pw);
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
                 root = (Pane) fxmlLoader.load();
@@ -101,19 +101,19 @@ public class IHMConnexionPageController {
 
             catch (FunctionalException e) {
                 try {
-                	wrongData(true);
+                    wrongData(true);
                 } catch (IOException e1) {
-					log.error(e1.getMessage(), e1);
-				} 
+                    log.error(e1.getMessage(), e1);
+                }
                 log.error(e.getMessage(), e);
             }
 
             catch (TechnicalException e) {
                 try {
-                	wrongData(false);
+                    wrongData(false);
                 } catch (IOException e1) {
-					log.error(e1.getMessage(), e1);
-				} 
+                    log.error(e1.getMessage(), e1);
+                }
                 log.error(e.getMessage(), e);
             }
         }
@@ -144,17 +144,17 @@ public class IHMConnexionPageController {
         if (f != null) {
             try {
                 myIClientToIHM.importProfile(f, true);
-                importOK(); 
+                importOK();
             } catch (FunctionalException e) {
                 importNOK("Error : functional exception");
                 log.error(e.getMessage(), e);
             } catch (TechnicalException e) {
-            	importNOK("Error : techninal exception"); 
-            	log.error(e.getMessage(), e);
+                importNOK("Error : techninal exception");
+                log.error(e.getMessage(), e);
             }
         }
     }
-    
+
     public void importOK() throws IOException {
         Stage stage;
         Parent root;
@@ -162,7 +162,7 @@ public class IHMConnexionPageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ConfirmationController controller = fxmlLoader.getController();
-        
+
         controller.setControllerContext(this.IHMManager);
         controller.setMainApp(this.mainApp, "Successful import!");
         stage.setScene(new Scene(root));
@@ -172,7 +172,7 @@ public class IHMConnexionPageController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
-    
+
     public void importNOK(String message) throws IOException {
         Stage stage;
         Parent root;
@@ -180,7 +180,7 @@ public class IHMConnexionPageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-        
+
         controller.setControllerContext(this.IHMManager);
         controller.setMainApp(this.mainApp, message);
         stage.setScene(new Scene(root));
@@ -193,7 +193,7 @@ public class IHMConnexionPageController {
 
     @FXML
     private void onSignUpClicked(Event event) throws IOException {
-    	Stage stage;
+        Stage stage;
         Parent root;
         stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/createProfilePage.fxml"));
@@ -224,7 +224,7 @@ public class IHMConnexionPageController {
         if (ihmManager != null)
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
     }
-    
+
     public Stage getCurrentStage() {
         return currentStage;
     }
@@ -232,7 +232,7 @@ public class IHMConnexionPageController {
     public void setCurrentStage(Stage currentStage) {
         this.currentStage = currentStage;
     }
-    
+
     public void error(String message) throws IOException {
         Stage stage;
         Parent root;

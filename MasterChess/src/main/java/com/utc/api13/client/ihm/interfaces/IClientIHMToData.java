@@ -107,15 +107,16 @@ public interface IClientIHMToData {
      * of the other one to change the final score
      */
     // displayAnswerForLeaving(boolean answer)
-    
+
     /**
      * when a en error occurs between data and com modules
      */
-	void displayError(String errorMessage);
-	/**
-     * to display confirmation message that everything went ok 
+    void displayError(String errorMessage);
+
+    /**
+     * to display confirmation message that everything went ok
      */
-	void displayConfirmation(String confirmationMessage);
+    void displayConfirmation(String confirmationMessage);
     /*
      * public void didReceiveBoard(); public void
      * didReceiveEndOfGameBySurrender(); public void

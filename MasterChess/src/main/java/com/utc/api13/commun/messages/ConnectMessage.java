@@ -34,7 +34,7 @@ public class ConnectMessage extends Message {
 
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
-    	comClientManager.getIClientDataToCom().notifyConnection(pubUser);
+        comClientManager.getIClientDataToCom().notifyConnection(pubUser);
     }
 
     @Override

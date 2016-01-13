@@ -55,8 +55,8 @@ public class UserInfoPopUpController {
     @FXML
     TableColumn userInfoWon, userInfoLost, userInfoPlayed;
     @FXML
-    Button sendPropositionButton; 
-    
+    Button sendPropositionButton;
+
     public PublicUserEntity getU() {
         return u;
     }
@@ -113,7 +113,7 @@ public class UserInfoPopUpController {
         userInfoLogin.textProperty().bind(profile.loginProperty());
         userInfoFirstName.textProperty().bind(profile.firstNameProperty());
         userInfoLastName.textProperty().bind(profile.lastNameProperty());
-        userUUID.textProperty().bind(profile.userUUID());  
+        userUUID.textProperty().bind(profile.userUUID());
 
         userInfoWon.setCellValueFactory(new PropertyValueFactory<PrivateUserEntity, Integer>("nbWon"));
         userInfoLost.setCellValueFactory(new PropertyValueFactory<PrivateUserEntity, Integer>("nbLost"));
@@ -124,7 +124,7 @@ public class UserInfoPopUpController {
         });
 
     }
-    
+
     public Stage getCurrentStage() {
         return currentStage;
     }
@@ -132,34 +132,34 @@ public class UserInfoPopUpController {
     public void setCurrentStage(Stage currentStage) {
         this.currentStage = currentStage;
     }
-    
+
     public void sendProposition() throws IOException {
-    	Stage stage;
+        Stage stage;
         Parent root;
         stage = new Stage();
         try {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/sendPropositionPopUp.fxml"));
-        root = (Pane) fxmlLoader.load();
-        SendPropositionController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
-        controller.setMainApp(this.mainApp, userUUID , userInfoLogin);
-        stage.setScene(new Scene(root));
-        stage.setTitle("Error");
-        mainApp.setCurrentStage(stage);
-        mainApp.getCurrentStage().close();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/sendPropositionPopUp.fxml"));
+            root = (Pane) fxmlLoader.load();
+            SendPropositionController controller = fxmlLoader.getController();
+            controller.setControllerContext(this.IHMManager);
+            controller.setMainApp(this.mainApp, userUUID, userInfoLogin);
+            stage.setScene(new Scene(root));
+            stage.setTitle("Error");
+            mainApp.setCurrentStage(stage);
+            mainApp.getCurrentStage().close();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
         } catch (IOException e) {
-        	try {
-				error("Error when loading proposition window : IOException");
-			} catch (IOException e1) {
-				log.error(e1.getMessage(), e1);
-			} 
-        	log.error(e.getMessage(), e);
+            try {
+                error("Error when loading proposition window : IOException");
+            } catch (IOException e1) {
+                log.error(e1.getMessage(), e1);
+            }
+            log.error(e.getMessage(), e);
         }
-    	
+
     }
-    
+
     public void error(String message) throws IOException {
         Stage stage;
         Parent root;

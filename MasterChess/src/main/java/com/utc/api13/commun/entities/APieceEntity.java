@@ -2,6 +2,7 @@ package com.utc.api13.commun.entities;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.util.Assert;
@@ -10,133 +11,223 @@ import com.utc.api13.commun.enumerations.PieceColorEnum;
 
 public abstract class APieceEntity extends ADataEntity {
 
-	private static final long serialVersionUID = 6842864968035495956L;
-	private PieceColorEnum color;
-	private PositionEntity position;
+    private static final long serialVersionUID = 6842864968035495956L;
+    private PieceColorEnum color;
+    private PositionEntity position;
 
-	/**
-	 * get the list of positions of a specified list of pieces
-	 * 
-	 * @param List<APieceEntity>
-	 *            pieces
-	 * @return static List<PositionEntity>
-	 */
-	public static List<PositionEntity> getAllPositionsByPieces(final List<APieceEntity> pieces) {
-		List<PositionEntity> positions = new ArrayList<PositionEntity>();
-		for (APieceEntity piece : pieces) {
-			positions.add(piece.getPosition());
-		}
-		return positions;
-	}
+    /**
+     * get the list of positions of a specified list of pieces
+     * 
+     * @param List<APieceEntity>
+     *            pieces
+     * @return static List<PositionEntity>
+     */
+    public static List<PositionEntity> getAllPositionsByPieces(final List<APieceEntity> pieces) {
+        List<PositionEntity> positions = new ArrayList<PositionEntity>();
+        for (APieceEntity piece : pieces) {
+            positions.add(piece.getPosition());
+        }
+        return positions;
+    }
 
-	/**
-	 * remove a piece by its postion in a list of pieces
-	 * 
-	 * @param List<APieceEntity>
-	 *            pieces
-	 * @param final
-	 *            PositionEntity position
-	 */
-	public static void removePieceByPosition(List<APieceEntity> pieces, final PositionEntity position) {
-		pieces.removeIf(piece -> piece.getPosition().equals(position));
-	}
+    /**
+     * Check if is position is available from a list of pieces
+     * 
+     * @param pieces
+     * @param position
+     * @return
+     */
+    public static boolean isPositionAvailableFromPieces(final List<APieceEntity> pieces,
+            final PositionEntity position) {
+        for (APieceEntity piece : pieces) {
+            if (piece.getPosition().equals(position)) {
+                return Boolean.FALSE;
+            }
+        }
+        return Boolean.TRUE;
+    }
 
-	/**
-	 * @param color
-	 * @param currentGame
-	 */
-	public APieceEntity(PieceColorEnum color) {
-		super();
-		this.color = color;
-	}
+    /**
+     * Check if is position is available with a list of positions
+     * 
+     * @param pieces
+     * @param position
+     * @return
+     */
+    public static boolean isPositionAvailable(final List<PositionEntity> positions,
+            final PositionEntity positionToCheck) {
+        for (PositionEntity position : positions) {
+            if (position.equals(positionToCheck)) {
+                return Boolean.FALSE;
+            }
+        }
+        return Boolean.TRUE;
+    }
 
-	public void deleteDestinationPiece(final MoveEntity move, GameEntity game) {
-		Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
-		Assert.notNull(game.getCurrentPlayer(), "[APieceEntity][move] current player shouldn't be null");
-		Assert.notNull(game.getWhitePieces(), "[APieceEntity][move] WhitePieces shouldn't be null");
-		Assert.notNull(game.getBlackPieces(), "[APieceEntity][move] BlackPieces shouldn't be null");
-		Assert.notNull(move, "[APieceEntity][move] move shouldn't be null");
+    /**
+     * remove a piece by its postion in a list of pieces
+     * 
+     * @param List<APieceEntity>
+     *            pieces
+     * @param final
+     *            PositionEntity position
+     */
+    public static void removePieceByPosition(List<APieceEntity> pieces, final PositionEntity position) {
+        pieces.removeIf(piece -> piece.getPosition().equals(position));
+    }
 
-		if (game.getCurrentPlayer().equals(game.getBlackPlayer())) {
-			if (APieceEntity.getAllPositionsByPieces(game.getWhitePieces()).contains(move.getToPosition())) {
-				// Suppression de la pièce dans le jeu de l'adversaire
-				APieceEntity.removePieceByPosition(game.getWhitePieces(), move.getToPosition());
-			}
-		} else {
-			if (APieceEntity.getAllPositionsByPieces(game.getBlackPieces()).contains(move.getToPosition())) {
-				// Suppression de la pièce dans le jeu de l'adversaire
-				APieceEntity.removePieceByPosition(game.getBlackPieces(), move.getToPosition());
-			}
-		}
-	}
+    /**
+     * @param color
+     * @param currentGame
+     */
+    public APieceEntity(PieceColorEnum color) {
+        super();
+        this.color = color;
+    }
 
-	public void movePiece(final MoveEntity move, GameEntity game) {
-		Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
-		Assert.notNull(move, "[APieceEntity][move] move shouldn't be null");
-		Assert.notNull(game.getMovesHistory(), "[APieceEntity][move] MovesHistory shouldn't be null");
+    public void deleteDestinationPiece(final MoveEntity move, GameEntity game) {
+        Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
+        Assert.notNull(game.getCurrentPlayer(), "[APieceEntity][move] current player shouldn't be null");
+        Assert.notNull(game.getWhitePieces(), "[APieceEntity][move] WhitePieces shouldn't be null");
+        Assert.notNull(game.getBlackPieces(), "[APieceEntity][move] BlackPieces shouldn't be null");
+        Assert.notNull(move, "[APieceEntity][move] move shouldn't be null");
 
-		// Déplacement de la pièce
-		setPosition(move.getToPosition());
+        game.removePiece(move.getPiece());
 
-		// Ajout dans l'historique des coups
-		game.getMovesHistory().add(move);
-	}
+    }
 
-	public void cancelLastMove(GameEntity game) {
-		Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
-		Assert.notNull(game.getMovesHistory(), "[APieceEntity][move] MovesHistory shouldn't be null");
+    public void movePiece(final MoveEntity move, GameEntity game) {
+        Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
+        Assert.notNull(move, "[APieceEntity][move] move shouldn't be null");
+        Assert.notNull(game.getMovesHistory(), "[APieceEntity][move] MovesHistory shouldn't be null");
 
-		MoveEntity lastMove = game.getMovesHistory().stream().max(new Comparator<MoveEntity>() {
-			@Override
-			public int compare(MoveEntity o1, MoveEntity o2) {
-				return o1.getDate().compareTo(o2.getDate());
-			}
+        // Déplacement de la pièce
+        setPosition(move.getToPosition());
 
-		}).get();
+        // TODO : Delete adversary pond if needed !!! (managed deleted pond to
+        // allow canceling a move ?)
 
-		// annulation du dernier mouvement
-		setPosition(lastMove.getFromPosition());
+        // Ajout dans l'historique des coups
+        game.getMovesHistory().add(move);
+    }
 
-		// Enlever de l'historique
-		game.getMovesHistory().remove(lastMove);
-	}
+    public void cancelLastMove(GameEntity game) {
+        Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
+        Assert.notNull(game.getMovesHistory(), "[APieceEntity][move] MovesHistory shouldn't be null");
 
-	public boolean isMovePossible(final MoveEntity move, final GameEntity game) {
-		Assert.notNull(move, "[APieceEntity][isMovePossible] move shouldn't be null");
-		Assert.notNull(game, "[APieceEntity][isMovePossible] game shouldn't be null");
+        MoveEntity lastMove = game.getMovesHistory().stream().max(new Comparator<MoveEntity>() {
+            @Override
+            public int compare(MoveEntity o1, MoveEntity o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
 
-		return (generateAvailableMoves(game).contains(move.getToPosition())) ? true : false;
-	}
+        }).get();
 
-	public abstract List<PositionEntity> generateAvailableMoves(GameEntity game);
+        // annulation du dernier mouvement
+        setPosition(lastMove.getFromPosition());
 
-	/**
-	 * @return the position
-	 */
-	public PositionEntity getPosition() {
-		return position;
-	}
+        // Enlever de l'historique
+        game.getMovesHistory().remove(lastMove);
+    }
 
-	/**
-	 * @param position
-	 *            the position to set
-	 */
-	public void setPosition(PositionEntity position) {
-		this.position = position;
-	}
+    public boolean isMovePossible(final MoveEntity move, final GameEntity game) {
+        Assert.notNull(move, "[APieceEntity][isMovePossible] move shouldn't be null");
+        Assert.notNull(game, "[APieceEntity][isMovePossible] game shouldn't be null");
 
-	/**
-	 * @return the color
-	 */
-	public PieceColorEnum getColor() {
-		return color;
-	}
+        return (generateAvailableMoves(game).contains(move.getToPosition())) ? true : false;
+    }
 
-	/**
-	 * @param color
-	 *            the color to set
-	 */
-	public void setColor(PieceColorEnum color) {
-		this.color = color;
-	}
+    public abstract List<PositionEntity> generateAvailableMoves(GameEntity game);
+
+    public abstract List<PositionEntity> generateAvailableMoves(GameEntity game, boolean verifyCheck);
+
+    /**
+     * @return the position
+     */
+    public PositionEntity getPosition() {
+        return position;
+    }
+
+    /**
+     * @param position
+     *            the position to set
+     */
+    public void setPosition(PositionEntity position) {
+        this.position = position;
+    }
+
+    /**
+     * @return the color
+     */
+    public PieceColorEnum getColor() {
+        return color;
+    }
+
+    /**
+     * @param color
+     *            the color to set
+     */
+    public void setColor(PieceColorEnum color) {
+        this.color = color;
+    }
+
+    /**
+     * This method allow us to add a possible position to the result depending
+     * on a offset (x & y).
+     * 
+     * @return boolean -> if true -> the solution implies a kill or the position
+     *         is already taken : the piece is stopped and can't go further
+     * @param game
+     * @param positionX
+     * @param positionY
+     * @param x
+     * @param y
+     * @param result
+     * @author ulyss_000
+     */
+    protected boolean addPossibleSolution(final GameEntity game, final int positionX, final int positionY, int x, int y,
+            List<PositionEntity> result, boolean verifyCheck) {
+        PositionEntity positionTemp = new PositionEntity(positionX + x, positionY + y);
+        boolean isStopped = false;
+
+        // On vérifie que la position est bien sur le plateau de jeu
+        if (ChessboardEntity.isCaseOnChessboard(positionTemp)) {
+            // On vérifie que la position n'est pas déjà prise par nos pionts
+            if (APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
+                // On vérifie que cela ne met pas notre roi en échec
+                // :
+
+                this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
+                // on supprime le piont adverse s'il y en a un a destination
+                APieceEntity tmpOpponentPiece = null;
+                boolean haskilledAnother = false;
+                if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
+                    tmpOpponentPiece = game.getOpponentPieces().stream()
+                            .filter(piece -> piece.getPosition().equals(positionTemp)).findFirst().orElse(null);
+                    game.removePiece(tmpOpponentPiece);
+                    haskilledAnother = true;
+                    isStopped = true;
+                }
+                if (verifyCheck) {
+                    if (!game.isCheck()) {
+                        result.add(positionTemp);
+                    }
+                } else {
+                    result.add(positionTemp);
+                }
+                if (haskilledAnother) {
+                    game.addPiece(tmpOpponentPiece);
+                }
+                this.cancelLastMove(game);
+            } else {
+                isStopped = true;
+            }
+        }
+        return isStopped;
+    }
+
+    protected boolean addPossibleSolution(final GameEntity game, final int positionX, final int positionY, int x, int y,
+            List<PositionEntity> result) {
+        return addPossibleSolution(game, positionX, positionY, x, y, result, Boolean.TRUE);
+    };
 }

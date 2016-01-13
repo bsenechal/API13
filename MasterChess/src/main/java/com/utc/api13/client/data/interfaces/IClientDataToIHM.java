@@ -66,15 +66,15 @@ public interface IClientDataToIHM {
      */
     public void disconnect() throws TechnicalException, FunctionalException;
 
-	/**
-	 * @author ulyss_000 Moves a piece to the given position
-	 * @param piece
-	 * @param position
-	 * @throws FunctionalException
-	 *             ErrorTypeEnum.MOVE_IMPOSSIBLE -> Is thrown if the move is not
-	 *             possible !
-	 */
-	public void move(APieceEntity piece, PositionEntity position) throws FunctionalException;
+    /**
+     * @author ulyss_000 Moves a piece to the given position
+     * @param piece
+     * @param position
+     * @throws FunctionalException
+     *             ErrorTypeEnum.MOVE_IMPOSSIBLE -> Is thrown if the move is not
+     *             possible !
+     */
+    public void move(APieceEntity piece, PositionEntity position) throws FunctionalException;
 
     /**
      * informs the server that the local user is leaving as an observer

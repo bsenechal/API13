@@ -55,14 +55,14 @@ public class IHMGamePageController {
 
     @FXML
     private void onExcludeChatClicked(Event event) {
-    	
+
     }
 
     @FXML
     private void onSendTextClicked(Event event) {
-    	PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
-    	chatTextArea.setText(u.getLogin() + " : " + sendTextArea.getText());
-    	sendTextArea.setText(null);
+        PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
+        chatTextArea.setText(u.getLogin() + " : " + sendTextArea.getText());
+        sendTextArea.setText(null);
     }
 
     @FXML
@@ -98,16 +98,15 @@ public class IHMGamePageController {
         chatTextArea.setDisable(true);
 
         chessBoardStackPane.getChildren().add(swingNode);
-        
+
         // initialisation des différents labels
         PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
         int nbObservers = game.getObservers().size();
-        
-        
-        //otherPlayerLoginLabel.setText();
-        //otherPlayerTimeLabel.setText(); 
-        playerLoginLabel.setText(u.getLogin()); 
-        //playerTimeLabel.setText(); 
+
+        // otherPlayerLoginLabel.setText();
+        // otherPlayerTimeLabel.setText();
+        playerLoginLabel.setText(u.getLogin());
+        // playerTimeLabel.setText();
         numberObserversLabel.setText(String.valueOf(nbObservers));
 
     }
@@ -118,7 +117,7 @@ public class IHMGamePageController {
 
     public void setBindingsOnLoad() {
     }
-    
+
     public Stage getCurrentStage() {
         return currentStage;
     }

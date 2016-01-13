@@ -23,7 +23,7 @@ public class ErrorController {
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
-    
+
     @FXML
     BorderPane errorBorderPane;
     @FXML
@@ -31,7 +31,7 @@ public class ErrorController {
     @FXML
     AnchorPane errorAnchorPane;
     @FXML
-    ImageView errorIcon; 
+    ImageView errorIcon;
 
     public ErrorController() {
         initialize();
@@ -67,7 +67,7 @@ public class ErrorController {
     public void setBindingsOnLoad() {
 
     }
-    
+
     public Stage getCurrentStage() {
         return currentStage;
     }
@@ -75,7 +75,7 @@ public class ErrorController {
     public void setCurrentStage(Stage currentStage) {
         this.currentStage = currentStage;
     }
-    
+
     public void setBindings(ErrorProperty errorProperty) {
         errorLabel.textProperty().bind(errorProperty.errorMessageProperty());
     }
