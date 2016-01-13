@@ -73,7 +73,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                            stage.setScene(new Scene(root));
                            stage.setTitle("You've got a new game proposition!");
                            stage.initModality(Modality.APPLICATION_MODAL);
-                           stage.showAndWait();
+                           stage.show();
                        } catch (IOException e) {
                           e.printStackTrace();
                           }
@@ -100,7 +100,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 		               stage.setScene(new Scene(root));
 		               stage.setTitle("Proposition refused");
 		               stage.initModality(Modality.APPLICATION_MODAL);
-		               stage.showAndWait();
+		               stage.show();
 		           } catch (IOException e) {
 		              e.printStackTrace();
 		              }
@@ -128,7 +128,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                            stage.setScene(new Scene(root));
                            stage.setTitle("Game!");
                            stage.initModality(Modality.APPLICATION_MODAL);
-                           stage.showAndWait();
+                           stage.show();
                        } catch (IOException e) {
                           e.printStackTrace();
                           }

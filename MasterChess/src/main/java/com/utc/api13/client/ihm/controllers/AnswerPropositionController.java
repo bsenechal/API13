@@ -78,7 +78,7 @@ public class AnswerPropositionController {
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
     
     @SuppressWarnings("restriction")
