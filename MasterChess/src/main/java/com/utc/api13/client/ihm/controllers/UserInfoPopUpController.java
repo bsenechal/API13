@@ -142,11 +142,11 @@ public class UserInfoPopUpController {
             root = (Pane) fxmlLoader.load();
             SendPropositionController controller = fxmlLoader.getController();
             controller.setControllerContext(this.IHMManager);
+            mainApp.getCurrentStage().close();
+            mainApp.setCurrentStage(stage);
             controller.setMainApp(this.mainApp, userUUID, userInfoLogin);
             stage.setScene(new Scene(root));
-            stage.setTitle("Error");
-            mainApp.setCurrentStage(stage);
-            mainApp.getCurrentStage().close();
+            stage.setTitle("Proposition");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
         } catch (IOException e) {
@@ -168,10 +168,11 @@ public class UserInfoPopUpController {
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
-        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
