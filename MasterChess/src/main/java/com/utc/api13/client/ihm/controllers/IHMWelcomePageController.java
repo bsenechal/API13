@@ -23,6 +23,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -42,6 +43,7 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class IHMWelcomePageController {
     private IHMManager IHMManager;
@@ -415,6 +417,10 @@ public class IHMWelcomePageController {
                 }
             }
         });
+        
+        
+        
+        
     }
 
     public void setBindingsOnLoad() {
@@ -465,6 +471,29 @@ public class IHMWelcomePageController {
         mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
+    }
+    
+    //Function to make people disconnect when they click the cross to close the window of Welcome Page
+    public void setDisconnectUserByClosingWindow()
+    {
+     // catch event close window
+        mainApp.getCurrentStage().setOnCloseRequest
+        ( 
+                new EventHandler<WindowEvent>() 
+                {
+                    public void handle(WindowEvent we) 
+                    {
+                        try
+                        {
+                            onLogOutClicked();
+                        } 
+                        catch (IOException e) 
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
     }
 
 }
