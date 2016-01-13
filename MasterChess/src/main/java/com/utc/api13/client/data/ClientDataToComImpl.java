@@ -34,7 +34,8 @@ public class ClientDataToComImpl implements IClientDataToCom {
     /*
      * (non-Javadoc)
      * 
-     * @see com.utc.api13.client.data.interfaces.IClientToComm#getInstanceDataClientManager()
+     * @see com.utc.api13.client.data.interfaces.IClientToComm#
+     * getInstanceDataClientManager()
      */
     @Override
     public DataClientManager getInstanceDataClientManager() {
@@ -44,19 +45,20 @@ public class ClientDataToComImpl implements IClientDataToCom {
     /*
      * (non-Javadoc)
      * 
-     * @see com.utc.api13.client.data.interfaces.IClientToComm#setInstanceDataClientManager()
+     * @see com.utc.api13.client.data.interfaces.IClientToComm#
+     * setInstanceDataClientManager()
      */
     @Override
     public void setInstanceDataClientManager(DataClientManager instanceDataClientManager) {
         this.instanceDataClientManager = instanceDataClientManager;
     }
 
-
     /*
      * (non-Javadoc)
      * 
-     * @see com.utc.api13.client.data.interfaces.IClientToComm#displayUsersList()
-
+     * @see
+     * com.utc.api13.client.data.interfaces.IClientToComm#displayUsersList()
+     * 
      */
     @Override
     public void displayUsersList(List<PublicUserEntity> connectedUserList) {
@@ -86,7 +88,8 @@ public class ClientDataToComImpl implements IClientDataToCom {
     /*
      * (non-Javadoc)
      * 
-     * @see com.utc.api13.client.data.interfaces.IClientToComm#print_error(java.lang.
+     * @see
+     * com.utc.api13.client.data.interfaces.IClientToComm#print_error(java.lang.
      * String)
      */
     @Override
@@ -102,11 +105,12 @@ public class ClientDataToComImpl implements IClientDataToCom {
         instanceDataClientManager.getCurrentGames().addAll(games);
     }
 
-
     /*
      * (non-Javadoc)
      * 
-     * @see com.utc.api13.client.data.interfaces.IClientToComm#displayResult(java.util.UUID, com.utc.api13.commun.entities.MoveEntity)
+     * @see
+     * com.utc.api13.client.data.interfaces.IClientToComm#displayResult(java.
+     * util.UUID, com.utc.api13.commun.entities.MoveEntity)
      */
     @Override
     public void displayResult(UUID idPlayer, MoveEntity move) {
@@ -154,7 +158,8 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     @Override
     public void endGameByLeaving() {
-        // Add game in local user saved game (in case the local user wants to save the game after ending)
+        // Add game in local user saved game (in case the local user wants to
+        // save the game after ending)
         instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
         // Set the current game to null
         instanceDataClientManager.setCurrentGame(null);
@@ -165,18 +170,20 @@ public class ClientDataToComImpl implements IClientDataToCom {
         // TODO décommenter
         // instanceDataClientManager.getIClientIHMToData().notify(message);
     }
+
     @Override
     public void initGame(GameEntity game) {
         // Set the current game
         instanceDataClientManager.setCurrentGame(game);
         // Ask the IHM module to display the Chessboard
-        instanceDataClientManager.getIClientIHMToData().displayChessBoard();
+        instanceDataClientManager.getIClientIHMToData().displayChessBoard(game);
     }
-
 
     /*
      * (non-Javadoc)
-     * @see com.utc.api13.client.data.interfaces.IClientToComm#newObserver(java.util.
+     * 
+     * @see
+     * com.utc.api13.client.data.interfaces.IClientToComm#newObserver(java.util.
      * UUID)
      */
     @Override
@@ -188,13 +195,13 @@ public class ClientDataToComImpl implements IClientDataToCom {
      * (non-Javadoc)
      * 
      * @see
-     * com.utc.api13.client.data.interfaces.IClientToComm#newPlayer(java.util.UUID)
+     * com.utc.api13.client.data.interfaces.IClientToComm#newPlayer(java.util.
+     * UUID)
      */
     @Override
     public void newPlayer(UUID idPlayer) {
         // TODO Auto-generated method stub
     }
-
 
     /*
      * (non-Javadoc)
@@ -219,7 +226,6 @@ public class ClientDataToComImpl implements IClientDataToCom {
         instanceDataClientManager.getIClientIHMToData().displayProposition(uidSender, observable, chattable);
     }
 
-
     /*
      * (non-Javadoc)
      * 
@@ -242,12 +248,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
         // TODO Auto-generated method stub
     }
 
-
     @Override
     public void displayMessage(final String message) {
         instanceDataClientManager.getIClientIHMToData().displayMessage(message);
     }
-
 
     @Override
     public void notifyConnection(final PublicUserEntity user) {
@@ -259,7 +263,6 @@ public class ClientDataToComImpl implements IClientDataToCom {
         instanceDataClientManager.getCurrentUsers().removeIf(u -> idUser.equals(u.getId()));
     }
 
-    
     @Override
     public void setFinishedStatus(GameStatusEnum status) {
         Assert.notNull(instanceDataClientManager.getCurrentGames(),

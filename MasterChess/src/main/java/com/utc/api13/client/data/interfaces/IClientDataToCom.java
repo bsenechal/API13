@@ -44,7 +44,9 @@ public interface IClientDataToCom {
 
     /**
      * Affiche un Profil de PublicUserEntity distant
-     * @param user utilisateur à afficher
+     * 
+     * @param user
+     *            utilisateur à afficher
      */
     void displayProfile(final PublicUserEntity user);
 
@@ -52,9 +54,11 @@ public interface IClientDataToCom {
 
     /**
      * Affiche (récupère pour affichege IHM) la liste des GameEntity en cours
-     * @param games liste des games en cours
+     * 
+     * @param games
+     *            liste des games en cours
      */
-    void displayAllGames(final List<GameEntity> games); 
+    void displayAllGames(final List<GameEntity> games);
 
     /**
      * This method will update the local currentGame with the server validated
@@ -90,7 +94,8 @@ public interface IClientDataToCom {
      * La GameEntity est créé sur le serveur.<br/>
      * Cette méthode initialise l'instance de la GameEntity sur le client
      * 
-     * @param game game créé sur le serveur
+     * @param game
+     *            game créé sur le serveur
      */
     void initGame(final GameEntity game);
 
@@ -99,9 +104,10 @@ public interface IClientDataToCom {
     /**
      * Etant donné qu'un GameEntity est créé sur le serveur avec deux users<br/>
      * cette méthode semble inutile
+     * 
      * @param idPlayer
      */
-    void newPlayer(final UUID idPlayer); 
+    void newPlayer(final UUID idPlayer);
 
     void newReplay(final GameEntity game);
 
@@ -111,7 +117,9 @@ public interface IClientDataToCom {
                                       // com ?
 
     /**
-     * Affiche la proposition de jeu d'un autre joueur. "Voulez vous jouer avec moi ?"
+     * Affiche la proposition de jeu d'un autre joueur.
+     * "Voulez vous jouer avec moi ?"
+     * 
      * @param uidSender
      * @param observable
      * @param chattable
@@ -129,23 +137,29 @@ public interface IClientDataToCom {
     void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
 
     /**
-     * Adds a new user to the list of local users* 
-     * @param user user to add
+     * Adds a new user to the list of local users*
+     * 
+     * @param user
+     *            user to add
      */
     public void notifyConnection(PublicUserEntity user);
 
     /**
      * Delete a user from the list of local users
-     * @param idUser id of user to delete
+     * 
+     * @param idUser
+     *            id of user to delete
      */
     public void notifyDisconnection(UUID idUser);
-    
+
     /**
      * This method will set the status of the game / switch active players /
      * give points if necessary
      * 
      * @author ulyss_000
-     * @param status -> the game status (CHECK/CHECKMATE/CONTINUE/DRAW) send by the server
+     * @param status
+     *            -> the game status (CHECK/CHECKMATE/CONTINUE/DRAW) send by the
+     *            server
      */
     void setFinishedStatus(GameStatusEnum status);
 }

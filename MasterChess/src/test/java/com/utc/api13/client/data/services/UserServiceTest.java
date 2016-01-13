@@ -22,7 +22,6 @@ import com.utc.api13.commun.exceptions.TechnicalException;
  * @author Amstrong
  *
  */
-
 public class UserServiceTest {
 
     /**

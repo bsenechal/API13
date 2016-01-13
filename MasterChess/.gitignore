@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+/bin/
+/target/
+.classpath
+.project
+.metadata
+.settings
+.classpath
+.recommenders
+/.apt_generated/
+/export/
+=======
 /bin/
 
 /target/
@@ -14,3 +26,4 @@
 .project
 .recommenders
 /.apt_generated/
+>>>>>>> refs/remotes/origin/DATA
