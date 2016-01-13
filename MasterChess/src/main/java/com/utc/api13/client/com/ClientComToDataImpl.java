@@ -11,7 +11,6 @@ import com.utc.api13.commun.messages.ChatMessage;
 import com.utc.api13.commun.messages.ConnectMessage;
 import com.utc.api13.commun.messages.DisconnectMessage;
 import com.utc.api13.commun.messages.GameRequestMessage;
-import com.utc.api13.commun.messages.MoveMessage;
 import com.utc.api13.commun.messages.ObserverLeaveMessage;
 import com.utc.api13.commun.messages.ObserverRequestMessage;
 import com.utc.api13.commun.messages.PublicUserMessage;
@@ -177,9 +176,8 @@ public class ClientComToDataImpl implements IClientComToData {
      *      java.util.UUID, boolean, boolean,
      *      com.utc.api13.commun.entities.PublicUserEntity)
      */
-    public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, PublicUserEntity user) {
-    	//TODO
-//        comClientManagerInstance.sendMessage(new GameRequestMessage(sender, reciever, chattable, observable,0));
+    public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean timer, Integer timerInt) {
+        comClientManagerInstance.sendMessage(new GameRequestMessage(sender, reciever, chattable, observable, timer, timerInt));
     }
 
     /**
@@ -196,8 +194,7 @@ public class ClientComToDataImpl implements IClientComToData {
      *      java.util.UUID, boolean, boolean, boolean)
      */
     @Override
-    public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer) {
-    	// TODO
-//        comClientManagerInstance.sendMessage(new RequestAnswerMessage(sender, reciever, chattable, observable, answer,0));
+    public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer, boolean timer, Integer timerInt) {
+        comClientManagerInstance.sendMessage(new RequestAnswerMessage(sender, reciever, chattable, observable, answer,timer, timerInt));
     }
 }
