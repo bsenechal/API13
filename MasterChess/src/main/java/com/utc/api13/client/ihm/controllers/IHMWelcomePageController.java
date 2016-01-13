@@ -135,9 +135,9 @@ public class IHMWelcomePageController {
         root = (Pane) fxmlLoader.load();
         ModifyProfileController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp);
         stage.setScene(new Scene(root));
-        mainApp.setCurrentStage(stage);
         stage.setTitle("My Profile");
         stage.show();
     }
@@ -171,12 +171,12 @@ public class IHMWelcomePageController {
         root = (Pane) fxmlLoader.load();
         IHMConnexionPageController controller = fxmlLoader.getController();
         controller.setControllerContext(IHMManager);
+        mainApp.getMainStage().close();
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(mainApp);
         Scene scene = new Scene(root, 800, 600);
         stage.setTitle("Connexion to MasterChess");
         stage.setScene(scene);
-        mainApp.getCurrentStage().close();
-        mainApp.setCurrentStage(stage);
         stage.show();
     }
 
@@ -229,6 +229,7 @@ public class IHMWelcomePageController {
             root = (Pane) fxmlLoader.load();
             UserInfoPopUpController controller = fxmlLoader.getController();
             controller.setControllerContext(this.IHMManager);
+            mainApp.setCurrentStage(stage);
             controller.setMainApp(this.mainApp);
             stage.setScene(new Scene(root));
             stage.setTitle("User Information");
@@ -260,11 +261,10 @@ public class IHMWelcomePageController {
         root = (Pane) fxmlLoader.load();
         MyInfoPopUpController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp);
         stage.setScene(new Scene(root));
         stage.setTitle("My Information");
-        mainApp.getCurrentStage().close();
-        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
@@ -290,12 +290,10 @@ public class IHMWelcomePageController {
         root = (Pane) fxmlLoader.load();
         ConfirmationController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
-
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, "Successful export!");
         stage.setScene(new Scene(root));
         stage.setTitle("Export success");
-        mainApp.getCurrentStage().close();
-        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
@@ -308,12 +306,10 @@ public class IHMWelcomePageController {
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
-
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, "Export error!");
         stage.setScene(new Scene(root));
         stage.setTitle("Export error");
-        mainApp.getCurrentStage().close();
-        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
@@ -401,6 +397,7 @@ public class IHMWelcomePageController {
                     root = (Pane) fxmlLoader.load();
                     UserInfoPopUpController controller = fxmlLoader.getController();
                     controller.setControllerContext(IHMManager);
+                    mainApp.setCurrentStage(stage);
                     controller.setMainApp(mainApp);
                     controller.setBindings(profile);
                     stage.setScene(new Scene(root));
@@ -465,10 +462,10 @@ public class IHMWelcomePageController {
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
-        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
@@ -477,7 +474,7 @@ public class IHMWelcomePageController {
     public void setDisconnectUserByClosingWindow()
     {
      // catch event close window
-        mainApp.getCurrentStage().setOnCloseRequest
+        mainApp.getMainStage().setOnCloseRequest
         ( 
                 new EventHandler<WindowEvent>() 
                 {
