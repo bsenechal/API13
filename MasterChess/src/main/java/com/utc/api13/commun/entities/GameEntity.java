@@ -403,14 +403,7 @@ public class GameEntity extends ADataEntity {
 	 */
 	public Boolean isCheck() {
 		Boolean result = Boolean.FALSE;
-		// if (this.getOpponentPieces().stream()
-		// .filter(op ->
-		// APieceEntity.isPositionAvailable(op.generateAvailableMoves(this,
-		// Boolean.FALSE),
-		// (this.getKing() != null) ? this.getKing().getPosition() : null))
-		// .findFirst().orElse(null) == null) {
-		// result = true;
-		// }
+
 		List<APieceEntity> tmp = new ArrayList<APieceEntity>();
 		tmp.addAll(this.getOpponentPieces());
 
@@ -464,10 +457,12 @@ public class GameEntity extends ADataEntity {
 			result = GameStatusEnum.CHECK;
 		}
 
-		//TODO : aussi le cas où un pion peut protéger le roi !
 		// Checkmate check :
 		if (check == true) {
+			//check if the king can't move :
 			if (king.generateAvailableMoves(this).isEmpty()) {
+				//check if no piece can save him :
+				//TODO !!!			
 				result = GameStatusEnum.CHECKMATE;
 			}
 		}

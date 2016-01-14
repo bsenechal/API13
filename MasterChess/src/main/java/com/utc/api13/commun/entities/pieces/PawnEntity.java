@@ -66,7 +66,10 @@ public class PawnEntity extends APieceEntity {
             }
             
             if (positionX == START_LINE_WHITE_PAWN) {
-                addPossibleSolution(game, positionX, positionY, 0, 2, result, Boolean.FALSE);
+                positionTemp = new PositionEntity(positionX, positionY + 2);
+                if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp) && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
+                    result.add(positionTemp);
+                }
             }
 
             // ennemis dans les diagonales
@@ -89,7 +92,10 @@ public class PawnEntity extends APieceEntity {
             }
 
             if (positionX == START_LINE_BLACK_PAWN) {
-                addPossibleSolution(game, positionX, positionY, 0, -2, result, Boolean.FALSE);
+                positionTemp = new PositionEntity(positionX, positionY - 2);
+                if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp) && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
+                    result.add(positionTemp);
+                }            
             }
 
             // ennemis dans les diagonales
