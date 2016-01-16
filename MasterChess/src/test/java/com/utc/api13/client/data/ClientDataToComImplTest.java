@@ -7,8 +7,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.client.ihm.ClientIHMToDataImpl;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 
@@ -19,8 +23,13 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 public class ClientDataToComImplTest {
     private DataClientManager dataClientManager;
 
+    @Mock
+    private ClientIHMToDataImpl clientIHMToDataImpl;
+    
     @Before
     public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        
         dataClientManager = new DataClientManager();
     }
 
@@ -111,15 +120,13 @@ public class ClientDataToComImplTest {
     @Test
     public void initGame() {
         GameEntity testGame = new GameEntity();
-        PublicUserEntity testUser = new PublicUserEntity();
-        testUser.setFirstName("jean");
-
-        testGame.setIsObservable(true);
-        testGame.setWhitePlayer(testUser);
-
+        
+        dataClientManager.setIClientIHMToData(clientIHMToDataImpl);
+        Mockito.doNothing().when(clientIHMToDataImpl).displayChessBoard(testGame);
+        
         dataClientManager.getClientDataToComImpl().initGame(testGame);
-        Assert.assertTrue("IsObservable should be true", dataClientManager.getCurrentGame().getIsObservable());
-        Assert.assertEquals("Current white player should be Jean ", "Jean",
-                dataClientManager.getCurrentGame().getWhitePlayer().getFirstName());
+        
+        Assert.assertNotNull("CurrentGame shouldn't be null", dataClientManager.getCurrentGame());
+        Assert.assertEquals("CurrentGame and testGame should be equals", dataClientManager.getCurrentGame(), testGame);
     }
 }
