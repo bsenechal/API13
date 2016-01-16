@@ -31,16 +31,16 @@ public interface IClientDataToCom {
      * 
      * @param connectedUserList
      */
-    void displayUsersList(final List<PublicUserEntity> connectedUserList); // Affiche
-                                                                           // (récupère
-                                                                           // pour
-                                                                           // affichege
-                                                                           // IHM)
-                                                                           // la
-                                                                           // liste
-                                                                           // des
-                                                                           // PublicUserEntity
-                                                                           // connectés
+    public void displayUsersList(final List<PublicUserEntity> connectedUserList); // Affiche
+    // (récupère
+    // pour
+    // affichege
+    // IHM)
+    // la
+    // liste
+    // des
+    // PublicUserEntity
+    // connectés
 
     /**
      * Affiche un Profil de PublicUserEntity distant
@@ -48,9 +48,9 @@ public interface IClientDataToCom {
      * @param user
      *            utilisateur à afficher
      */
-    void displayProfile(final PublicUserEntity user);
+    public void displayProfile(final PublicUserEntity user);
 
-    void print_error(final String error);
+    public void print_error(final String error);
 
     /**
      * Affiche (récupère pour affichege IHM) la liste des GameEntity en cours
@@ -58,7 +58,7 @@ public interface IClientDataToCom {
      * @param games
      *            liste des games en cours
      */
-    void displayAllGames(final List<GameEntity> games);
+    public void displayAllGames(final List<GameEntity> games);
 
     /**
      * This method will update the local currentGame with the server validated
@@ -68,19 +68,19 @@ public interface IClientDataToCom {
      * @param idPlayer
      * @param move
      */
-    void displayResult(final UUID idPlayer, final MoveEntity move);
+    public void displayResult(final UUID idPlayer, final MoveEntity move);
 
-    void sendMessageToChat(final MessageEntity message);
+    public void sendMessageToChat(final MessageEntity message);
 
-    void sendAnswerForLeaving(final boolean answer);
+    public void sendAnswerForLeaving(final boolean answer);
 
-    void requestPlayerForLeaving(final UUID uid);
+    public void requestPlayerForLeaving(final UUID uid);
 
     /**
      * Ends the local game for the observer when one of the player has left<br/>
      * Method to call only for observer users
      */
-    void endGameByLeaving();
+    public void endGameByLeaving();
 
     /**
      * TODO: unnecessary
@@ -88,7 +88,7 @@ public interface IClientDataToCom {
      * @param message
      *            message
      */
-    void notify(final String message);
+    public void notify(final String message);
 
     /**
      * La GameEntity est créé sur le serveur.<br/>
@@ -116,41 +116,40 @@ public interface IClientDataToCom {
                                       // méthodes utilisées par le "retour" de
                                       // com ?
 
-/**
- * Affiche la proposition de jeu d'un autre joueur.
- * "Voulez vous jouer avec moi ?"
- * 
- * @param uidSender
- * @param observable
- * @param chattable
- * @param timer
- */
-void printProposition(final UUID uidSender, final boolean observable, final boolean chattable, final boolean timer, final Integer timerInt); // Affiche
-                                                                                                    // la
-                                                                                                    // proposition
-                                                                                                    // de
-                                                                                                    // jeu
-                                                                                                    // d'un
-                                                                                                    // autre
-                                                                                                    // joueur.
-                                                                                                    // "Voulez
-                                                                                                    // vous
-                                                                                                    // jouer
-                                                                                                    // avec
-                                                                                                    // moi
-                                                                                                    // ?"
+    /**
+     * Affiche la proposition de jeu d'un autre joueur.
+     * "Voulez vous jouer avec moi ?"
+     * 
+     * @param uidSender
+     * @param observable
+     * @param chattable
+     * @param timer
+     */
+    public void printProposition(final UUID uidSender, final boolean observable, final boolean chattable,
+            final boolean timer, final Integer timerInt); // Affiche
+    // la
+    // proposition
+    // de
+    // jeu
+    // d'un
+    // autre
+    // joueur.
+    // "Voulez
+    // vous
+    // jouer
+    // avec
+    // moi
+    // ?"
 
-   
+    public void victoryBySurrender();
 
-    void victoryBySurrender();
+    public void endGameBySurrender();
 
-    void endGameBySurrender();
+    public void displayMessage(final String message);
 
-    void displayMessage(final String message);
+    public DataClientManager getInstanceDataClientManager();
 
-    DataClientManager getInstanceDataClientManager();
-
-    void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
+    public void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
 
     /**
      * Adds a new user to the list of local users*
@@ -177,8 +176,8 @@ void printProposition(final UUID uidSender, final boolean observable, final bool
      *            -> the game status (CHECK/CHECKMATE/CONTINUE/DRAW) send by the
      *            server
      */
-    void setFinishedStatus(GameStatusEnum status);
-    
+    public void setFinishedStatus(GameStatusEnum status);
+
     public void NextTurn(GameStatusEnum isFinished, UUID nextPlayer);
 
 }
