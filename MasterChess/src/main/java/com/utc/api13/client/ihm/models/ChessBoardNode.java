@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -63,6 +64,8 @@ public class ChessBoardNode implements ActionListener {
         int ligne = 0;
         char couleur = 'N';
         APieceEntity tempo = null;
+        //setter une variable d'etat pour savoir si on selectionne une piece ou une position pour les déplacements dans le listener
+		int selection = 1;
         gui.setBorder(new EmptyBorder(5, 5, 5, 5));
         chessBoard = new JPanel(new GridLayout(0, 9));
         chessBoard.setBorder(new LineBorder(Color.BLACK));
@@ -74,22 +77,28 @@ public class ChessBoardNode implements ActionListener {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
                 JButton b = new JButton();
                 b.addActionListener(new ActionListener() {
-					
 					public void actionPerformed(ActionEvent e) {
-						
-						//setter une variable d'etat pour savoir quand on selectionne une piece ou une position
-						
-						
-						//cette fonction est appellée a chaque clic sur un bouton
-						//la position de ce bouton est -> ii , jj
-						
-						//if(mode == 1) listePosition = getAvailableMoves(ii,jj)
-						//if(listePosition != vide) -> surbrillance + mode = 2
-						//garder dans une variable la position
-						
-						
-						//if(mode == 2) ... si(position choisi = position actuelle) -> mode == 1
-						// sinon playMoves(ancienne position, nouvelle position(ii,jj))
+						PositionEntity currentPosition = new PositionEntity(ii, jj);
+						if (selection == 1) {
+							List<PositionEntity> positionList = myIClientToIHM.getAvailableMoves(ii, jj);
+							if (positionList != null) {
+								selection = 2;
+								// passer les cases en surbrillance
+								for (int i=0; i < positionList.size(); i++) {
+									chessBoardSquares[positionList.get(i).getPositionX()][positionList.get(i).getPositionY()].setBorder(new LineBorder(Color.GREEN));
+								}
+							}
+						}
+												
+						if (selection ==2) {
+							if ((currentPosition.getPositionX() == ii) && (currentPosition.getPositionY() ==jj)) {
+								selection = 1;
+							}
+							else {
+								myIClientToIHM.playmoves(currentPosition.getPositionX(), currentPosition.getPositionY(), ii, jj);
+							}
+						}
+
 					}
 				});
                 b.setMargin(buttonMargin);
