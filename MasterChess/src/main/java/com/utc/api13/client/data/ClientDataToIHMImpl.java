@@ -273,8 +273,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
                 "[ClientDataToIHMImpl][sendChatText] current game shouldn't be null");
         MessageEntity newMessage = new MessageEntity();
         newMessage.setText(message);
-        // TODO: à revoir, on aura besoin que la méthode prenne un MessageEntity
-        // et non un string
+        dataClientManager.getCurrentGame().getMessages().add(newMessage);
         dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
     }
 
