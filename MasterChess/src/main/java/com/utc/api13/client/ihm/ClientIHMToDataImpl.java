@@ -77,7 +77,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                            stage.setScene(new Scene(root));
                            stage.setTitle("You've got a new game proposition!");
                            stage.initModality(Modality.APPLICATION_MODAL);
-                           stage.showAndWait();
+                           stage.show();
                        } catch (IOException e) {
                           e.printStackTrace();
                           }
@@ -104,7 +104,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 		               stage.setScene(new Scene(root));
 		               stage.setTitle("Proposition refused");
 		               stage.initModality(Modality.APPLICATION_MODAL);
-		               stage.showAndWait();
+		               stage.show();
 		           } catch (IOException e) {
 		              e.printStackTrace();
 		              }
@@ -114,7 +114,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     @SuppressWarnings("restriction")
 	@Override
-    public void displayChessBoard(GameEntity g) {
+    public void displayChessBoard(GameEntity g) { // si yep data should call that function 
         // TODO Auto-generated method stub
     	Platform.runLater(new Runnable() {
             @Override
@@ -132,7 +132,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                            stage.setScene(new Scene(root));
                            stage.setTitle("Game!");
                            stage.initModality(Modality.APPLICATION_MODAL);
-                           stage.showAndWait();
+                           stage.show();
                        } catch (IOException e) {
                           e.printStackTrace();
                           }
