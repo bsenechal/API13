@@ -256,6 +256,12 @@ public interface IClientDataToIHM {
      */
     public void playMove(int fromLine, int fromCol, int toLine, int toCol);
 
+    /**
+     * Removes the given user from game's chat
+     * @param idUser uid of user to remove from chat
+     */
+    void removeUserFromChat(UUID idUser);
+
     // TODO
     // Si le (IClientDataToCom.)printProposition() ne renvoie pas directement la
     // réponse à com pour dire si un User à accepté la partie, il faudra créer

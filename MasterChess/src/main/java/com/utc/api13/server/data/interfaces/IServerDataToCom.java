@@ -103,16 +103,13 @@ public interface IServerDataToCom {
      */
     public boolean saveUserData(final PublicUserEntity User) throws TechnicalException, FunctionalException;
 
-    public void newObserver(final UUID idGame, final UUID idUser); // Un nouvel
-                                                                   // observeur
-                                                                   // se
-                                                                   // connecte
-                                                                   // à la
-                                                                   // partie.
-                                                                   // Mettre à
-                                                                   // jour la
-                                                                   // List<PublicUserEntity>
-                                                                   // d'observeurs
+    /**
+     * Un nouvel observateur se connecte à la partie<br/>
+     * Mettre à jour la Liste des observateurs
+     * @param idGame uid game
+     * @param idUser uid user à rajouter
+     */
+    public void newObserver(final UUID idGame, final UUID idUser);
 
     public void createReplay(final GameEntity game, final PublicUserEntity user);
 
@@ -155,4 +152,11 @@ public interface IServerDataToCom {
      *            id of game
      */
     void endGame(UUID idGame);
+
+    /**
+     * removes an observer from his/her local game
+     * @param idUser uid of user to remove
+     * @param idGame uid of game
+     */
+    void removeUserFromChat(UUID idUser, UUID idGame);
 }

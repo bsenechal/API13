@@ -334,6 +334,14 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         // TODO Auto-generated method stub
         
     }
-
+    
+    @Override
+    public void removeUserFromChat(UUID idUser) {
+        Assert.notNull(idUser,
+                "[ClientDataToIHMImpl][removeUserFromChat] current id of user shouldn't be null");
+        Assert.notNull(dataClientManager.getCurrentGame(),
+                "[ClientDataToIHMImpl][removeUserFromChat] current game shouldn't be null");
+//        dataClientManager.getIClientComToData().removeUserFromChat(idUser, dataClientManager.getCurrentGame().getId());
+    }
    
 }
