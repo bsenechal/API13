@@ -1,6 +1,8 @@
 package com.utc.api13.client.ihm;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.AppClient;
@@ -53,11 +55,18 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     @Override
     public void displayProposition(UUID uidSender, boolean observable,
             boolean chattable , boolean timer, Integer timeInt) {
+        myIHMManager.setUIDistant(uidSender);
 
 	    Platform.runLater(new Runnable() {
             @Override
             public void run() {
 
+//                     PublicUserEntity user= myIHMManager.getIClientDataToIHM().getUserList().stream()
+//                            .filter(u->u.getId().equals(uidSender)).findFirst().orElse(null);
+                     List<Object> users=Arrays.asList(myIHMManager.getIClientDataToIHM().getUserList().toArray());
+                     PublicUserEntity user=(PublicUserEntity) users.stream()
+                     .filter(u->((PublicUserEntity) u).getId().equals(uidSender)).findFirst().orElse(null);
+                    
             	    Stage stage;
                     Parent root = null;
                     String l=""; 
@@ -69,9 +78,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                            controller.setControllerContext(myIHMManager);
 
                            controller.setMainApp(myIHMManager.getMainApp(), 
-                                   myIHMManager.getIClientDataToIHM().getUserList().stream()
-                                   .filter(u->u.getId()== uidSender).map(PublicUserEntity::getLogin)
-                                   .findFirst().orElse("unknown User"), chattable, timer, 
+                                  user.getLogin(), chattable, timer, 
                                    observable, timeInt);        
                              
                            stage.setScene(new Scene(root));
@@ -127,7 +134,9 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     try {
                            root = (Pane) fxmlLoader.load();
                            IHMGamePageController controller = fxmlLoader.getController();
+                           
                            controller.setControllerContext(myIHMManager);
+                          
                            controller.setMainApp(myIHMManager.getMainApp(), g); 
                            stage.setScene(new Scene(root));
                            stage.setTitle("Game!");
@@ -183,12 +192,13 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     @Override
     public void displayMessage(String newMessage) {
+        
         // TODO Auto-generated method stub
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 String sms= myIHMManager.getChat().getMessage().get();
-                myIHMManager.getChat().getMessage().set(sms+"\n"+newMessage);
+                myIHMManager.getChat().getMessage().set((sms==null?"":sms)+"\n"+newMessage);
             }
         });
     }

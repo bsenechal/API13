@@ -113,7 +113,7 @@ public class AnswerPropositionController {
     	PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
 		UUID answeringUser = u.getId(); 
 		try {
-			this.myIClientToIHM.sendResponse(answeringUser, enquirerUUID, answer, observable, chattable, timer, timeInt);
+			this.myIClientToIHM.sendResponse(answeringUser,IHMManager.getUisender(), answer, observable, chattable, timer, timeInt);
 		} catch (TechnicalException e) {
 			log.error(e.getMessage(), e);
 			try { 
