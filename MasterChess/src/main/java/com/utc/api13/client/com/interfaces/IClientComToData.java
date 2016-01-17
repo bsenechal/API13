@@ -49,24 +49,58 @@ public interface IClientComToData {
      */
     public void validateMove(UUID idPlayer, MoveEntity move);
 
+    /**
+     * Sends new user profile when it has bee updated.
+     * @param user Local user public profile object
+     */
     public void sendUserUpdates(PublicUserEntity user);
 
+    /**
+     * Sends the game replay on the server
+     * @param user Sender
+     * @param game Game object
+     */
     public void pushReplayToServer(PublicUserEntity user, GameEntity game);
 
+    // DEPRECATED
     public void sendProposition(PublicUserEntity player);
 
     // public void sendAnswer(String answer, PublicUserEntity sender);
 
+    /**
+     * Informs the server the current player surrenders
+     * @param uid Id of the player
+     */
     public void surrender(UUID uid);
 
+    /**
+     * Give victory to the opponent by surrending
+     * @param uid ID of the opponent
+     */
     public void victoryBySurrender(UUID uid);
 
+    /**
+     * 
+     */
     public void endGameBySurrender();
 
+    /**
+     * Ends the game when the player exits the game window
+     */
     public void endGameByLeaving();
 
+    /**
+     * Sends leaving request to the opponent
+     * @param uid ID of the opponent
+     * @param answer 
+     */
     public void requestPlayerForLeaving(UUID uid, boolean answer);
 
+    /**
+     * Sends chat message to a game
+     * @param texte Message
+     * @param partie Game ID
+     */
     public void sendTextChat(String texte, UUID partie);
 
     /**
@@ -74,12 +108,24 @@ public interface IClientComToData {
      */
     public void getAllParties();
 
+    /**
+     * Notifies that the local observer leaves the game
+     * @param uid
+     */
     public void observerLeave(UUID uid);
 
     public void sendLeavingMessage(UUID idPartie);
 
+    /**
+     * Getter for manager instance
+     * @return Manager instance
+     */
     public ComClientManager getComClientManagerInstance();
 
+    /**
+     * Setter for manager instance
+     * @param comClientManagerInstance Manager to set
+     */
     public void setComClientManagerInstance(ComClientManager comClientManagerInstance);
 
 }
