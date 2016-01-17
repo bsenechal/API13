@@ -97,7 +97,7 @@ public class CreateProfileController {
                 mainApp.getCurrentStage().close();
                 mainApp.setCurrentStage(stage);
                 stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
+                stage.show();
 
             } catch (TechnicalException e) {
                 try {
@@ -195,7 +195,7 @@ public class CreateProfileController {
             mainApp.getCurrentStage().close();
         }
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
 }

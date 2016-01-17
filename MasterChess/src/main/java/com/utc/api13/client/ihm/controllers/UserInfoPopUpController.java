@@ -148,7 +148,7 @@ public class UserInfoPopUpController {
             stage.setScene(new Scene(root));
             stage.setTitle("Proposition");
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
+            stage.show();
         } catch (IOException e) {
             try {
                 error("Error when loading proposition window : IOException");
@@ -174,7 +174,7 @@ public class UserInfoPopUpController {
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
 }

@@ -234,7 +234,7 @@ public class IHMWelcomePageController {
             stage.setScene(new Scene(root));
             stage.setTitle("User Information");
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
+            stage.show();
         } catch (IOException e) {
             try {
                 error("Error when loading user info : IOException");
@@ -266,7 +266,7 @@ public class IHMWelcomePageController {
         stage.setScene(new Scene(root));
         stage.setTitle("My Information");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
     public void initialize() {
@@ -295,7 +295,7 @@ public class IHMWelcomePageController {
         stage.setScene(new Scene(root));
         stage.setTitle("Export success");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
     public void exportNOK() throws IOException {
@@ -311,7 +311,7 @@ public class IHMWelcomePageController {
         stage.setScene(new Scene(root));
         stage.setTitle("Export error");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
     public void setListConnectedUser() {
@@ -403,7 +403,7 @@ public class IHMWelcomePageController {
                     stage.setScene(new Scene(root));
                     stage.setTitle("User Information");
                     stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.showAndWait();
+                    stage.show();
                 } catch (IOException e) {
                     try {
                         error("Error when loading user info : IOException");
@@ -467,7 +467,7 @@ public class IHMWelcomePageController {
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
     
     //Function to make people disconnect when they click the cross to close the window of Welcome Page
