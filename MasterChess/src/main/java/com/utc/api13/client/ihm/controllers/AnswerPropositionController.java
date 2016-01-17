@@ -1,4 +1,3 @@
-
 package com.utc.api13.client.ihm.controllers;
 
 import java.io.IOException;
@@ -79,10 +78,11 @@ public class AnswerPropositionController {
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
     
-    public void setMainApp(AppClient app, String login, Boolean chattable, Boolean timer, Boolean observable, int time) {
+    @SuppressWarnings("restriction")
+	public void setMainApp(AppClient app, String login, Boolean chattable, Boolean timer, Boolean observable, int time) {
         this.mainApp = app;
         this.chattable=chattable; 
         this.timer=timer; 
@@ -113,7 +113,7 @@ public class AnswerPropositionController {
     	PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
 		UUID answeringUser = u.getId(); 
 		try {
-			this.myIClientToIHM.sendResponse(answeringUser, enquirerUUID, answer, observable, chattable, timer, timeInt);
+			this.myIClientToIHM.sendResponse(answeringUser,IHMManager.getUisender(), answer, observable, chattable, timer, timeInt);
 		} catch (TechnicalException e) {
 			log.error(e.getMessage(), e);
 			try { 
@@ -131,6 +131,12 @@ public class AnswerPropositionController {
     }
     
     public void setBindings(PropositionProperty proposition) {
-    }
+    	invintingPlayerLogin.textProperty().bind(proposition.loginAskingPayerProperty());
+    //	invitationLabel, optionsLabel, chosenOptionsLabel; 
+    	optionsLabel.textProperty().bind(proposition.chattableProperty().asString()); // can be change to String Property
+    
+    	
+    	
 
+    }
 }

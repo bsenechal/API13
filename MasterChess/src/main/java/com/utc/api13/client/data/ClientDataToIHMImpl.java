@@ -58,7 +58,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public ObservableList<PublicUserEntity> getUserList() {
         return dataClientManager.getCurrentUsers();
     }
-    
+
     @Override
     public void getUsers() {
         dataClientManager.getIClientComToData().getUsers();
@@ -250,10 +250,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      * supprimer quand ils l'auront enlever
      */
     @Override
-    public void createProposition(UUID uidReciever, UUID enquirerUUID, boolean chattable, boolean observable, boolean timer, Integer timeInt) {
-        // TODO: dernier paramètre à enlever quand Com aura corriger sa fonction
+    public void createProposition(UUID uidReciever, UUID enquirerUUID, boolean chattable, boolean observable,
+            boolean timer, Integer timeInt) {
         dataClientManager.getIClientComToData().sendProposition(dataClientManager.getUserLocal().getId(), uidReciever,
-                chattable, observable, null);
+                chattable, observable, timer, timeInt);
     }
 
     /*
@@ -296,13 +296,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      * Envoi la réponse vers le second client
      */
     @Override
-    public void sendResponse(UUID uidReceiver, UUID uidEnquirer, boolean answer, boolean observable, boolean chattable, boolean timer, Integer timeInt)
-            throws TechnicalException {
-        // TODO: la méthode com ne devrait pas prendre un user mais plutôt un
-        // uid
-       /* dataClientManager.getIClientComToData().answerProposition(idUser, dataClientManager.getUserLocal().getId(),
-                chattable, observable, answer);*/
-
+    public void sendResponse(UUID uidReceiver, UUID uidEnquirer, boolean answer, boolean observable, boolean chattable,
+            boolean timer, Integer timeInt) throws TechnicalException {
+        dataClientManager.getIClientComToData().answerProposition(uidReceiver, uidEnquirer, chattable, observable,
+                answer, timer, timeInt);
     }
 
     @Override

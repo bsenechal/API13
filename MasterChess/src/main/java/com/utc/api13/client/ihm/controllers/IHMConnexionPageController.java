@@ -90,14 +90,14 @@ public class IHMConnexionPageController {
                 root = (Pane) fxmlLoader.load();
                 IHMWelcomePageController controllerRight = fxmlLoader.getController();
                 controllerRight.setControllerContext(IHMManager);
+                mainApp.getCurrentStage().close();
+                mainApp.setMainStage(stage);
                 controllerRight.setMainApp(mainApp);
                 stage.setTitle("Welcome to MasterChess");
                 stage.setScene(new Scene(root));
-                mainApp.getCurrentStage().close();
-                mainApp.setCurrentStage(stage);
                 controllerRight.setDisconnectUserByClosingWindow();
                 stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
+                stage.show();
             }
 
             catch (FunctionalException e) {
@@ -129,12 +129,12 @@ public class IHMConnexionPageController {
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, bool ? "Wrong connexion information!" : "Technical error!");
         stage.setScene(new Scene(root));
         stage.setTitle("User Information");
-        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
     @FXML
@@ -165,13 +165,13 @@ public class IHMConnexionPageController {
         ConfirmationController controller = fxmlLoader.getController();
 
         controller.setControllerContext(this.IHMManager);
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, "Successful import!");
         stage.setScene(new Scene(root));
         stage.setTitle("Import success");
-        mainApp.getCurrentStage().close();
-        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
     public void importNOK(String message) throws IOException {
@@ -181,15 +181,14 @@ public class IHMConnexionPageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-
         controller.setControllerContext(this.IHMManager);
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, message);
         stage.setScene(new Scene(root));
         stage.setTitle("Import error");
-        mainApp.getCurrentStage().close();
-        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
     @FXML
@@ -201,11 +200,11 @@ public class IHMConnexionPageController {
         root = (Pane) fxmlLoader.load();
         CreateProfileController controller = fxmlLoader.getController();
         controller.setControllerContext(IHMManager);
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(mainApp);
         Scene scene = new Scene(root, 800, 600);
         stage.setTitle("My Profile");
         stage.setScene(scene);
-        mainApp.setCurrentStage(stage);
         stage.show();
     }
 
@@ -242,11 +241,12 @@ public class IHMConnexionPageController {
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
 }

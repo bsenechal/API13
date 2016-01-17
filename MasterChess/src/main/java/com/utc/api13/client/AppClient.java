@@ -50,8 +50,8 @@ public class AppClient extends Application {
         Pane root = (Pane) fxmlLoader.load();
         IHMConnexionPageController controller = fxmlLoader.getController();
         controller.setControllerContext(ihmManager);
-        controller.setMainApp(this);
         this.setCurrentStage(stage);
+        controller.setMainApp(this);
         Scene scene = new Scene(root, 800, 600);
         scene.getStylesheets().add(getClass().getResource("/css/masterCSS.css").toExternalForm());
         stage.setTitle("Connexion");
@@ -76,10 +76,18 @@ public class AppClient extends Application {
     public void setCurrentStage(Stage currentStage) {
         this.currentStage = currentStage;
     }
+    
+    public Stage getMainStage() {
+        return stage;
+    }
+
+    public void setMainStage(Stage mainStage) {
+        this.stage = mainStage;
+    }
+    
 
     public static void main(String[] args) {
         launch(args);
 
     }
-
 }

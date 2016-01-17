@@ -61,7 +61,10 @@ public class IHMGamePageController {
 
     @FXML
     private void onExcludeChatClicked(Event event) {
-
+        
+        
+        
+        
     }
 
     @FXML
@@ -70,9 +73,10 @@ public class IHMGamePageController {
         Optional.ofNullable(sendTextArea.getText()).
             ifPresent(
                     sms->{
-                        myIClientToIHM.sendChatText(sms);
-                        String message= chatTextArea.getText();
-                        chat.getMessage().set(message+"\n\n "+ myIClientToIHM.getLocalUser().getLogin()+"-> says :"+sms);
+                        chatTextArea.clear();
+                        sendTextArea.clear();
+                        String realMessage=myIClientToIHM.getLocalUser().getLogin()+": "+sms;
+                        myIClientToIHM.sendChatText(realMessage);
                     }
              );
     }
@@ -89,8 +93,11 @@ public class IHMGamePageController {
 
     public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
-        if (ihmManager != null)
+        if (ihmManager != null){
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            chat=new ChatProperty();
+            ihmManager.setChat(chat);
+        }
         setListenersOnLoad();
         setBindingsOnLoad();
     }
