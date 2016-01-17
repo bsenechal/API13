@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.util.Assert;
 
@@ -536,4 +538,14 @@ public class GameEntity extends ADataEntity {
 			this.whitePieces.remove(piece);
 		}
 	}
+	
+    public APieceEntity getPieceFromPosition(PositionEntity myposition) {
+        //List<APieceEntity> piecelist = new ArrayList<APieceEntity>(this.getWhitePieces());
+        //piecelist.addAll(this.getBlackPieces());
+                
+        List<APieceEntity> piecelist = Stream.concat(this.getWhitePieces().stream(), this.getBlackPieces().stream()).collect(Collectors.toList());
+        
+        return piecelist.stream().filter(piece -> piece.getPosition().equals(myposition)).findFirst().orElse(null);
+        
+        }
 }
