@@ -1,7 +1,10 @@
 package com.utc.api13.client.ihm;
 
+import java.util.UUID;
+
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+import com.utc.api13.client.ihm.property.ChatProperty;
 import com.utc.api13.client.ihm.property.ConfirmationProperty;
 import com.utc.api13.client.ihm.property.ErrorProperty;
 import com.utc.api13.client.ihm.property.GameProperty;
@@ -13,14 +16,12 @@ public class IHMManager {
     private IClientDataToIHM myIClientToIHM;
     private ClientIHMToDataImpl myClientIHMToDataImpl;
     private AppClient mainApp;
-    
-  
-
     private ProfilProperty profil;
     private PropositionProperty proposition;
     private GameProperty game;
     private ErrorProperty error;
     private ChatProperty chat;
+    private UUID uisender;
     
     public ChatProperty getChat() {
         return chat;
@@ -109,4 +110,19 @@ public class IHMManager {
     public void setMainApp(AppClient mainApp) {
         this.mainApp = mainApp;
     }
+
+    public void setUIDistant(UUID uidSender) {
+        // TODO Auto-generated method stub
+        this.uisender=uidSender;
+        
+    }
+
+    public UUID getUisender() {
+        return uisender;
+    }
+
+    public void setUisender(UUID uisender) {
+        this.uisender = uisender;
+    }
+    
 }

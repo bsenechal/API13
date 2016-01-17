@@ -63,9 +63,10 @@ public class MyInfoPopUpController {
         root = (Pane) fxmlLoader.load();
         ModifyProfileController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp);
         stage.setScene(new Scene(root));
-        mainApp.setCurrentStage(stage);
         stage.setTitle("Update my Profile");
         stage.show();
     }
