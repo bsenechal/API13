@@ -151,12 +151,12 @@ public interface IServerDataToCom {
      * @param idGame
      *            id of game
      */
-    void endGame(UUID idGame);
+    public void endGame(UUID idGame);
 
     /**
      * removes an observer from his/her local game
      * @param idUser uid of user to remove
      * @param idGame uid of game
      */
-    void removeUserFromChat(UUID idUser, UUID idGame);
+    public void removeUserFromChat(UUID idUser, UUID idGame);
 }

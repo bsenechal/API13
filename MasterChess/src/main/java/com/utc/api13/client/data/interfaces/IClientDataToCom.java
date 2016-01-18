@@ -97,9 +97,9 @@ public interface IClientDataToCom {
      * @param game
      *            game créé sur le serveur
      */
-    void initGame(final GameEntity game);
+    public void initGame(final GameEntity game);
 
-    void newObserver(final UUID idObserver);
+    public void newObserver(final UUID idObserver);
 
     /**
      * Etant donné qu'un GameEntity est créé sur le serveur avec deux users<br/>
@@ -107,11 +107,11 @@ public interface IClientDataToCom {
      * 
      * @param idPlayer
      */
-    void newPlayer(final UUID idPlayer);
+    public void newPlayer(final UUID idPlayer);
 
-    void newReplay(final GameEntity game);
+    public void newReplay(final GameEntity game);
 
-    void sendProposition(final UUID uidSender, final UUID uidReciever, final boolean observable,
+    public void sendProposition(final UUID uidSender, final UUID uidReciever, final boolean observable,
             final boolean chattable); // A quoi sert cette méthode dans les
                                       // méthodes utilisées par le "retour" de
                                       // com ?

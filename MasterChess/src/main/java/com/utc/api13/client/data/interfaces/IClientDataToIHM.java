@@ -260,7 +260,7 @@ public interface IClientDataToIHM {
      * Removes the given user from game's chat
      * @param idUser uid of user to remove from chat
      */
-    void removeUserFromChat(UUID idUser);
+    public void removeUserFromChat(UUID idUser);
 
     // TODO
     // Si le (IClientDataToCom.)printProposition() ne renvoie pas directement la
