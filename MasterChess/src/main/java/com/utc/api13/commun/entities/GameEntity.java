@@ -539,12 +539,16 @@ public class GameEntity extends ADataEntity {
 		}
 	}
 	
-	
-	//A tester
+	/**
+	 * Return a piece from a position
+	 * @param myposition
+	 * @return APieceEntity
+	 */
     public APieceEntity getPieceFromPosition(PositionEntity myposition) {
-        //List<APieceEntity> piecelist = new ArrayList<APieceEntity>(this.getWhitePieces());
-        //piecelist.addAll(this.getBlackPieces());
-                
+        Assert.notNull(this.getWhitePieces(), "[GameEntity][getPieceFromPosition] whitePieces shouldn't be null");
+        Assert.notNull(this.getBlackPieces(), "[GameEntity][getPieceFromPosition] blackPieces shouldn't be null");
+
+        
         List<APieceEntity> piecelist = Stream.concat(this.getWhitePieces().stream(), this.getBlackPieces().stream()).collect(Collectors.toList());
         
         return piecelist.stream().filter(piece -> piece.getPosition().equals(myposition)).findFirst().orElse(null);
