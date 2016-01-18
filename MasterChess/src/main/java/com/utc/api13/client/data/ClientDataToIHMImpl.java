@@ -331,6 +331,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         return piece.generateAvailableMoves(dataClientManager.getCurrentGame());
     }
 
+    
     @Override
     public void playMove(int fromLine, int fromCol, int toLine, int toCol) {
         //On crée une position entity de la position de départ
