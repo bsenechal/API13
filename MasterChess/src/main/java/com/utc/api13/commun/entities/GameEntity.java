@@ -492,19 +492,19 @@ public class GameEntity extends ADataEntity {
 		pieces.add(new KingEntity(color));
 		pieces.add(new QueenEntity(color));
 
-		for (int column : GameEntityConstant.INITIAL_COLUMNS_ROOK) {
+		for (int column : GameEntityConstant.getInitialColumnsRook()) {
 			pieces.add(new RookEntity(color, column));
 		}
 
-		for (int column : GameEntityConstant.INITIAL_COLUMNS_PAWN) {
+		for (int column : GameEntityConstant.getInitialColumnsPawn()) {
 			pieces.add(new PawnEntity(color, column));
 		}
 
-		for (int column : GameEntityConstant.INITIAL_COLUMNS_KNIGHT) {
+		for (int column : GameEntityConstant.getInitialColumnsKnight()) {
 			pieces.add(new KnightEntity(color, column));
 		}
 
-		for (int column : GameEntityConstant.INITIAL_COLUMNS_BISHOP) {
+		for (int column : GameEntityConstant.getInitialColumnsBishop()) {
 			pieces.add(new BishopEntity(color, column));
 		}
 
