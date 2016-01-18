@@ -42,7 +42,7 @@ import com.utc.api13.commun.entities.pieces.QueenEntity;
 import com.utc.api13.commun.entities.pieces.RookEntity;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
-public class ChessBoardNode implements ActionListener {
+public class ChessBoardNode {
     private IClientDataToIHM myIClientToIHM;
     private IHMManager myIhmManager;
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
@@ -50,7 +50,10 @@ public class ChessBoardNode implements ActionListener {
     private static final String COLS = "ABCDEFGH";
     private static final int TAILLE = 8;
     private static final int TAILLE_CASE = 25;
-    private JButton[][] chessBoardSquares = new JButton[TAILLE][TAILLE];
+    private Case[][] chessBoardSquares = new Case[TAILLE][TAILLE];
+    private PositionEntity currentPosition;
+  //setter une variable d'etat pour savoir si on selectionne une piece ou une position pour les déplacements dans le listener
+  	private int selection = 1;
 
     public ChessBoardNode(IHMManager ihmManager) {
         myIhmManager = ihmManager;
@@ -64,38 +67,39 @@ public class ChessBoardNode implements ActionListener {
         int ligne = 0;
         char couleur = 'N';
         APieceEntity tempo = null;
-        //setter une variable d'etat pour savoir si on selectionne une piece ou une position pour les déplacements dans le listener
-		int selection = 1;
+        
         gui.setBorder(new EmptyBorder(5, 5, 5, 5));
         chessBoard = new JPanel(new GridLayout(0, 9));
         chessBoard.setBorder(new LineBorder(Color.BLACK));
         gui.add(chessBoard);
 
-        // create the chess board squares
+        // création des cases de l'échiquier avec le listener pour les déplacements
         Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int ii = 0; ii < chessBoardSquares.length; ii++) {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
-                JButton b = new JButton();
+                Case b = new Case(ii, jj);
                 b.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						PositionEntity currentPosition = new PositionEntity(ii, jj);
+						Case current = (Case) e.getSource();
 						if (selection == 1) {
-							List<PositionEntity> positionList = myIClientToIHM.getAvailableMoves(ii, jj);
+							currentPosition.setPositionX(current.getLine());
+							currentPosition.setPositionY(current.getColumn());
+							List<PositionEntity> positionList = myIClientToIHM.getAvailableMoves(current.getLine(), current.getColumn());
 							if (positionList != null) {
 								selection = 2;
 								// passer les cases en surbrillance
 								for (int i=0; i < positionList.size(); i++) {
-									chessBoardSquares[positionList.get(i).getPositionX()][positionList.get(i).getPositionY()].setBorder(new LineBorder(Color.GREEN));
+									chessBoardSquares[positionList.get(i).getPositionX()][positionList.get(i).getPositionY()].setBackground(Color.GREEN);
 								}
 							}
 						}
 												
 						if (selection ==2) {
-							if ((currentPosition.getPositionX() == ii) && (currentPosition.getPositionY() ==jj)) {
+							if ((current.getLine() == currentPosition.getPositionX()) && (current.getColumn() ==currentPosition.getPositionY())) {
 								selection = 1;
 							}
 							else {
-								myIClientToIHM.playmoves(currentPosition.getPositionX(), currentPosition.getPositionY(), ii, jj);
+								myIClientToIHM.playmoves(currentPosition.getPositionX(), currentPosition.getPositionY(), current.getLine(), current.getColumn());
 							}
 						}
 

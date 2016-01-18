@@ -151,7 +151,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, String pieceType) {
     	// TODO Auto-generated method stub
-
+    	
     }
 
     @SuppressWarnings("restriction")
