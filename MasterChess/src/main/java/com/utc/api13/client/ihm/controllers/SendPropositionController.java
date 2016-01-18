@@ -62,6 +62,8 @@ public class SendPropositionController {
         boolean observable = observerCheckBox.isSelected();
         boolean timer = timerCheckBox.isSelected();
         String time = timeTextField.getText();
+        
+        if (time.length() == 0 && timer) time = "00:30";
 
         if (time.length() != 0 && !timer) {
             try {
@@ -69,7 +71,9 @@ public class SendPropositionController {
             } catch (IOException e) {
                 log.error(e.getMessage(), e);
             }
-        } else if (!time.matches("[0-9][0-3]:+[0-5][0-9]")) {
+        }
+        
+        if (timer && !time.matches("[0-9][0-3]:+[0-5][0-9]")) {
 
             try {
                 error("Please use a 00:00 format!");
@@ -78,17 +82,11 @@ public class SendPropositionController {
             }
         }
 
-        else {
-            if (time.length() == 0 && timer)
-                time = "00:30";
-
             PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
             UUID enquirerUUID = u.getId();
             int timeInt = 0;
-            if (timer)
-                timeInt = this.conversionTime(time);
-            // this.proposition = new PropositionProperty(u.getLogin(), timeInt,
-            // chattable, timer, observable);
+            if (timer) timeInt = this.conversionTime(time);
+            
             this.IHMManager.setProposition(this.proposition);
             this.myIClientToIHM.createProposition(UUID.fromString(this.opponentUUID), enquirerUUID, chattable,
                     observable, timer, timeInt);
@@ -96,11 +94,11 @@ public class SendPropositionController {
 
             try {
                 this.confirmation();
+                this.currentStage.close();
             } catch (IOException e) {
                 log.error(e.getMessage(), e);
             }
         }
-    }
 
     private int conversionTime(String time) {
         String secondsString = time.substring(3, 5);

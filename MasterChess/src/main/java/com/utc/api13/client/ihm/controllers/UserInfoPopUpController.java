@@ -1,6 +1,7 @@
 package com.utc.api13.client.ihm.controllers;
 
 import javafx.scene.control.Button;
+
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -109,7 +110,8 @@ public class UserInfoPopUpController {
         return SwingFXUtils.toFXImage(image, null);
     }
 
-    public void setBindings(ProfilProperty profile) {
+    @SuppressWarnings("restriction")
+	public void setBindings(ProfilProperty profile) {
         userInfoLogin.textProperty().bind(profile.loginProperty());
         userInfoFirstName.textProperty().bind(profile.firstNameProperty());
         userInfoLastName.textProperty().bind(profile.lastNameProperty());
@@ -133,7 +135,8 @@ public class UserInfoPopUpController {
         this.currentStage = currentStage;
     }
 
-    public void sendProposition() throws IOException {
+    @SuppressWarnings("restriction")
+	public void sendProposition() throws IOException {
         Stage stage;
         Parent root;
         stage = new Stage();
