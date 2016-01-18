@@ -137,7 +137,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                            
                            controller.setControllerContext(myIHMManager);
                           
-                           controller.setMainApp(myIHMManager.getMainApp(), g); 
+                           controller.setMainApp(myIHMManager.getMainApp()); 
                            stage.setScene(new Scene(root));
                            stage.setTitle("Game!");
                            stage.initModality(Modality.APPLICATION_MODAL);
