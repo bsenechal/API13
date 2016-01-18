@@ -539,6 +539,8 @@ public class GameEntity extends ADataEntity {
 		}
 	}
 	
+	
+	//A tester
     public APieceEntity getPieceFromPosition(PositionEntity myposition) {
         //List<APieceEntity> piecelist = new ArrayList<APieceEntity>(this.getWhitePieces());
         //piecelist.addAll(this.getBlackPieces());

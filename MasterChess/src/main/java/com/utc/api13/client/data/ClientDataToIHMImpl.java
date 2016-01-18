@@ -324,14 +324,32 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     }
 
     @Override
+    //A tester
     public List<PositionEntity> getAvailablesMoves(int line, int col) {
-        // TODO Auto-generated method stub
-        return null;
+        PositionEntity myposition = new PositionEntity(line, col);
+        APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(myposition);
+        return piece.generateAvailableMoves(dataClientManager.getCurrentGame());
     }
 
     @Override
     public void playMove(int fromLine, int fromCol, int toLine, int toCol) {
-        // TODO Auto-generated method stub
+        //On crée une position entity de la position de départ
+        PositionEntity fromposition = new PositionEntity(fromLine, fromCol);
+        
+        //On crée une position entity de la position de fin
+        PositionEntity toposition = new PositionEntity(toLine, toCol);
+
+        //On récupère l'UID du currentplayer
+        UUID currentplayer= dataClientManager.getCurrentGame().getCurrentPlayer().getId();
+        
+        //On récupère la pièce sur la case de départ : fromposition
+        APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(fromposition);
+
+        //On instancie un move entity
+        MoveEntity move = new MoveEntity(new Date(), fromposition, toposition, piece);
+        
+        //On passe le moveEntity à com
+        dataClientManager.getIClientComToData().validateMove(currentplayer, move);
         
     }
     
