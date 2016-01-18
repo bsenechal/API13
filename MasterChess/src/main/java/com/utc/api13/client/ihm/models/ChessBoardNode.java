@@ -2,6 +2,7 @@ package com.utc.api13.client.ihm.models;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Event;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -169,6 +170,7 @@ public class ChessBoardNode {
                 try {
                     Image img = ImageIO.read(getClass().getResource(dossierIcone + 'P' + couleur + ".gif"));
                     chessBoardSquares[ctr][ligne + increment].setIcon(new ImageIcon(img));
+                 
                 } catch (IOException e) {
 
                 }
@@ -188,5 +190,6 @@ public class ChessBoardNode {
     public final JPanel getGui() {
         return gui;
     }
+    
 
 }

@@ -1,18 +1,42 @@
 package com.utc.api13.client.ihm;
 
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.ihm.controllers.AnswerPropositionController;
 import com.utc.api13.client.ihm.controllers.ErrorController;
 import com.utc.api13.client.ihm.controllers.IHMGamePageController;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
+import com.utc.api13.client.ihm.models.Case;
+import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
+import com.utc.api13.commun.entities.PositionEntity;
 //github.com/bsenechal/API13.git
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.entities.pieces.BishopEntity;
+import com.utc.api13.commun.entities.pieces.KingEntity;
+import com.utc.api13.commun.entities.pieces.KnightEntity;
+import com.utc.api13.commun.entities.pieces.PawnEntity;
+import com.utc.api13.commun.entities.pieces.QueenEntity;
+import com.utc.api13.commun.entities.pieces.RookEntity;
+import com.utc.api13.commun.enumerations.PieceColorEnum;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -149,9 +173,21 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 	    });
     }
 
-    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, String pieceType) {
+    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, String pieceType, String couleur) {
     	// TODO Auto-generated method stub
+    	String dossierIcone = "/pictures/pieces/";
+    	// récupérer chessboardsquares
     	
+    	// effacer la pièce de l'ancienne case
+    	//chessBoardSquares[line_from][col_from].setIcon(null);
+    	
+    	// afficher la pièce sur la nouvelle case
+    	try {
+            Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + couleur + ".gif"));
+            //chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
+        } catch (IOException e) {
+
+        }	
     }
 
     @SuppressWarnings("restriction")
