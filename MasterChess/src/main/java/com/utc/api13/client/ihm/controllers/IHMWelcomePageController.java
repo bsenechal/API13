@@ -141,7 +141,8 @@ public class IHMWelcomePageController {
         stage.show();
     }
 
-    @FXML
+    @SuppressWarnings("restriction")
+	@FXML
     public void onLogOutClicked() throws IOException {
         try {
             this.myIClientToIHM.disconnect();
@@ -179,7 +180,8 @@ public class IHMWelcomePageController {
         stage.show();
     }
 
-    @FXML
+    @SuppressWarnings("restriction")
+	@FXML
     public void onExportClicked() throws IOException {
         File exportFile = null;
         try {
@@ -216,7 +218,8 @@ public class IHMWelcomePageController {
         }
     }
 
-    @FXML
+    @SuppressWarnings("restriction")
+	@FXML
     public void onUserInfoClicked() throws IOException {
 
         Stage stage;
@@ -228,6 +231,8 @@ public class IHMWelcomePageController {
             root = (Pane) fxmlLoader.load();
             UserInfoPopUpController controller = fxmlLoader.getController();
             controller.setControllerContext(this.IHMManager);
+            mainApp.setCurrentStage(stage);
+            mainApp.getCurrentStage().close();
             mainApp.setCurrentStage(stage);
             controller.setMainApp(this.mainApp);
             stage.setScene(new Scene(root));

@@ -10,17 +10,20 @@
    <top>
       <AnchorPane fx:id="answerPropositionAnchorPane" prefHeight="401.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="invintingPlayerLogin" layoutX="402.0" layoutY="130.0" text="Label">
+            <Label fx:id="invintingPlayerLogin" layoutX="402.0" layoutY="109.0" text="Label">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="invitationLabel" layoutX="328.0" layoutY="153.0" text="has just invited you to play chess!" />
-            <Label fx:id="optionsLabel" layoutX="361.0" layoutY="185.0" text="Options choosed :" />
-            <Label fx:id="chosenOptionsLabel" layoutX="471.0" layoutY="185.0" text="Label" />
-            <Button fx:id="yesButton" layoutX="383.0" layoutY="225.0" mnemonicParsing="false" onAction="#onYesClicked" text="Yes" />
-            <Button fx:id="noButton" layoutX="439.0" layoutY="225.0" mnemonicParsing="false" onAction="#onNoClicked" text="No" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="78.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+            <Label fx:id="invitationLabel" layoutX="328.0" layoutY="132.0" text="has just invited you to play chess!" />
+            <Label fx:id="optionsLabel" layoutX="369.0" layoutY="168.0" text="Options choosed :">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="chosenOptionsLabel" layoutX="369.0" layoutY="192.0" text="Label" />
+            <Button fx:id="yesButton" layoutX="383.0" layoutY="239.0" mnemonicParsing="false" onAction="#onYesClicked" text="Yes" />
+            <Button fx:id="noButton" layoutX="439.0" layoutY="239.0" mnemonicParsing="false" onAction="#onNoClicked" text="No" />
+            <ImageView fitHeight="166.0" fitWidth="229.0" layoutX="56.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../pictures/picture-proposition.jpg" />
                </image>

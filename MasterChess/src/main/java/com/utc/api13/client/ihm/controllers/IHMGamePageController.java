@@ -136,9 +136,9 @@ public class IHMGamePageController {
         setBindingsOnLoad();
     }
 
-    public void setMainApp(AppClient app, GameEntity g) {
+    public void setMainApp(AppClient app ) {
         this.mainApp = app;
-        GameEntity game = this.myIClientToIHM.getCurrentGame();
+        //GameEntity game = this.myIClientToIHM.getCurrentGame();
         final ChessBoardNode cb = new ChessBoardNode(IHMManager);
         final SwingNode swingNode = new SwingNode();
 
@@ -153,14 +153,14 @@ public class IHMGamePageController {
         chessBoardStackPane.getChildren().add(swingNode);
 
         // initialisation des différents labels
-        PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
-        int nbObservers = game.getObservers().size();
+        //PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
+        //int nbObservers = game.getObservers().size();
 
         // otherPlayerLoginLabel.setText();
         // otherPlayerTimeLabel.setText();
-        playerLoginLabel.setText(u.getLogin());
+       // playerLoginLabel.setText(u.getLogin());
         // playerTimeLabel.setText();
-        numberObserversLabel.setText(String.valueOf(nbObservers));
+       // numberObserversLabel.setText(String.valueOf(nbObservers));
 
     }
 

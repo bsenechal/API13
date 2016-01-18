@@ -76,7 +76,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                            root = (Pane) fxmlLoader.load();
                            AnswerPropositionController controller = fxmlLoader.getController();
                            controller.setControllerContext(myIHMManager);
-
+                           myIHMManager.setCurrentStage(stage);
                            controller.setMainApp(myIHMManager.getMainApp(), 
                                   user.getLogin(), chattable, timer, 
                                    observable, timeInt);        
@@ -149,10 +149,9 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 	    });
     }
 
-    @Override
-    public void refreshChessBoard() {
-        // TODO Auto-generated method stub
-
+    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, String pieceType) {
+    	// TODO Auto-generated method stub
+    	
     }
 
     @SuppressWarnings("restriction")
@@ -167,7 +166,8 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         });
     }
 
-    @Override
+    @SuppressWarnings("restriction")
+	@Override
     public void displayConfirmation(String confirmationMessage) {
         // TODO Auto-generated method stub
         Platform.runLater(new Runnable() {
@@ -190,7 +190,8 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     }
 
-    @Override
+    @SuppressWarnings("restriction")
+	@Override
     public void displayMessage(String newMessage) {
         
         // TODO Auto-generated method stub

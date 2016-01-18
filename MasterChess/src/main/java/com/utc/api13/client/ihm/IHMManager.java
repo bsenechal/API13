@@ -10,12 +10,14 @@ import com.utc.api13.client.ihm.property.ErrorProperty;
 import com.utc.api13.client.ihm.property.GameProperty;
 import com.utc.api13.client.ihm.property.ProfilProperty;
 import com.utc.api13.client.ihm.property.PropositionProperty;
+import javafx.stage.Stage;
 
 public class IHMManager {
 
     private IClientDataToIHM myIClientToIHM;
     private ClientIHMToDataImpl myClientIHMToDataImpl;
     private AppClient mainApp;
+    private Stage currentStage; 
     private ProfilProperty profil;
     private PropositionProperty proposition;
     private GameProperty game;
@@ -29,6 +31,14 @@ public class IHMManager {
 
     public void setChat(ChatProperty chat) {
         this.chat = chat;
+    }
+    
+    public Stage getCurrentStage() {
+    	return this.currentStage; 
+    }
+    
+    public void setCurrentStage(Stage s) {
+    	this.currentStage=s; 
     }
 
     private ConfirmationProperty confirmation;
