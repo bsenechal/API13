@@ -190,12 +190,9 @@ public class ClientDataToIHMImplTest {
 
         Mockito.doNothing().when(clientComToDataImpl).validateMove(currentplayer, move);
         
-        try {
-            dataClientManager.getClientDataToIHMImpl().playMove(fromLine, fromCol, toLine, toCol);
-        } catch (Exception e) {
-            Assert.fail("Error : " + e.getMessage());
-        }
+        dataClientManager.setIClientComToData(clientComToDataImpl);
         
+        dataClientManager.getClientDataToIHMImpl().playMove(fromLine, fromCol, toLine, toCol);
     }
 }
 
