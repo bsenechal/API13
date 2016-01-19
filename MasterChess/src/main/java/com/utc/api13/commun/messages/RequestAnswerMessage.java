@@ -58,7 +58,7 @@ public class RequestAnswerMessage extends Message {
             //On recupere la liste des parties mise à jour
             List<GameEntity> games = comServerManager.getIServerDataToCom().getAllGames();
             //On broadcast la nouvelle liste de partie
-            comServerManager.broadcastMessage(new RefreshGameListMessage(sender, receiver, games));
+            comServerManager.broadcastMessage(new AllGameMessage(sender, receiver, games));
         }
         // On envoie aussi le message a l'autre joueur
         comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
