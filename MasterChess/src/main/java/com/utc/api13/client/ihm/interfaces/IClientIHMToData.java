@@ -77,7 +77,7 @@ public interface IClientIHMToData {
     /**
      * After a piece is moved
      */
-    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, String pieceType, String couleur);
+    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, String pieceType);
 
     /**
      * Method called when distant user sent a chat message, in order the HMI to
