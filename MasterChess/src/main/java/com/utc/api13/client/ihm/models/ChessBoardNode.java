@@ -79,7 +79,7 @@ public class ChessBoardNode {
                         if (selection == 1) {
                             currentPosition.setPositionX(current.getLine());
                             currentPosition.setPositionY(current.getColumn());
-                            List<PositionEntity> positionList = myIClientToIHM.getAvailableMoves(current.getLine(),
+                            List<PositionEntity> positionList = myIClientToIHM.getAvailablesMoves(current.getLine(),
                                     current.getColumn());
                             if (positionList != null) {
                                 selection = 2;
@@ -96,7 +96,7 @@ public class ChessBoardNode {
                                     && (current.getColumn() == currentPosition.getPositionY())) {
                                 selection = 1;
                             } else {
-                                myIClientToIHM.playmoves(currentPosition.getPositionX(), currentPosition.getPositionY(),
+                                myIClientToIHM.playMove(currentPosition.getPositionX(), currentPosition.getPositionY(),
                                         current.getLine(), current.getColumn());
                             }
                         }
