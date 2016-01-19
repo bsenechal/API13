@@ -1,6 +1,7 @@
 package com.utc.api13.client.data.interfaces;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -154,7 +155,7 @@ public interface IClientDataToIHM {
      * @param observable
      *            true if observers are allowed
      */
-    public void createProposition(UUID uidReciever, boolean chattable, boolean observable);
+    public void createProposition(UUID uidReciever, UUID enquirerUUID, boolean chattable, boolean observable, boolean timer, Integer timeInt);
 
     public void surrender();
 
@@ -196,7 +197,7 @@ public interface IClientDataToIHM {
      *             exception when extracting bytes from image in local user
      *             profile
      */
-    public void sendResponse(UUID idUser, boolean answer, boolean observable, boolean chattable)
+    public void sendResponse(UUID idUser, UUID requirer, boolean answer, boolean observable, boolean chattable, boolean time, Integer timeInt)
             throws TechnicalException;
 
     /**
@@ -244,6 +245,17 @@ public interface IClientDataToIHM {
      */
     ObservableList<GameEntity> getGamesList();
 
+    
+    /**
+     * @return Returns the list of PositionEntity
+     */
+    public List<PositionEntity> getAvailablesMoves(int line, int col);
+
+    /**
+     * Play the chosen move
+     */
+    public void playMove(int fromLine, int fromCol, int toLine, int toCol);
+    
     // TODO
     // Si le (IClientDataToCom.)printProposition() ne renvoie pas directement la
     // réponse à com pour dire si un User à accepté la partie, il faudra créer

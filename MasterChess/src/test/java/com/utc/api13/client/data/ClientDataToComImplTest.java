@@ -1,6 +1,7 @@
 package com.utc.api13.client.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 /**
  * @author DATA
@@ -121,5 +123,27 @@ public class ClientDataToComImplTest {
         Assert.assertTrue("IsObservable should be true", dataClientManager.getCurrentGame().getIsObservable());
         Assert.assertEquals("Current white player should be Jean ", "Jean",
                 dataClientManager.getCurrentGame().getWhitePlayer().getFirstName());
+    }
+
+    @Test
+    public void nextTurnTest() {
+        PublicUserEntity user1 = new PublicUserEntity();
+        PublicUserEntity user2 = new PublicUserEntity();
+        GameEntity game = new GameEntity(Boolean.FALSE, Boolean.FALSE, new Date(), user1, user2);
+
+        dataClientManager.setCurrentGame(game);
+        
+        // Test si le currentUser est bien le joueur noir
+        Assert.assertEquals("Current player should be user1", dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user1.getId());
+
+        dataClientManager.getClientDataToComImpl().nextTurn(GameStatusEnum.CONTINUE, user2.getId());
+
+        // Status CONTINUE : On vérifie qu'on a bien changé de currentPlayer
+        Assert.assertEquals("Current player should be user2", dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user2.getId());
+        
+        dataClientManager.getClientDataToComImpl().nextTurn(GameStatusEnum.CHECKMATE, user2.getId());
+
+        // Status CHECKMATE : On vérifie qu'on a pas changé de joueur
+        Assert.assertEquals("Current player should be user2", dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user2.getId());
     }
 }

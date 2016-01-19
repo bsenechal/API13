@@ -265,12 +265,11 @@ public class ServerDataToComImpl implements IServerDataToCom {
         dataServerManager.getCurrentUsers().removeIf(user -> user.getId().equals(idUser));
     }
 
-    @Override
-    public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable) {
-
+	@Override
+	public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable, boolean timer, Integer timerInt) {
         PublicUserEntity whitePlayer;
         PublicUserEntity blackPlayer;
-
+        
         /*
          * generate a random number to choose between 0 and 1 to choose who will
          * be the white player and who will be the black player
@@ -294,6 +293,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
         newGame.setWhitePlayer(whitePlayer);
         newGame.setIsOservable(observable);
         newGame.setIsChattable(chattable);
+        newGame.setTimer(timer);
+        newGame.setTimerInt(timerInt);
         // Add to the list of current games
         dataServerManager.getCurrentGames().add(newGame);
         return newGame;

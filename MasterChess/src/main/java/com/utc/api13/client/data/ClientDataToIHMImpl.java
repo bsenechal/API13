@@ -250,10 +250,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      * supprimer quand ils l'auront enlever
      */
     @Override
-    public void createProposition(UUID uidReciever, boolean chattable, boolean observable) {
-        // TODO: dernier paramètre à enlever quand Com aura corriger sa fonction
+    public void createProposition(UUID uidReciever, UUID enquirerUUID, boolean chattable, boolean observable,
+            boolean timer, Integer timeInt) {
         dataClientManager.getIClientComToData().sendProposition(dataClientManager.getUserLocal().getId(), uidReciever,
-                chattable, observable, null);
+                chattable, observable, timer, timeInt);
     }
 
     /*
@@ -296,12 +296,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      * Envoi la réponse vers le second client
      */
     @Override
-    public void sendResponse(UUID idUser, boolean answer, boolean observable, boolean chattable)
-            throws TechnicalException {
-        // TODO: la méthode com ne devrait pas prendre un user mais plutôt un
-        // uid
-        dataClientManager.getIClientComToData().answerProposition(idUser, dataClientManager.getUserLocal().getId(),
-                chattable, observable, answer);
+    public void sendResponse(UUID uidReceiver, UUID uidEnquirer, boolean answer, boolean observable, boolean chattable,
+            boolean timer, Integer timeInt) throws TechnicalException {
+        dataClientManager.getIClientComToData().answerProposition(uidReceiver, uidEnquirer, chattable, observable,
+                answer, timer, timeInt);
 
     }
 
@@ -325,4 +323,18 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public ObservableList<GameEntity> getGamesList() {
         return dataClientManager.getCurrentGames();
     }
+
+    @Override
+    public List<PositionEntity> getAvailablesMoves(int line, int col) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void playMove(int fromLine, int fromCol, int toLine, int toCol) {
+        // TODO Auto-generated method stub
+        
+    }
+
+   
 }
