@@ -9,6 +9,7 @@ public class PublicUserEntity extends AUserEntity implements Cloneable {
     private static final long serialVersionUID = 7421076183167325143L;
     private byte[] image;
     private GameEntity observedGame;
+    private boolean allowedToChat;
 
     public PublicUserEntity() {
 
@@ -16,6 +17,7 @@ public class PublicUserEntity extends AUserEntity implements Cloneable {
 
     public PublicUserEntity(String login, String password) {
         super(login, password);
+        allowedToChat=false;
     }
 
     /**
@@ -67,4 +69,14 @@ public class PublicUserEntity extends AUserEntity implements Cloneable {
     public void setObservedGames(GameEntity observedGame) {
         this.observedGame = observedGame;
     }
+
+    public boolean getAllowedToChat() {
+        // TODO Auto-generated method stub
+        return allowedToChat;
+    }
+
+    public void setAllowedToChat(boolean allowedToTchat) {
+        this.allowedToChat = allowedToTchat;
+    }
+    
 }

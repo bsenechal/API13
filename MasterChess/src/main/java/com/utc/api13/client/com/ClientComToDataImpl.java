@@ -3,6 +3,7 @@ package com.utc.api13.client.com;
 import java.util.UUID;
 
 import com.utc.api13.client.com.interfaces.IClientComToData;
+import com.utc.api13.client.ihm.controllers.ExcludeGameObservateur;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -10,6 +11,7 @@ import com.utc.api13.commun.messages.AllUserMessage;
 import com.utc.api13.commun.messages.ChatMessage;
 import com.utc.api13.commun.messages.ConnectMessage;
 import com.utc.api13.commun.messages.DisconnectMessage;
+import com.utc.api13.commun.messages.ExcludeObserverMessage;
 import com.utc.api13.commun.messages.GameRequestMessage;
 import com.utc.api13.commun.messages.ObserverLeaveMessage;
 import com.utc.api13.commun.messages.ObserverRequestMessage;
@@ -196,5 +198,21 @@ public class ClientComToDataImpl implements IClientComToData {
     @Override
     public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer, boolean timer, Integer timerInt) {
         comClientManagerInstance.sendMessage(new RequestAnswerMessage(sender, reciever, chattable, observable, answer,timer, timerInt));
+    }
+
+    /**
+     * removing a user from the tchat
+     * 
+     * @param userId
+     *            : the id of the user which will be deleted to the tchat
+     * @param gameId
+     *            : the game  which the user watching
+    */
+    
+    @Override
+    public void removeUserFromChat(UUID userId, UUID gameId) {
+        // TODO Auto-generated method stub
+        comClientManagerInstance.sendMessage(new ExcludeObserverMessage(userId,gameId));
+        
     }
 }

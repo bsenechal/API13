@@ -214,7 +214,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
         // If the idGame exist on the server
         if (gameFound != null) {
-            // Else get all observer + two players
+            // Else get all observer  two players
             if (gameFound.getObservers() != null) {
                 listUsersByGame.addAll(gameFound.getObservers());
             }
@@ -275,7 +275,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
          * be the white player and who will be the black player
          */
         Random r = new Random();
-        int valeur = 0 + r.nextInt(2 - 0);
+        int valeur = 0 +  r.nextInt(2 - 0);
 
         if (valeur == 1) {
             whitePlayer = getUserInfo(j1);
@@ -310,4 +310,15 @@ public class ServerDataToComImpl implements IServerDataToCom {
     public void endGame(UUID idGame) {
         dataServerManager.getCurrentGames().removeIf(g -> idGame.equals(g.getId()));
     }
+
+    @Override
+        public void removeUserFromChat(UUID idUser, UUID idGame) {
+            GameEntity game = getGameById(idGame);
+            if(game != null) {
+                PublicUserEntity userToRemove = getUserInfo(idUser);
+                if(userToRemove != null) {
+                    userToRemove.setAllowedToChat(false);
+                }
+            }
+        }
 }

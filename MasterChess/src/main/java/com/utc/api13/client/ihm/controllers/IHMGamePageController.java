@@ -1,6 +1,11 @@
 package com.utc.api13.client.ihm.controllers;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.swing.SwingUtilities;
 
@@ -11,15 +16,21 @@ import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.models.ChessBoardNode;
 import com.utc.api13.client.ihm.property.ChatProperty;
 import com.utc.api13.commun.entities.GameEntity;
+import com.utc.api13.commun.entities.PublicUserEntity;
 
 import javafx.embed.swing.SwingNode;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class IHMGamePageController {
@@ -60,10 +71,33 @@ public class IHMGamePageController {
     }
 
     @FXML
-    private void onExcludeChatClicked(Event event) {
-        
-        
-        
+    private void onExcludeChatClicked(Event event) throws IOException {
+
+      List<UUID> players=Arrays.asList( myIClientToIHM.getCurrentGame().getBlackPlayer().getId(),
+              myIClientToIHM.getCurrentGame().getBlackPlayer().getId());
+      if(!players.contains(myIClientToIHM.getLocalUser().getId())){    
+         openUserObservableList();
+      }
+      else{
+          error(" only the two player can remove someone from the Tchat");
+      }
+    }
+
+    private void openUserObservableList() throws IOException {
+        // TODO Auto-generated method stub
+         Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/excludeObservateur.fxml"));
+        root = (Pane) fxmlLoader.load();
+        ExcludeGameObservateur controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager);
+        mainApp.setCurrentStage(stage);
+        controller.setMainApp(this.mainApp);
+        stage.setScene(new Scene(root));
+        stage.setTitle("Exclude observateur ");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
         
     }
 
@@ -102,10 +136,11 @@ public class IHMGamePageController {
         setBindingsOnLoad();
     }
 
-    public void setMainApp(AppClient app, GameEntity g) {
+    public void setMainApp(AppClient app ) {
         this.mainApp = app;
         GameEntity game = this.myIClientToIHM.getCurrentGame();
-        final ChessBoardNode cb = new ChessBoardNode(IHMManager);
+        //final ChessBoardNode cb = new ChessBoardNode(IHMManager);
+        this.IHMManager.getChessBoardNode().setIHMManager(IHMManager);
         final SwingNode swingNode = new SwingNode();
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -120,12 +155,15 @@ public class IHMGamePageController {
 
         // initialisation des différents labels
         PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
+        if (u.getId() == game.getWhitePlayer().getId()) {
+        	playerLoginLabel.setText(u.getLogin());
+        	otherPlayerLoginLabel.setText(game.getBlackPlayer().getLogin());
+        }
+        else {
+        	otherPlayerLoginLabel.setText(u.getLogin());
+        	playerLoginLabel.setText(game.getWhitePlayer().getLogin());
+        }
         int nbObservers = game.getObservers().size();
-
-        // otherPlayerLoginLabel.setText();
-        // otherPlayerTimeLabel.setText();
-        playerLoginLabel.setText(u.getLogin());
-        // playerTimeLabel.setText();
         numberObserversLabel.setText(String.valueOf(nbObservers));
 
     }
@@ -155,4 +193,19 @@ public class IHMGamePageController {
         this.chat = chat;
     }
 
+    public void error(String message) throws IOException {
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+        root = (Pane) fxmlLoader.load();
+        ErrorController controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager);
+        mainApp.setCurrentStage(stage);
+        controller.setMainApp(this.mainApp, message);
+        stage.setScene(new Scene(root));
+        stage.setTitle("Error");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
 }

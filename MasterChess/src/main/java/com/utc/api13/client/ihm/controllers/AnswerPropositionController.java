@@ -109,10 +109,12 @@ public class AnswerPropositionController {
         }
     }
     
-    public void onYesClicked() {
+    @SuppressWarnings("restriction")
+	public void onYesClicked() {
     	PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
 		UUID answeringUser = u.getId(); 
 		try {
+			this.IHMManager.getCurrentStage().close();
 			this.myIClientToIHM.sendResponse(answeringUser,IHMManager.getUisender(), answer, observable, chattable, timer, timeInt);
 		} catch (TechnicalException e) {
 			log.error(e.getMessage(), e);

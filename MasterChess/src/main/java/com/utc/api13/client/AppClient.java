@@ -90,5 +90,4 @@ public class AppClient extends Application {
         launch(args);
 
     }
-
 }
