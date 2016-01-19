@@ -10,6 +10,10 @@ import com.utc.api13.server.com.ComServerManager;
 import io.netty.channel.ChannelHandlerContext;
 
 public class ErrorMessage extends Message {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6008159212103570714L;
     private static final Logger logger = Logger.getLogger(ErrorMessage.class);
     private Exception exception;
 

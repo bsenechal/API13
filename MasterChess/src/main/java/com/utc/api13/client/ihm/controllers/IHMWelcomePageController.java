@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
@@ -135,13 +134,14 @@ public class IHMWelcomePageController {
         root = (Pane) fxmlLoader.load();
         ModifyProfileController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp);
         stage.setScene(new Scene(root));
-        mainApp.setCurrentStage(stage);
         stage.setTitle("My Profile");
         stage.show();
     }
 
+    @SuppressWarnings("restriction")
     @FXML
     public void onLogOutClicked() throws IOException {
         try {
@@ -171,15 +171,16 @@ public class IHMWelcomePageController {
         root = (Pane) fxmlLoader.load();
         IHMConnexionPageController controller = fxmlLoader.getController();
         controller.setControllerContext(IHMManager);
+        mainApp.getMainStage().close();
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(mainApp);
         Scene scene = new Scene(root, 800, 600);
         stage.setTitle("Connexion to MasterChess");
         stage.setScene(scene);
-        mainApp.getCurrentStage().close();
-        mainApp.setCurrentStage(stage);
         stage.show();
     }
 
+    @SuppressWarnings("restriction")
     @FXML
     public void onExportClicked() throws IOException {
         File exportFile = null;
@@ -217,6 +218,7 @@ public class IHMWelcomePageController {
         }
     }
 
+    @SuppressWarnings("restriction")
     @FXML
     public void onUserInfoClicked() throws IOException {
 
@@ -229,11 +231,14 @@ public class IHMWelcomePageController {
             root = (Pane) fxmlLoader.load();
             UserInfoPopUpController controller = fxmlLoader.getController();
             controller.setControllerContext(this.IHMManager);
+            mainApp.setCurrentStage(stage);
+            mainApp.getCurrentStage().close();
+            mainApp.setCurrentStage(stage);
             controller.setMainApp(this.mainApp);
             stage.setScene(new Scene(root));
             stage.setTitle("User Information");
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
+            stage.show();
         } catch (IOException e) {
             try {
                 error("Error when loading user info : IOException");
@@ -260,13 +265,12 @@ public class IHMWelcomePageController {
         root = (Pane) fxmlLoader.load();
         MyInfoPopUpController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp);
         stage.setScene(new Scene(root));
         stage.setTitle("My Information");
-        mainApp.getCurrentStage().close();
-        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
     public void initialize() {
@@ -290,14 +294,12 @@ public class IHMWelcomePageController {
         root = (Pane) fxmlLoader.load();
         ConfirmationController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
-
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, "Successful export!");
         stage.setScene(new Scene(root));
         stage.setTitle("Export success");
-        mainApp.getCurrentStage().close();
-        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
     public void exportNOK() throws IOException {
@@ -308,14 +310,12 @@ public class IHMWelcomePageController {
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
-
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, "Export error!");
         stage.setScene(new Scene(root));
         stage.setTitle("Export error");
-        mainApp.getCurrentStage().close();
-        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
     public void setListConnectedUser() {
@@ -401,12 +401,13 @@ public class IHMWelcomePageController {
                     root = (Pane) fxmlLoader.load();
                     UserInfoPopUpController controller = fxmlLoader.getController();
                     controller.setControllerContext(IHMManager);
+                    mainApp.setCurrentStage(stage);
                     controller.setMainApp(mainApp);
                     controller.setBindings(profile);
                     stage.setScene(new Scene(root));
                     stage.setTitle("User Information");
                     stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.showAndWait();
+                    stage.show();
                 } catch (IOException e) {
                     try {
                         error("Error when loading user info : IOException");
@@ -417,10 +418,7 @@ public class IHMWelcomePageController {
                 }
             }
         });
-        
-        
-        
-        
+
     }
 
     public void setBindingsOnLoad() {
@@ -465,35 +463,27 @@ public class IHMWelcomePageController {
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
-        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
-    
-    //Function to make people disconnect when they click the cross to close the window of Welcome Page
-    public void setDisconnectUserByClosingWindow()
-    {
-     // catch event close window
-        mainApp.getCurrentStage().setOnCloseRequest
-        ( 
-                new EventHandler<WindowEvent>() 
-                {
-                    public void handle(WindowEvent we) 
-                    {
-                        try
-                        {
-                            onLogOutClicked();
-                        } 
-                        catch (IOException e) 
-                        {
-                            e.printStackTrace();
-                        }
-                    }
+
+    // Function to make people disconnect when they click the cross to close the
+    // window of Welcome Page
+    public void setDisconnectUserByClosingWindow() {
+        // catch event close window
+        mainApp.getMainStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                try {
+                    onLogOutClicked();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-        );
+            }
+        });
     }
 
 }

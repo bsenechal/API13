@@ -12,6 +12,10 @@ import com.utc.api13.server.com.ComServerManager;
 import io.netty.channel.ChannelHandlerContext;
 
 public class AllUserMessage extends Message {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3425696469122464793L;
     private static final Logger logger = Logger.getLogger(AllUserMessage.class);
     List<PublicUserEntity> users = null;
 

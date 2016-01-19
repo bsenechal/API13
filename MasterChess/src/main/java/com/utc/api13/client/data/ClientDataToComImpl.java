@@ -252,6 +252,9 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     @Override
     public void displayMessage(final String message) {
+        MessageEntity newMessage = new MessageEntity();
+        newMessage.setText(message);
+        instanceDataClientManager.getCurrentGame().getMessages().add(newMessage);
         instanceDataClientManager.getIClientIHMToData().displayMessage(message);
     }
 

@@ -10,6 +10,10 @@ import com.utc.api13.server.com.ComServerManager;
 import io.netty.channel.ChannelHandlerContext;
 
 public class DisconnectMessage extends Message {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8917480597959281133L;
     private static final Logger logger = Logger.getLogger(ConnectMessage.class);
     private UUID idPubUser;
 
