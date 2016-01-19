@@ -1,5 +1,7 @@
 package com.utc.api13.commun.entities;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -554,5 +556,20 @@ public class GameEntity extends ADataEntity {
 
         return piecelist.stream().filter(piece -> piece.getPosition().equals(myposition)).findFirst().orElse(null);
 
+    }
+    
+    //utilise pour binder  a une partie sur l'ecran d'accueil
+    public String getWhitePlayerLogin(){
+    	return whitePlayer.getLogin();
+    }
+    
+    public String getBlackPlayerLogin(){
+    	return blackPlayer.getLogin();
+    }
+    
+    public String getCreationDateDrawable(){
+    	DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+    	String reportDate = df.format(creationDate);
+    	return reportDate;
     }
 }
