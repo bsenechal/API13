@@ -28,7 +28,8 @@ public class RequestAnswerMessage extends Message {
      * @param receiver
      * @param gameId
      */
-    public RequestAnswerMessage(UUID sender, UUID receiver, boolean chattable, boolean observable, boolean answer, boolean timer, Integer timerInt) {
+    public RequestAnswerMessage(UUID sender, UUID receiver, boolean chattable, boolean observable, boolean answer,
+            boolean timer, Integer timerInt) {
         super(sender, receiver);
         this.chattable = chattable;
         this.observable = observable;
@@ -50,7 +51,7 @@ public class RequestAnswerMessage extends Message {
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         if (answer) {
             this.ge = comServerManager.getIServerDataToCom().createGame(getSender(), getReceiver(), chattable,
-                    observable,timer,timerInt);
+                    observable, timer, timerInt);
             // On retourne l'info a l'utilisateur
             comServerManager.sendMessage(ctx.channel(), this);
         }
@@ -82,17 +83,16 @@ public class RequestAnswerMessage extends Message {
         this.answer = answer;
     }
 
-	public Integer getTimer() {
-		return timerInt;
-	}
+    public Integer getTimer() {
+        return timerInt;
+    }
 
-	public void setTimer(Integer timerInt) {
-		this.timerInt = timerInt;
-	}
+    public void setTimer(Integer timerInt) {
+        this.timerInt = timerInt;
+    }
 
-	public void setTimer(boolean timer) {
-		this.timer = timer;
-	}
-    
-    
+    public void setTimer(boolean timer) {
+        this.timer = timer;
+    }
+
 }

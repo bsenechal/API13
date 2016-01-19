@@ -222,8 +222,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
     }
 
     @Override
-    public void printProposition(final UUID uidSender, boolean observable, boolean chattable, boolean timer, Integer timerInt) {
-        instanceDataClientManager.getIClientIHMToData().displayProposition(uidSender, observable, chattable, timer, timerInt);
+    public void printProposition(final UUID uidSender, boolean observable, boolean chattable, boolean timer,
+            Integer timerInt) {
+        instanceDataClientManager.getIClientIHMToData().displayProposition(uidSender, observable, chattable, timer,
+                timerInt);
     }
 
     /*
@@ -250,6 +252,9 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     @Override
     public void displayMessage(final String message) {
+        MessageEntity newMessage = new MessageEntity();
+        newMessage.setText(message);
+        instanceDataClientManager.getCurrentGame().getMessages().add(newMessage);
         instanceDataClientManager.getIClientIHMToData().displayMessage(message);
     }
 
@@ -288,8 +293,13 @@ public class ClientDataToComImpl implements IClientDataToCom {
     }
 
     @Override
-    public void NextTurn(GameStatusEnum isFinished, UUID nextPlayer) {
-        // TODO Auto-generated method stub
-        
+    public void nextTurn(final GameStatusEnum status, final UUID nextPlayer) {
+        if (GameStatusEnum.CONTINUE.equals(status)) {
+            instanceDataClientManager.getCurrentGame().setCurrentPlayer(
+                    (instanceDataClientManager.getCurrentGame().getBlackPlayer().getId().equals(nextPlayer))
+                            ? instanceDataClientManager.getCurrentGame().getBlackPlayer()
+                            : instanceDataClientManager.getCurrentGame().getWhitePlayer());
+        }
+        // TODO : Notifier IHM du changement de joueurs
     }
 }

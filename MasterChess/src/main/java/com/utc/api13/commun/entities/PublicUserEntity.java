@@ -4,18 +4,20 @@ import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.exceptions.TechnicalException;
 import com.utc.api13.commun.utils.ImageUtils;
 
-public class PublicUserEntity extends AUserEntity implements Cloneable {
+public class PublicUserEntity extends AUserEntity {
 
     private static final long serialVersionUID = 7421076183167325143L;
     private byte[] image;
     private GameEntity observedGame;
+    private boolean allowedToChat;
 
     public PublicUserEntity() {
-
+        allowedToChat = false;
     }
 
     public PublicUserEntity(String login, String password) {
         super(login, password);
+        allowedToChat = false;
     }
 
     /**
@@ -36,6 +38,7 @@ public class PublicUserEntity extends AUserEntity implements Cloneable {
         setNbWon(privateUser.getNbWon());
         // extract bytes from image
         setImage(ImageUtils.extractBytes(privateUser.getImagePath()));
+        setAllowedToChat(false);
     }
 
     /**
@@ -66,5 +69,21 @@ public class PublicUserEntity extends AUserEntity implements Cloneable {
      */
     public void setObservedGames(GameEntity observedGame) {
         this.observedGame = observedGame;
+    }
+
+    /**
+     * 
+     * @return true if and only if the user is allowed to chat during the game
+     */
+    public boolean isAllowedToChat() {
+        return allowedToChat;
+    }
+
+    /**
+     * @param allowedToChat
+     *            true if and only if user is allowed to chat during the game
+     */
+    public void setAllowedToChat(boolean allowedToChat) {
+        this.allowedToChat = allowedToChat;
     }
 }

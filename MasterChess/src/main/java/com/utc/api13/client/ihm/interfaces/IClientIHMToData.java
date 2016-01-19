@@ -1,6 +1,5 @@
 package com.utc.api13.client.ihm.interfaces;
 
-import java.io.IOException;
 import java.util.UUID;
 
 import com.utc.api13.commun.entities.GameEntity;
@@ -49,7 +48,8 @@ public interface IClientIHMToData {
      *            proposed game
      * @return void
      */
-    public void displayProposition(UUID uidSender, boolean observable, boolean chattable, boolean timer, Integer timeInt);
+    public void displayProposition(UUID uidSender, boolean observable, boolean chattable, boolean timer,
+            Integer timeInt);
 
     /**
      * This method notifies local user (who proposed a game) that distant user
@@ -77,7 +77,7 @@ public interface IClientIHMToData {
     /**
      * After a piece is moved
      */
-    public void refreshChessBoard();
+    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, String pieceType);
 
     /**
      * Method called when distant user sent a chat message, in order the HMI to

@@ -1,7 +1,5 @@
 package com.utc.api13.client.ihm.controllers;
 
-import javafx.scene.control.Button;
-
 import java.io.IOException;
 
 import com.utc.api13.client.AppClient;
@@ -15,7 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,7 +21,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MyInfoPopUpController {
@@ -63,9 +60,10 @@ public class MyInfoPopUpController {
         root = (Pane) fxmlLoader.load();
         ModifyProfileController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp);
         stage.setScene(new Scene(root));
-        mainApp.setCurrentStage(stage);
         stage.setTitle("Update my Profile");
         stage.show();
     }
