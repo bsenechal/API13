@@ -75,12 +75,21 @@ public class ChessBoardNode {
                 b.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         Case movePosition = (Case) e.getSource();
-                        System.out.println(movePosition);
+                        for(int ii=0; ii< chessBoardSquares.length; ii++) {
+                        	for (int jj=0; jj< chessBoardSquares[ii].length; jj++) {
+                        		if (movePosition == chessBoardSquares[ii][jj]) {
+                        			
+                        			movePosition.setLine(ii);
+                        			movePosition.setColumn(jj);
+                        		}
+                        	}
+                        }
                         if (selection == 1) {
+                        	
                         	firstPosition.setPositionX(movePosition.getLine());
                         	firstPosition.setPositionY(movePosition.getColumn());
-                            List<PositionEntity> positionList = myIClientToIHM.getAvailablesMoves(movePosition.getLine(),
-                            		movePosition.getColumn());
+                            List<PositionEntity> positionList = myIClientToIHM.getAvailablesMoves(firstPosition.getPositionX(),
+                            		firstPosition.getPositionY());
                             if (positionList != null) {
                                 selection = 2;
                                 // désactiver toutes les cases
