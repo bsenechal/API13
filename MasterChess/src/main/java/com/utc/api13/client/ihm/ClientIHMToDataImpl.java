@@ -177,16 +177,16 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     	// TODO Auto-generated method stub
     	String dossierIcone = "/pictures/pieces/";
     	// récupérer chessboardsquares
-    	
+    	Case [][] chessBoardSquares = myIHMManager.getChessBoardNode().getChessBoardSquares();
     	// effacer la pièce de l'ancienne case
-    	//chessBoardSquares[line_from][col_from].setIcon(null);
+    	chessBoardSquares[line_from][col_from].setIcon(null);
     	
     	// afficher la pièce sur la nouvelle case
     	try {
             Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + couleur + ".gif"));
-            //chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
+            chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
         } catch (IOException e) {
-
+        	e.printStackTrace();
         }	
     }
 

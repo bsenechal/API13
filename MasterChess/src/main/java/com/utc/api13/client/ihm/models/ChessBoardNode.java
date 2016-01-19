@@ -56,10 +56,14 @@ public class ChessBoardNode {
   //setter une variable d'etat pour savoir si on selectionne une piece ou une position pour les déplacements dans le listener
   	private int selection = 1;
 
-    public ChessBoardNode(IHMManager ihmManager) {
+    /**public ChessBoardNode(IHMManager ihmManager) {
         myIhmManager = ihmManager;
         initializeGui();
-    }
+    }*/
+  	
+  	public ChessBoardNode() {
+  		initializeGui();
+  	}
 
     public final void initializeGui() {
         String dossierIcone = "/pictures/pieces/";
@@ -191,5 +195,15 @@ public class ChessBoardNode {
         return gui;
     }
     
-
+    public final IHMManager getIHMManager() {
+    	return this.myIhmManager;
+    }
+    
+    public final void setIHMManager(IHMManager im) {
+    	this.myIhmManager = im;
+    }
+    
+    public final Case[][] getChessBoardSquares() {
+    	return this.chessBoardSquares;
+    }
 }
