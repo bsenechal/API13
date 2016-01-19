@@ -6,6 +6,7 @@ import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.messages.AllGameMessage;
 import com.utc.api13.commun.messages.AllUserMessage;
 import com.utc.api13.commun.messages.ChatMessage;
 import com.utc.api13.commun.messages.ConnectMessage;
@@ -118,7 +119,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void getAllParties() {
-        // TODO Auto-generated method stub
+    	comClientManagerInstance.sendMessage(new AllGameMessage(new UUID(0, 0), new UUID(0, 0),null));
         return;
     }
 
