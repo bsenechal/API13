@@ -164,7 +164,7 @@ public class SendPropositionController {
         this.mainApp = app;
         this.opponentUUID = oppUUID.getText();
         this.opponentLogin.setText(oppLogin.getText());
-        
+
     }
 
     public void setControllerContext(IHMManager ihmManager) {
