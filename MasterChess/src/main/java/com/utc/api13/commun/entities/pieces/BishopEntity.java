@@ -15,7 +15,7 @@ import com.utc.api13.commun.enumerations.PieceColorEnum;
 
 /**
  * 
- * @author Lucie 
+ * @author Lucie
  *
  */
 public class BishopEntity extends APieceEntity {

@@ -1,14 +1,20 @@
 package com.utc.api13.client.ihm;
 
+import java.awt.Image;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
+import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.controllers.AnswerPropositionController;
 import com.utc.api13.client.ihm.controllers.ErrorController;
 import com.utc.api13.client.ihm.controllers.IHMGamePageController;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
+import com.utc.api13.client.ihm.models.Case;
 import com.utc.api13.commun.entities.GameEntity;
 //github.com/bsenechal/API13.git
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -24,6 +30,7 @@ import javafx.stage.Stage;
 public class ClientIHMToDataImpl implements IClientIHMToData {
 
     private IHMManager myIHMManager;
+    private IClientDataToIHM myIClientDataToIHM;
 
     public ClientIHMToDataImpl(IHMManager pIHMManager) {
         myIHMManager = pIHMManager;
@@ -151,7 +158,27 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, String pieceType) {
         // TODO Auto-generated method stub
+        String dossierIcone = "/pictures/pieces/";
+        GameEntity game = myIClientDataToIHM.getCurrentGame();
+        // récupérer chessboardsquares
+        Case[][] chessBoardSquares = myIHMManager.getChessBoardNode().getChessBoardSquares();
+        // effacer la pièce de l'ancienne case
 
+        chessBoardSquares[line_from][col_from].setIcon(null);
+
+        // afficher la pièce sur la nouvelle case
+        try {
+            if (game.getCurrentPlayer() == game.getBlackPlayer()) {
+                Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "N.gif"));
+                chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
+            } else {
+                Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "B.gif"));
+                chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("restriction")

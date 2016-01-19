@@ -3,30 +3,26 @@ package com.utc.api13.client.ihm.controllers;
 import java.io.IOException;
 import java.util.UUID;
 
-import javafx.collections.ListChangeListener;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-import javafx.scene.control.cell.PropertyValueFactory;
-
 import org.apache.log4j.Logger;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
-import com.utc.api13.client.ihm.property.ProfilProperty;
 import com.utc.api13.client.ihm.property.PropositionProperty;
-import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.TechnicalException;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class AnswerPropositionController {
 
