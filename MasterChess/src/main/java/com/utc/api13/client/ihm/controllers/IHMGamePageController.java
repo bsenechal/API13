@@ -146,14 +146,9 @@ public class IHMGamePageController {
         chessBoardStackPane.getChildren().add(swingNode);
 
         // initialisation des différents labels
-        PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
-        if (u.getId() == game.getWhitePlayer().getId()) {
-            playerLoginLabel.setText(u.getLogin());
-            otherPlayerLoginLabel.setText(game.getBlackPlayer().getLogin());
-        } else {
-        	playerLoginLabel.setText(u.getLogin());
-        	otherPlayerLoginLabel.setText(game.getWhitePlayer().getLogin());
-        }
+        playerLoginLabel.setText(game.getWhitePlayer().getLogin());
+        otherPlayerLoginLabel.setText(game.getBlackPlayer().getLogin());
+        
         int nbObservers = game.getObservers().size();
         numberObserversLabel.setText(String.valueOf(nbObservers));
     }
