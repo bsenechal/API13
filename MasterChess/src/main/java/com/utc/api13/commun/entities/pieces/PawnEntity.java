@@ -4,15 +4,12 @@
 package com.utc.api13.commun.entities.pieces;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.util.Assert;
 
 import com.utc.api13.commun.entities.APieceEntity;
-import com.utc.api13.commun.entities.ChessboardEntity;
 import com.utc.api13.commun.entities.GameEntity;
-import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
@@ -34,10 +31,19 @@ public class PawnEntity extends APieceEntity {
         this.setPosition((color.equals(PieceColorEnum.BLACK) ? new PositionEntity(startColumn, START_LINE_BLACK_PAWN)
                 : new PositionEntity(startColumn, START_LINE_WHITE_PAWN)));
     }
+    
+    public PawnEntity(final PieceColorEnum color, final PositionEntity startPosition) {
+        super(color);
+        this.setPosition(startPosition);
+    }
+    
+    @Override
+    public String toString(){
+        return "Pawn";
+    }
 
     @Override
     public List<PositionEntity> generateAvailableMoves(GameEntity game, boolean verifyCheck) {
-        APieceEntity tmpOpponentPiece = null;
         PositionEntity positionTemp = null;
 
         Assert.notNull(getPosition(), "[PawnEntity][generateAvailableMoves] Position shouldn't be null");
@@ -47,117 +53,57 @@ public class PawnEntity extends APieceEntity {
         int positionX = getPosition().getPositionX();
         int positionY = getPosition().getPositionY();
 
-        if (this.getColor() == PieceColorEnum.WHITE) {
-            // Si position de départ, alors on peut avancer de deux
-            positionTemp = new PositionEntity(positionX, positionY + 2);
-            if (positionX == START_LINE_WHITE_PAWN
-                    && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)
-                    && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
-                if (!game.isCheck()) {
-                    result.add(positionTemp);
-                }
-                this.cancelLastMove(game);
-            }
+        if (this.getColor().equals(PieceColorEnum.WHITE)) {
+            
 
             // mouvement classique
             positionTemp = new PositionEntity(positionX, positionY + 1);
-            if (ChessboardEntity.isCaseOnChessboard(positionTemp)
-                    && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)
-                    && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
-                if (!game.isCheck()) {
+            if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp) && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
+                result.add(positionTemp);
+            }
+            
+            if (positionX == START_LINE_WHITE_PAWN) {
+                positionTemp = new PositionEntity(positionX, positionY + 2);
+                if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp) && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
                     result.add(positionTemp);
                 }
-                this.cancelLastMove(game);
             }
 
             // ennemis dans les diagonales
-            PositionEntity positionTemp2 = new PositionEntity(positionX + 1, positionY + 1);
+            positionTemp = new PositionEntity(positionX + 1 , positionY + 1);
             if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
-
-                tmpOpponentPiece = game.getOpponentPieces().stream()
-                        .filter(piece -> piece.getPosition().equals(positionTemp2)).findFirst().orElse(null);
-                game.removePiece(tmpOpponentPiece);
-
-                if (!game.isCheck()) {
-                    result.add(positionTemp);
-                }
-                game.addPiece(tmpOpponentPiece);
-                this.cancelLastMove(game);
-
+                addPossibleSolution(game, positionX, positionY, 1, 1, result, Boolean.FALSE);
             }
-            PositionEntity positionTemp3 = new PositionEntity(positionX - 1, positionY + 1);
+            
+            positionTemp = new PositionEntity(positionX - 1, positionY + 1);
             if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
-
-                tmpOpponentPiece = game.getOpponentPieces().stream()
-                        .filter(piece -> piece.getPosition().equals(positionTemp3)).findFirst().orElse(null);
-                game.removePiece(tmpOpponentPiece);
-
-                if (!game.isCheck()) {
-                    result.add(positionTemp);
-                }
-                game.addPiece(tmpOpponentPiece);
-                this.cancelLastMove(game);
+                addPossibleSolution(game, positionX, positionY, -1, 1, result, Boolean.FALSE);
             }
 
-        } else if (this.getColor() == PieceColorEnum.BLACK) {
-            // si position de départ on peut avancer de deux
-            positionTemp = new PositionEntity(positionX, positionY - 2);
-            if (positionX == START_LINE_BLACK_PAWN
-                    && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)
-                    && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
-                if (!game.isCheck()) {
-                    result.add(positionTemp);
-                }
-                this.cancelLastMove(game);
-            }
-
+        } else if (this.getColor().equals(PieceColorEnum.BLACK)) {
+            
             // mouvement classique
             positionTemp = new PositionEntity(positionX, positionY - 1);
-            if (ChessboardEntity.isCaseOnChessboard(positionTemp)
-                    && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)
-                    && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
-                if (!game.isCheck()) {
+            if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp) && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
+                result.add(positionTemp);
+            }
+
+            if (positionX == START_LINE_BLACK_PAWN) {
+                positionTemp = new PositionEntity(positionX, positionY - 2);
+                if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp) && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
                     result.add(positionTemp);
-                }
-                this.cancelLastMove(game);
+                }            
             }
 
             // ennemis dans les diagonales
-            PositionEntity positionTemp2 = new PositionEntity(positionX + 1, positionY - 1);
-            if (APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)
-                    && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
-
-                tmpOpponentPiece = game.getOpponentPieces().stream()
-                        .filter(piece -> piece.getPosition().equals(positionTemp2)).findFirst().orElse(null);
-                game.removePiece(tmpOpponentPiece);
-
-                if (!game.isCheck()) {
-                    result.add(positionTemp);
-                }
-                game.addPiece(tmpOpponentPiece);
-                this.cancelLastMove(game);
+            positionTemp = new PositionEntity(positionX + 1 , positionY - 1);
+            if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
+                addPossibleSolution(game, positionX, positionY, 1, -1, result, Boolean.FALSE);
             }
-            PositionEntity positionTemp3 = new PositionEntity(positionX - 1, positionY - 1);
-            if (APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)
-                    && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this), game);
-
-                tmpOpponentPiece = game.getOpponentPieces().stream()
-                        .filter(piece -> piece.getPosition().equals(positionTemp3)).findFirst().orElse(null);
-                game.removePiece(tmpOpponentPiece);
-
-                if (!game.isCheck()) {
-                    result.add(positionTemp);
-                }
-                game.addPiece(tmpOpponentPiece);
-                this.cancelLastMove(game);
+            
+            positionTemp = new PositionEntity(positionX - 1, positionY - 1);
+            if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
+                addPossibleSolution(game, positionX, positionY, -1, -1, result, Boolean.FALSE);
             }
         }
 

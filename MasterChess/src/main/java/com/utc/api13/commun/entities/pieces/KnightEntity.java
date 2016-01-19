@@ -1,16 +1,14 @@
 package com.utc.api13.commun.entities.pieces;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.util.Assert;
+
 import com.utc.api13.commun.entities.APieceEntity;
-import com.utc.api13.commun.entities.ChessboardEntity;
 import com.utc.api13.commun.entities.GameEntity;
-import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
-import java.util.ArrayList;
-import java.util.Date;
-import org.springframework.util.Assert;
 
 /**
  * @author Benoît
@@ -47,7 +45,11 @@ public class KnightEntity extends APieceEntity {
             if (x != 0) {
                 for (int y = MIN_MOVE; y < MAX_MOVE; y++) {
                     if (y != 0 && Math.abs(x) != Math.abs(y)) {
-
+                        
+                        addPossibleSolution(game, positionX, positionY, x, y, result, verifyCheck);
+                        
+                        /*
+                         
                         PositionEntity positionTemp = new PositionEntity(positionX + x, positionY + y);
 
                         // On vérifie que la position est bien sur le plateau de
@@ -73,6 +75,7 @@ public class KnightEntity extends APieceEntity {
 
                             }
                         }
+                        */
                     }
                 }
             }
@@ -83,5 +86,10 @@ public class KnightEntity extends APieceEntity {
     @Override
     public List<PositionEntity> generateAvailableMoves(GameEntity game) {
         return generateAvailableMoves(game, Boolean.TRUE);
+    }
+    
+    @Override
+    public String toString() {
+    	return "Knight";
     }
 }
