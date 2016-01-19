@@ -81,7 +81,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
      * com.utc.api13.commun.entities.MoveEntity)
      */
     @Override
-    public boolean computerResult(int idPlayer, MoveEntity move) {
+    public boolean computerResult(UUID idPlayer, MoveEntity move) {
         Assert.notNull(move.getGameID(), "[ServerDataToComImpl][computerResult] gameID shouldn't be null");
         Assert.notNull(move.getUserID(), "[ServerDataToComImpl][computerResult] userID shouldn't be null");
         Assert.notNull(move.getPiece(), "[ServerDataToComImpl][computerResult] piece shouldn't be null");
@@ -174,8 +174,11 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public void newObserver(UUID idGame, UUID idUser) {
-        // TODO Auto-generated method stub
-
+        GameEntity game = getGameById(idGame);
+        PublicUserEntity userToAdd = getUserInfo(idUser);
+        if (game != null && userToAdd != null) {
+            game.getObservers().add(userToAdd);
+        }
     }
 
     /*
@@ -209,12 +212,11 @@ public class ServerDataToComImpl implements IServerDataToCom {
         List<PublicUserEntity> listUsersByGame = new ArrayList<PublicUserEntity>();
 
         // variable containing the corresponding idGame Game.
-        final GameEntity gameFound = dataServerManager.getCurrentGames().stream().filter(u -> u.getId().equals(idGame))
-                .findFirst().orElse(null);
+        final GameEntity gameFound = getGameById(idGame);
 
         // If the idGame exist on the server
         if (gameFound != null) {
-            // Else get all observer  two players
+            // Else get all observer + two players
             if (gameFound.getObservers() != null) {
                 listUsersByGame.addAll(gameFound.getObservers());
             }
@@ -231,7 +233,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
         // If the idGame doesn't exist on the server, the method sends back
         // 'null'
         return null;
-    };
+    }
 
     /*
      * (non-Javadoc)
@@ -265,17 +267,18 @@ public class ServerDataToComImpl implements IServerDataToCom {
         dataServerManager.getCurrentUsers().removeIf(user -> user.getId().equals(idUser));
     }
 
-	@Override
-	public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable, boolean timer, Integer timerInt) {
+    @Override
+    public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable, boolean timer,
+            Integer timerInt) {
         PublicUserEntity whitePlayer;
         PublicUserEntity blackPlayer;
-        
+
         /*
          * generate a random number to choose between 0 and 1 to choose who will
          * be the white player and who will be the black player
          */
         Random r = new Random();
-        int valeur = 0 +  r.nextInt(2 - 0);
+        int valeur = 0 + r.nextInt(2 - 0);
 
         if (valeur == 1) {
             whitePlayer = getUserInfo(j1);
@@ -287,6 +290,9 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
         Assert.notNull(whitePlayer, "[ServerDataToComImpl][createGame] player 1 is not online");
         Assert.notNull(blackPlayer, "[ServerDataToComImpl][createGame] player 2 is not online");
+        // Enable chat for the two players
+        whitePlayer.setAllowedToChat(true);
+        blackPlayer.setAllowedToChat(true);
         // Create a game
         GameEntity newGame = new GameEntity();
         newGame.setBlackPlayer(blackPlayer);
@@ -301,9 +307,9 @@ public class ServerDataToComImpl implements IServerDataToCom {
     }
 
     @Override
-    public GameEntity getGameById(UUID IdGame) {
-        // TODO Auto-generated method stub
-        return null;
+    public GameEntity getGameById(UUID idGame) {
+        return dataServerManager.getCurrentGames().stream().filter(u -> u.getId().equals(idGame)).findFirst()
+                .orElse(null);
     }
 
     @Override
@@ -312,13 +318,13 @@ public class ServerDataToComImpl implements IServerDataToCom {
     }
 
     @Override
-        public void removeUserFromChat(UUID idUser, UUID idGame) {
-            GameEntity game = getGameById(idGame);
-            if(game != null) {
-                PublicUserEntity userToRemove = getUserInfo(idUser);
-                if(userToRemove != null) {
-                    userToRemove.setAllowedToChat(false);
-                }
+    public void removeUserFromChat(UUID idUser, UUID idGame) {
+        GameEntity game = getGameById(idGame);
+        if (game != null) {
+            PublicUserEntity userToRemove = getUserInfo(idUser);
+            if (userToRemove != null) {
+                userToRemove.setAllowedToChat(false);
             }
         }
+    }
 }

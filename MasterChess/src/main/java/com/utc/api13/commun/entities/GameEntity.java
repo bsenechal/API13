@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.util.Assert;
 
@@ -20,8 +22,8 @@ public class GameEntity extends ADataEntity {
 
     private static final long serialVersionUID = -959030856925179648L;
     private Date creationDate;
-    private boolean isObservable;
-    private boolean isChattable;
+    private Boolean isObservable;
+    private Boolean isChattable;
     private boolean timer;
     private Integer timerInt;
     private Date limit;
@@ -308,7 +310,8 @@ public class GameEntity extends ADataEntity {
     }
 
     /**
-     * @param timer the timer to set
+     * @param timer
+     *            the timer to set
      */
     public void setTimer(boolean timer) {
         this.timer = timer;
@@ -322,7 +325,8 @@ public class GameEntity extends ADataEntity {
     }
 
     /**
-     * @param timerInt the timerInt to set
+     * @param timerInt
+     *            the timerInt to set
      */
     public void setTimerInt(Integer timerInt) {
         this.timerInt = timerInt;
@@ -357,12 +361,12 @@ public class GameEntity extends ADataEntity {
             pieces = getWhitePieces();
         }
 
-        // TODO : CORRIGER CA !
-        // Dans la liste de pièces, on ne peut pas récupérer le type classe de
-        // la pièce (donc isInstance(KingEntity.class) est toujours faut et ça
-        // renvoi toujours null
-        return (KingEntity) pieces.stream().filter(bw -> bw.getClass().isInstance(KingEntity.class)).findFirst()
-                .orElse(null);
+        for (APieceEntity tmpEntity : pieces) {
+            if (tmpEntity.toString().equals("King")) {
+                return (KingEntity) tmpEntity;
+            }
+        }
+        return null;
     }
 
     /**
@@ -401,12 +405,21 @@ public class GameEntity extends ADataEntity {
      * @return true if the gameentity is in check, false if not
      */
     public Boolean isCheck() {
-        Boolean result = false;
-        if (this.getOpponentPieces().stream()
-                .filter(op -> APieceEntity.isPositionAvailable(op.generateAvailableMoves(this, Boolean.FALSE),
-                        (this.getKing() != null) ? this.getKing().getPosition() : null))
-                .findFirst().orElse(null) == null) {
-            result = true;
+        Boolean result = Boolean.FALSE;
+
+        List<APieceEntity> tmp = new ArrayList<APieceEntity>();
+        tmp.addAll(this.getOpponentPieces());
+
+        for (APieceEntity op : tmp) {
+            List<PositionEntity> tmpP = new ArrayList<PositionEntity>();
+            APieceEntity king = this.getKing();
+            if (king == null) {
+                return Boolean.FALSE;
+            }
+            tmpP.addAll(op.generateAvailableMoves(this, Boolean.FALSE));
+            if (!APieceEntity.isPositionAvailable(tmpP, king.getPosition())) {
+                result = Boolean.TRUE;
+            }
         }
         return result;
     }
@@ -430,15 +443,15 @@ public class GameEntity extends ADataEntity {
 
         // set local variables according to the local player color :
         if (this.getCurrentPlayer().getId().equals(this.getBlackPlayer().getId())) {
-            // ActivePlayer is WhitePlayer
+            // ActivePlayer is BlackPlayer
             opponentPieces = this.getWhitePieces();
         } else {
-            // ActivePlayer is BlackPlayer
+            // ActivePlayer is WhitePlayer
             opponentPieces = this.getBlackPieces();
+
         }
-        
-        king = (KingEntity) opponentPieces.stream().filter(bp -> bp.getClass().isInstance(KingEntity.class))
-                .findFirst().orElse(null);
+        king = (KingEntity) opponentPieces.stream().filter(bp -> bp.getClass().isInstance(KingEntity.class)).findFirst()
+                .orElse(null);
 
         // Check check
         if (this.isCheck()) {
@@ -448,7 +461,10 @@ public class GameEntity extends ADataEntity {
 
         // Checkmate check :
         if (check == true) {
+            // check if the king can't move :
             if (king.generateAvailableMoves(this).isEmpty()) {
+                // check if no piece can save him :
+                // TODO !!!
                 result = GameStatusEnum.CHECKMATE;
             }
         }
@@ -476,19 +492,19 @@ public class GameEntity extends ADataEntity {
         pieces.add(new KingEntity(color));
         pieces.add(new QueenEntity(color));
 
-        for (int column : GameEntityConstant.INITIAL_COLUMNS_ROOK) {
+        for (int column : GameEntityConstant.getInitialColumnsRook()) {
             pieces.add(new RookEntity(color, column));
         }
 
-        for (int column : GameEntityConstant.INITIAL_COLUMNS_PAWN) {
+        for (int column : GameEntityConstant.getInitialColumnsPawn()) {
             pieces.add(new PawnEntity(color, column));
         }
 
-        for (int column : GameEntityConstant.INITIAL_COLUMNS_KNIGHT) {
+        for (int column : GameEntityConstant.getInitialColumnsKnight()) {
             pieces.add(new KnightEntity(color, column));
         }
 
-        for (int column : GameEntityConstant.INITIAL_COLUMNS_BISHOP) {
+        for (int column : GameEntityConstant.getInitialColumnsBishop()) {
             pieces.add(new BishopEntity(color, column));
         }
 
@@ -519,7 +535,24 @@ public class GameEntity extends ADataEntity {
         if (piece.getColor().equals(PieceColorEnum.BLACK)) {
             this.blackPieces.remove(piece);
         } else {
-            this.whitePieces.add(piece);
+            this.whitePieces.remove(piece);
         }
+    }
+
+    /**
+     * Return a piece from a position
+     * 
+     * @param myposition
+     * @return APieceEntity
+     */
+    public APieceEntity getPieceFromPosition(PositionEntity myposition) {
+        Assert.notNull(this.getWhitePieces(), "[GameEntity][getPieceFromPosition] whitePieces shouldn't be null");
+        Assert.notNull(this.getBlackPieces(), "[GameEntity][getPieceFromPosition] blackPieces shouldn't be null");
+
+        List<APieceEntity> piecelist = Stream.concat(this.getWhitePieces().stream(), this.getBlackPieces().stream())
+                .collect(Collectors.toList());
+
+        return piecelist.stream().filter(piece -> piece.getPosition().equals(myposition)).findFirst().orElse(null);
+
     }
 }

@@ -1,5 +1,6 @@
 package com.utc.api13.commun.exceptions;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import com.utc.api13.commun.Erreur;
  *
  */
 
-public class FunctionalException extends Exception {
+public class FunctionalException extends Exception implements Serializable {
 
     private static final long serialVersionUID = -7559305873860060208L;
     /**

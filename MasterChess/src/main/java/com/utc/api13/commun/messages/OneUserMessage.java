@@ -11,6 +11,10 @@ import io.netty.channel.ChannelHandlerContext;
 
 public class OneUserMessage extends Message {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3911005325138154087L;
     private static final Logger logger = Logger.getLogger(OneUserMessage.class);
 
     /**

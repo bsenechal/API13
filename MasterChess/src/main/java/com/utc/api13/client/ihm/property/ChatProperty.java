@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class ChatProperty {
-    
+
     private StringProperty message;
 
     public StringProperty getMessage() {
@@ -22,8 +22,9 @@ public class ChatProperty {
         super();
         this.message = message;
     }
-    public ChatProperty(){
-        this.message=new SimpleStringProperty();
+
+    public ChatProperty() {
+        this.message = new SimpleStringProperty();
     }
-    
+
 }

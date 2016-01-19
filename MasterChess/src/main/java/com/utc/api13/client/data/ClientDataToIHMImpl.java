@@ -273,8 +273,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
                 "[ClientDataToIHMImpl][sendChatText] current game shouldn't be null");
         MessageEntity newMessage = new MessageEntity();
         newMessage.setText(message);
-        // TODO: à revoir, on aura besoin que la méthode prenne un MessageEntity
-        // et non un string
+        dataClientManager.getCurrentGame().getMessages().add(newMessage);
         dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
     }
 
@@ -300,6 +299,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
             boolean timer, Integer timeInt) throws TechnicalException {
         dataClientManager.getIClientComToData().answerProposition(uidReceiver, uidEnquirer, chattable, observable,
                 answer, timer, timeInt);
+
     }
 
     @Override
@@ -324,13 +324,42 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     }
 
     @Override
+    // A tester
+    public List<PositionEntity> getAvailablesMoves(int line, int col) {
+        PositionEntity myposition = new PositionEntity(line, col);
+        APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(myposition);
+        return piece.generateAvailableMoves(dataClientManager.getCurrentGame());
+    }
+
+    @Override
+    public void playMove(int fromLine, int fromCol, int toLine, int toCol) {
+        // On crée une position entity de la position de départ
+        PositionEntity fromposition = new PositionEntity(fromLine, fromCol);
+
+        // On crée une position entity de la position de fin
+        PositionEntity toposition = new PositionEntity(toLine, toCol);
+
+        // On récupère l'UID du currentplayer
+        UUID currentplayer = dataClientManager.getCurrentGame().getCurrentPlayer().getId();
+
+        // On récupère la pièce sur la case de départ : fromposition
+        APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(fromposition);
+
+        // On instancie un move entity
+        MoveEntity move = new MoveEntity(new Date(), fromposition, toposition, piece);
+
+        // On passe le moveEntity à com
+        dataClientManager.getIClientComToData().validateMove(currentplayer, move);
+
+    }
+
+    @Override
     public void removeUserFromChat(UUID idUser) {
-        // TODO Auto-generated method stub
-        Assert.notNull(idUser,
-                                "[ClientDataToIHMImpl][removeUserFromChat] current id of user shouldn't be null");
-                        Assert.notNull(dataClientManager.getCurrentGame(),
-                              "[ClientDataToIHMImpl][removeUserFromChat] current game shouldn't be null");
-                        dataClientManager.getIClientComToData().removeUserFromChat(idUser, dataClientManager.getCurrentGame().getId());
-                  }
-        
+        Assert.notNull(idUser, "[ClientDataToIHMImpl][removeUserFromChat] current id of user shouldn't be null");
+        Assert.notNull(dataClientManager.getCurrentGame(),
+                "[ClientDataToIHMImpl][removeUserFromChat] current game shouldn't be null");
+        // dataClientManager.getIClientComToData().removeUserFromChat(idUser,
+        // dataClientManager.getCurrentGame().getId());
+    }
+
 }

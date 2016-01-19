@@ -17,8 +17,8 @@ public final class ChessboardEntity extends ADataEntity {
         super();
         cases = new ArrayList<PositionEntity>();
 
-        for (int x = MIN_COLUMN; x < MAX_COLUMN; x++) {
-            for (int y = MIN_LINE; y < MAX_LINE; y++) {
+        for (int x = MIN_COLUMN; x <= MAX_COLUMN; x++) {
+            for (int y = MIN_LINE; y <= MAX_LINE; y++) {
                 cases.add(new PositionEntity(x, y));
             }
         }

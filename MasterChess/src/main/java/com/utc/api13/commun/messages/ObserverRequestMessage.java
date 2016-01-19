@@ -11,6 +11,11 @@ import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.server.com.ComServerManager;
 
 public class ObserverRequestMessage extends Message {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4586898422959823860L;
+
     private static final Logger logger = Logger.getLogger(ObserverRequestMessage.class);
 
     private UUID game; // Game on which we request to observe
@@ -45,8 +50,8 @@ public class ObserverRequestMessage extends Message {
         // Envoyer la réponse au demandeur !
         comServerManager.sendMessage(ctx.channel(), new ObserverAnswerMessage(new UUID(0, 0), new UUID(0, 0), gameE));
 
-        // A tous les participants à la partie : new Observer        
-         comServerManager.multicastMessageByUsers(gameE.getAllParticipants(), this);
+        // A tous les participants à la partie : new Observer
+        comServerManager.multicastMessageByUsers(gameE.getAllParticipants(), this);
 
     }
 
