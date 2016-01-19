@@ -83,8 +83,16 @@ public class ChessBoardNode {
                                     current.getColumn());
                             if (positionList != null) {
                                 selection = 2;
-                                // passer les cases en surbrillance
+                                // désactiver toutes les cases
+                                for(int ii=0; ii< chessBoardSquares.length; ii++) {
+                                	for (int jj=0; jj< chessBoardSquares[ii].length; jj++) {
+                                		chessBoardSquares[ii][jj].setEnabled(false);   
+                                	}
+                                }
+                                // passer les cases en surbrillance et activer uniquement celles-ci
                                 for (int i = 0; i < positionList.size(); i++) {
+                                	chessBoardSquares[positionList.get(i).getPositionX()][positionList.get(i)
+                                	                                                      .getPositionY()].setEnabled(true);
                                     chessBoardSquares[positionList.get(i).getPositionX()][positionList.get(i)
                                             .getPositionY()].setBackground(Color.GREEN);
                                 }
