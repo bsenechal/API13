@@ -10,6 +10,7 @@ import com.utc.api13.commun.messages.AllUserMessage;
 import com.utc.api13.commun.messages.ChatMessage;
 import com.utc.api13.commun.messages.ConnectMessage;
 import com.utc.api13.commun.messages.DisconnectMessage;
+import com.utc.api13.commun.messages.ExcludeObserverMessage;
 import com.utc.api13.commun.messages.GameRequestMessage;
 import com.utc.api13.commun.messages.ObserverLeaveMessage;
 import com.utc.api13.commun.messages.ObserverRequestMessage;
@@ -47,7 +48,8 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void validateMove(UUID idPlayer, MoveEntity move) {
-//    	comClientManagerInstance.sendMessage(new MoveValidationMessage(idPlayer, new UUID(0,0), move));
+        // comClientManagerInstance.sendMessage(new
+        // MoveValidationMessage(idPlayer, new UUID(0,0), move));
         return;
     }
 
@@ -122,7 +124,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void observerLeave(UUID uid) {
-    	comClientManagerInstance.sendMessage(new ObserverLeaveMessage(uid, new UUID(0, 0)));
+        comClientManagerInstance.sendMessage(new ObserverLeaveMessage(uid, new UUID(0, 0)));
     }
 
     @Override
@@ -176,8 +178,10 @@ public class ClientComToDataImpl implements IClientComToData {
      *      java.util.UUID, boolean, boolean,
      *      com.utc.api13.commun.entities.PublicUserEntity)
      */
-    public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean timer, Integer timerInt) {
-        comClientManagerInstance.sendMessage(new GameRequestMessage(sender, reciever, chattable, observable, timer, timerInt));
+    public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean timer,
+            Integer timerInt) {
+        comClientManagerInstance
+                .sendMessage(new GameRequestMessage(sender, reciever, chattable, observable, timer, timerInt));
     }
 
     /**
@@ -194,7 +198,25 @@ public class ClientComToDataImpl implements IClientComToData {
      *      java.util.UUID, boolean, boolean, boolean)
      */
     @Override
-    public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer, boolean timer, Integer timerInt) {
-        comClientManagerInstance.sendMessage(new RequestAnswerMessage(sender, reciever, chattable, observable, answer,timer, timerInt));
+    public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer,
+            boolean timer, Integer timerInt) {
+        comClientManagerInstance.sendMessage(
+                new RequestAnswerMessage(sender, reciever, chattable, observable, answer, timer, timerInt));
+    }
+
+    /**
+     * removing a user from the tchat
+     * 
+     * @param userId
+     *            : the id of the user which will be deleted to the tchat
+     * @param gameId
+     *            : the game which the user watching
+     */
+
+    @Override
+    public void removeUserFromChat(UUID userId, UUID gameId) {
+        // TODO Auto-generated method stub
+        comClientManagerInstance.sendMessage(new ExcludeObserverMessage(userId, gameId));
+
     }
 }

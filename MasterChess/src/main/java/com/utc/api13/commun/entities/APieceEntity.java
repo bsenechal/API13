@@ -129,8 +129,8 @@ public abstract class APieceEntity extends ADataEntity {
         // Enlever de l'historique
         game.getMovesHistory().remove(lastMove);
     }
-    
-    public void cancelMove(GameEntity game,final MoveEntity move) {
+
+    public void cancelMove(GameEntity game, final MoveEntity move) {
         Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
         Assert.notNull(game.getMovesHistory(), "[APieceEntity][move] MovesHistory shouldn't be null");
 
@@ -203,43 +203,45 @@ public abstract class APieceEntity extends ADataEntity {
 
         // On vérifie que la position est bien sur le plateau de jeu
         if (ChessboardEntity.isCaseOnChessboard(positionTemp)) {
-            List<APieceEntity> piecesOfSameColor = this.color.equals(PieceColorEnum.BLACK)?game.getBlackPieces():game.getWhitePieces();
-            List<APieceEntity> piecesOfDifferentColor = this.color.equals(PieceColorEnum.BLACK)?game.getWhitePieces():game.getBlackPieces();
-                    	
+            List<APieceEntity> piecesOfSameColor = this.color.equals(PieceColorEnum.BLACK) ? game.getBlackPieces()
+                    : game.getWhitePieces();
+            List<APieceEntity> piecesOfDifferentColor = this.color.equals(PieceColorEnum.BLACK) ? game.getWhitePieces()
+                    : game.getBlackPieces();
+
             // On vérifie que la position n'est pas déjà prise par nos pionts
             if (APieceEntity.isPositionAvailableFromPieces(piecesOfSameColor, positionTemp)) {
-            	
-            	// On vérifie que cela ne met pas notre roi en échec en fct de verifyCheck
-            	if (verifyCheck) {
-                	MoveEntity tmpMove = new MoveEntity(new Date(), this.getPosition(), positionTemp, this);
 
-	            	this.movePiece(tmpMove, game);
-	                // on supprime le piont adverse s'il y en a un a destination
-	                APieceEntity tmpOpponentPiece = null;
-	                boolean haskilledAnother = Boolean.FALSE;
-	                if (!APieceEntity.isPositionAvailableFromPieces(piecesOfDifferentColor, positionTemp)) {
-	                    tmpOpponentPiece = piecesOfDifferentColor.stream()
-	                            .filter(piece -> piece.getPosition().equals(positionTemp)).findFirst().orElse(null);
-	                    game.removePiece(tmpOpponentPiece);
-	                    haskilledAnother = Boolean.TRUE;
-	                    isStopped = Boolean.TRUE;
-	                }
-	                
-	                if (!game.isCheck()) {
-	                    result.add(positionTemp);
-	                }
-	          
-	                if (haskilledAnother == Boolean.TRUE) {
-	                    game.addPiece(tmpOpponentPiece);
-	                }
-	                this.cancelMove(game,tmpMove);
-            	}
-                else{
-                	//without game.isCheck
+                // On vérifie que cela ne met pas notre roi en échec en fct de
+                // verifyCheck
+                if (verifyCheck) {
+                    MoveEntity tmpMove = new MoveEntity(new Date(), this.getPosition(), positionTemp, this);
+
+                    this.movePiece(tmpMove, game);
+                    // on supprime le piont adverse s'il y en a un a destination
+                    APieceEntity tmpOpponentPiece = null;
+                    boolean haskilledAnother = Boolean.FALSE;
+                    if (!APieceEntity.isPositionAvailableFromPieces(piecesOfDifferentColor, positionTemp)) {
+                        tmpOpponentPiece = piecesOfDifferentColor.stream()
+                                .filter(piece -> piece.getPosition().equals(positionTemp)).findFirst().orElse(null);
+                        game.removePiece(tmpOpponentPiece);
+                        haskilledAnother = Boolean.TRUE;
+                        isStopped = Boolean.TRUE;
+                    }
+
+                    if (!game.isCheck()) {
+                        result.add(positionTemp);
+                    }
+
+                    if (haskilledAnother == Boolean.TRUE) {
+                        game.addPiece(tmpOpponentPiece);
+                    }
+                    this.cancelMove(game, tmpMove);
+                } else {
+                    // without game.isCheck
                     result.add(positionTemp);
-	                if (!APieceEntity.isPositionAvailableFromPieces(piecesOfDifferentColor, positionTemp)) {
-	                    isStopped = Boolean.TRUE;
-	                }
+                    if (!APieceEntity.isPositionAvailableFromPieces(piecesOfDifferentColor, positionTemp)) {
+                        isStopped = Boolean.TRUE;
+                    }
                 }
             } else {
                 isStopped = Boolean.TRUE;

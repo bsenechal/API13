@@ -126,13 +126,13 @@ public class ClientDataToIHMImplTest {
         Assert.assertTrue("CurrentGames should contains " + specificGame.toString(),
                 dataClientManager.getClientDataToIHMImpl().getGamesList().contains(specificGame));
     }
-    
-    //Comment vérifier la svg ?
+
+    // Comment vérifier la svg ?
     @Test
     public void saveGameTest() {
-        PublicUserEntity whitePlayer = new PublicUserEntity("whitelogin","whitemdp");
-        PublicUserEntity blackPlayer = new PublicUserEntity("blacklogin","blackmdp");
-        
+        PublicUserEntity whitePlayer = new PublicUserEntity("whitelogin", "whitemdp");
+        PublicUserEntity blackPlayer = new PublicUserEntity("blacklogin", "blackmdp");
+
         GameEntity newGame = new GameEntity();
         newGame.setBlackPlayer(blackPlayer);
         newGame.setWhitePlayer(whitePlayer);
@@ -140,7 +140,7 @@ public class ClientDataToIHMImplTest {
         newGame.setIsChattable(true);
         newGame.setTimer(true);
         newGame.setTimerInt(7);
-        
+
         dataClientManager.setCurrentGame(newGame);
         try {
             clientDataToIHMImpl.saveGame();
@@ -151,6 +151,6 @@ public class ClientDataToIHMImplTest {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+
     }
 }

@@ -179,5 +179,4 @@ public interface IClientDataToCom {
     public void setFinishedStatus(GameStatusEnum status);
 
     public void nextTurn(GameStatusEnum isFinished, UUID nextPlayer);
-
 }

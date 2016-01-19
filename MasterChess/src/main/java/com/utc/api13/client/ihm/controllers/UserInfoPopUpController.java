@@ -1,10 +1,8 @@
 package com.utc.api13.client.ihm.controllers;
 
-import javafx.scene.control.Button;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
@@ -23,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -109,6 +108,7 @@ public class UserInfoPopUpController {
         return SwingFXUtils.toFXImage(image, null);
     }
 
+    @SuppressWarnings("restriction")
     public void setBindings(ProfilProperty profile) {
         userInfoLogin.textProperty().bind(profile.loginProperty());
         userInfoFirstName.textProperty().bind(profile.firstNameProperty());
@@ -133,6 +133,7 @@ public class UserInfoPopUpController {
         this.currentStage = currentStage;
     }
 
+    @SuppressWarnings("restriction")
     public void sendProposition() throws IOException {
         Stage stage;
         Parent root;
@@ -142,13 +143,13 @@ public class UserInfoPopUpController {
             root = (Pane) fxmlLoader.load();
             SendPropositionController controller = fxmlLoader.getController();
             controller.setControllerContext(this.IHMManager);
+            mainApp.getCurrentStage().close();
+            mainApp.setCurrentStage(stage);
             controller.setMainApp(this.mainApp, userUUID, userInfoLogin);
             stage.setScene(new Scene(root));
-            stage.setTitle("Error");
-            mainApp.setCurrentStage(stage);
-            mainApp.getCurrentStage().close();
+            stage.setTitle("Proposition");
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
+            stage.show();
         } catch (IOException e) {
             try {
                 error("Error when loading proposition window : IOException");
@@ -168,12 +169,13 @@ public class UserInfoPopUpController {
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
+        mainApp.getCurrentStage().close();
+        mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
-        mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
 }

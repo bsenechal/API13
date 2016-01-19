@@ -11,6 +11,10 @@ import com.utc.api13.server.com.ComServerManager;
 import io.netty.channel.ChannelHandlerContext;
 
 public class HeartBeat extends Message {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -607617759169441509L;
     private static final Logger logger = Logger.getLogger(HeartBeat.class);
     private InetAddress ping;
 

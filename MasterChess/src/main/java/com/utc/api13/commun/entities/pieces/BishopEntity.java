@@ -14,6 +14,7 @@ import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
 /**
+ * 
  * @author Lucie 
  *
  */
@@ -43,13 +44,12 @@ public class BishopEntity extends APieceEntity {
     public List<PositionEntity> generateAvailableMoves(GameEntity game, boolean verifyCheck) {
         // TODO Auto-generated method stub
         Assert.notNull(getPosition(), "[BishopEntity][generateAvailableMoves] Position shouldn't be null");
-        
+
         List<PositionEntity> result = new ArrayList<PositionEntity>();
 
         int positionX = getPosition().getPositionX();
         int positionY = getPosition().getPositionY();
-        
-        
+
         for (int x = -1; x >= MIN_MOVE; x--) {
             // Sideways 1 movements
             if (addPossibleSolution(game, positionX, positionY, x, x, result)) {
@@ -74,7 +74,7 @@ public class BishopEntity extends APieceEntity {
                 break;
             }
         }
-        
+
         return result;
     }
 

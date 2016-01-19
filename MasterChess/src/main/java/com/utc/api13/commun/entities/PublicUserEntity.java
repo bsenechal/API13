@@ -80,7 +80,8 @@ public class PublicUserEntity extends AUserEntity {
     }
 
     /**
-     * @param allowedToChat true if and only if user is allowed to chat during the game
+     * @param allowedToChat
+     *            true if and only if user is allowed to chat during the game
      */
     public void setAllowedToChat(boolean allowedToChat) {
         this.allowedToChat = allowedToChat;

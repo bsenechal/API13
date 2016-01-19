@@ -81,7 +81,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
      * com.utc.api13.commun.entities.MoveEntity)
      */
     @Override
-    public boolean computerResult(int idPlayer, MoveEntity move) {
+    public boolean computerResult(UUID idPlayer, MoveEntity move) {
         Assert.notNull(move.getGameID(), "[ServerDataToComImpl][computerResult] gameID shouldn't be null");
         Assert.notNull(move.getUserID(), "[ServerDataToComImpl][computerResult] userID shouldn't be null");
         Assert.notNull(move.getPiece(), "[ServerDataToComImpl][computerResult] piece shouldn't be null");
@@ -176,7 +176,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
     public void newObserver(UUID idGame, UUID idUser) {
         GameEntity game = getGameById(idGame);
         PublicUserEntity userToAdd = getUserInfo(idUser);
-        if(game != null && userToAdd != null) {
+        if (game != null && userToAdd != null) {
             game.getObservers().add(userToAdd);
         }
     }
@@ -267,11 +267,12 @@ public class ServerDataToComImpl implements IServerDataToCom {
         dataServerManager.getCurrentUsers().removeIf(user -> user.getId().equals(idUser));
     }
 
-	@Override
-	public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable, boolean timer, Integer timerInt) {
+    @Override
+    public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable, boolean timer,
+            Integer timerInt) {
         PublicUserEntity whitePlayer;
         PublicUserEntity blackPlayer;
-        
+
         /*
          * generate a random number to choose between 0 and 1 to choose who will
          * be the white player and who will be the black player
@@ -289,7 +290,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
         Assert.notNull(whitePlayer, "[ServerDataToComImpl][createGame] player 1 is not online");
         Assert.notNull(blackPlayer, "[ServerDataToComImpl][createGame] player 2 is not online");
-        //Enable chat for the two players
+        // Enable chat for the two players
         whitePlayer.setAllowedToChat(true);
         blackPlayer.setAllowedToChat(true);
         // Create a game
@@ -307,21 +308,21 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
     @Override
     public GameEntity getGameById(UUID idGame) {
-        return dataServerManager.getCurrentGames().stream().filter(u -> u.getId().equals(idGame))
-                .findFirst().orElse(null);
+        return dataServerManager.getCurrentGames().stream().filter(u -> u.getId().equals(idGame)).findFirst()
+                .orElse(null);
     }
 
     @Override
     public void endGame(UUID idGame) {
         dataServerManager.getCurrentGames().removeIf(g -> idGame.equals(g.getId()));
     }
-    
+
     @Override
     public void removeUserFromChat(UUID idUser, UUID idGame) {
         GameEntity game = getGameById(idGame);
-        if(game != null) {
+        if (game != null) {
             PublicUserEntity userToRemove = getUserInfo(idUser);
-            if(userToRemove != null) {
+            if (userToRemove != null) {
                 userToRemove.setAllowedToChat(false);
             }
         }
