@@ -40,7 +40,7 @@ public class ChessBoardNode {
     private static final int TAILLE = 8;
     private static final int TAILLE_CASE = 25;
     private Case[][] chessBoardSquares = new Case[TAILLE][TAILLE];
-    private PositionEntity currentPosition;
+    private PositionEntity firstPosition;
     // setter une variable d'etat pour savoir si on selectionne une piece ou une
     // position pour les déplacements dans le listener
     private int selection = 1;
@@ -74,12 +74,13 @@ public class ChessBoardNode {
                 Case b = new Case(ii, jj);
                 b.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        Case current = (Case) e.getSource();
+                        Case movePosition = (Case) e.getSource();
+                        System.out.println(movePosition);
                         if (selection == 1) {
-                            currentPosition.setPositionX(current.getLine());
-                            currentPosition.setPositionY(current.getColumn());
-                            List<PositionEntity> positionList = myIClientToIHM.getAvailablesMoves(current.getLine(),
-                                    current.getColumn());
+                        	firstPosition.setPositionX(movePosition.getLine());
+                        	firstPosition.setPositionY(movePosition.getColumn());
+                            List<PositionEntity> positionList = myIClientToIHM.getAvailablesMoves(movePosition.getLine(),
+                            		movePosition.getColumn());
                             if (positionList != null) {
                                 selection = 2;
                                 // désactiver toutes les cases
@@ -92,6 +93,7 @@ public class ChessBoardNode {
                                 for (int i = 0; i < positionList.size(); i++) {
                                 	chessBoardSquares[positionList.get(i).getPositionX()][positionList.get(i)
                                 	                                                      .getPositionY()].setEnabled(true);
+                                	chessBoardSquares[firstPosition.getPositionX()][firstPosition.getPositionY()].setBorder(new LineBorder(Color.GREEN));
                                     chessBoardSquares[positionList.get(i).getPositionX()][positionList.get(i)
                                             .getPositionY()].setBackground(Color.GREEN);
                                 }
@@ -99,12 +101,12 @@ public class ChessBoardNode {
                         }
 
                         if (selection == 2) {
-                            if ((current.getLine() == currentPosition.getPositionX())
-                                    && (current.getColumn() == currentPosition.getPositionY())) {
+                            if ((movePosition.getLine() == firstPosition.getPositionX())
+                                    && (movePosition.getColumn() == firstPosition.getPositionY())) {
                                 selection = 1;
                             } else {
-                                myIClientToIHM.playMove(currentPosition.getPositionX(), currentPosition.getPositionY(),
-                                        current.getLine(), current.getColumn());
+                                myIClientToIHM.playMove(firstPosition.getPositionX(), firstPosition.getPositionY(),
+                                		movePosition.getLine(), movePosition.getColumn());
                             }
                         }
 
