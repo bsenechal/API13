@@ -45,8 +45,12 @@ public class ChessBoardNode {
     // position pour les déplacements dans le listener
     private int selection = 1;
 
-    public ChessBoardNode(IHMManager ihmManager) {
-        myIhmManager = ihmManager;
+    /**
+     * public ChessBoardNode(IHMManager ihmManager) { myIhmManager = ihmManager;
+     * initializeGui(); }
+     */
+
+    public ChessBoardNode() {
         initializeGui();
     }
 
@@ -163,6 +167,7 @@ public class ChessBoardNode {
                 try {
                     Image img = ImageIO.read(getClass().getResource(dossierIcone + 'P' + couleur + ".gif"));
                     chessBoardSquares[ctr][ligne + increment].setIcon(new ImageIcon(img));
+
                 } catch (IOException e) {
 
                 }
@@ -183,4 +188,15 @@ public class ChessBoardNode {
         return gui;
     }
 
+    public final IHMManager getIHMManager() {
+        return this.myIhmManager;
+    }
+
+    public final void setIHMManager(IHMManager im) {
+        this.myIhmManager = im;
+    }
+
+    public final Case[][] getChessBoardSquares() {
+        return this.chessBoardSquares;
+    }
 }
