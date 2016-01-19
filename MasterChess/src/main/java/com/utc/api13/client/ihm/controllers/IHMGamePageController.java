@@ -12,6 +12,7 @@ import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.client.ihm.models.ChessBoardNode;
 import com.utc.api13.client.ihm.property.ChatProperty;
 import com.utc.api13.commun.entities.GameEntity;
 
@@ -130,7 +131,7 @@ public class IHMGamePageController {
     public void setMainApp(AppClient app) {
         this.mainApp = app;
         GameEntity game = this.myIClientToIHM.getCurrentGame();
-        // final ChessBoardNode cb = new ChessBoardNode(IHMManager);
+        final ChessBoardNode cb = new ChessBoardNode();
         this.IHMManager.getChessBoardNode().setIHMManager(IHMManager);
         final SwingNode swingNode = new SwingNode();
 
