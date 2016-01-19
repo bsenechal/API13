@@ -1,6 +1,5 @@
 package com.utc.api13.client.ihm.interfaces;
 
-import java.io.IOException;
 import java.util.UUID;
 
 import com.utc.api13.commun.entities.GameEntity;
@@ -49,7 +48,8 @@ public interface IClientIHMToData {
      *            proposed game
      * @return void
      */
-    public void displayProposition(UUID uidSender, boolean observable, boolean chattable, boolean timer, Integer timeInt);
+    public void displayProposition(UUID uidSender, boolean observable, boolean chattable, boolean timer,
+            Integer timeInt);
 
     /**
      * This method notifies local user (who proposed a game) that distant user

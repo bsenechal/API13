@@ -48,50 +48,50 @@ public class QueenEntity extends APieceEntity {
         // All movements
         for (int x = -1; x >= MIN_MOVE; x--) {
             // Horizontal movements
-            if (addPossibleSolution(game, positionX, positionY, x, 0, result)) {
+            if (addPossibleSolution(game, positionX, positionY, x, 0, result, verifyCheck)) {
                 break;
             }
         }
         for (int x = 1; x <= MAX_MOVE; x++) {
             // Horizontal movements
-            if (addPossibleSolution(game, positionX, positionY, x, 0, result)) {
+            if (addPossibleSolution(game, positionX, positionY, x, 0, result, verifyCheck)) {
                 break;
             }
         }
 
         for (int x = -1; x >= MIN_MOVE; x--) {
             // Vertical movements
-            if (addPossibleSolution(game, positionX, positionY, 0, x, result)) {
+            if (addPossibleSolution(game, positionX, positionY, 0, x, result, verifyCheck)) {
                 break;
             }
         }
         for (int x = 1; x <= MAX_MOVE; x++) {
             // Vertical movements
-            if (addPossibleSolution(game, positionX, positionY, 0, x, result)) {
+            if (addPossibleSolution(game, positionX, positionY, 0, x, result, verifyCheck)) {
                 break;
             }
         }
         for (int x = -1; x >= MIN_MOVE; x--) {
             // Sideways 1 movements
-            if (addPossibleSolution(game, positionX, positionY, x, x, result)) {
+            if (addPossibleSolution(game, positionX, positionY, x, x, result, verifyCheck)) {
                 break;
             }
         }
         for (int x = 1; x <= MAX_MOVE; x++) {
             // Sideways 1 movements
-            if (addPossibleSolution(game, positionX, positionY, x, x, result)) {
+            if (addPossibleSolution(game, positionX, positionY, x, x, result, verifyCheck)) {
                 break;
             }
         }
         for (int x = -1; x >= MIN_MOVE; x--) {
             // Sideways 2 movements
-            if (addPossibleSolution(game, positionX, positionY, x, -x, result)) {
+            if (addPossibleSolution(game, positionX, positionY, x, -x, result, verifyCheck)) {
                 break;
             }
         }
         for (int x = 1; x <= MAX_MOVE; x++) {
             // Sideways 2 movements
-            if (addPossibleSolution(game, positionX, positionY, x, -x, result)) {
+            if (addPossibleSolution(game, positionX, positionY, x, -x, result, verifyCheck)) {
                 break;
             }
         }
@@ -104,4 +104,8 @@ public class QueenEntity extends APieceEntity {
         return generateAvailableMoves(game, Boolean.TRUE);
     }
 
+    @Override
+    public String toString() {
+        return "Queen";
+    }
 }

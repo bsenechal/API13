@@ -1,6 +1,7 @@
 package com.utc.api13.client.data.interfaces;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -154,7 +155,8 @@ public interface IClientDataToIHM {
      * @param observable
      *            true if observers are allowed
      */
-    public void createProposition(UUID uidReciever, UUID enquirerUUID, boolean chattable, boolean observable, boolean timer, Integer timeInt);
+    public void createProposition(UUID uidReciever, UUID enquirerUUID, boolean chattable, boolean observable,
+            boolean timer, Integer timeInt);
 
     public void surrender();
 
@@ -196,8 +198,8 @@ public interface IClientDataToIHM {
      *             exception when extracting bytes from image in local user
      *             profile
      */
-    public void sendResponse(UUID idUser, UUID requirer, boolean answer, boolean observable, boolean chattable, boolean time, Integer timeInt)
-            throws TechnicalException;
+    public void sendResponse(UUID idUser, UUID requirer, boolean answer, boolean observable, boolean chattable,
+            boolean time, Integer timeInt) throws TechnicalException;
 
     /**
      * Imports the profile of the user contained in file into the app
@@ -242,9 +244,25 @@ public interface IClientDataToIHM {
      * 
      * @return Returns the list of observable
      */
-    ObservableList<GameEntity> getGamesList();
+    public ObservableList<GameEntity> getGamesList();
 
-    public void removeUserFromChat(UUID id);
+    /**
+     * @return Returns the list of PositionEntity
+     */
+    public List<PositionEntity> getAvailablesMoves(int line, int col);
+
+    /**
+     * Play the chosen move
+     */
+    public void playMove(int fromLine, int fromCol, int toLine, int toCol);
+
+    /**
+     * Removes the given user from game's chat
+     * 
+     * @param idUser
+     *            uid of user to remove from chat
+     */
+    public void removeUserFromChat(UUID idUser);
 
     // TODO
     // Si le (IClientDataToCom.)printProposition() ne renvoie pas directement la

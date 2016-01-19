@@ -10,6 +10,10 @@ import io.netty.channel.ChannelHandlerContext;
 
 public class PublicUserMessage extends Message {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8984432044466721967L;
     UUID target; // UUID of the user of which we require info.
     PublicUserEntity usr; // Object concerning the user
 

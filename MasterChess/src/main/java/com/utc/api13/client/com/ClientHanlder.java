@@ -11,7 +11,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 /**
  * 
  * @author stephane, clemence, thomas Manage User process on a message reception
- *
+ * 
  */
 
 public class ClientHanlder extends SimpleChannelInboundHandler<Message> {
