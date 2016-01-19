@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -43,7 +44,9 @@ public class CreateProfileController {
     @FXML
     Label createProfileLabel, loginLabel, passwordLabel, firstNameLabel, lastNameLabel, errorInfo;
     @FXML
-    TextField loginTextView, passwordTextView, firstNameTextView, lastNameTextView;
+    TextField loginTextView, firstNameTextView, lastNameTextView;
+    @FXML
+    PasswordField passwordTextView; 
     @FXML
     Button saveProfileButton;
     @FXML
@@ -94,7 +97,7 @@ public class CreateProfileController {
                 mainApp.getCurrentStage().close();
                 mainApp.setCurrentStage(stage);
                 stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
+                stage.show();
 
             } catch (TechnicalException e) {
                 try {
@@ -192,7 +195,7 @@ public class CreateProfileController {
             mainApp.getCurrentStage().close();
         }
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        stage.show();
     }
 
 }

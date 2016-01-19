@@ -14,7 +14,11 @@ import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
 /**
+<<<<<<< HEAD
  * @author Lucie 
+=======
+ * @author Benoît
+>>>>>>> refs/remotes/origin/IHM
  *
  */
 public class BishopEntity extends APieceEntity {

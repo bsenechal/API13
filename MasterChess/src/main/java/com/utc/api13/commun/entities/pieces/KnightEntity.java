@@ -50,6 +50,9 @@ public class KnightEntity extends APieceEntity {
                         
                         /*
                          
+=======
+
+>>>>>>> refs/remotes/origin/IHM
                         PositionEntity positionTemp = new PositionEntity(positionX + x, positionY + y);
 
                         // On vérifie que la position est bien sur le plateau de
@@ -75,6 +78,7 @@ public class KnightEntity extends APieceEntity {
 
                             }
                         }
+<<<<<<< HEAD
                         */
                     }
                 }
