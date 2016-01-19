@@ -131,8 +131,8 @@ public class IHMGamePageController {
     public void setMainApp(AppClient app) {
         this.mainApp = app;
         GameEntity game = this.myIClientToIHM.getCurrentGame();
-        final ChessBoardNode cb = new ChessBoardNode();
-        this.IHMManager.getChessBoardNode().setIHMManager(IHMManager);
+        final ChessBoardNode cb = new ChessBoardNode(IHMManager);
+        
         final SwingNode swingNode = new SwingNode();
 
         SwingUtilities.invokeLater(new Runnable() {

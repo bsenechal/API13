@@ -45,14 +45,13 @@ public class ChessBoardNode {
     // position pour les déplacements dans le listener
     private int selection = 1;
 
-    /**
-     * public ChessBoardNode(IHMManager ihmManager) { myIhmManager = ihmManager;
-     * initializeGui(); }
-     */
+  
+     public ChessBoardNode(IHMManager ihmManager) { 
+    	myIhmManager = ihmManager;
+      initializeGui(); 
+      }
+     
 
-    public ChessBoardNode() {
-        initializeGui();
-    }
 
     public final void initializeGui() {
         String dossierIcone = "/pictures/pieces/";

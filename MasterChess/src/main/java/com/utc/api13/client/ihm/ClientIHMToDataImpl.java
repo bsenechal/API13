@@ -161,19 +161,19 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         String dossierIcone = "/pictures/pieces/";
         GameEntity game = myIClientDataToIHM.getCurrentGame();
         // récupérer chessboardsquares
-        Case[][] chessBoardSquares = myIHMManager.getChessBoardNode().getChessBoardSquares();
+        //Case[][] chessBoardSquares = myIHMManager.getChessBoardNode().getChessBoardSquares();
         // effacer la pièce de l'ancienne case
 
-        chessBoardSquares[line_from][col_from].setIcon(null);
+        //chessBoardSquares[line_from][col_from].setIcon(null);
 
         // afficher la pièce sur la nouvelle case
         try {
             if (game.getCurrentPlayer() == game.getBlackPlayer()) {
                 Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "N.gif"));
-                chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
+                //chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
             } else {
                 Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "B.gif"));
-                chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
+                //chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
             }
 
         } catch (IOException e) {
