@@ -82,4 +82,6 @@ public interface IClientComToData {
 
     public void setComClientManagerInstance(ComClientManager comClientManagerInstance);
 
+    public void removeUserFromChat(UUID idUser, UUID game);
+
 }

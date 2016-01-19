@@ -244,6 +244,8 @@ public interface IClientDataToIHM {
      */
     ObservableList<GameEntity> getGamesList();
 
+    public void removeUserFromChat(UUID id);
+
     // TODO
     // Si le (IClientDataToCom.)printProposition() ne renvoie pas directement la
     // réponse à com pour dire si un User à accepté la partie, il faudra créer

@@ -322,4 +322,15 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public ObservableList<GameEntity> getGamesList() {
         return dataClientManager.getCurrentGames();
     }
+
+    @Override
+    public void removeUserFromChat(UUID idUser) {
+        // TODO Auto-generated method stub
+        Assert.notNull(idUser,
+                                "[ClientDataToIHMImpl][removeUserFromChat] current id of user shouldn't be null");
+                        Assert.notNull(dataClientManager.getCurrentGame(),
+                              "[ClientDataToIHMImpl][removeUserFromChat] current game shouldn't be null");
+                        dataClientManager.getIClientComToData().removeUserFromChat(idUser, dataClientManager.getCurrentGame().getId());
+                  }
+        
 }

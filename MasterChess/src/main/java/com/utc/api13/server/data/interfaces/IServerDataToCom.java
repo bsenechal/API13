@@ -155,4 +155,6 @@ public interface IServerDataToCom {
      *            id of game
      */
     void endGame(UUID idGame);
+
+    public void removeUserFromChat(UUID userId, UUID game);
 }
