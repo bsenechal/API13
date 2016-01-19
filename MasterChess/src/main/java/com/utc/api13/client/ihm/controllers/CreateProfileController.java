@@ -2,7 +2,6 @@ package com.utc.api13.client.ihm.controllers;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
 
 import org.apache.log4j.Logger;
 
@@ -21,8 +20,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -46,7 +45,7 @@ public class CreateProfileController {
     @FXML
     TextField loginTextView, firstNameTextView, lastNameTextView;
     @FXML
-    PasswordField passwordTextView; 
+    PasswordField passwordTextView;
     @FXML
     Button saveProfileButton;
     @FXML

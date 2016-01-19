@@ -1,7 +1,5 @@
 package com.utc.api13.commun.entities.pieces;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,17 +15,16 @@ import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
-
 /**
- * @author  Lucie
+ * @author Lucie
  *
  */
 public class BishopEntityTest {
-    
+
     private GameEntity game;
     private PublicUserEntity blackPlayer;
     private PublicUserEntity whitePlayer;
-    
+
     /**
      * @throws java.lang.Exception
      */
@@ -40,7 +37,7 @@ public class BishopEntityTest {
         Assert.assertEquals("Error initing game positions", game.getBlackPieces().size(), 16);
         Assert.assertEquals("Error initing game positions", game.getWhitePieces().size(), 16);
     }
-    
+
     /**
      * @throws java.lang.Exception
      */
@@ -48,18 +45,16 @@ public class BishopEntityTest {
     public void tearDown() throws Exception {
     }
 
-    
     @Test
     public void testGenerateAvailableMoves() {
-        //I only test with one bishop by color
+        // I only test with one bishop by color
         final PositionEntity blackBishopPosition = new PositionEntity(3, 8);
         final PositionEntity whiteBishopPosition = new PositionEntity(3, 1);
         BishopEntity whiteBishopFirst = new BishopEntity(PieceColorEnum.WHITE, 3);
         BishopEntity whiteBishopSecond = new BishopEntity(PieceColorEnum.WHITE, 6);
         BishopEntity blackBishopFirst = new BishopEntity(PieceColorEnum.BLACK, 6);
         BishopEntity blackBishopSecond = new BishopEntity(PieceColorEnum.BLACK, 3);
-        
-        
+
         Assert.assertEquals("Error init King position", whiteBishopFirst.getPosition().getPositionX(),
                 whiteBishopPosition.getPositionX());
         Assert.assertEquals("Error init King position", whiteBishopFirst.getPosition().getPositionY(),
@@ -69,55 +64,56 @@ public class BishopEntityTest {
                 blackBishopPosition.getPositionX());
         Assert.assertEquals("Error init King position", blackBishopSecond.getPosition().getPositionY(),
                 blackBishopPosition.getPositionY());
-        
+
         List<PositionEntity> availablesPositionsWhiteBishop = whiteBishopFirst.generateAvailableMoves(game);
         Assert.assertTrue("availablesPositionsWhiteBishop should be empty", availablesPositionsWhiteBishop.isEmpty());
 
-        
-//        game.getWhitePieces().remove(new PawnEntity(PieceColorEnum.WHITE,2));
-//        System.out.println(whiteBishopFirst.generateAvailableMoves(game));
-        
-        // On supprime toutes les pieces 
+        // game.getWhitePieces().remove(new PawnEntity(PieceColorEnum.WHITE,2));
+        // System.out.println(whiteBishopFirst.generateAvailableMoves(game));
+
+        // On supprime toutes les pieces
         game.setBlackPieces(new ArrayList<APieceEntity>());
         game.getBlackPieces().add(blackBishopFirst);
 
         game.setWhitePieces(new ArrayList<APieceEntity>());
         game.getWhitePieces().add(whiteBishopFirst);
-        System.out.println("My white bishop :"+whiteBishopFirst.getPosition().getPositionX()+","+whiteBishopFirst.getPosition().getPositionY());
+        System.out.println("My white bishop :" + whiteBishopFirst.getPosition().getPositionX() + ","
+                + whiteBishopFirst.getPosition().getPositionY());
 
         availablesPositionsWhiteBishop = whiteBishopFirst.generateAvailableMoves(game);
         System.out.println("White possible move");
-        for(PositionEntity tmp:availablesPositionsWhiteBishop){
+        for (PositionEntity tmp : availablesPositionsWhiteBishop) {
             System.out.println(String.valueOf(tmp.getPositionX()) + "," + String.valueOf(tmp.getPositionY()));
         }
         // Sans piece, il y a 7 position posibles
         Assert.assertEquals(availablesPositionsWhiteBishop.size(), 7);
-        
-        // On ajoute un pion bloquant 
+
+        // On ajoute un pion bloquant
         PawnEntity PawnBlock = new PawnEntity(PieceColorEnum.WHITE, new PositionEntity(4, 2));
-        System.out.println("Bloking pawn :" + PawnBlock.getPosition().getPositionX() + "," + PawnBlock.getPosition().getPositionY());
+        System.out.println("Bloking pawn :" + PawnBlock.getPosition().getPositionX() + ","
+                + PawnBlock.getPosition().getPositionY());
         game.getWhitePieces().add(PawnBlock);
         availablesPositionsWhiteBishop = whiteBishopFirst.generateAvailableMoves(game);
         System.out.println("White possible move with blocking pawn : ");
-        for(PositionEntity tmp:availablesPositionsWhiteBishop){
+        for (PositionEntity tmp : availablesPositionsWhiteBishop) {
             System.out.println(String.valueOf(tmp.getPositionX()) + "," + String.valueOf(tmp.getPositionY()));
         }
         Assert.assertEquals(availablesPositionsWhiteBishop.size(), 2);
-        
-        //On supprime le pion bloquant 
+
+        // On supprime le pion bloquant
         game.removePiece(PawnBlock);
-         
-        //On ajoute un pion ennemi 
+
+        // On ajoute un pion ennemi
         PawnEntity PawnBlockBlack = new PawnEntity(PieceColorEnum.BLACK, new PositionEntity(4, 2));
         game.addPiece(PawnBlockBlack);
-        System.out.println("Ennemi bloking pawn :" + PawnBlockBlack.getPosition().getPositionX() + "," + PawnBlockBlack.getPosition().getPositionY());
+        System.out.println("Ennemi bloking pawn :" + PawnBlockBlack.getPosition().getPositionX() + ","
+                + PawnBlockBlack.getPosition().getPositionY());
         availablesPositionsWhiteBishop = whiteBishopFirst.generateAvailableMoves(game);
         System.out.println("White possible move with ennemi blocking pawn : ");
-        for(PositionEntity tmp:availablesPositionsWhiteBishop){
+        for (PositionEntity tmp : availablesPositionsWhiteBishop) {
             System.out.println(String.valueOf(tmp.getPositionX()) + "," + String.valueOf(tmp.getPositionY()));
         }
         Assert.assertEquals(availablesPositionsWhiteBishop.size(), 3);
     }
-    
 
 }

@@ -2,38 +2,27 @@ package com.utc.api13.client.ihm.models;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Event;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.TransferHandler;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
-import com.utc.api13.commun.entities.AUserEntity;
-import com.utc.api13.commun.entities.ChessboardEntity;
 import com.utc.api13.commun.entities.APieceEntity;
-import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PositionEntity;
-import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.pieces.BishopEntity;
 import com.utc.api13.commun.entities.pieces.KingEntity;
 import com.utc.api13.commun.entities.pieces.KnightEntity;
@@ -52,8 +41,9 @@ public class ChessBoardNode {
     private static final int TAILLE_CASE = 25;
     private Case[][] chessBoardSquares = new Case[TAILLE][TAILLE];
     private PositionEntity currentPosition;
-  //setter une variable d'etat pour savoir si on selectionne une piece ou une position pour les déplacements dans le listener
-  	private int selection = 1;
+    // setter une variable d'etat pour savoir si on selectionne une piece ou une
+    // position pour les déplacements dans le listener
+    private int selection = 1;
 
     public ChessBoardNode(IHMManager ihmManager) {
         myIhmManager = ihmManager;
@@ -67,44 +57,48 @@ public class ChessBoardNode {
         int ligne = 0;
         char couleur = 'N';
         APieceEntity tempo = null;
-        
+
         gui.setBorder(new EmptyBorder(5, 5, 5, 5));
         chessBoard = new JPanel(new GridLayout(0, 9));
         chessBoard.setBorder(new LineBorder(Color.BLACK));
         gui.add(chessBoard);
 
-        // création des cases de l'échiquier avec le listener pour les déplacements
+        // création des cases de l'échiquier avec le listener pour les
+        // déplacements
         Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int ii = 0; ii < chessBoardSquares.length; ii++) {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
                 Case b = new Case(ii, jj);
                 b.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						Case current = (Case) e.getSource();
-						if (selection == 1) {
-							currentPosition.setPositionX(current.getLine());
-							currentPosition.setPositionY(current.getColumn());
-							List<PositionEntity> positionList = myIClientToIHM.getAvailableMoves(current.getLine(), current.getColumn());
-							if (positionList != null) {
-								selection = 2;
-								// passer les cases en surbrillance
-								for (int i=0; i < positionList.size(); i++) {
-									chessBoardSquares[positionList.get(i).getPositionX()][positionList.get(i).getPositionY()].setBackground(Color.GREEN);
-								}
-							}
-						}
-												
-						if (selection ==2) {
-							if ((current.getLine() == currentPosition.getPositionX()) && (current.getColumn() ==currentPosition.getPositionY())) {
-								selection = 1;
-							}
-							else {
-								myIClientToIHM.playmoves(currentPosition.getPositionX(), currentPosition.getPositionY(), current.getLine(), current.getColumn());
-							}
-						}
+                    public void actionPerformed(ActionEvent e) {
+                        Case current = (Case) e.getSource();
+                        if (selection == 1) {
+                            currentPosition.setPositionX(current.getLine());
+                            currentPosition.setPositionY(current.getColumn());
+                            List<PositionEntity> positionList = myIClientToIHM.getAvailableMoves(current.getLine(),
+                                    current.getColumn());
+                            if (positionList != null) {
+                                selection = 2;
+                                // passer les cases en surbrillance
+                                for (int i = 0; i < positionList.size(); i++) {
+                                    chessBoardSquares[positionList.get(i).getPositionX()][positionList.get(i)
+                                            .getPositionY()].setBackground(Color.GREEN);
+                                }
+                            }
+                        }
 
-					}
-				});
+                        if (selection == 2) {
+                            if ((current.getLine() == currentPosition.getPositionX())
+                                    && (current.getColumn() == currentPosition.getPositionY())) {
+                                selection = 1;
+                            } else {
+                                myIClientToIHM.playmoves(currentPosition.getPositionX(), currentPosition.getPositionY(),
+                                        current.getLine(), current.getColumn());
+                            }
+                        }
+
+                    }
+                });
                 b.setMargin(buttonMargin);
                 if ((jj % 2 == 1 && ii % 2 == 1) || (jj % 2 == 0 && ii % 2 == 0)) {
                     b.setBackground(Color.WHITE);
@@ -112,7 +106,7 @@ public class ChessBoardNode {
                     b.setBackground(Color.GRAY);
                 }
                 chessBoardSquares[jj][ii] = b;
-               
+
             }
         }
 

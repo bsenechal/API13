@@ -37,12 +37,14 @@ public interface IClientComToData {
     /**
      * to send a proposition to a another connected user
      */
-    public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean timer, Integer timerInt);
+    public void sendProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean timer,
+            Integer timerInt);
 
     /**
      * to answer a proposition to a another connected user
      */
-    public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer, boolean timer, Integer timerInt);
+    public void answerProposition(UUID sender, UUID reciever, boolean chattable, boolean observable, boolean answer,
+            boolean timer, Integer timerInt);
 
     /**
      * to request a validation of move.
@@ -51,14 +53,19 @@ public interface IClientComToData {
 
     /**
      * Sends new user profile when it has bee updated.
-     * @param user Local user public profile object
+     * 
+     * @param user
+     *            Local user public profile object
      */
     public void sendUserUpdates(PublicUserEntity user);
 
     /**
      * Sends the game replay on the server
-     * @param user Sender
-     * @param game Game object
+     * 
+     * @param user
+     *            Sender
+     * @param game
+     *            Game object
      */
     public void pushReplayToServer(PublicUserEntity user, GameEntity game);
 
@@ -69,13 +76,17 @@ public interface IClientComToData {
 
     /**
      * Informs the server the current player surrenders
-     * @param uid Id of the player
+     * 
+     * @param uid
+     *            Id of the player
      */
     public void surrender(UUID uid);
 
     /**
      * Give victory to the opponent by surrending
-     * @param uid ID of the opponent
+     * 
+     * @param uid
+     *            ID of the opponent
      */
     public void victoryBySurrender(UUID uid);
 
@@ -91,15 +102,20 @@ public interface IClientComToData {
 
     /**
      * Sends leaving request to the opponent
-     * @param uid ID of the opponent
-     * @param answer 
+     * 
+     * @param uid
+     *            ID of the opponent
+     * @param answer
      */
     public void requestPlayerForLeaving(UUID uid, boolean answer);
 
     /**
      * Sends chat message to a game
-     * @param texte Message
-     * @param partie Game ID
+     * 
+     * @param texte
+     *            Message
+     * @param partie
+     *            Game ID
      */
     public void sendTextChat(String texte, UUID partie);
 
@@ -110,6 +126,7 @@ public interface IClientComToData {
 
     /**
      * Notifies that the local observer leaves the game
+     * 
      * @param uid
      */
     public void observerLeave(UUID uid);
@@ -118,13 +135,16 @@ public interface IClientComToData {
 
     /**
      * Getter for manager instance
+     * 
      * @return Manager instance
      */
     public ComClientManager getComClientManagerInstance();
 
     /**
      * Setter for manager instance
-     * @param comClientManagerInstance Manager to set
+     * 
+     * @param comClientManagerInstance
+     *            Manager to set
      */
     public void setComClientManagerInstance(ComClientManager comClientManagerInstance);
 

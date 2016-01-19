@@ -76,7 +76,7 @@ public class AppClient extends Application {
     public void setCurrentStage(Stage currentStage) {
         this.currentStage = currentStage;
     }
-    
+
     public Stage getMainStage() {
         return stage;
     }
@@ -84,7 +84,6 @@ public class AppClient extends Application {
     public void setMainStage(Stage mainStage) {
         this.stage = mainStage;
     }
-    
 
     public static void main(String[] args) {
         launch(args);

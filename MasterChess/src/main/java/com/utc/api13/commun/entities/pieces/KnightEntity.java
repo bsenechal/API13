@@ -45,41 +45,36 @@ public class KnightEntity extends APieceEntity {
             if (x != 0) {
                 for (int y = MIN_MOVE; y < MAX_MOVE; y++) {
                     if (y != 0 && Math.abs(x) != Math.abs(y)) {
-                        
+
                         addPossibleSolution(game, positionX, positionY, x, y, result, verifyCheck);
-                        
+
                         /*
-                         
-=======
-
->>>>>>> refs/remotes/origin/IHM
-                        PositionEntity positionTemp = new PositionEntity(positionX + x, positionY + y);
-
-                        // On vérifie que la position est bien sur le plateau de
-                        // jeu
-                        if (ChessboardEntity.isCaseOnChessboard(positionTemp)) {
-                            List<APieceEntity> opponentPieces = null;
-                            // Si on est le joueur noir
-                            if (game.getCurrentPlayer().equals(game.getBlackPlayer())) {
-                                opponentPieces = game.getBlackPieces();
-                            } else {
-                                opponentPieces = game.getWhitePieces();
-                            }
-                            // On vérifie que la position n'est pas déjà prise
-                            if (APieceEntity.isPositionAvailableFromPieces(opponentPieces, positionTemp)) {
-                                // On vérifie que cela ne met pas notre roi en
-                                // échec
-                                this.movePiece(new MoveEntity(new Date(), this.getPosition(), positionTemp, this),
-                                        game);
-                                if (!game.isCheck()) {
-                                    result.add(positionTemp);
-                                }
-                                this.cancelLastMove(game);
-
-                            }
-                        }
-<<<<<<< HEAD
-                        */
+                         * 
+                         * =======
+                         * 
+                         * >>>>>>> refs/remotes/origin/IHM PositionEntity
+                         * positionTemp = new PositionEntity(positionX + x,
+                         * positionY + y);
+                         * 
+                         * // On vérifie que la position est bien sur le plateau
+                         * de // jeu if
+                         * (ChessboardEntity.isCaseOnChessboard(positionTemp)) {
+                         * List<APieceEntity> opponentPieces = null; // Si on
+                         * est le joueur noir if
+                         * (game.getCurrentPlayer().equals(game.getBlackPlayer()
+                         * )) { opponentPieces = game.getBlackPieces(); } else {
+                         * opponentPieces = game.getWhitePieces(); } // On
+                         * vérifie que la position n'est pas déjà prise if
+                         * (APieceEntity.isPositionAvailableFromPieces(
+                         * opponentPieces, positionTemp)) { // On vérifie que
+                         * cela ne met pas notre roi en // échec
+                         * this.movePiece(new MoveEntity(new Date(),
+                         * this.getPosition(), positionTemp, this), game); if
+                         * (!game.isCheck()) { result.add(positionTemp); }
+                         * this.cancelLastMove(game);
+                         * 
+                         * } } <<<<<<< HEAD
+                         */
                     }
                 }
             }
@@ -91,9 +86,9 @@ public class KnightEntity extends APieceEntity {
     public List<PositionEntity> generateAvailableMoves(GameEntity game) {
         return generateAvailableMoves(game, Boolean.TRUE);
     }
-    
+
     @Override
     public String toString() {
-    	return "Knight";
+        return "Knight";
     }
 }

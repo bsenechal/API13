@@ -258,7 +258,9 @@ public interface IClientDataToIHM {
 
     /**
      * Removes the given user from game's chat
-     * @param idUser uid of user to remove from chat
+     * 
+     * @param idUser
+     *            uid of user to remove from chat
      */
     public void removeUserFromChat(UUID idUser);
 

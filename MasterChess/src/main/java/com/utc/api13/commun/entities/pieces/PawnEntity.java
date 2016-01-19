@@ -31,14 +31,14 @@ public class PawnEntity extends APieceEntity {
         this.setPosition((color.equals(PieceColorEnum.BLACK) ? new PositionEntity(startColumn, START_LINE_BLACK_PAWN)
                 : new PositionEntity(startColumn, START_LINE_WHITE_PAWN)));
     }
-    
+
     public PawnEntity(final PieceColorEnum color, final PositionEntity startPosition) {
         super(color);
         this.setPosition(startPosition);
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return "Pawn";
     }
 
@@ -54,53 +54,56 @@ public class PawnEntity extends APieceEntity {
         int positionY = getPosition().getPositionY();
 
         if (this.getColor().equals(PieceColorEnum.WHITE)) {
-            
 
             // mouvement classique
             positionTemp = new PositionEntity(positionX, positionY + 1);
-            if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp) && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
+            if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)
+                    && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
                 result.add(positionTemp);
             }
-            
+
             if (positionX == START_LINE_WHITE_PAWN) {
                 positionTemp = new PositionEntity(positionX, positionY + 2);
-                if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp) && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
+                if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)
+                        && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
                     result.add(positionTemp);
                 }
             }
 
             // ennemis dans les diagonales
-            positionTemp = new PositionEntity(positionX + 1 , positionY + 1);
+            positionTemp = new PositionEntity(positionX + 1, positionY + 1);
             if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
                 addPossibleSolution(game, positionX, positionY, 1, 1, result, Boolean.FALSE);
             }
-            
+
             positionTemp = new PositionEntity(positionX - 1, positionY + 1);
             if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
                 addPossibleSolution(game, positionX, positionY, -1, 1, result, Boolean.FALSE);
             }
 
         } else if (this.getColor().equals(PieceColorEnum.BLACK)) {
-            
+
             // mouvement classique
             positionTemp = new PositionEntity(positionX, positionY - 1);
-            if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp) && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
+            if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)
+                    && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
                 result.add(positionTemp);
             }
 
             if (positionX == START_LINE_BLACK_PAWN) {
                 positionTemp = new PositionEntity(positionX, positionY - 2);
-                if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp) && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
+                if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)
+                        && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
                     result.add(positionTemp);
-                }            
+                }
             }
 
             // ennemis dans les diagonales
-            positionTemp = new PositionEntity(positionX + 1 , positionY - 1);
+            positionTemp = new PositionEntity(positionX + 1, positionY - 1);
             if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
                 addPossibleSolution(game, positionX, positionY, 1, -1, result, Boolean.FALSE);
             }
-            
+
             positionTemp = new PositionEntity(positionX - 1, positionY - 1);
             if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
                 addPossibleSolution(game, positionX, positionY, -1, -1, result, Boolean.FALSE);

@@ -142,7 +142,7 @@ public class IHMWelcomePageController {
     }
 
     @SuppressWarnings("restriction")
-	@FXML
+    @FXML
     public void onLogOutClicked() throws IOException {
         try {
             this.myIClientToIHM.disconnect();
@@ -181,7 +181,7 @@ public class IHMWelcomePageController {
     }
 
     @SuppressWarnings("restriction")
-	@FXML
+    @FXML
     public void onExportClicked() throws IOException {
         File exportFile = null;
         try {
@@ -219,7 +219,7 @@ public class IHMWelcomePageController {
     }
 
     @SuppressWarnings("restriction")
-	@FXML
+    @FXML
     public void onUserInfoClicked() throws IOException {
 
         Stage stage;
@@ -418,10 +418,7 @@ public class IHMWelcomePageController {
                 }
             }
         });
-        
-        
-        
-        
+
     }
 
     public void setBindingsOnLoad() {
@@ -473,28 +470,20 @@ public class IHMWelcomePageController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
-    
-    //Function to make people disconnect when they click the cross to close the window of Welcome Page
-    public void setDisconnectUserByClosingWindow()
-    {
-     // catch event close window
-        mainApp.getMainStage().setOnCloseRequest
-        ( 
-                new EventHandler<WindowEvent>() 
-                {
-                    public void handle(WindowEvent we) 
-                    {
-                        try
-                        {
-                            onLogOutClicked();
-                        } 
-                        catch (IOException e) 
-                        {
-                            e.printStackTrace();
-                        }
-                    }
+
+    // Function to make people disconnect when they click the cross to close the
+    // window of Welcome Page
+    public void setDisconnectUserByClosingWindow() {
+        // catch event close window
+        mainApp.getMainStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                try {
+                    onLogOutClicked();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-        );
+            }
+        });
     }
 
 }

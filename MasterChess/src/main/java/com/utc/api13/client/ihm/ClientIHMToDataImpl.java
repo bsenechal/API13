@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import com.utc.api13.client.AppClient;
 import com.utc.api13.client.ihm.controllers.AnswerPropositionController;
 import com.utc.api13.client.ihm.controllers.ErrorController;
 import com.utc.api13.client.ihm.controllers.IHMGamePageController;
@@ -31,7 +30,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     }
 
     @SuppressWarnings("restriction")
-	@Override
+    @Override
     public void displayProfile(PublicUserEntity u) {
         Platform.runLater(new Runnable() {
             @Override
@@ -53,109 +52,110 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     @SuppressWarnings("restriction")
     @Override
-    public void displayProposition(UUID uidSender, boolean observable,
-            boolean chattable , boolean timer, Integer timeInt) {
+    public void displayProposition(UUID uidSender, boolean observable, boolean chattable, boolean timer,
+            Integer timeInt) {
         myIHMManager.setUIDistant(uidSender);
 
-	    Platform.runLater(new Runnable() {
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
 
-//                     PublicUserEntity user= myIHMManager.getIClientDataToIHM().getUserList().stream()
-//                            .filter(u->u.getId().equals(uidSender)).findFirst().orElse(null);
-                     List<Object> users=Arrays.asList(myIHMManager.getIClientDataToIHM().getUserList().toArray());
-                     PublicUserEntity user=(PublicUserEntity) users.stream()
-                     .filter(u->((PublicUserEntity) u).getId().equals(uidSender)).findFirst().orElse(null);
-                    
-            	    Stage stage;
-                    Parent root = null;
-                    String l=""; 
-                    stage = new Stage();
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AnswerPropositionPopUp.fxml"));
-                    try {
-                           root = (Pane) fxmlLoader.load();
-                           AnswerPropositionController controller = fxmlLoader.getController();
-                           controller.setControllerContext(myIHMManager);
-                           myIHMManager.setCurrentStage(stage);
-                           controller.setMainApp(myIHMManager.getMainApp(), 
-                                  user.getLogin(), chattable, timer, 
-                                   observable, timeInt);        
-                             
-                           stage.setScene(new Scene(root));
-                           stage.setTitle("You've got a new game proposition!");
-                           stage.initModality(Modality.APPLICATION_MODAL);
-                           stage.show();
-                       } catch (IOException e) {
-                          e.printStackTrace();
-                          }
+                // PublicUserEntity user=
+                // myIHMManager.getIClientDataToIHM().getUserList().stream()
+                // .filter(u->u.getId().equals(uidSender)).findFirst().orElse(null);
+                List<Object> users = Arrays.asList(myIHMManager.getIClientDataToIHM().getUserList().toArray());
+                PublicUserEntity user = (PublicUserEntity) users.stream()
+                        .filter(u -> ((PublicUserEntity) u).getId().equals(uidSender)).findFirst().orElse(null);
+
+                Stage stage;
+                Parent root = null;
+                String l = "";
+                stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AnswerPropositionPopUp.fxml"));
+                try {
+                    root = (Pane) fxmlLoader.load();
+                    AnswerPropositionController controller = fxmlLoader.getController();
+                    controller.setControllerContext(myIHMManager);
+                    myIHMManager.setCurrentStage(stage);
+                    controller.setMainApp(myIHMManager.getMainApp(), user.getLogin(), chattable, timer, observable,
+                            timeInt);
+
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("You've got a new game proposition!");
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-	    });
+        });
     }
 
     @SuppressWarnings("restriction")
-	@Override
+    @Override
     public void displayAnswer(UUID uidSender, boolean observable) {
-        // uniquement si réponse négative 
-    	Platform.runLater(new Runnable() {
+        // uniquement si réponse négative
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
-		    	Stage stage;
-		        Parent root = null;
-		        stage = new Stage();
-		        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
-		        try {
-		               root = (Pane) fxmlLoader.load();
-		               ErrorController controller = fxmlLoader.getController();
-		               controller.setControllerContext(myIHMManager);
-		               controller.setMainApp(myIHMManager.getMainApp(), "Sorry: the player has refused to play!"); 
-		               stage.setScene(new Scene(root));
-		               stage.setTitle("Proposition refused");
-		               stage.initModality(Modality.APPLICATION_MODAL);
-		               stage.show();
-		           } catch (IOException e) {
-		              e.printStackTrace();
-		              }
-		}
-});
+                Stage stage;
+                Parent root = null;
+                stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+                try {
+                    root = (Pane) fxmlLoader.load();
+                    ErrorController controller = fxmlLoader.getController();
+                    controller.setControllerContext(myIHMManager);
+                    controller.setMainApp(myIHMManager.getMainApp(), "Sorry: the player has refused to play!");
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("Proposition refused");
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @SuppressWarnings("restriction")
-	@Override
-    public void displayChessBoard(GameEntity g) { // si yep data should call that function 
+    @Override
+    public void displayChessBoard(GameEntity g) { // si yep data should call
+                                                  // that function
         // TODO Auto-generated method stub
-    	Platform.runLater(new Runnable() {
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
 
-            	    Stage stage;
-                    Parent root = null;
-                    stage = new Stage();
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/gamePage.fxml"));
-                    try {
-                           root = (Pane) fxmlLoader.load();
-                           IHMGamePageController controller = fxmlLoader.getController();
-                           
-                           controller.setControllerContext(myIHMManager);
-                          
-                           controller.setMainApp(myIHMManager.getMainApp()); 
-                           stage.setScene(new Scene(root));
-                           stage.setTitle("Game!");
-                           stage.initModality(Modality.APPLICATION_MODAL);
-                           stage.show();
-                       } catch (IOException e) {
-                          e.printStackTrace();
-                          }
+                Stage stage;
+                Parent root = null;
+                stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/gamePage.fxml"));
+                try {
+                    root = (Pane) fxmlLoader.load();
+                    IHMGamePageController controller = fxmlLoader.getController();
+
+                    controller.setControllerContext(myIHMManager);
+
+                    controller.setMainApp(myIHMManager.getMainApp());
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("Game!");
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-	    });
+        });
     }
 
     public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, String pieceType) {
-    	// TODO Auto-generated method stub
-    	
+        // TODO Auto-generated method stub
+
     }
 
     @SuppressWarnings("restriction")
-	@Override
+    @Override
     public void displayError(String errorMessage) {
         // TODO Auto-generated method stub
         Platform.runLater(new Runnable() {
@@ -167,7 +167,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     }
 
     @SuppressWarnings("restriction")
-	@Override
+    @Override
     public void displayConfirmation(String confirmationMessage) {
         // TODO Auto-generated method stub
         Platform.runLater(new Runnable() {
@@ -191,15 +191,15 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     }
 
     @SuppressWarnings("restriction")
-	@Override
+    @Override
     public void displayMessage(String newMessage) {
-        
+
         // TODO Auto-generated method stub
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                String sms= myIHMManager.getChat().getMessage().get();
-                myIHMManager.getChat().getMessage().set((sms==null?"":sms)+"\n"+newMessage);
+                String sms = myIHMManager.getChat().getMessage().get();
+                myIHMManager.getChat().getMessage().set((sms == null ? "" : sms) + "\n" + newMessage);
             }
         });
     }

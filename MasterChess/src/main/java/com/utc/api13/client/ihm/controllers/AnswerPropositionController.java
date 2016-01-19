@@ -35,29 +35,30 @@ public class AnswerPropositionController {
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
     private final Logger log = Logger.getLogger(getClass());
-    private UUID enquirerUUID; 
-    private boolean answer=true; 
-    private boolean chattable; 
-    private boolean observable; 
-    private boolean timer; 
-    private String timeString; 
-    private int timeInt; 
-    
+    private UUID enquirerUUID;
+    private boolean answer = true;
+    private boolean chattable;
+    private boolean observable;
+    private boolean timer;
+    private String timeString;
+    private int timeInt;
+
     @FXML
     BorderPane answerPropositionBorderPane;
     @FXML
     AnchorPane answerPropositionAnchorPane;
     @FXML
-    Label invintingPlayerLogin, invitationLabel, optionsLabel, chosenOptionsLabel; 
+    Label invintingPlayerLogin, invitationLabel, optionsLabel, chosenOptionsLabel;
     @FXML
-    Button yesButton, noButton; 
-    
+    Button yesButton, noButton;
+
     public AnswerPropositionController() {
         initialize();
     }
+
     public void initialize() {
     }
-    
+
     public Stage getCurrentStage() {
         return currentStage;
     }
@@ -65,7 +66,7 @@ public class AnswerPropositionController {
     public void setCurrentStage(Stage currentStage) {
         this.currentStage = currentStage;
     }
-    
+
     public void error(String message) throws IOException {
         Stage stage;
         Parent root;
@@ -80,65 +81,72 @@ public class AnswerPropositionController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
-    
+
     @SuppressWarnings("restriction")
-	public void setMainApp(AppClient app, String login, Boolean chattable, Boolean timer, Boolean observable, int time) {
+    public void setMainApp(AppClient app, String login, Boolean chattable, Boolean timer, Boolean observable,
+            int time) {
         this.mainApp = app;
-        this.chattable=chattable; 
-        this.timer=timer; 
-        this.timeInt=time; 
-        int nbSecondes=time%60; 
-        int nbMinutes=time/60; 
-        this.timeString=Integer.toString(nbMinutes)+":"+Integer.toString(nbSecondes); 
-        this.observable=observable; 
-        
-        String options= new String("") ; 
-        if (chattable) options=options+"chattable ; "; 
-        if (observable) options=options+"observable ; "; 
-        if (timer) options=options+"timer : "+timeString; 
-        if (options.length()==0) options="None"; 
-        
+        this.chattable = chattable;
+        this.timer = timer;
+        this.timeInt = time;
+        int nbSecondes = time % 60;
+        int nbMinutes = time / 60;
+        this.timeString = Integer.toString(nbMinutes) + ":" + Integer.toString(nbSecondes);
+        this.observable = observable;
+
+        String options = new String("");
+        if (chattable)
+            options = options + "chattable ; ";
+        if (observable)
+            options = options + "observable ; ";
+        if (timer)
+            options = options + "timer : " + timeString;
+        if (options.length() == 0)
+            options = "None";
+
         this.chosenOptionsLabel.setText(options);
-        this.invintingPlayerLogin.setText(login); 
+        this.invintingPlayerLogin.setText(login);
     }
-    
+
     public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null) {
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
         }
     }
-    
+
     @SuppressWarnings("restriction")
-	public void onYesClicked() {
-    	PrivateUserEntity u=this.myIClientToIHM.getLocalUser(); 
-		UUID answeringUser = u.getId(); 
-		try {
-			this.IHMManager.getCurrentStage().close();
-			this.myIClientToIHM.sendResponse(answeringUser,IHMManager.getUisender(), answer, observable, chattable, timer, timeInt);
-		} catch (TechnicalException e) {
-			log.error(e.getMessage(), e);
-			try { 
-				error("Error while sending proposition answer : technical exception"); 
-			}
-			catch (IOException e1) {
-				log.error(e1.getMessage(), e1);
-			}
-		}
+    public void onYesClicked() {
+        PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
+        UUID answeringUser = u.getId();
+        try {
+            this.IHMManager.getCurrentStage().close();
+            this.myIClientToIHM.sendResponse(answeringUser, IHMManager.getUisender(), answer, observable, chattable,
+                    timer, timeInt);
+        } catch (TechnicalException e) {
+            log.error(e.getMessage(), e);
+            try {
+                error("Error while sending proposition answer : technical exception");
+            } catch (IOException e1) {
+                log.error(e1.getMessage(), e1);
+            }
+        }
     }
-    
+
     public void onNoClicked() {
-    	this.answer=false; 
-    	this.onYesClicked(); 
+        this.answer = false;
+        this.onYesClicked();
     }
-    
+
     public void setBindings(PropositionProperty proposition) {
-    	invintingPlayerLogin.textProperty().bind(proposition.loginAskingPayerProperty());
-    //	invitationLabel, optionsLabel, chosenOptionsLabel; 
-    	optionsLabel.textProperty().bind(proposition.chattableProperty().asString()); // can be change to String Property
-    
-    	
-    	
+        invintingPlayerLogin.textProperty().bind(proposition.loginAskingPayerProperty());
+        // invitationLabel, optionsLabel, chosenOptionsLabel;
+        optionsLabel.textProperty().bind(proposition.chattableProperty().asString()); // can
+                                                                                      // be
+                                                                                      // change
+                                                                                      // to
+                                                                                      // String
+                                                                                      // Property
 
     }
 }

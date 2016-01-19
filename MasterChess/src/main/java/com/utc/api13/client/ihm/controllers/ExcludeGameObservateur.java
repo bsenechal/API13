@@ -31,21 +31,21 @@ public class ExcludeGameObservateur {
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
     private final Logger log = Logger.getLogger(getClass());
-    private UUID enquirerUUID; 
+    private UUID enquirerUUID;
     private ObservableList gameObserver;
 
-   
     @FXML
-    TableView  observateurUserTable;
+    TableView observateurUserTable;
     @FXML
-    TableColumn observateurUserLogin,observateurUserFirstName,observateurLastName;
-    
+    TableColumn observateurUserLogin, observateurUserFirstName, observateurLastName;
+
     public ExcludeGameObservateur() {
         initialize();
     }
+
     public void initialize() {
     }
-    
+
     public Stage getCurrentStage() {
         return currentStage;
     }
@@ -53,7 +53,7 @@ public class ExcludeGameObservateur {
     public void setCurrentStage(Stage currentStage) {
         this.currentStage = currentStage;
     }
-    
+
     public void error(String message) throws IOException {
         Stage stage;
         Parent root;
@@ -68,22 +68,26 @@ public class ExcludeGameObservateur {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
-    
+
     @SuppressWarnings("restriction")
-	public void setMainApp(AppClient app /*, String login, Boolean chattable, Boolean timer, Boolean observable, int time */) {
+    public void setMainApp(
+            AppClient app /*
+                           * , String login, Boolean chattable, Boolean timer,
+                           * Boolean observable, int time
+                           */) {
         this.mainApp = app;
     }
-    
+
     @SuppressWarnings("unchecked")
     private void loadDataFromTable() {
         // TODO Auto-generated method stub
-       
-        gameObserver=FXCollections.observableList(
-                myIClientToIHM.getCurrentGame().getObservers());
-        
+
+        gameObserver = FXCollections.observableList(myIClientToIHM.getCurrentGame().getObservers());
+
         observateurUserTable.setItems(gameObserver);
-     
+
     }
+
     public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null) {
@@ -92,33 +96,32 @@ public class ExcludeGameObservateur {
         setListenersOnLoad();
         setBindingsOnLoad();
     }
-    
 
-    
     public void setBindings() {
 
-
     }
+
     public void setListenersOnLoad() {
-        
+
         loadDataFromTable();
         // selecting a line this user will be deleted from the Tchat
-        
-        observateurUserTable.getSelectionModel().selectedIndexProperty().addListener((obs, oldSelection, newSelection) -> {
-            int newValue=newSelection.intValue();   
-            Optional.ofNullable(gameObserver.get(newValue))
-                        .ifPresent(user -> myIClientToIHM.removeUserFromChat(((PublicUserEntity)user).getId()));
-            
-            getCurrentStage().close();//closing the current Stage
-      
-        });
+
+        observateurUserTable.getSelectionModel().selectedIndexProperty()
+                .addListener((obs, oldSelection, newSelection) -> {
+                    int newValue = newSelection.intValue();
+                    Optional.ofNullable(gameObserver.get(newValue))
+                            .ifPresent(user -> myIClientToIHM.removeUserFromChat(((PublicUserEntity) user).getId()));
+
+                    getCurrentStage().close();// closing the current Stage
+
+                });
     }
-            
+
     public void setBindingsOnLoad() {
-        
+
         observateurUserLogin.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("login"));
         observateurUserFirstName.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("firstName"));
         observateurLastName.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("lastName"));
     }
-    
+
 }

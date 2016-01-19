@@ -27,11 +27,11 @@ public class ClientDataToComImplTest {
 
     @Mock
     private ClientIHMToDataImpl clientIHMToDataImpl;
-    
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        
+
         dataClientManager = new DataClientManager();
     }
 
@@ -122,12 +122,12 @@ public class ClientDataToComImplTest {
     @Test
     public void initGame() {
         GameEntity testGame = new GameEntity();
-        
+
         dataClientManager.setIClientIHMToData(clientIHMToDataImpl);
         Mockito.doNothing().when(clientIHMToDataImpl).displayChessBoard(testGame);
-        
+
         dataClientManager.getClientDataToComImpl().initGame(testGame);
-        
+
         Assert.assertNotNull("CurrentGame shouldn't be null", dataClientManager.getCurrentGame());
         Assert.assertEquals("CurrentGame and testGame should be equals", dataClientManager.getCurrentGame(), testGame);
     }
@@ -139,18 +139,21 @@ public class ClientDataToComImplTest {
         GameEntity game = new GameEntity(Boolean.FALSE, Boolean.FALSE, new Date(), user1, user2);
 
         dataClientManager.setCurrentGame(game);
-        
+
         // Test si le currentUser est bien le joueur noir
-        Assert.assertEquals("Current player should be user1", dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user1.getId());
+        Assert.assertEquals("Current player should be user1",
+                dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user1.getId());
 
         dataClientManager.getClientDataToComImpl().nextTurn(GameStatusEnum.CONTINUE, user2.getId());
 
         // Status CONTINUE : On vérifie qu'on a bien changé de currentPlayer
-        Assert.assertEquals("Current player should be user2", dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user2.getId());
-        
+        Assert.assertEquals("Current player should be user2",
+                dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user2.getId());
+
         dataClientManager.getClientDataToComImpl().nextTurn(GameStatusEnum.CHECKMATE, user2.getId());
 
         // Status CHECKMATE : On vérifie qu'on a pas changé de joueur
-        Assert.assertEquals("Current player should be user2", dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user2.getId());
+        Assert.assertEquals("Current player should be user2",
+                dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user2.getId());
     }
 }

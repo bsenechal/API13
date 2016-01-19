@@ -1,7 +1,6 @@
 package com.utc.api13.client.ihm.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -10,13 +9,10 @@ import java.util.UUID;
 import javax.swing.SwingUtilities;
 
 import com.utc.api13.client.AppClient;
-import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.models.ChessBoardNode;
 import com.utc.api13.client.ihm.property.ChatProperty;
-import com.utc.api13.commun.entities.GameEntity;
-import com.utc.api13.commun.entities.PublicUserEntity;
 
 import javafx.embed.swing.SwingNode;
 import javafx.event.Event;
@@ -39,8 +35,6 @@ public class IHMGamePageController {
     private AppClient mainApp;
     private Stage currentStage;
     private ChatProperty chat;
-
-   
 
     @FXML
     Label chatLabel, otherPlayerLoginLabel, otherPlayerTimeLabel, playerLoginLabel, playerTimeLabel,
@@ -73,19 +67,18 @@ public class IHMGamePageController {
     @FXML
     private void onExcludeChatClicked(Event event) throws IOException {
 
-      List<UUID> players=Arrays.asList( myIClientToIHM.getCurrentGame().getBlackPlayer().getId(),
-              myIClientToIHM.getCurrentGame().getBlackPlayer().getId());
-      if(!players.contains(myIClientToIHM.getLocalUser().getId())){    
-         openUserObservableList();
-      }
-      else{
-          error(" only the two player can remove someone from the Tchat");
-      }
+        List<UUID> players = Arrays.asList(myIClientToIHM.getCurrentGame().getBlackPlayer().getId(),
+                myIClientToIHM.getCurrentGame().getBlackPlayer().getId());
+        if (!players.contains(myIClientToIHM.getLocalUser().getId())) {
+            openUserObservableList();
+        } else {
+            error(" only the two player can remove someone from the Tchat");
+        }
     }
 
     private void openUserObservableList() throws IOException {
         // TODO Auto-generated method stub
-         Stage stage;
+        Stage stage;
         Parent root;
         stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/excludeObservateur.fxml"));
@@ -98,21 +91,18 @@ public class IHMGamePageController {
         stage.setTitle("Exclude observateur ");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
-        
+
     }
 
     @FXML
     private void onSendTextClicked(Event event) {
-        
-        Optional.ofNullable(sendTextArea.getText()).
-            ifPresent(
-                    sms->{
-                        chatTextArea.clear();
-                        sendTextArea.clear();
-                        String realMessage=myIClientToIHM.getLocalUser().getLogin()+": "+sms;
-                        myIClientToIHM.sendChatText(realMessage);
-                    }
-             );
+
+        Optional.ofNullable(sendTextArea.getText()).ifPresent(sms -> {
+            chatTextArea.clear();
+            sendTextArea.clear();
+            String realMessage = myIClientToIHM.getLocalUser().getLogin() + ": " + sms;
+            myIClientToIHM.sendChatText(realMessage);
+        });
     }
 
     @FXML
@@ -127,18 +117,18 @@ public class IHMGamePageController {
 
     public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
-        if (ihmManager != null){
+        if (ihmManager != null) {
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
-            chat=new ChatProperty();
+            chat = new ChatProperty();
             ihmManager.setChat(chat);
         }
         setListenersOnLoad();
         setBindingsOnLoad();
     }
 
-    public void setMainApp(AppClient app ) {
+    public void setMainApp(AppClient app) {
         this.mainApp = app;
-        //GameEntity game = this.myIClientToIHM.getCurrentGame();
+        // GameEntity game = this.myIClientToIHM.getCurrentGame();
         final ChessBoardNode cb = new ChessBoardNode(IHMManager);
         final SwingNode swingNode = new SwingNode();
 
@@ -153,14 +143,14 @@ public class IHMGamePageController {
         chessBoardStackPane.getChildren().add(swingNode);
 
         // initialisation des différents labels
-        //PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
-        //int nbObservers = game.getObservers().size();
+        // PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
+        // int nbObservers = game.getObservers().size();
 
         // otherPlayerLoginLabel.setText();
         // otherPlayerTimeLabel.setText();
-       // playerLoginLabel.setText(u.getLogin());
+        // playerLoginLabel.setText(u.getLogin());
         // playerTimeLabel.setText();
-       // numberObserversLabel.setText(String.valueOf(nbObservers));
+        // numberObserversLabel.setText(String.valueOf(nbObservers));
 
     }
 
@@ -169,9 +159,9 @@ public class IHMGamePageController {
     }
 
     public void setBindingsOnLoad() {
-        
+
         chatTextArea.textProperty().bind(chat.getMessage());
-        
+
     }
 
     public Stage getCurrentStage() {
@@ -181,6 +171,7 @@ public class IHMGamePageController {
     public void setCurrentStage(Stage currentStage) {
         this.currentStage = currentStage;
     }
+
     public ChatProperty getChat() {
         return chat;
     }
