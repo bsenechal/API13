@@ -169,7 +169,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         Case[][] chessBoardSquares = controller.getCb().getChessBoardSquares();
         
         // effacer la pièce de l'ancienne case
-        chessBoardSquares[line_from][col_from].setIcon(null);
+        chessBoardSquares[line_from-1][col_from-1].setIcon(null);
         // trouver le type de piece
         String pieceType="";
         if(piece.toString() == "Rook") {
@@ -188,11 +188,11 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         // afficher la pièce sur la nouvelle case
         try {
             if (game.getCurrentPlayer() == game.getBlackPlayer()) {
-                Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "N.gif"));
-                chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
-            } else {
                 Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "B.gif"));
-                chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
+                chessBoardSquares[line_to-1][col_to-1].setIcon(new ImageIcon(img));
+            } else {
+                Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "N.gif"));
+                chessBoardSquares[line_to-1][col_to-1].setIcon(new ImageIcon(img));
             }
 
         } catch (IOException e) {
@@ -251,10 +251,10 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     }
     public void activateCases(PublicUserEntity currentUser, GameStatusEnum status) {
     	// en fonction du joueur courant 
-    	GameEntity gameEntity = myIClientDataToIHM.getCurrentGame();
+    	GameEntity gameEntity = myIHMManager.getIClientDataToIHM().getCurrentGame();
     	Case[][] cb = controller.getCb().getChessBoardSquares();
     	if(status != GameStatusEnum.CHECKMATE) {
-    		if (myIClientDataToIHM.getLocalUser().getId() == currentUser.getId()) {
+    		if (myIHMManager.getIClientDataToIHM().getLocalUser().getId().equals(currentUser.getId())) {
     			for(Case i[] : cb) {
         			for(Case j : i){
         				j.setEnabled(true);

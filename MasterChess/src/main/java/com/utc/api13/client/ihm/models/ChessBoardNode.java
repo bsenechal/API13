@@ -102,6 +102,7 @@ public class ChessBoardNode {
                                 // désactiver toutes les cases
                                 for (int ii = 0; ii < chessBoardSquares.length; ii++) {
                                     for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
+                                    	
                                         chessBoardSquares[ii][jj].setEnabled(false);
                                     }
                                 }
@@ -112,26 +113,30 @@ public class ChessBoardNode {
                                 for (int i = 0; i < positionList.size(); i++) {
                                     chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
                                             .getPositionY()-1].setEnabled(true);
-                                    
+      
                                     chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
                                             .getPositionY()-1].setBackground(Color.GREEN);
+  	
                                 }
+                                
                             }
                         }
 
                         else if (selection == 2) {
                             if ((movePosition.getLine() == firstPosition.getPositionX())
                                     && (movePosition.getColumn() == firstPosition.getPositionY())) {
+                       
                                 selection = 1;
                             } else {
                                 myIClientToIHM.playMove(firstPosition.getPositionX(), firstPosition.getPositionY(),
                                         movePosition.getLine(), movePosition.getColumn());
-                                //décolorer la case
+                                //décolorer les cases
                                 for (Case[] i : chessBoardSquares) {
                                 	for(Case j : i) {
                                 		if(positionList.contains(j))
                                 			j.setBackground(j.getColor());                                		 
                                 	}
+                                chessBoardSquares[firstPosition.getPositionX()][firstPosition.getPositionY()].setBackground(chessBoardSquares[firstPosition.getPositionX()][firstPosition.getPositionY()].getColor());
  
                                 }
                                 // tout rendre unclickable
@@ -140,7 +145,9 @@ public class ChessBoardNode {
                         				j.setEnabled(false);
                         			}
                     			}
+                                
                             }
+                        
                         }
 
                     }

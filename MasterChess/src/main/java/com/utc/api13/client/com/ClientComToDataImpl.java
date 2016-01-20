@@ -13,6 +13,7 @@ import com.utc.api13.commun.messages.ConnectMessage;
 import com.utc.api13.commun.messages.DisconnectMessage;
 import com.utc.api13.commun.messages.ExcludeObserverMessage;
 import com.utc.api13.commun.messages.GameRequestMessage;
+import com.utc.api13.commun.messages.MoveValidationMessage;
 import com.utc.api13.commun.messages.ObserverLeaveMessage;
 import com.utc.api13.commun.messages.ObserverRequestMessage;
 import com.utc.api13.commun.messages.PublicUserMessage;
@@ -49,8 +50,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void validateMove(UUID idPlayer, MoveEntity move) {
-        // comClientManagerInstance.sendMessage(new
-        // MoveValidationMessage(idPlayer, new UUID(0,0), move));
+        comClientManagerInstance.sendMessage(new MoveValidationMessage(idPlayer, new UUID(0,0), move));
         return;
     }
 

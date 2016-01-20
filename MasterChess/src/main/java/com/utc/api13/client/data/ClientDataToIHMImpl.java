@@ -356,7 +356,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(fromposition);
 
         // On instancie un move entity
-        MoveEntity move = new MoveEntity(new Date(), fromposition, toposition, piece);
+        MoveEntity move = new MoveEntity(new Date(), fromposition, toposition, piece, currentplayer, dataClientManager.getCurrentGame().getId());
+ 
 
         // On passe le moveEntity à com
         dataClientManager.getIClientComToData().validateMove(currentplayer, move);
