@@ -143,7 +143,7 @@ public class IHMGamePageController {
     public void setMainApp(AppClient app) {
         this.mainApp = app;
         GameEntity game = this.myIClientToIHM.getCurrentGame();
-        cb = new ChessBoardNode(IHMManager, game);
+        cb = new ChessBoardNode(IHMManager, game, myIClientToIHM);
         cb.setMyIClientToIHM(myIClientToIHM);
         
         final SwingNode swingNode = new SwingNode();

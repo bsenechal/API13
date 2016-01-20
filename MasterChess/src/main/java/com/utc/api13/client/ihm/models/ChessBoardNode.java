@@ -52,9 +52,10 @@ public class ChessBoardNode {
     // position pour les déplacements dans le listener
     private int selection = 1;
 
-    public ChessBoardNode(IHMManager ihmManager, GameEntity game) {
+    public ChessBoardNode(IHMManager ihmManager, GameEntity game, IClientDataToIHM myIClientToIHM2) {
         myIhmManager = ihmManager;
         myGame = game;
+        myIClientToIHM = myIClientToIHM2;
         initializeGui();
     }
 
@@ -156,10 +157,9 @@ public class ChessBoardNode {
                 chessBoardSquares[jj][ii] = b;
 
             }
-            
-            activateCases(myGame.getCurrentPlayer());
-    
         }
+        
+        activateCases(myGame.getCurrentPlayer());
 
         // fill the chess board
         chessBoard.add(new JLabel(""));
@@ -261,9 +261,10 @@ public class ChessBoardNode {
 	public void setMyGame(GameEntity myGame) {
 		this.myGame = myGame;
 	}
+	
 	public void activateCases(PublicUserEntity currentUser) {
     	// en fonction du joueur courant 
-    	if (myIClientToIHM.getLocalUser().getId() == currentUser.getId()) {
+    	if (myIClientToIHM.getLocalUser().getId().equals(currentUser.getId())) {
     			for(Case i[] : chessBoardSquares) {
         			for(Case j : i){
         				j.setEnabled(true);
