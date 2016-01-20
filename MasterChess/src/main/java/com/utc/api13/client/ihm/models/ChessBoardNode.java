@@ -127,12 +127,13 @@ public class ChessBoardNode {
                             } else {
                                 myIClientToIHM.playMove(firstPosition.getPositionX(), firstPosition.getPositionY(),
                                         movePosition.getLine(), movePosition.getColumn());
-                                //décolorer la case
+                                //décolorer les cases
                                 for (Case[] i : chessBoardSquares) {
                                 	for(Case j : i) {
                                 		if(positionList.contains(j))
                                 			j.setBackground(j.getColor());                                		 
                                 	}
+                                chessBoardSquares[firstPosition.getPositionX()][firstPosition.getPositionY()].setColor(chessBoardSquares[firstPosition.getPositionX()][firstPosition.getPositionY()].getColor());
  
                                 }
                                 // tout rendre unclickable
