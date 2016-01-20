@@ -90,7 +90,7 @@ public interface IClientDataToCom {
      */
     public void notify(final String message);
 
-    public void notifyRejection(final UUID uidSender);
+    public void notifyRejection(final UUID uidSender, String REJECTION_MESSAGE);
 
     
     /**

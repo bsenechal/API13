@@ -148,7 +148,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
                 .equals(instanceDataClientManager.getCurrentGame().getBlackPlayer().getId())
                         ? instanceDataClientManager.getCurrentGame().getWhitePlayer().getId()
                         : instanceDataClientManager.getCurrentGame().getBlackPlayer().getId();
-        instanceDataClientManager.getIClientIHMToData().displayAnswer(senderId, answer);
+        instanceDataClientManager.getIClientIHMToData().displayAnswer(senderId, answer, "The player has quit the game ");
     }
 
     @Override
@@ -166,8 +166,8 @@ public class ClientDataToComImpl implements IClientDataToCom {
     }
 
     @Override
-    public void notifyRejection(UUID uidSender) {
-        instanceDataClientManager.getIClientIHMToData().displayAnswer(uidSender, false);
+    public void notifyRejection(UUID uidSender, String REJECTION_MESSAGE) {
+        instanceDataClientManager.getIClientIHMToData().displayAnswer(uidSender, false, REJECTION_MESSAGE);
         //Appelle la fonction displayAnswer qui n'est censé être utilisée que lorsque le joueur refuse la partie
     }
 
