@@ -61,7 +61,7 @@ public class MoveValidationMessage extends Message {
             GameStatusEnum status = comServerManager.getIServerDataToCom().isFinished(move.getGameID());
             game = comServerManager.getIServerDataToCom().getGameById(move.getGameID());
             UUID nexttoplay = game.getCurrentPlayer().getId();
-//             UUID nexttoplay = comServerManager.getIServerDataToCom().getNextPlayer(move.getGameID());
+//             UUID nexttoplay = comServerManager.getIServerDataToCom().getNextPlayer(move.getGameID()); // A vérifier, mais ne pas utiliser
              NextTurnMessage ntm = new NextTurnMessage(new UUID(0, 0), null, status, nexttoplay);
              comServerManager.multicastMessageByUsers(list, ntm);
         } else {
