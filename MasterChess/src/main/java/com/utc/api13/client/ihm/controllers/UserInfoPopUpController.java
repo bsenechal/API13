@@ -1,11 +1,8 @@
 package com.utc.api13.client.ihm.controllers;
 
-import javafx.scene.control.Button;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
@@ -24,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -111,7 +109,7 @@ public class UserInfoPopUpController {
     }
 
     @SuppressWarnings("restriction")
-	public void setBindings(ProfilProperty profile) {
+    public void setBindings(ProfilProperty profile) {
         userInfoLogin.textProperty().bind(profile.loginProperty());
         userInfoFirstName.textProperty().bind(profile.firstNameProperty());
         userInfoLastName.textProperty().bind(profile.lastNameProperty());
@@ -136,7 +134,7 @@ public class UserInfoPopUpController {
     }
 
     @SuppressWarnings("restriction")
-	public void sendProposition() throws IOException {
+    public void sendProposition() throws IOException {
         Stage stage;
         Parent root;
         stage = new Stage();

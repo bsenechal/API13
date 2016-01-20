@@ -65,7 +65,7 @@ public interface IServerDataToCom {
      * @return true if the move is possible, else -> false
      */
     // TODO : Ulysse : do we need idPlayer since move as the players infos ?
-    public boolean computerResult(final int idPlayer, final MoveEntity move);
+    public boolean computerResult(final UUID idPlayer, final MoveEntity move);
 
     /**
      * This method is used to determine if the game is check/checkmate, draw or
@@ -103,16 +103,16 @@ public interface IServerDataToCom {
      */
     public boolean saveUserData(final PublicUserEntity User) throws TechnicalException, FunctionalException;
 
-    public void newObserver(final UUID idGame, final UUID idUser); // Un nouvel
-                                                                   // observeur
-                                                                   // se
-                                                                   // connecte
-                                                                   // à la
-                                                                   // partie.
-                                                                   // Mettre à
-                                                                   // jour la
-                                                                   // List<PublicUserEntity>
-                                                                   // d'observeurs
+    /**
+     * Un nouvel observateur se connecte à la partie<br/>
+     * Mettre à jour la Liste des observateurs
+     * 
+     * @param idGame
+     *            uid game
+     * @param idUser
+     *            uid user à rajouter
+     */
+    public void newObserver(final UUID idGame, final UUID idUser);
 
     public void createReplay(final GameEntity game, final PublicUserEntity user);
 
@@ -141,9 +141,10 @@ public interface IServerDataToCom {
                                                // pour supprimer un User de la
                                                // liste des Users connectés
 
-	// TODO
-	// Méthode pour créer une nouvelle partie :
-	public GameEntity createGame(final UUID j1, final UUID j2, final boolean observable, final boolean chattable, final boolean timer, final Integer timerInt);
+    // TODO
+    // Méthode pour créer une nouvelle partie :
+    public GameEntity createGame(final UUID j1, final UUID j2, final boolean observable, final boolean chattable,
+            final boolean timer, final Integer timerInt);
 
     public GameEntity getGameById(final UUID IdGame); // Renvoie une GameEntity
                                                       // par l'UID de la Game
@@ -154,7 +155,15 @@ public interface IServerDataToCom {
      * @param idGame
      *            id of game
      */
-    void endGame(UUID idGame);
+    public void endGame(UUID idGame);
 
-    public void removeUserFromChat(UUID userId, UUID game);
+    /**
+     * removes an observer from his/her local game
+     * 
+     * @param idUser
+     *            uid of user to remove
+     * @param idGame
+     *            uid of game
+     */
+    public void removeUserFromChat(UUID idUser, UUID idGame);
 }

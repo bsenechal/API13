@@ -1,16 +1,22 @@
 package com.utc.api13.client.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.client.ihm.ClientIHMToDataImpl;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 /**
  * @author DATA
@@ -19,8 +25,13 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 public class ClientDataToComImplTest {
     private DataClientManager dataClientManager;
 
+    @Mock
+    private ClientIHMToDataImpl clientIHMToDataImpl;
+
     @Before
     public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+
         dataClientManager = new DataClientManager();
     }
 
@@ -111,15 +122,39 @@ public class ClientDataToComImplTest {
     @Test
     public void initGame() {
         GameEntity testGame = new GameEntity();
-        PublicUserEntity testUser = new PublicUserEntity();
-        testUser.setFirstName("jean");
 
-        testGame.setIsObservable(true);
-        testGame.setWhitePlayer(testUser);
+        dataClientManager.setIClientIHMToData(clientIHMToDataImpl);
+        Mockito.doNothing().when(clientIHMToDataImpl).displayChessBoard(testGame);
 
         dataClientManager.getClientDataToComImpl().initGame(testGame);
-        Assert.assertTrue("IsObservable should be true", dataClientManager.getCurrentGame().getIsObservable());
-        Assert.assertEquals("Current white player should be Jean ", "Jean",
-                dataClientManager.getCurrentGame().getWhitePlayer().getFirstName());
+
+        Assert.assertNotNull("CurrentGame shouldn't be null", dataClientManager.getCurrentGame());
+        Assert.assertEquals("CurrentGame and testGame should be equals", dataClientManager.getCurrentGame(), testGame);
     }
+
+    @Test
+    public void nextTurnTest() {
+        PublicUserEntity user1 = new PublicUserEntity();
+        PublicUserEntity user2 = new PublicUserEntity();
+        GameEntity game = new GameEntity(Boolean.FALSE, Boolean.FALSE, new Date(), user1, user2);
+
+        dataClientManager.setCurrentGame(game);
+
+        // Test si le currentUser est bien le joueur noir
+        Assert.assertEquals("Current player should be user1",
+                dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user1.getId());
+
+        dataClientManager.getClientDataToComImpl().nextTurn(GameStatusEnum.CONTINUE, user2.getId());
+
+        // Status CONTINUE : On vérifie qu'on a bien changé de currentPlayer
+        Assert.assertEquals("Current player should be user2",
+                dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user2.getId());
+
+        dataClientManager.getClientDataToComImpl().nextTurn(GameStatusEnum.CHECKMATE, user2.getId());
+
+        // Status CHECKMATE : On vérifie qu'on a pas changé de joueur
+        Assert.assertEquals("Current player should be user2",
+                dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user2.getId());
+    }
+
 }

@@ -4,7 +4,9 @@
 package com.utc.api13.client.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -16,7 +18,10 @@ import org.mockito.MockitoAnnotations;
 
 import com.utc.api13.client.com.ClientComToDataImpl;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
+import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
+import com.utc.api13.commun.entities.MoveEntity;
+import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
@@ -125,5 +130,105 @@ public class ClientDataToIHMImplTest {
                 dataClientManager.getClientDataToIHMImpl().getGamesList().size());
         Assert.assertTrue("CurrentGames should contains " + specificGame.toString(),
                 dataClientManager.getClientDataToIHMImpl().getGamesList().contains(specificGame));
+    }
+
+    // Comment vérifier la svg ?
+    @Test
+    public void saveGameTest() {
+        PublicUserEntity whitePlayer = new PublicUserEntity("whitelogin", "whitemdp");
+        PublicUserEntity blackPlayer = new PublicUserEntity("blacklogin", "blackmdp");
+
+        GameEntity newGame = new GameEntity();
+        newGame.setBlackPlayer(blackPlayer);
+        newGame.setWhitePlayer(whitePlayer);
+        newGame.setIsOservable(true);
+        newGame.setIsChattable(true);
+        newGame.setTimer(true);
+        newGame.setTimerInt(7);
+
+        dataClientManager.setCurrentGame(newGame);
+        try {
+            clientDataToIHMImpl.saveGame();
+        } catch (TechnicalException e) {
+            Assert.fail("Erreur technique : " + e.getMessage());
+        } catch (FunctionalException e) {
+            Assert.fail("Erreur fonctionnelle : " + e.getMessage());
+        }
+
+    }
+
+    @Test
+    public void playMoveTest() {
+
+        PublicUserEntity whitePlayer = new PublicUserEntity("whitelogin", "whitemdp");
+        PublicUserEntity blackPlayer = new PublicUserEntity("blacklogin", "blackmdp");
+
+        GameEntity newGame = new GameEntity();
+        newGame.setBlackPlayer(blackPlayer);
+        newGame.setWhitePlayer(whitePlayer);
+        newGame.setIsOservable(true);
+        newGame.setIsChattable(true);
+        newGame.setTimer(true);
+        newGame.setTimerInt(7);
+        newGame.setCurrentPlayer(whitePlayer);
+
+        dataClientManager.setCurrentGame(newGame);
+
+        int fromLine = 2;
+        int toLine = 3;
+        int fromCol = 2;
+        int toCol = 2;
+
+        PositionEntity fromposition = new PositionEntity(fromLine, fromCol);
+        PositionEntity toposition = new PositionEntity(toLine, toCol);
+        UUID currentplayer = dataClientManager.getCurrentGame().getCurrentPlayer().getId();
+        APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(fromposition);
+        MoveEntity move = new MoveEntity(new Date(), fromposition, toposition, piece);
+
+        Mockito.doNothing().when(clientComToDataImpl).validateMove(currentplayer, move);
+
+        dataClientManager.setIClientComToData(clientComToDataImpl);
+
+        dataClientManager.getClientDataToIHMImpl().playMove(fromLine, fromCol, toLine, toCol);
+    }
+    
+    
+    @Test
+    public void moveTest(){
+        PrivateUserEntity whitePrivatePlayer = new PrivateUserEntity("whitelogin", "whitemdp");
+        PublicUserEntity whitePlayer = new PublicUserEntity("whitelogin", "whitemdp");
+
+        PublicUserEntity blackPlayer = new PublicUserEntity("blacklogin", "blackmdp");
+
+        GameEntity newGame = new GameEntity();
+        newGame.setBlackPlayer(blackPlayer);
+        newGame.setWhitePlayer(whitePlayer);
+        newGame.setCurrentPlayer(whitePlayer);
+        
+        dataClientManager.setUserLocal(whitePrivatePlayer);
+        
+        dataClientManager.setCurrentGame(newGame);
+        for (APieceEntity piece: newGame.getWhitePieces()){
+            System.out.println(piece.toString()+"  - X : "+ piece.getPosition().getPositionX() +" , Y : "+piece.getPosition().getPositionY() );
+        }
+        
+        APieceEntity pieceToMove = dataClientManager.getCurrentGame().getPieceFromPosition(new PositionEntity(4, 2));
+        
+        
+        MoveEntity move = new MoveEntity(new Date(), new PositionEntity(4, 2), new PositionEntity(4, 3), pieceToMove);
+        
+        Mockito.doNothing().when(clientComToDataImpl).validateMove(whitePlayer.getId(), move);
+
+        dataClientManager.setIClientComToData(clientComToDataImpl);
+
+       try {
+           
+            dataClientManager.getClientDataToIHMImpl().move(pieceToMove, new PositionEntity(4, 3));
+        } catch (FunctionalException e) {
+            Assert.fail("Error : " + e.getMessage());
+        }  
+       for (APieceEntity piece: newGame.getWhitePieces()){
+           System.out.println(piece.toString()+"  - X : "+ piece.getPosition().getPositionX() +" , Y : "+piece.getPosition().getPositionY() );
+       }
     }
 }

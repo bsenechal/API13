@@ -4,6 +4,7 @@
 package com.utc.api13.server.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -12,10 +13,14 @@ import java.util.stream.Collectors;
 
 import org.springframework.util.Assert;
 
+import com.utc.api13.commun.entities.APieceEntity;
 //import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
+import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.entities.pieces.KingEntity;
+import com.utc.api13.commun.entities.pieces.RookEntity;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
 import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
@@ -81,7 +86,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
      * com.utc.api13.commun.entities.MoveEntity)
      */
     @Override
-    public boolean computerResult(int idPlayer, MoveEntity move) {
+    public boolean computerResult(UUID idPlayer, MoveEntity move) {
         Assert.notNull(move.getGameID(), "[ServerDataToComImpl][computerResult] gameID shouldn't be null");
         Assert.notNull(move.getUserID(), "[ServerDataToComImpl][computerResult] userID shouldn't be null");
         Assert.notNull(move.getPiece(), "[ServerDataToComImpl][computerResult] piece shouldn't be null");
@@ -93,10 +98,42 @@ public class ServerDataToComImpl implements IServerDataToCom {
         Boolean result = move.getPiece().isMovePossible(move, game);
         if (result) {
 
+            if (move.getPiece().toString() == "King") {
+                KingEntity kingTmp = (KingEntity) move.getPiece();
+                if (kingTmp.getHasMove() == Boolean.FALSE) {
+                    if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() + 2) {
+                        // petit roque
+
+                        PositionEntity fromPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
+                                kingTmp.getPosition().getPositionX() + 3);
+                        PositionEntity toPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
+                                kingTmp.getPosition().getPositionX() + 1);
+
+                        APieceEntity piece = game.getPieceFromPosition(fromPosition);
+
+                        MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
+                        moveTmp.getPiece().movePiece(moveTmp, game);
+
+                    } else if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() - 2) {
+                        // grand roque
+
+                        PositionEntity fromPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
+                                kingTmp.getPosition().getPositionX() - 4);
+                        PositionEntity toPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
+                                kingTmp.getPosition().getPositionX() - 1);
+
+                        APieceEntity piece = game.getPieceFromPosition(fromPosition);
+
+                        MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
+                        moveTmp.getPiece().movePiece(moveTmp, game);
+                    }
+                }
+
+            }
+
             move.getPiece().deleteDestinationPiece(move, game);
             move.getPiece().movePiece(move, game);
 
-            // TODO: Ulysse : When do we switch activeplayers ?
 
         }
 
@@ -174,8 +211,11 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public void newObserver(UUID idGame, UUID idUser) {
-        // TODO Auto-generated method stub
-
+        GameEntity game = getGameById(idGame);
+        PublicUserEntity userToAdd = getUserInfo(idUser);
+        if (game != null && userToAdd != null) {
+            game.getObservers().add(userToAdd);
+        }
     }
 
     /*
@@ -209,12 +249,11 @@ public class ServerDataToComImpl implements IServerDataToCom {
         List<PublicUserEntity> listUsersByGame = new ArrayList<PublicUserEntity>();
 
         // variable containing the corresponding idGame Game.
-        final GameEntity gameFound = dataServerManager.getCurrentGames().stream().filter(u -> u.getId().equals(idGame))
-                .findFirst().orElse(null);
+        final GameEntity gameFound = getGameById(idGame);
 
         // If the idGame exist on the server
         if (gameFound != null) {
-            // Else get all observer  two players
+            // Else get all observer + two players
             if (gameFound.getObservers() != null) {
                 listUsersByGame.addAll(gameFound.getObservers());
             }
@@ -231,7 +270,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
         // If the idGame doesn't exist on the server, the method sends back
         // 'null'
         return null;
-    };
+    }
 
     /*
      * (non-Javadoc)
@@ -265,17 +304,18 @@ public class ServerDataToComImpl implements IServerDataToCom {
         dataServerManager.getCurrentUsers().removeIf(user -> user.getId().equals(idUser));
     }
 
-	@Override
-	public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable, boolean timer, Integer timerInt) {
+    @Override
+    public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable, boolean timer,
+            Integer timerInt) {
         PublicUserEntity whitePlayer;
         PublicUserEntity blackPlayer;
-        
+
         /*
          * generate a random number to choose between 0 and 1 to choose who will
          * be the white player and who will be the black player
          */
         Random r = new Random();
-        int valeur = 0 +  r.nextInt(2 - 0);
+        int valeur = 0 + r.nextInt(2 - 0);
 
         if (valeur == 1) {
             whitePlayer = getUserInfo(j1);
@@ -287,10 +327,14 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
         Assert.notNull(whitePlayer, "[ServerDataToComImpl][createGame] player 1 is not online");
         Assert.notNull(blackPlayer, "[ServerDataToComImpl][createGame] player 2 is not online");
+        // Enable chat for the two players
+        whitePlayer.setAllowedToChat(true);
+        blackPlayer.setAllowedToChat(true);
         // Create a game
         GameEntity newGame = new GameEntity();
         newGame.setBlackPlayer(blackPlayer);
         newGame.setWhitePlayer(whitePlayer);
+        newGame.setCurrentPlayer(whitePlayer);
         newGame.setIsOservable(observable);
         newGame.setIsChattable(chattable);
         newGame.setTimer(timer);
@@ -301,9 +345,9 @@ public class ServerDataToComImpl implements IServerDataToCom {
     }
 
     @Override
-    public GameEntity getGameById(UUID IdGame) {
-        // TODO Auto-generated method stub
-        return null;
+    public GameEntity getGameById(UUID idGame) {
+        return dataServerManager.getCurrentGames().stream().filter(u -> u.getId().equals(idGame)).findFirst()
+                .orElse(null);
     }
 
     @Override
@@ -312,13 +356,13 @@ public class ServerDataToComImpl implements IServerDataToCom {
     }
 
     @Override
-        public void removeUserFromChat(UUID idUser, UUID idGame) {
-            GameEntity game = getGameById(idGame);
-            if(game != null) {
-                PublicUserEntity userToRemove = getUserInfo(idUser);
-                if(userToRemove != null) {
-                    userToRemove.setAllowedToChat(false);
-                }
+    public void removeUserFromChat(UUID idUser, UUID idGame) {
+        GameEntity game = getGameById(idGame);
+        if (game != null) {
+            PublicUserEntity userToRemove = getUserInfo(idUser);
+            if (userToRemove != null) {
+                userToRemove.setAllowedToChat(false);
             }
         }
+    }
 }

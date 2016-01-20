@@ -11,6 +11,10 @@ import com.utc.api13.server.com.ComServerManager;
 import io.netty.channel.ChannelHandlerContext;
 
 public class GameFinishedMessage extends Message {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3446575915066676519L;
     private static final Logger logger = Logger.getLogger(GameFinishedMessage.class);
     GameEntity game;
 

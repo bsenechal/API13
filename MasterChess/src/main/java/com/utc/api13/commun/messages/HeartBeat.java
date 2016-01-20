@@ -11,6 +11,10 @@ import com.utc.api13.server.com.ComServerManager;
 import io.netty.channel.ChannelHandlerContext;
 
 public class HeartBeat extends Message {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -607617759169441509L;
     private static final Logger logger = Logger.getLogger(HeartBeat.class);
     private InetAddress ping;
 
@@ -27,7 +31,7 @@ public class HeartBeat extends Message {
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // logger.info("Hello message received from server, answering Hello");
-        ctx.writeAndFlush(new HeartBeat(new UUID(0, 0), new UUID(0, 0), null));
+        ctx.writeAndFlush(new HeartBeat(receiver, sender, ping));
     }
 
     public InetAddress getPing() {

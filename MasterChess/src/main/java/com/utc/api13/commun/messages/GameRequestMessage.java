@@ -22,7 +22,8 @@ public class GameRequestMessage extends Message {
      * @param receiver
      * @param gameId
      */
-    public GameRequestMessage(UUID sender, UUID receiver, boolean chattable, boolean observable, boolean timer, Integer timerInt) {
+    public GameRequestMessage(UUID sender, UUID receiver, boolean chattable, boolean observable, boolean timer,
+            Integer timerInt) {
         super(sender, receiver);
         this.chattable = chattable;
         this.observable = observable;
@@ -56,33 +57,34 @@ public class GameRequestMessage extends Message {
         this.observable = observable;
     }
 
-	/**
-	 * @return the timerInt
-	 */
-	public Integer getTimerInt() {
-		return timerInt;
-	}
+    /**
+     * @return the timerInt
+     */
+    public Integer getTimerInt() {
+        return timerInt;
+    }
 
-	/**
-	 * @param timerInt the timerInt to set
-	 */
-	public void setTimerInt(Integer timerInt) {
-		this.timerInt = timerInt;
-	}
+    /**
+     * @param timerInt
+     *            the timerInt to set
+     */
+    public void setTimerInt(Integer timerInt) {
+        this.timerInt = timerInt;
+    }
 
-	/**
-	 * @return the timer
-	 */
-	public boolean isTimer() {
-		return timer;
-	}
+    /**
+     * @return the timer
+     */
+    public boolean isTimer() {
+        return timer;
+    }
 
-	/**
-	 * @param timer the timer to set
-	 */
-	public void setTimer(boolean timer) {
-		this.timer = timer;
-	}
-    
-    
+    /**
+     * @param timer
+     *            the timer to set
+     */
+    public void setTimer(boolean timer) {
+        this.timer = timer;
+    }
+
 }

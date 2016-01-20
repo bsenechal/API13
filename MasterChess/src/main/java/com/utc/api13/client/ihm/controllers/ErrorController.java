@@ -1,17 +1,12 @@
 package com.utc.api13.client.ihm.controllers;
 
 import com.utc.api13.client.AppClient;
-import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.property.ErrorProperty;
-import com.utc.api13.client.ihm.property.ProfilProperty;
-import com.utc.api13.commun.entities.PublicUserEntity;
 
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;

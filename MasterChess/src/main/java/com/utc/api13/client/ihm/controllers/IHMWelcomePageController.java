@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
@@ -64,7 +65,7 @@ public class IHMWelcomePageController {
     @FXML
     ImageView iconHelp, iconParam, iconProfile, iconNotif, infoTest;
     @FXML
-    Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel, testEcran;
+    Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel;
     @FXML
     Text userLabel;
     @FXML
@@ -79,23 +80,6 @@ public class IHMWelcomePageController {
     SplitMenuButton paramSplitMenuButton;
     @FXML
     ScrollBar currentGamesScrollbar, savedGamesScrollbar, connectedUserScrollbar;
-
-    @FXML
-    public void testEcranFunction() throws IOException {
-        // ne pas effacer cette fonction car utile pour tester les écrans
-        // déclenchés par data !
-        /*
-         * Stage stage; Parent root; stage = new Stage(); FXMLLoader fxmlLoader
-         * = new
-         * FXMLLoader(getClass().getResource("/fxml/answerPropositionPopUp.fxml"
-         * )); root = (Pane) fxmlLoader.load(); AnswerPropositionController
-         * controller = fxmlLoader.getController();
-         * controller.setControllerContext(this.IHMManager);
-         * controller.setMainApp(this.mainApp, "un joueur", "pas d'options");
-         * stage.setScene(new Scene(root)); mainApp.setCurrentStage(stage);
-         * stage.setTitle("My Profile"); stage.show();
-         */
-    }
 
     public ProfilProperty getProfile() {
         return this.profile;
@@ -142,7 +126,7 @@ public class IHMWelcomePageController {
     }
 
     @SuppressWarnings("restriction")
-	@FXML
+    @FXML
     public void onLogOutClicked() throws IOException {
         try {
             this.myIClientToIHM.disconnect();
@@ -181,7 +165,7 @@ public class IHMWelcomePageController {
     }
 
     @SuppressWarnings("restriction")
-	@FXML
+    @FXML
     public void onExportClicked() throws IOException {
         File exportFile = null;
         try {
@@ -198,12 +182,12 @@ public class IHMWelcomePageController {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Export to ...");
         File selectedDirectory = directoryChooser.showDialog(new Stage());
-
+        File newFile = new File(selectedDirectory.getAbsolutePath() + File.separator + exportFile.getName());
         if (selectedDirectory != null) {
             try {
                 // Attention : si la gestion d'erreur n'est pas faite,
                 // exportFile est null et on a une belle NullPointerException
-                Files.copy(exportFile.toPath(), selectedDirectory.toPath(),
+                Files.copy(exportFile.toPath(), newFile.toPath(),
                         java.nio.file.StandardCopyOption.REPLACE_EXISTING,
                         java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
                 exportOK(selectedDirectory.getAbsolutePath());
@@ -219,7 +203,7 @@ public class IHMWelcomePageController {
     }
 
     @SuppressWarnings("restriction")
-	@FXML
+    @FXML
     public void onUserInfoClicked() throws IOException {
 
         Stage stage;
@@ -367,19 +351,19 @@ public class IHMWelcomePageController {
         // Demande de la liste des jeux
         // -------------------------------
 
-        /*
-         * this.listCurrentGames= myIClientToIHM.getGamesList();
-         * this.listCurrentGames.addListener // add listener on observableList
-         * in DATA ( new ListChangeListener<GameEntity>() {
-         * 
-         * @Override public void
-         * onChanged(javafx.collections.ListChangeListener.Change<? extends
-         * GameEntity> c) {
-         * currentGamesTable.setItems(myIClientToIHM.getGamesList()); } } );
-         * 
-         * listCurrentGames.setItems(this.listCurrentGames);
-         * myIClientToIHM.getAllGames(); // ask for list of game to DATA
-         */
+        this.listCurrentGames = myIClientToIHM.getGamesList();
+        this.listCurrentGames.addListener // add listener on observableList in
+                                          // DATA
+        (new ListChangeListener<GameEntity>() {
+
+            @Override
+            public void onChanged(javafx.collections.ListChangeListener.Change<? extends GameEntity> c) {
+                currentGamesTable.setItems(myIClientToIHM.getGamesList());
+            }
+        });
+
+        currentGamesTable.setItems(this.listCurrentGames);
+        myIClientToIHM.getAllGames(); // ask for list of game to DATA
 
         // Demande de la liste des parties sauvegardées
         // -------------------------------
@@ -418,10 +402,7 @@ public class IHMWelcomePageController {
                 }
             }
         });
-        
-        
-        
-        
+
     }
 
     public void setBindingsOnLoad() {
@@ -433,16 +414,11 @@ public class IHMWelcomePageController {
 
         // liste des jeux en cours
         // ---------------
-        /*
-         * currentGamesId.setCellValueFactory(new
-         * PropertyValueFactory<GameEntity, UUID>("id"));
-         * currentGamesPlayer1.setCellValueFactory(new
-         * PropertyValueFactory<GameEntity, String>("whitePlayer"));
-         * currentGamesPlayer2.setCellValueFactory(new
-         * PropertyValueFactory<GameEntity, String>("blackPlayer"));
-         * currentGamesTime.setCellValueFactory(new
-         * PropertyValueFactory<GameEntity, Date>("creationDate"));
-         */
+
+        currentGamesId.setCellValueFactory(new PropertyValueFactory<GameEntity, UUID>("id"));
+        currentGamesPlayer1.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("whitePlayerLogin"));
+        currentGamesPlayer2.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("blackPlayerLogin"));
+        currentGamesTime.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("creationDateDrawable"));
 
     }
 
@@ -473,28 +449,20 @@ public class IHMWelcomePageController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
-    
-    //Function to make people disconnect when they click the cross to close the window of Welcome Page
-    public void setDisconnectUserByClosingWindow()
-    {
-     // catch event close window
-        mainApp.getMainStage().setOnCloseRequest
-        ( 
-                new EventHandler<WindowEvent>() 
-                {
-                    public void handle(WindowEvent we) 
-                    {
-                        try
-                        {
-                            onLogOutClicked();
-                        } 
-                        catch (IOException e) 
-                        {
-                            e.printStackTrace();
-                        }
-                    }
+
+    // Function to make people disconnect when they click the cross to close the
+    // window of Welcome Page
+    public void setDisconnectUserByClosingWindow() {
+        // catch event close window
+        mainApp.getMainStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                try {
+                    onLogOutClicked();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-        );
+            }
+        });
     }
 
 }

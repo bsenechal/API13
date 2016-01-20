@@ -1,5 +1,6 @@
 package com.utc.api13.commun.messages;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.com.ComClientManager;
@@ -28,7 +29,8 @@ public class RequestAnswerMessage extends Message {
      * @param receiver
      * @param gameId
      */
-    public RequestAnswerMessage(UUID sender, UUID receiver, boolean chattable, boolean observable, boolean answer, boolean timer, Integer timerInt) {
+    public RequestAnswerMessage(UUID sender, UUID receiver, boolean chattable, boolean observable, boolean answer,
+            boolean timer, Integer timerInt) {
         super(sender, receiver);
         this.chattable = chattable;
         this.observable = observable;
@@ -42,7 +44,7 @@ public class RequestAnswerMessage extends Message {
         if (answer) {
             comClientManager.getIClientDataToCom().initGame(this.ge);
         } else {
-            comClientManager.getIClientDataToCom().notify(REJECTION_MESSAGE);
+            comClientManager.getIClientDataToCom().notifyRejection(this.sender, REJECTION_MESSAGE);
         }
     }
 
@@ -50,9 +52,13 @@ public class RequestAnswerMessage extends Message {
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         if (answer) {
             this.ge = comServerManager.getIServerDataToCom().createGame(getSender(), getReceiver(), chattable,
-                    observable,timer,timerInt);
+                    observable, timer, timerInt);
             // On retourne l'info a l'utilisateur
             comServerManager.sendMessage(ctx.channel(), this);
+            //On recupere la liste des parties mise à jour
+            List<GameEntity> games = comServerManager.getIServerDataToCom().getAllGames();
+            //On broadcast la nouvelle liste de partie
+            comServerManager.broadcastMessage(new AllGameMessage(sender, receiver, games));
         }
         // On envoie aussi le message a l'autre joueur
         comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
@@ -82,17 +88,16 @@ public class RequestAnswerMessage extends Message {
         this.answer = answer;
     }
 
-	public Integer getTimer() {
-		return timerInt;
-	}
+    public Integer getTimer() {
+        return timerInt;
+    }
 
-	public void setTimer(Integer timerInt) {
-		this.timerInt = timerInt;
-	}
+    public void setTimer(Integer timerInt) {
+        this.timerInt = timerInt;
+    }
 
-	public void setTimer(boolean timer) {
-		this.timer = timer;
-	}
-    
-    
+    public void setTimer(boolean timer) {
+        this.timer = timer;
+    }
+
 }

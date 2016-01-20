@@ -1,6 +1,5 @@
 package com.utc.api13.client.ihm.interfaces;
 
-import java.io.IOException;
 import java.util.UUID;
 
 import com.utc.api13.commun.entities.GameEntity;
@@ -49,22 +48,20 @@ public interface IClientIHMToData {
      *            proposed game
      * @return void
      */
-    public void displayProposition(UUID uidSender, boolean observable, boolean chattable, boolean timer, Integer timeInt);
+    public void displayProposition(UUID uidSender, boolean observable, boolean chattable, boolean timer,
+            Integer timeInt);
 
     /**
      * This method notifies local user (who proposed a game) that distant user
-     * accepted or rejected the proposition of game
+     * rejected the proposition of game
      * 
      * @param uidSender
      *            The unique identifier of the distant answer who accepted or
      *            rejected the game proposition. Allows to identify which user
      *            answered.
-     * @param observable
-     *            Boolean indicating the answer of the distant user (TRUE ->
-     *            YES, FALSE -> NO)
      * @return void
      */
-    public void displayAnswer(UUID uidSender, boolean observable);
+    public void displayAnswer(UUID uidSender, boolean answer, String message);
 
     /**
      * Asks the HMI to display the chessboard when both user have accepted the
