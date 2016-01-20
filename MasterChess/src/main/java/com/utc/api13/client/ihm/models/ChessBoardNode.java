@@ -45,13 +45,10 @@ public class ChessBoardNode {
     // position pour les déplacements dans le listener
     private int selection = 1;
 
-  
-     public ChessBoardNode(IHMManager ihmManager) { 
-    	myIhmManager = ihmManager;
-      initializeGui(); 
-      }
-     
-
+    public ChessBoardNode(IHMManager ihmManager) {
+        myIhmManager = ihmManager;
+        initializeGui();
+    }
 
     public final void initializeGui() {
         String dossierIcone = "/pictures/pieces/";
@@ -75,34 +72,36 @@ public class ChessBoardNode {
                 b.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         Case movePosition = (Case) e.getSource();
-                        for(int ii=0; ii< chessBoardSquares.length; ii++) {
-                        	for (int jj=0; jj< chessBoardSquares[ii].length; jj++) {
-                        		if (movePosition == chessBoardSquares[ii][jj]) {
-                        			
-                        			movePosition.setLine(ii);
-                        			movePosition.setColumn(jj);
-                        		}
-                        	}
+                        for (int ii = 0; ii < chessBoardSquares.length; ii++) {
+                            for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
+                                if (movePosition == chessBoardSquares[ii][jj]) {
+
+                                    movePosition.setLine(ii);
+                                    movePosition.setColumn(jj);
+                                }
+                            }
                         }
                         if (selection == 1) {
-                        	
-                        	firstPosition.setPositionX(movePosition.getLine());
-                        	firstPosition.setPositionY(movePosition.getColumn());
-                            List<PositionEntity> positionList = myIClientToIHM.getAvailablesMoves(firstPosition.getPositionX(),
-                            		firstPosition.getPositionY());
+
+                            firstPosition.setPositionX(movePosition.getLine());
+                            firstPosition.setPositionY(movePosition.getColumn());
+                            List<PositionEntity> positionList = myIClientToIHM
+                                    .getAvailablesMoves(firstPosition.getPositionX(), firstPosition.getPositionY());
                             if (positionList != null) {
                                 selection = 2;
                                 // désactiver toutes les cases
-                                for(int ii=0; ii< chessBoardSquares.length; ii++) {
-                                	for (int jj=0; jj< chessBoardSquares[ii].length; jj++) {
-                                		chessBoardSquares[ii][jj].setEnabled(false);   
-                                	}
+                                for (int ii = 0; ii < chessBoardSquares.length; ii++) {
+                                    for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
+                                        chessBoardSquares[ii][jj].setEnabled(false);
+                                    }
                                 }
-                                // passer les cases en surbrillance et activer uniquement celles-ci
+                                // passer les cases en surbrillance et activer
+                                // uniquement celles-ci
                                 for (int i = 0; i < positionList.size(); i++) {
-                                	chessBoardSquares[positionList.get(i).getPositionX()][positionList.get(i)
-                                	                                                      .getPositionY()].setEnabled(true);
-                                	chessBoardSquares[firstPosition.getPositionX()][firstPosition.getPositionY()].setBorder(new LineBorder(Color.GREEN));
+                                    chessBoardSquares[positionList.get(i).getPositionX()][positionList.get(i)
+                                            .getPositionY()].setEnabled(true);
+                                    chessBoardSquares[firstPosition.getPositionX()][firstPosition.getPositionY()]
+                                            .setBorder(new LineBorder(Color.GREEN));
                                     chessBoardSquares[positionList.get(i).getPositionX()][positionList.get(i)
                                             .getPositionY()].setBackground(Color.GREEN);
                                 }
@@ -115,7 +114,7 @@ public class ChessBoardNode {
                                 selection = 1;
                             } else {
                                 myIClientToIHM.playMove(firstPosition.getPositionX(), firstPosition.getPositionY(),
-                                		movePosition.getLine(), movePosition.getColumn());
+                                        movePosition.getLine(), movePosition.getColumn());
                             }
                         }
 

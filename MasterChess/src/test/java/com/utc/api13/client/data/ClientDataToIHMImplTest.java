@@ -156,10 +156,10 @@ public class ClientDataToIHMImplTest {
         }
 
     }
-    
+
     @Test
     public void playMoveTest() {
-        
+
         PublicUserEntity whitePlayer = new PublicUserEntity("whitelogin", "whitemdp");
         PublicUserEntity blackPlayer = new PublicUserEntity("blacklogin", "blackmdp");
 
@@ -171,27 +171,24 @@ public class ClientDataToIHMImplTest {
         newGame.setTimer(true);
         newGame.setTimerInt(7);
         newGame.setCurrentPlayer(whitePlayer);
-        
+
         dataClientManager.setCurrentGame(newGame);
-        
-        int fromLine=2;
-        int toLine=3;
-        int fromCol=2;
-        int toCol=2;
-        
+
+        int fromLine = 2;
+        int toLine = 3;
+        int fromCol = 2;
+        int toCol = 2;
+
         PositionEntity fromposition = new PositionEntity(fromLine, fromCol);
         PositionEntity toposition = new PositionEntity(toLine, toCol);
         UUID currentplayer = dataClientManager.getCurrentGame().getCurrentPlayer().getId();
         APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(fromposition);
         MoveEntity move = new MoveEntity(new Date(), fromposition, toposition, piece);
-        
 
         Mockito.doNothing().when(clientComToDataImpl).validateMove(currentplayer, move);
-        
+
         dataClientManager.setIClientComToData(clientComToDataImpl);
-        
+
         dataClientManager.getClientDataToIHMImpl().playMove(fromLine, fromCol, toLine, toCol);
     }
 }
-
-
