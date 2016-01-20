@@ -331,6 +331,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public List<PositionEntity> getAvailablesMoves(int line, int col) {
         PositionEntity myposition = new PositionEntity(line, col);
         APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(myposition);
+        //On vérifie que la pièce existe et qu'elle est bien de la couleur du joueur courant :
         if(piece != null){
         	if(piece.getColor()==dataClientManager.getCurrentGame().getCurrentPlayerColor()){
             	return piece.generateAvailableMoves(dataClientManager.getCurrentGame());
