@@ -100,61 +100,61 @@ public class KingEntity extends APieceEntity {
             }
         }
 
-        if (hasMove == Boolean.FALSE) {
-            if (this.getPosition().getPositionX() == START_COLUMN_KING && ((this.getColor() == PieceColorEnum.BLACK
-                    && this.getPosition().getPositionY() == START_LINE_BLACK_KING)
-                    || (this.getColor() == PieceColorEnum.WHITE
-                            && this.getPosition().getPositionY() == START_LINE_WHITE_KING))) {
-
-                RookEntity RookTmp = null;
-
-                PositionEntity positionTmp1 = new PositionEntity(this.getPosition().getPositionX() + 1,
-                        this.getPosition().getPositionY());
-                PositionEntity positionTmp2 = new PositionEntity(this.getPosition().getPositionX() + 2,
-                        this.getPosition().getPositionY());
-                PositionEntity positionTmp3 = new PositionEntity(this.getPosition().getPositionX() + 3,
-                        this.getPosition().getPositionY());
-
-                if (game.getPieceFromPosition(positionTmp3).toString() == "Rook") {
-                    RookTmp = (RookEntity) game.getPieceFromPosition(positionTmp3);
-
-                    // Petit roque
-                    if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTmp1)
-                            && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTmp2)
-                            && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTmp1)
-                            && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTmp2)
-                            && RookTmp.getColor() == this.getColor() && RookTmp.getHasMove() == Boolean.FALSE) {
-                        result.add(positionTmp2);
-                    }
-                }
-
-                positionTmp1 = new PositionEntity(this.getPosition().getPositionX() - 1,
-                        this.getPosition().getPositionY());
-                positionTmp2 = new PositionEntity(this.getPosition().getPositionX() - 2,
-                        this.getPosition().getPositionY());
-                positionTmp3 = new PositionEntity(this.getPosition().getPositionX() - 3,
-                        this.getPosition().getPositionY());
-                PositionEntity positionTmp4 = new PositionEntity(this.getPosition().getPositionX() - 4,
-                        this.getPosition().getPositionY());
-                // Grand Roque
-                if (game.getPieceFromPosition(positionTmp4).toString() == "Rook") {
-
-                    RookTmp = (RookEntity) game.getPieceFromPosition(positionTmp3);
-
-                    if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTmp1)
-                            && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTmp2)
-                            && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTmp3)
-                            && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTmp1)
-                            && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTmp2)
-                            && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTmp3)
-                            && RookTmp.getColor() == this.getColor() && RookTmp.getHasMove() == Boolean.FALSE) {
-                        result.add(positionTmp2);
-
-                    }
-                }
-
-            }
-        }
+//        if (hasMove == Boolean.FALSE) {
+//            if (this.getPosition().getPositionX() == START_COLUMN_KING && ((this.getColor() == PieceColorEnum.BLACK
+//                    && this.getPosition().getPositionY() == START_LINE_BLACK_KING)
+//                    || (this.getColor() == PieceColorEnum.WHITE
+//                            && this.getPosition().getPositionY() == START_LINE_WHITE_KING))) {
+//
+//                RookEntity RookTmp = null;
+//
+//                PositionEntity positionTmp1 = new PositionEntity(this.getPosition().getPositionX() + 1,
+//                        this.getPosition().getPositionY());
+//                PositionEntity positionTmp2 = new PositionEntity(this.getPosition().getPositionX() + 2,
+//                        this.getPosition().getPositionY());
+//                PositionEntity positionTmp3 = new PositionEntity(this.getPosition().getPositionX() + 3,
+//                        this.getPosition().getPositionY());
+//
+//                if (game.getPieceFromPosition(positionTmp3).toString() == "Rook") {
+//                    RookTmp = (RookEntity) game.getPieceFromPosition(positionTmp3);
+//
+//                    // Petit roque
+//                    if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTmp1)
+//                            && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTmp2)
+//                            && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTmp1)
+//                            && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTmp2)
+//                            && RookTmp.getColor() == this.getColor() && RookTmp.getHasMove() == Boolean.FALSE) {
+//                        result.add(positionTmp2);
+//                    }
+//                }
+//
+//                positionTmp1 = new PositionEntity(this.getPosition().getPositionX() - 1,
+//                        this.getPosition().getPositionY());
+//                positionTmp2 = new PositionEntity(this.getPosition().getPositionX() - 2,
+//                        this.getPosition().getPositionY());
+//                positionTmp3 = new PositionEntity(this.getPosition().getPositionX() - 3,
+//                        this.getPosition().getPositionY());
+//                PositionEntity positionTmp4 = new PositionEntity(this.getPosition().getPositionX() - 4,
+//                        this.getPosition().getPositionY());
+//                // Grand Roque
+//                if (game.getPieceFromPosition(positionTmp4).toString() == "Rook") {
+//
+//                    RookTmp = (RookEntity) game.getPieceFromPosition(positionTmp3);
+//
+//                    if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTmp1)
+//                            && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTmp2)
+//                            && APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTmp3)
+//                            && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTmp1)
+//                            && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTmp2)
+//                            && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTmp3)
+//                            && RookTmp.getColor() == this.getColor() && RookTmp.getHasMove() == Boolean.FALSE) {
+//                        result.add(positionTmp2);
+//
+//                    }
+//                }
+//
+//            }
+//        }
         return result;
     }
 
