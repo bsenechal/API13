@@ -7,6 +7,7 @@ import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +45,9 @@ public class StorageUtils {
             String filePath = PATH.getAbsolutePath() + File.separator + user.getLogin() + "_" + user.getId() + ".ser";
             // First let's try to create the file
             File file = new File(filePath);
+            if(file.exists()){
+            	Files.delete(file.toPath());
+            }
             if (!file.createNewFile()) {
                 throw new TechnicalException("user storage file cannot be created");
             }
@@ -144,19 +148,20 @@ public class StorageUtils {
      *             exception when reading file
      */
     public static PrivateUserEntity readUserFromFile(File file) throws FunctionalException, TechnicalException {
+    	Object ob = null;
         try {
             ois = new ObjectInputStream(new FileInputStream(file));
-            Object ob = ois.readObject();
+            ob = ois.readObject();
             if (!(ob instanceof PrivateUserEntity)) {
                 List<Erreur> erreurs = new ArrayList<>();
                 erreurs.add(new Erreur(ErrorTypeEnum.NON_PRIVATE_USER));
                 throw new FunctionalException(erreurs);
             }
-            return (PrivateUserEntity) ob;
+            
         } catch (IOException | ClassNotFoundException e) {
             throw new TechnicalException("Error while reading object from file", e);
         } finally {
-            if (oos != null) {
+            if (ois != null) {
                 try {
                     ois.close();
                 } catch (IOException ex) {
@@ -164,6 +169,7 @@ public class StorageUtils {
                 }
             }
         }
+        return (PrivateUserEntity) ob;
     }
 
 }
