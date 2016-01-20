@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.springframework.util.Assert;
 
 import com.utc.api13.client.data.interfaces.IClientDataToCom;
+import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
@@ -114,13 +115,18 @@ public class ClientDataToComImpl implements IClientDataToCom {
      */
     @Override
     public void displayResult(UUID idPlayer, MoveEntity move) {
+        int fromLine=move.getFromPosition().getPositionX();
+        int fromCol=move.getFromPosition().getPositionY();
+        int toLine=move.getToPosition().getPositionX();
+        int toCol=move.getToPosition().getPositionY();
+        APieceEntity piece=move.getPiece();
+        
         Assert.notNull(instanceDataClientManager.getCurrentGame(),
                 "[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
-        // move the Piece on the local Game :
         move.getPiece().movePiece(move, instanceDataClientManager.getCurrentGame());
-        // TODO : Ulysse : display on IHM -> shouldn't currentGame be an
-        // observable ? if not :
-        // instanceDataClientManager.getIClientIHMToData().refreshChessBoard();
+                
+        instanceDataClientManager.getIClientIHMToData().refreshChessBoard(fromLine, fromCol, toLine, toCol, piece);
+
     }
 
     @Override
