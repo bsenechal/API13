@@ -367,6 +367,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
         GameEntity newGame = new GameEntity();
         newGame.setBlackPlayer(blackPlayer);
         newGame.setWhitePlayer(whitePlayer);
+        newGame.setCurrentPlayer(whitePlayer);
         newGame.setIsOservable(observable);
         newGame.setIsChattable(chattable);
         newGame.setTimer(timer);

@@ -302,9 +302,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
             // TODO : Notifier IHM du changement de joueurs
             // TODO : active/desactive chessboard
         }
-        else{
-        	setFinishedStatus(status);
-        }
-        
+        setFinishedStatus(status);
+                
     }
 }
