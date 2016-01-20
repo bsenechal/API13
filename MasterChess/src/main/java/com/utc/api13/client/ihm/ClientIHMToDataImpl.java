@@ -251,7 +251,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     }
     public void activateCases(PublicUserEntity currentUser, GameStatusEnum status) {
     	// en fonction du joueur courant 
-    	GameEntity gameEntity = myIClientDataToIHM.getCurrentGame();
+    	GameEntity gameEntity = myIHMManager.getIClientDataToIHM().getCurrentGame();
     	Case[][] cb = controller.getCb().getChessBoardSquares();
     	if(status != GameStatusEnum.CHECKMATE) {
     		if (myIClientDataToIHM.getLocalUser().getId() == currentUser.getId()) {
