@@ -169,7 +169,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         Case[][] chessBoardSquares = controller.getCb().getChessBoardSquares();
         
         // effacer la pièce de l'ancienne case
-        chessBoardSquares[line_from][col_from].setIcon(null);
+        chessBoardSquares[line_from-1][col_from-1].setIcon(null);
         // trouver le type de piece
         String pieceType="";
         if(piece.toString() == "Rook") {
