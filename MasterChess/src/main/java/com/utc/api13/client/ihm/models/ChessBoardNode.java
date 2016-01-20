@@ -116,20 +116,16 @@ public class ChessBoardNode {
       
                                     chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
                                             .getPositionY()-1].setBackground(Color.GREEN);
-                                    if(chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
-                                            .getPositionY()-1].getX()== firstPosition.getPositionX() && chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
-                                            .getPositionY()-1].getY()== firstPosition.getPositionY()) {
-                                    	chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
-                                    	                                                        .getPositionY()-1].setEnabled(true);
-                                    }
-                                    	
+  	
                                 }
+                                chessBoardSquares[firstPosition.getPositionX()][firstPosition.getPositionY()].setEnabled(true);
                             }
                         }
 
                         else if (selection == 2) {
                             if ((movePosition.getLine() == firstPosition.getPositionX())
                                     && (movePosition.getColumn() == firstPosition.getPositionY())) {
+                       
                                 selection = 1;
                             } else {
                                 myIClientToIHM.playMove(firstPosition.getPositionX(), firstPosition.getPositionY(),
@@ -149,7 +145,9 @@ public class ChessBoardNode {
                         				j.setEnabled(false);
                         			}
                     			}
+                                
                             }
+                        
                         }
 
                     }
