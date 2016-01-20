@@ -14,6 +14,7 @@ import com.utc.api13.commun.enumerations.ErrorTypeEnum;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,6 +31,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class CreateProfileController {
     private IHMManager IHMManager;
@@ -52,6 +54,7 @@ public class CreateProfileController {
     ImageView changeProfilePicture;
     @FXML
     AnchorPane createProfileAnchorPane;
+	private Stage confirmationStage;
 
     @FXML
     public void onSaveProfileClicked() throws IOException {
@@ -78,9 +81,8 @@ public class CreateProfileController {
             user.setFirstName(firstName);
             user.setLastName(lastName);
 
-            Stage stage;
             Parent root;
-            stage = new Stage();
+            confirmationStage = new Stage();
             FXMLLoader fxmlLoader;
 
             try {
@@ -91,12 +93,16 @@ public class CreateProfileController {
                 ConfirmationController controller = fxmlLoader.getController();
                 controller.setControllerContext(this.IHMManager);
                 controller.setMainApp(this.mainApp, "Your profile has been saved!");
-                stage.setScene(new Scene(root));
-                stage.setTitle("Your profile");
+                confirmationStage.setScene(new Scene(root));
+                confirmationStage.setTitle("Your profile");
                 mainApp.getCurrentStage().close();
-                mainApp.setCurrentStage(stage);
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.show();
+                mainApp.setCurrentStage(confirmationStage);
+                confirmationStage.initModality(Modality.APPLICATION_MODAL);
+                confirmationStage.show();
+                
+                PauseTransition delay = new PauseTransition(Duration.seconds(2));
+            	delay.setOnFinished( event -> confirmationStage.close() );
+            	delay.play();
 
             } catch (TechnicalException e) {
                 try {
