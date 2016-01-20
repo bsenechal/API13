@@ -254,7 +254,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     	GameEntity gameEntity = myIHMManager.getIClientDataToIHM().getCurrentGame();
     	Case[][] cb = controller.getCb().getChessBoardSquares();
     	if(status != GameStatusEnum.CHECKMATE) {
-    		if (myIClientDataToIHM.getLocalUser().getId() == currentUser.getId()) {
+    		if (myIHMManager.getIClientDataToIHM().getLocalUser().getId().equals(currentUser.getId())) {
     			for(Case i[] : cb) {
         			for(Case j : i){
         				j.setEnabled(true);
