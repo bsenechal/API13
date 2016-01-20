@@ -90,6 +90,9 @@ public interface IClientDataToCom {
      */
     public void notify(final String message);
 
+    public void notifyRejection(final UUID uidSender, String REJECTION_MESSAGE);
+
+    
     /**
      * La GameEntity est créé sur le serveur.<br/>
      * Cette méthode initialise l'instance de la GameEntity sur le client
