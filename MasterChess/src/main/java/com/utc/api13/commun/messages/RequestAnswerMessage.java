@@ -44,7 +44,7 @@ public class RequestAnswerMessage extends Message {
         if (answer) {
             comClientManager.getIClientDataToCom().initGame(this.ge);
         } else {
-            comClientManager.getIClientDataToCom().notify(REJECTION_MESSAGE);
+            comClientManager.getIClientDataToCom().notifyRejection(this.sender, REJECTION_MESSAGE);
         }
     }
 

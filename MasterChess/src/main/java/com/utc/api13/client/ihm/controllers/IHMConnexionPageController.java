@@ -165,7 +165,6 @@ public class IHMConnexionPageController {
         ConfirmationController controller = fxmlLoader.getController();
 
         controller.setControllerContext(this.IHMManager);
-        mainApp.getCurrentStage().close();
         mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, "Successful import!");
         stage.setScene(new Scene(root));
