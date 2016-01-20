@@ -299,7 +299,12 @@ public class ClientDataToComImpl implements IClientDataToCom {
                     (instanceDataClientManager.getCurrentGame().getBlackPlayer().getId().equals(nextPlayer))
                             ? instanceDataClientManager.getCurrentGame().getBlackPlayer()
                             : instanceDataClientManager.getCurrentGame().getWhitePlayer());
+            // TODO : Notifier IHM du changement de joueurs
+            // TODO : active/desactive chessboard
         }
-        // TODO : Notifier IHM du changement de joueurs
+        else{
+        	setFinishedStatus(status);
+        }
+        
     }
 }
