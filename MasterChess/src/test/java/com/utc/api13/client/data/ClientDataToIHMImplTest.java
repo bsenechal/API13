@@ -150,11 +150,9 @@ public class ClientDataToIHMImplTest {
         try {
             clientDataToIHMImpl.saveGame();
         } catch (TechnicalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Assert.fail("Erreur technique : " + e.getMessage());
         } catch (FunctionalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Assert.fail("Erreur fonctionnelle : " + e.getMessage());
         }
 
     }
