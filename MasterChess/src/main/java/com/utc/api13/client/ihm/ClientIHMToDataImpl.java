@@ -2,17 +2,23 @@ package com.utc.api13.client.ihm;
 
 import java.awt.Image;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.controllers.AnswerPropositionController;
 import com.utc.api13.client.ihm.controllers.ErrorController;
 import com.utc.api13.client.ihm.controllers.IHMGamePageController;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
+import com.utc.api13.client.ihm.models.Case;
+import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
 //github.com/bsenechal/API13.git
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -29,6 +35,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     private IHMManager myIHMManager;
     private IClientDataToIHM myIClientDataToIHM;
+    private Map<UUID, IHMGamePageController> gameController = new HashMap<UUID, IHMGamePageController>();
 
     public ClientIHMToDataImpl(IHMManager pIHMManager) {
         myIHMManager = pIHMManager;
@@ -139,7 +146,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 try {
                     root = (Pane) fxmlLoader.load();
                     IHMGamePageController controller = fxmlLoader.getController();
-
+                    gameController.put(controller.getCb().getMyGame().getId(),controller);
                     controller.setControllerContext(myIHMManager);
 
                     controller.setMainApp(myIHMManager.getMainApp());
@@ -154,27 +161,38 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         });
     }
 
-    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, String pieceType) {
+    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, APieceEntity piece, GameEntity game) {
         // TODO Auto-generated method stub
         String dossierIcone = "/pictures/pieces/";
-        GameEntity game = myIClientDataToIHM.getCurrentGame();
         // récupérer chessboardsquares
-        // Case[][] chessBoardSquares =
-        // myIHMManager.getChessBoardNode().getChessBoardSquares();
+        IHMGamePageController currentGameController = gameController.get(game.getId());
+        Case[][] chessBoardSquares = currentGameController.getCb().getChessBoardSquares();
+        
         // effacer la pièce de l'ancienne case
-
-        // chessBoardSquares[line_from][col_from].setIcon(null);
-
+        chessBoardSquares[line_from][col_from].setIcon(null);
+        // trouver le type de piece
+        String pieceType="";
+        if(piece.toString() == "Rook") {
+        	pieceType="T";
+        } else if (piece.toString() == "Knight" )	{
+        	pieceType="C";
+        } else if (piece.toString() == "Queen") {
+        	pieceType="D";
+        } else if (piece.toString() =="King") {
+        	pieceType="R";
+        } else if (piece.toString() == "Pawn") {
+        	pieceType="P";
+        } else if (piece.toString() =="Bishop" ) {
+        	pieceType="F";
+        }
         // afficher la pièce sur la nouvelle case
         try {
             if (game.getCurrentPlayer() == game.getBlackPlayer()) {
                 Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "N.gif"));
-                // chessBoardSquares[line_to][col_to].setIcon(new
-                // ImageIcon(img));
+                chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
             } else {
                 Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "B.gif"));
-                // chessBoardSquares[line_to][col_to].setIcon(new
-                // ImageIcon(img));
+                chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
             }
 
         } catch (IOException e) {

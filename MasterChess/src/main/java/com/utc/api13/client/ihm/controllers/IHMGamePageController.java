@@ -48,8 +48,11 @@ public class IHMGamePageController {
     TextArea chatTextArea, sendTextArea;
     @FXML
     StackPane chessBoardStackPane;
+	private ChessBoardNode cb;
 
-    public IHMManager getIHMManager() {
+    
+
+	public IHMManager getIHMManager() {
         return IHMManager;
     }
 
@@ -130,8 +133,9 @@ public class IHMGamePageController {
     public void setMainApp(AppClient app) {
         this.mainApp = app;
         GameEntity game = this.myIClientToIHM.getCurrentGame();
-        final ChessBoardNode cb = new ChessBoardNode(IHMManager);
-
+        cb = new ChessBoardNode(IHMManager);
+        cb.setMyIClientToIHM(myIClientToIHM);
+        cb.setMyGame(game);
         final SwingNode swingNode = new SwingNode();
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -193,4 +197,12 @@ public class IHMGamePageController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
+    
+    public ChessBoardNode getCb() {
+		return cb;
+	}
+
+	public void setCb(ChessBoardNode cb) {
+		this.cb = cb;
+	}
 }
