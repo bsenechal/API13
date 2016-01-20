@@ -155,9 +155,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void getUserInfo(UUID iduser) {
-
         comClientManagerInstance.sendMessage(new PublicUserMessage(null, new UUID(0, 0), iduser));
-
     }
 
     @Override
