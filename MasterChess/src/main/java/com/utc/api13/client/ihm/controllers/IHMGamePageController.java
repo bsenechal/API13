@@ -67,6 +67,16 @@ public class IHMGamePageController {
     public void initialize() {
 
     }
+    
+    @FXML 
+    private void onGiveUpClicked() {
+    	
+    }
+    
+    @FXML 
+    private void onLeaveClicked() {
+    	
+    }
 
     @FXML
     private void onExcludeChatClicked(Event event) throws IOException {

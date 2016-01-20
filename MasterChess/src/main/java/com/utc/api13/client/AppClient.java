@@ -36,7 +36,7 @@ public class AppClient extends Application {
 
         ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
         comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
-        comClientManager.launchAppCom("172.25.2.106", 8000);
+        comClientManager.launchAppCom("localhost", 8000);
 
         /**
          * >>>>>>>>>>>>>>>>>>>>>>>
