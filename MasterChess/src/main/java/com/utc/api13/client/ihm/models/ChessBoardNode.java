@@ -113,9 +113,16 @@ public class ChessBoardNode {
                                 for (int i = 0; i < positionList.size(); i++) {
                                     chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
                                             .getPositionY()-1].setEnabled(true);
-                                    
+      
                                     chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
                                             .getPositionY()-1].setBackground(Color.GREEN);
+                                    if(chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
+                                            .getPositionY()-1].getX()== firstPosition.getPositionX() && chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
+                                            .getPositionY()-1].getY()== firstPosition.getPositionY()) {
+                                    	chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
+                                    	                                                        .getPositionY()-1].setEnabled(true);
+                                    }
+                                    	
                                 }
                             }
                         }
