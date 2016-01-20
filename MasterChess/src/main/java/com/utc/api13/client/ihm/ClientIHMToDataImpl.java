@@ -20,7 +20,6 @@ import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
 import com.utc.api13.client.ihm.models.Case;
 import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
-//github.com/bsenechal/API13.git
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
 
@@ -252,5 +251,16 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     }
     public void activateCases(PublicUserEntity currentUser, GameStatusEnum status) {
     	// en fonction du joueur courant 
+    	GameEntity gameEntity = myIClientDataToIHM.getCurrentGame();
+    	Case[][] cb = controller.getCb().getChessBoardSquares();
+    	if(status != GameStatusEnum.CHECKMATE) {
+    		if (myIClientDataToIHM.getLocalUser().getId() == currentUser.getId()) {
+    			for(Case i[] : cb) {
+        			for(Case j : i){
+        				j.setEnabled(true);
+        			}
+    			}
+    		}
+    	} 
     }
 }
