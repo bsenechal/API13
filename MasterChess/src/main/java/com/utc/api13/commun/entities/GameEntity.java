@@ -461,10 +461,15 @@ public class GameEntity extends ADataEntity {
 
         // Checkmate check :
         if (check == true) {
-            // check if the king can't move :
-            if (king.generateAvailableMoves(this).isEmpty()) {
-                // check if no piece can save him :
-                // TODO !!!
+        	// get all availables moves of the current player, if null -> checkmate :
+        	List<APieceEntity> currentPlayerPieces = new ArrayList<APieceEntity>();
+        	currentPlayerPieces.addAll(this.getCurrentPlayerPieces());
+        	List<PositionEntity> currentPlayerAvailableMoves = new ArrayList<PositionEntity>();
+        	for(APieceEntity piece:currentPlayerPieces){
+        		currentPlayerAvailableMoves.addAll(piece.generateAvailableMoves(this));
+        	}	
+            // check if nothing can save the king :
+            if (currentPlayerAvailableMoves.isEmpty()) {
                 result = GameStatusEnum.CHECKMATE;
             }
         }
