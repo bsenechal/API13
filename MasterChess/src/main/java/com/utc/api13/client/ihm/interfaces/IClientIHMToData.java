@@ -53,18 +53,15 @@ public interface IClientIHMToData {
 
     /**
      * This method notifies local user (who proposed a game) that distant user
-     * accepted or rejected the proposition of game
+     * rejected the proposition of game
      * 
      * @param uidSender
      *            The unique identifier of the distant answer who accepted or
      *            rejected the game proposition. Allows to identify which user
      *            answered.
-     * @param observable
-     *            Boolean indicating the answer of the distant user (TRUE ->
-     *            YES, FALSE -> NO)
      * @return void
      */
-    public void displayAnswer(UUID uidSender, boolean observable);
+    public void displayAnswer(UUID uidSender, boolean answer, String message);
 
     /**
      * Asks the HMI to display the chessboard when both user have accepted the

@@ -182,12 +182,12 @@ public class IHMWelcomePageController {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Export to ...");
         File selectedDirectory = directoryChooser.showDialog(new Stage());
-
+        File newFile = new File(selectedDirectory.getAbsolutePath() + File.separator + exportFile.getName());
         if (selectedDirectory != null) {
             try {
                 // Attention : si la gestion d'erreur n'est pas faite,
                 // exportFile est null et on a une belle NullPointerException
-                Files.copy(exportFile.toPath(), selectedDirectory.toPath(),
+                Files.copy(exportFile.toPath(), newFile.toPath(),
                         java.nio.file.StandardCopyOption.REPLACE_EXISTING,
                         java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
                 exportOK(selectedDirectory.getAbsolutePath());
