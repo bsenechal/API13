@@ -64,5 +64,18 @@ public class GameEntityTest {
         piece = game.getPieceFromPosition(null);
         Assert.assertNull("piece should be null", piece);
     }
+    
+    
+    /**
+     * Test method for
+     * {@link com.utc.api13.commun.entities.GameEntity#isFinished()}
+     * .
+     */
+    @Test
+    public void testIsFinished() {
+
+        // test du statut initial du game :
+    	System.out.println(game.isFinished());
+    }
 
 }
