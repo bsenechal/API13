@@ -65,7 +65,7 @@ public class IHMWelcomePageController {
     @FXML
     ImageView iconHelp, iconParam, iconProfile, iconNotif, infoTest;
     @FXML
-    Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel, testEcran;
+    Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel;
     @FXML
     Text userLabel;
     @FXML
@@ -80,23 +80,6 @@ public class IHMWelcomePageController {
     SplitMenuButton paramSplitMenuButton;
     @FXML
     ScrollBar currentGamesScrollbar, savedGamesScrollbar, connectedUserScrollbar;
-
-    @FXML
-    public void testEcranFunction() throws IOException {
-        // ne pas effacer cette fonction car utile pour tester les écrans
-        // déclenchés par data !
-        /*
-         * Stage stage; Parent root; stage = new Stage(); FXMLLoader fxmlLoader
-         * = new
-         * FXMLLoader(getClass().getResource("/fxml/answerPropositionPopUp.fxml"
-         * )); root = (Pane) fxmlLoader.load(); AnswerPropositionController
-         * controller = fxmlLoader.getController();
-         * controller.setControllerContext(this.IHMManager);
-         * controller.setMainApp(this.mainApp, "un joueur", "pas d'options");
-         * stage.setScene(new Scene(root)); mainApp.setCurrentStage(stage);
-         * stage.setTitle("My Profile"); stage.show();
-         */
-    }
 
     public ProfilProperty getProfile() {
         return this.profile;
@@ -199,12 +182,12 @@ public class IHMWelcomePageController {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Export to ...");
         File selectedDirectory = directoryChooser.showDialog(new Stage());
-
+        File newFile = new File(selectedDirectory.getAbsolutePath() + File.separator + exportFile.getName());
         if (selectedDirectory != null) {
             try {
                 // Attention : si la gestion d'erreur n'est pas faite,
                 // exportFile est null et on a une belle NullPointerException
-                Files.copy(exportFile.toPath(), selectedDirectory.toPath(),
+                Files.copy(exportFile.toPath(), newFile.toPath(),
                         java.nio.file.StandardCopyOption.REPLACE_EXISTING,
                         java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
                 exportOK(selectedDirectory.getAbsolutePath());

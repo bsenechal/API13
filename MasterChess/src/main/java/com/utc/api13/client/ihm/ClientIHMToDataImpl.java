@@ -105,7 +105,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     @SuppressWarnings("restriction")
     @Override
-    public void displayAnswer(UUID uidSender, boolean observable) {
+    public void displayAnswer(UUID uidSender, boolean answer, String message) {
         // uniquement si réponse négative
         Platform.runLater(new Runnable() {
             @Override
@@ -118,7 +118,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     root = (Pane) fxmlLoader.load();
                     ErrorController controller = fxmlLoader.getController();
                     controller.setControllerContext(myIHMManager);
-                    controller.setMainApp(myIHMManager.getMainApp(), "Sorry: the player has refused to play!");
+                    controller.setMainApp(myIHMManager.getMainApp(), message);
                     stage.setScene(new Scene(root));
                     stage.setTitle("Proposition refused");
                     stage.initModality(Modality.APPLICATION_MODAL);
