@@ -3,6 +3,7 @@
  */
 package com.utc.api13.commun.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.After;
@@ -10,7 +11,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.utc.api13.commun.entities.pieces.KingEntity;
 import com.utc.api13.commun.entities.pieces.RookEntity;
+import com.utc.api13.commun.enumerations.GameStatusEnum;
+import com.utc.api13.commun.enumerations.PieceColorEnum;
 
 /**
  * @author Benoît
@@ -63,6 +67,37 @@ public class GameEntityTest {
         // test avec une position null
         piece = game.getPieceFromPosition(null);
         Assert.assertNull("piece should be null", piece);
+    }
+    
+    
+    /**
+     * Test method for
+     * {@link com.utc.api13.commun.entities.GameEntity#isFinished()}
+     * .
+     */
+    @Test
+    public void testIsFinished() {
+
+        // test du statut initial du game :
+    	Assert.assertEquals("Game should continue", game.isFinished(), GameStatusEnum.CONTINUE);
+    	
+        // Suppression des pièces autre que le roi pour tester les déplacement
+        // sur un plateau vide
+        game.setBlackPieces(new ArrayList<APieceEntity>());
+        game.getBlackPieces().add(new KingEntity(PieceColorEnum.BLACK));
+
+        game.setWhitePieces(new ArrayList<APieceEntity>());
+        game.getWhitePieces().add(new KingEntity(PieceColorEnum.WHITE));
+        
+        game.setCurrentPlayer(whitePlayer);
+        
+        // ajout tour :
+        RookEntity rook = new RookEntity(PieceColorEnum.BLACK, 8);
+        game.getBlackPieces().add(rook);
+        rook.movePiece(new MoveEntity(new Date(), new PositionEntity(8, 8), new PositionEntity(8, 1), rook), game);
+        
+        // test du statut en echec du game :
+    	Assert.assertEquals("Game should be check", game.isFinished(), GameStatusEnum.CHECK);
     }
 
 }
