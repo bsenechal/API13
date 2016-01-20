@@ -91,7 +91,7 @@ public class ChessBoardNode {
                             firstPosition.setPositionY(movePosition.getColumn());
                             List<PositionEntity> positionList = myIClientToIHM
                                     .getAvailablesMoves(firstPosition.getPositionX(), firstPosition.getPositionY());
-                            if (positionList != null) {
+                            if (!positionList.isEmpty()) {
                                 selection = 2;
                                 // désactiver toutes les cases
                                 for (int ii = 0; ii < chessBoardSquares.length; ii++) {
@@ -101,18 +101,19 @@ public class ChessBoardNode {
                                 }
                                 // passer les cases en surbrillance et activer
                                 // uniquement celles-ci
+                                chessBoardSquares[firstPosition.getPositionX()-1][firstPosition.getPositionY()-1]
+                                        .setBorder(new LineBorder(Color.GREEN));
                                 for (int i = 0; i < positionList.size(); i++) {
                                     chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
                                             .getPositionY()-1].setEnabled(true);
-                                    chessBoardSquares[firstPosition.getPositionX()][firstPosition.getPositionY()]
-                                            .setBorder(new LineBorder(Color.GREEN));
+                                    
                                     chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
                                             .getPositionY()-1].setBackground(Color.GREEN);
                                 }
                             }
                         }
 
-                        if (selection == 2) {
+                        else if (selection == 2) {
                             if ((movePosition.getLine() == firstPosition.getPositionX())
                                     && (movePosition.getColumn() == firstPosition.getPositionY())) {
                                 selection = 1;
