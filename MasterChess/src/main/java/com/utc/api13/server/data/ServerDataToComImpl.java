@@ -167,7 +167,6 @@ public class ServerDataToComImpl implements IServerDataToCom {
             move.getPiece().deleteDestinationPiece(move, game);
             move.getPiece().movePiece(move, game);
 
-            // TODO: Ulysse : When do we switch activeplayers ?
 
         }
 
