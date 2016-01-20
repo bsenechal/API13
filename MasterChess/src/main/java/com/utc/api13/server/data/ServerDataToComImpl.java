@@ -4,6 +4,7 @@
 package com.utc.api13.server.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -12,10 +13,14 @@ import java.util.stream.Collectors;
 
 import org.springframework.util.Assert;
 
+import com.utc.api13.commun.entities.APieceEntity;
 //import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
+import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.entities.pieces.KingEntity;
+import com.utc.api13.commun.entities.pieces.RookEntity;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
 import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
@@ -92,6 +97,72 @@ public class ServerDataToComImpl implements IServerDataToCom {
         GameEntity game = dataServerManager.getGameById(move.getGameID());
         Boolean result = move.getPiece().isMovePossible(move, game);
         if (result) {
+
+            if (move.getPiece().toString() == "King") {
+                KingEntity kingTmp = (KingEntity) move.getPiece();
+                if (kingTmp.getHasMove() == Boolean.FALSE) {
+                    if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() + 2) {
+                        // petit roque
+
+                        PositionEntity fromPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
+                                kingTmp.getPosition().getPositionX() + 3);
+                        PositionEntity toPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
+                                kingTmp.getPosition().getPositionX() + 1);
+
+                        APieceEntity piece = game.getPieceFromPosition(fromPosition);
+
+                        MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
+                        move.getPiece().movePiece(moveTmp, game);
+
+                    } else if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() - 2) {
+                        // grand roque
+
+                        PositionEntity fromPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
+                                kingTmp.getPosition().getPositionX() - 4);
+                        PositionEntity toPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
+                                kingTmp.getPosition().getPositionX() - 1);
+
+                        APieceEntity piece = game.getPieceFromPosition(fromPosition);
+
+                        MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
+                        move.getPiece().movePiece(moveTmp, game);
+
+                    }
+                }
+
+            } else if (move.getPiece().toString() == "Rook") {
+                RookEntity rookTmp = (RookEntity) move.getPiece();
+                if (rookTmp.getHasMove() == Boolean.FALSE) {
+                    if (move.getToPosition().getPositionX() == rookTmp.getPosition().getPositionX() + 3) {
+                        // grand roque
+
+                        PositionEntity fromPosition = new PositionEntity(rookTmp.getPosition().getPositionY(),
+                                rookTmp.getPosition().getPositionX() + 3);
+                        PositionEntity toPosition = new PositionEntity(rookTmp.getPosition().getPositionY(),
+                                rookTmp.getPosition().getPositionX() + 1);
+
+                        APieceEntity piece = game.getPieceFromPosition(fromPosition);
+
+                        MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
+                        move.getPiece().movePiece(moveTmp, game);
+
+                    } else if (move.getToPosition().getPositionX() == rookTmp.getPosition().getPositionX() - 2) {
+                        // petit roque
+
+                        PositionEntity fromPosition = new PositionEntity(rookTmp.getPosition().getPositionY(),
+                                rookTmp.getPosition().getPositionX() - 4);
+                        PositionEntity toPosition = new PositionEntity(rookTmp.getPosition().getPositionY(),
+                                rookTmp.getPosition().getPositionX() - 1);
+
+                        APieceEntity piece = game.getPieceFromPosition(fromPosition);
+
+                        MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
+                        move.getPiece().movePiece(moveTmp, game);
+
+                    }
+                }
+
+            }
 
             move.getPiece().deleteDestinationPiece(move, game);
             move.getPiece().movePiece(move, game);
