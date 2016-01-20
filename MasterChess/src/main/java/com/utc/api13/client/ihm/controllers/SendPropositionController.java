@@ -96,7 +96,6 @@ public class SendPropositionController {
 
         try {
             this.confirmation();
-            this.currentStage.close();
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
