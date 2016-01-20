@@ -133,7 +133,7 @@ public class ChessBoardNode {
                                 		if(positionList.contains(j))
                                 			j.setBackground(j.getColor());                                		 
                                 	}
-                                chessBoardSquares[firstPosition.getPositionX()][firstPosition.getPositionY()].setColor(chessBoardSquares[firstPosition.getPositionX()][firstPosition.getPositionY()].getColor());
+                                chessBoardSquares[firstPosition.getPositionX()][firstPosition.getPositionY()].setBackground(chessBoardSquares[firstPosition.getPositionX()][firstPosition.getPositionY()].getColor());
  
                                 }
                                 // tout rendre unclickable
