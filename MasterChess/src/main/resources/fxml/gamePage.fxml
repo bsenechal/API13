@@ -20,8 +20,8 @@
                      </font>
                   </Label>
                   <ImageView fx:id="iconProfile" fitHeight="34.0" fitWidth="65.0" layoutX="334.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="abandonButton" layoutX="227.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#onAbandonClicked" text="Abandonner" />
-                  <Button fx:id="quitGameButton" layoutX="341.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#onQuitGameClicked" text="Quitter" />
+                  <Button fx:id="abandonButton" layoutX="227.0" layoutY="17.0" mnemonicParsing="false" onAction="#onGiveUpClicked" onMouseClicked="#onAbandonClicked" text="GiveUp" />
+                  <Button fx:id="quitGameButton" layoutX="341.0" layoutY="17.0" mnemonicParsing="false" onAction="#onLeaveClicked" onMouseClicked="#onQuitGameClicked" text="Leave" />
                </children>
             </AnchorPane>
         </items>
