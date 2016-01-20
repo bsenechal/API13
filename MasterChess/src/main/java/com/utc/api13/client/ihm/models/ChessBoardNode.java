@@ -40,7 +40,7 @@ public class ChessBoardNode {
     private static final int TAILLE = 8;
     private static final int TAILLE_CASE = 25;
     private Case[][] chessBoardSquares = new Case[TAILLE][TAILLE];
-    private PositionEntity firstPosition;
+    private PositionEntity firstPosition = new PositionEntity(-1, -1);
     // setter une variable d'etat pour savoir si on selectionne une piece ou une
     // position pour les déplacements dans le listener
     private int selection = 1;
