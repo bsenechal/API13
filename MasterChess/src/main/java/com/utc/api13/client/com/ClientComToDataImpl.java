@@ -119,7 +119,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void getAllParties() {
-    	comClientManagerInstance.sendMessage(new AllGameMessage(new UUID(0, 0), new UUID(0, 0),null));
+        comClientManagerInstance.sendMessage(new AllGameMessage(new UUID(0, 0), new UUID(0, 0), null));
         return;
     }
 

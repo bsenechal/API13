@@ -183,4 +183,55 @@ public class ServerDataToCommImplTest {
         Assert.assertTrue("The list should contain the user " + observer2.toString(),
                 dataServerManager.getServerDataToComImpl().getUsersByGame(idGame).contains(observer2));
     }
+
+    @Test
+    public void getGameByIdTest() {
+
+        // Create a game and add it
+        GameEntity game = new GameEntity();
+        final UUID idGame = UUID.randomUUID();
+        final PublicUserEntity whitePlayer = new PublicUserEntity();
+        final PublicUserEntity blackPlayer = new PublicUserEntity();
+        final PublicUserEntity observer1 = new PublicUserEntity();
+        final PublicUserEntity observer2 = new PublicUserEntity();
+        List<PublicUserEntity> observers = new ArrayList<PublicUserEntity>();
+        observers.add(observer1);
+        observers.add(observer2);
+        game.setObservers(observers);
+        game.setId(idGame);
+        dataServerManager.getCurrentGames().add(game);
+
+        GameEntity gameRecover = dataServerManager.getServerDataToComImpl().getGameById(game.getId());
+        Assert.assertEquals(game, gameRecover);
+
+    }
+
+    @Test
+    public void newObserverTest() {
+        // Create a game and add it
+        GameEntity game = new GameEntity();
+        final UUID idGame = UUID.randomUUID();
+        final PublicUserEntity whitePlayer = new PublicUserEntity();
+        final PublicUserEntity blackPlayer = new PublicUserEntity();
+        final PublicUserEntity observer1 = new PublicUserEntity();
+        final PublicUserEntity observer2 = new PublicUserEntity();
+        List<PublicUserEntity> observers = new ArrayList<PublicUserEntity>();
+        observers.add(observer1);
+        observers.add(observer2);
+        game.setObservers(observers);
+        game.setId(idGame);
+        dataServerManager.getCurrentGames().add(game);
+
+        List<PublicUserEntity> obs = dataServerManager.getGameById(game.getId()).getObservers();
+        Assert.assertEquals(2, obs.size());
+
+        // create a user and add it to current user
+        final PublicUserEntity user = new PublicUserEntity();
+        dataServerManager.getCurrentUsers().add(user);
+
+        // Add user and assert one more
+        dataServerManager.getServerDataToComImpl().newObserver(game.getId(), user.getId());
+        obs = dataServerManager.getGameById(game.getId()).getObservers();
+        Assert.assertEquals(3, obs.size());
+    }
 }

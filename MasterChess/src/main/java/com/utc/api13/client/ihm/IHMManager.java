@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
-import com.utc.api13.client.ihm.models.ChessBoardNode;
 import com.utc.api13.client.ihm.property.ChatProperty;
 import com.utc.api13.client.ihm.property.ConfirmationProperty;
 import com.utc.api13.client.ihm.property.ErrorProperty;
@@ -26,7 +25,6 @@ public class IHMManager {
     private ErrorProperty error;
     private ChatProperty chat;
     private UUID uisender;
-    private ChessBoardNode cb = new ChessBoardNode();
 
     public ChatProperty getChat() {
         return chat;
@@ -89,10 +87,6 @@ public class IHMManager {
     public IHMManager() {
         this.myClientIHMToDataImpl = new ClientIHMToDataImpl(this);
 
-    }
-
-    public final ChessBoardNode getChessBoardNode() {
-        return this.cb;
     }
 
     public IClientDataToIHM getIClientDataToIHM() {

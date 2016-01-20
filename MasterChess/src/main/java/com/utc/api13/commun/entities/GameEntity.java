@@ -444,16 +444,10 @@ public class GameEntity extends ADataEntity {
         Boolean check = false;
 
         // set local variables according to the local player color :
-        if (this.getCurrentPlayer().getId().equals(this.getBlackPlayer().getId())) {
-            // ActivePlayer is BlackPlayer
-            opponentPieces = this.getWhitePieces();
-        } else {
-            // ActivePlayer is WhitePlayer
-            opponentPieces = this.getBlackPieces();
 
-        }
-        king = (KingEntity) opponentPieces.stream().filter(bp -> bp.getClass().isInstance(KingEntity.class)).findFirst()
-                .orElse(null);
+        opponentPieces = this.getOpponentPieces();
+
+        king = (KingEntity) opponentPieces.stream().filter(bp -> bp.toString().equals("King")).findFirst().orElse(null);
 
         // Check check
         if (this.isCheck()) {
@@ -463,10 +457,16 @@ public class GameEntity extends ADataEntity {
 
         // Checkmate check :
         if (check == true) {
-            // check if the king can't move :
-            if (king.generateAvailableMoves(this).isEmpty()) {
-                // check if no piece can save him :
-                // TODO !!!
+            // get all availables moves of the current player, if null ->
+            // checkmate :
+            List<APieceEntity> currentPlayerPieces = new ArrayList<APieceEntity>();
+            currentPlayerPieces.addAll(this.getCurrentPlayerPieces());
+            List<PositionEntity> currentPlayerAvailableMoves = new ArrayList<PositionEntity>();
+            for (APieceEntity piece : currentPlayerPieces) {
+                currentPlayerAvailableMoves.addAll(piece.generateAvailableMoves(this));
+            }
+            // check if nothing can save the king :
+            if (currentPlayerAvailableMoves.isEmpty()) {
                 result = GameStatusEnum.CHECKMATE;
             }
         }
@@ -557,19 +557,19 @@ public class GameEntity extends ADataEntity {
         return piecelist.stream().filter(piece -> piece.getPosition().equals(myposition)).findFirst().orElse(null);
 
     }
-    
-    //utilise pour binder  a une partie sur l'ecran d'accueil
-    public String getWhitePlayerLogin(){
-    	return whitePlayer.getLogin();
+
+    // utilise pour binder a une partie sur l'ecran d'accueil
+    public String getWhitePlayerLogin() {
+        return whitePlayer.getLogin();
     }
-    
-    public String getBlackPlayerLogin(){
-    	return blackPlayer.getLogin();
+
+    public String getBlackPlayerLogin() {
+        return blackPlayer.getLogin();
     }
-    
-    public String getCreationDateDrawable(){
-    	DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-    	String reportDate = df.format(creationDate);
-    	return reportDate;
+
+    public String getCreationDateDrawable() {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        String reportDate = df.format(creationDate);
+        return reportDate;
     }
 }

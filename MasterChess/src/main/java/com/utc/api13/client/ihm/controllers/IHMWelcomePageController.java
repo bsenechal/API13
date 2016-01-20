@@ -3,7 +3,6 @@ package com.utc.api13.client.ihm.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -369,19 +368,20 @@ public class IHMWelcomePageController {
         // Demande de la liste des jeux
         // -------------------------------
 
-          this.listCurrentGames= myIClientToIHM.getGamesList();
-          this.listCurrentGames.addListener // add listener on observableList in DATA 
-          ( new ListChangeListener<GameEntity>() {
-          
-          @Override public void
-          onChanged(javafx.collections.ListChangeListener.Change<? extends
-          GameEntity> c) {
-          currentGamesTable.setItems(myIClientToIHM.getGamesList()); } } );
-          
-          currentGamesTable.setItems(this.listCurrentGames);
-          myIClientToIHM.getAllGames(); // ask for list of game to DATA
-         
-        
+        this.listCurrentGames = myIClientToIHM.getGamesList();
+        this.listCurrentGames.addListener // add listener on observableList in
+                                          // DATA
+        (new ListChangeListener<GameEntity>() {
+
+            @Override
+            public void onChanged(javafx.collections.ListChangeListener.Change<? extends GameEntity> c) {
+                currentGamesTable.setItems(myIClientToIHM.getGamesList());
+            }
+        });
+
+        currentGamesTable.setItems(this.listCurrentGames);
+        myIClientToIHM.getAllGames(); // ask for list of game to DATA
+
         // Demande de la liste des parties sauvegardées
         // -------------------------------
         connectedUserTable.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
@@ -431,12 +431,12 @@ public class IHMWelcomePageController {
 
         // liste des jeux en cours
         // ---------------
-        
-          currentGamesId.setCellValueFactory(new PropertyValueFactory<GameEntity, UUID>("id"));
-          currentGamesPlayer1.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("whitePlayerLogin"));
-          currentGamesPlayer2.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("blackPlayerLogin"));
-          currentGamesTime.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("creationDateDrawable"));
-         
+
+        currentGamesId.setCellValueFactory(new PropertyValueFactory<GameEntity, UUID>("id"));
+        currentGamesPlayer1.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("whitePlayerLogin"));
+        currentGamesPlayer2.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("blackPlayerLogin"));
+        currentGamesTime.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("creationDateDrawable"));
+
     }
 
     public void displayProfile() {

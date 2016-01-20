@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.commun.entities.GameEntity;
-import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.server.com.ComServerManager;
 
 import io.netty.channel.ChannelHandlerContext;
