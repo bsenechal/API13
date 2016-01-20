@@ -1,5 +1,6 @@
 package com.utc.api13.commun.messages;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.utc.api13.client.com.ComClientManager;
@@ -54,6 +55,10 @@ public class RequestAnswerMessage extends Message {
                     observable, timer, timerInt);
             // On retourne l'info a l'utilisateur
             comServerManager.sendMessage(ctx.channel(), this);
+            //On recupere la liste des parties mise à jour
+            List<GameEntity> games = comServerManager.getIServerDataToCom().getAllGames();
+            //On broadcast la nouvelle liste de partie
+            comServerManager.broadcastMessage(new AllGameMessage(sender, receiver, games));
         }
         // On envoie aussi le message a l'autre joueur
         comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);

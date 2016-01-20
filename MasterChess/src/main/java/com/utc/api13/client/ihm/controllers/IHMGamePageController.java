@@ -9,7 +9,6 @@ import java.util.UUID;
 import javax.swing.SwingUtilities;
 
 import com.utc.api13.client.AppClient;
-import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.models.ChessBoardNode;
@@ -132,7 +131,7 @@ public class IHMGamePageController {
         this.mainApp = app;
         GameEntity game = this.myIClientToIHM.getCurrentGame();
         final ChessBoardNode cb = new ChessBoardNode(IHMManager);
-        
+
         final SwingNode swingNode = new SwingNode();
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -148,7 +147,7 @@ public class IHMGamePageController {
         // initialisation des différents labels
         playerLoginLabel.setText(game.getWhitePlayer().getLogin());
         otherPlayerLoginLabel.setText(game.getBlackPlayer().getLogin());
-        
+
         int nbObservers = game.getObservers().size();
         numberObserversLabel.setText(String.valueOf(nbObservers));
     }

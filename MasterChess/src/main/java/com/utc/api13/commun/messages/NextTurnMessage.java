@@ -2,11 +2,11 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
-import io.netty.channel.ChannelHandlerContext;
-
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
 import com.utc.api13.server.com.ComServerManager;
+
+import io.netty.channel.ChannelHandlerContext;
 
 public class NextTurnMessage extends Message {
 

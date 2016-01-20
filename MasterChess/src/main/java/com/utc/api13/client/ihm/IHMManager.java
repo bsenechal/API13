@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
-import com.utc.api13.client.ihm.models.ChessBoardNode;
 import com.utc.api13.client.ihm.property.ChatProperty;
 import com.utc.api13.client.ihm.property.ConfirmationProperty;
 import com.utc.api13.client.ihm.property.ErrorProperty;
@@ -89,7 +88,6 @@ public class IHMManager {
         this.myClientIHMToDataImpl = new ClientIHMToDataImpl(this);
 
     }
-
 
     public IClientDataToIHM getIClientDataToIHM() {
         return this.myIClientToIHM;

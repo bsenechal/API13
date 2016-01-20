@@ -31,7 +31,7 @@ public class HeartBeat extends Message {
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // logger.info("Hello message received from server, answering Hello");
-        ctx.writeAndFlush(new HeartBeat(new UUID(0, 0), new UUID(0, 0), null));
+        ctx.writeAndFlush(new HeartBeat(receiver, sender, ping));
     }
 
     public InetAddress getPing() {

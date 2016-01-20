@@ -5,7 +5,6 @@ import javax.swing.JButton;
 public class Case extends JButton {
     private int line;
     private int column;
-    
 
     public Case(int x, int y) {
         this.line = x;
