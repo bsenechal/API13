@@ -1,5 +1,6 @@
 package com.utc.api13.commun.utils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.util.Assert;
-
-import java.io.File;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.Erreur;
@@ -42,6 +41,7 @@ public class StorageUtils {
         Assert.notNull(user, "[StorageUtils] User shouldn't be null");
         try {
             String filePath = PATH.getAbsolutePath() + File.separator + user.getLogin() + "_" + user.getId() + ".ser";
+            
             // First let's try to create the file
             File file = new File(filePath);
             if (!file.createNewFile()) {
