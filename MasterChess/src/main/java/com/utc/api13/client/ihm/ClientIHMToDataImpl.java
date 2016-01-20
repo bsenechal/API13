@@ -98,7 +98,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     @SuppressWarnings("restriction")
     @Override
-    public void displayAnswer(UUID uidSender, boolean observable) {
+    public void displayAnswer(UUID uidSender) {
         // uniquement si réponse négative
         Platform.runLater(new Runnable() {
             @Override
