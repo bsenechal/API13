@@ -188,10 +188,10 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         // afficher la pièce sur la nouvelle case
         try {
             if (game.getCurrentPlayer() == game.getBlackPlayer()) {
-                Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "N.gif"));
+                Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "B.gif"));
                 chessBoardSquares[line_to-1][col_to-1].setIcon(new ImageIcon(img));
             } else {
-                Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "B.gif"));
+                Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "N.gif"));
                 chessBoardSquares[line_to-1][col_to-1].setIcon(new ImageIcon(img));
             }
 
