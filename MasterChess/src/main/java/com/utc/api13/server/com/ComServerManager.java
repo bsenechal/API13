@@ -124,7 +124,7 @@ public class ComServerManager {
     }
 
     /**
-     * 
+     * @retrun unique ChannelHandlerContext by user ID
      */
     public ChannelHandlerContext findChannelHandlerContextFromUserId(UUID idUser) {
         synchronized (this) {
@@ -133,7 +133,7 @@ public class ComServerManager {
     }
 
     /**
-     * 
+     * @return unique user ID by ChannelHandlerContext
      */
     public UUID findUserIdFromChannelHandlerContext(ChannelHandlerContext ctx) {
         synchronized (this) {
@@ -146,7 +146,7 @@ public class ComServerManager {
     }
 
     /**
-     * 
+     * To send message to every connected users
      */
     public void broadcastMessage(Message msg) {
         synchronized (this) {
@@ -158,7 +158,7 @@ public class ComServerManager {
     }
 
     /**
-     * 
+     * To send message to a list of users
      */
     public void multicastMessageByIds(List<UUID> userIds, Message msg) {
         synchronized (this) {
@@ -174,7 +174,7 @@ public class ComServerManager {
     }
 
     /**
-     * 
+     * To send messgage to a list of PublicUserEntity.
      */
     public void multicastMessageByUsers(List<PublicUserEntity> users, Message msg) {
         synchronized (this) {

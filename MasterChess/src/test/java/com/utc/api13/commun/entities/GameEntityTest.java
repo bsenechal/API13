@@ -16,8 +16,6 @@ import com.utc.api13.commun.entities.pieces.RookEntity;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
-import impl.org.controlsfx.tools.rectangle.change.ToWestChangeStrategy;
-
 /**
  * @author Benoît
  *
