@@ -48,44 +48,22 @@ public class MoveValidationMessage extends Message {
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         // STEP 1 : Validate the move
-        boolean ok = comServerManager.getIServerDataToCom().computerResult(sender, move); // Is
-                                                                                          // the
-                                                                                          // move
-                                                                                          // valid
-                                                                                          // ?
+        boolean ok = comServerManager.getIServerDataToCom().computerResult(sender, move); // Is the move valid ?
         if (ok) { // If yes,
             // STEP 2 : inform the other players
-            GameEntity game = comServerManager.getIServerDataToCom().getGameById(move.getGameID()); // get
-                                                                                                    // the
-                                                                                                    // game
-                                                                                                    // entity
-                                                                                                    // with
-                                                                                                    // the
-                                                                                                    // gameID
-            List<PublicUserEntity> list = game.getAllParticipants(); // get the
-                                                                     // list of
-                                                                     // all
-                                                                     // players
-            MoveMessage movemsg = new MoveMessage(new UUID(0, 0), null, move); // build
-                                                                               // the
-                                                                               // message
-            comServerManager.multicastMessageByUsers(list, movemsg); // send the
-                                                                     // move to
-                                                                     // all game
-                                                                     // participants
-                                                                     // (players
-                                                                     // &
-                                                                     // observers
-                                                                     // !)
+            GameEntity game = comServerManager.getIServerDataToCom().getGameById(move.getGameID()); // get the game entity with the gameID
+            List<PublicUserEntity> list = game.getAllParticipants(); // get the list of all players
+            MoveMessage movemsg = new MoveMessage(new UUID(0, 0), null, move); // build the message
+            comServerManager.multicastMessageByUsers(list, movemsg); // send the move to all game participants (players & observers!)
 
             // STEP 3 : inform the other players of the next step ( game
             // finished, next player)
             GameStatusEnum status = comServerManager.getIServerDataToCom().isFinished(move.getGameID());
-            // UUID nexttoplay =
-            // comServerManager.getIServerDataToCom().getNextPlayer(move.getGameID());
-            // NextTurnMessage ntm = new NextTurnMessage(new UUID(0, 0), null,
-            // status, nexttoplay);
-            // comServerManager.multicastMessageByUsers(list, ntm);
+            game = comServerManager.getIServerDataToCom().getGameById(move.getGameID());
+            UUID nexttoplay = game.getCurrentPlayer().getId();
+//             UUID nexttoplay = comServerManager.getIServerDataToCom().getNextPlayer(move.getGameID());
+             NextTurnMessage ntm = new NextTurnMessage(new UUID(0, 0), null, status, nexttoplay);
+             comServerManager.multicastMessageByUsers(list, ntm);
         } else {
             // TODO : Error !
         }
