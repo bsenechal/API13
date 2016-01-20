@@ -3,6 +3,7 @@
  */
 package com.utc.api13.commun.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.After;
@@ -11,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.utc.api13.commun.entities.pieces.RookEntity;
+import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 /**
  * @author Benoît
@@ -75,7 +77,9 @@ public class GameEntityTest {
     public void testIsFinished() {
 
         // test du statut initial du game :
-    	System.out.println(game.isFinished());
+    	Assert.assertEquals("Game should continue", game.isFinished(), GameStatusEnum.CONTINUE);
+    	
+        
     }
 
 }
