@@ -331,7 +331,13 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public List<PositionEntity> getAvailablesMoves(int line, int col) {
         PositionEntity myposition = new PositionEntity(line, col);
         APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(myposition);
-        return piece.generateAvailableMoves(dataClientManager.getCurrentGame());
+        if(piece != null){
+        	if(piece.getColor()==dataClientManager.getCurrentGame().getCurrentPlayerColor()){
+            	return piece.generateAvailableMoves(dataClientManager.getCurrentGame());
+        	}
+        }
+        return new ArrayList<PositionEntity>();
+        
     }
 
     @Override

@@ -386,6 +386,22 @@ public class GameEntity extends ADataEntity {
 
         }
     }
+    
+    /**
+     * @author ulyss_000
+     * @return the current player color
+     */
+    public PieceColorEnum getCurrentPlayerColor() {
+        if (this.getCurrentPlayer().getId().equals(this.getBlackPlayer().getId())) {
+            // ActivePlayer is BlackPlayer
+            return PieceColorEnum.BLACK;
+
+        } else {
+            // ActivePlayer is WhitePlayer
+            return PieceColorEnum.WHITE;
+
+        }
+    }
 
     /**
      * @author ulyss_000
