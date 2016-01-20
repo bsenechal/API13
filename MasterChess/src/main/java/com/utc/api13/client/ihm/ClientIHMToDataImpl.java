@@ -22,6 +22,7 @@ import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
 //github.com/bsenechal/API13.git
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -249,5 +250,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
             }
         });
     }
-
+    public void activateCases(PublicUserEntity currentUser, GameStatusEnum status) {
+    	// en fonction du joueur courant 
+    }
 }

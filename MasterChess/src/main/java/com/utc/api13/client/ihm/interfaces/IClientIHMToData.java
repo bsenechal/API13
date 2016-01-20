@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 public interface IClientIHMToData {
 
@@ -140,4 +141,6 @@ public interface IClientIHMToData {
     // erreurs : il suffit de catcher les exceptions
     // attention dans les fonctions à tout le temps mettre getCardGame pour
     // récup jeu local
+    
+    public void activateCases(PublicUserEntity currentUser, GameStatusEnum status);
 }
