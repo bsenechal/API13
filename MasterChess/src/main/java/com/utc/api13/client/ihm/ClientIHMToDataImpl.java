@@ -189,10 +189,10 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         try {
             if (game.getCurrentPlayer() == game.getBlackPlayer()) {
                 Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "N.gif"));
-                chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
+                chessBoardSquares[line_to-1][col_to-1].setIcon(new ImageIcon(img));
             } else {
                 Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "B.gif"));
-                chessBoardSquares[line_to][col_to].setIcon(new ImageIcon(img));
+                chessBoardSquares[line_to-1][col_to-1].setIcon(new ImageIcon(img));
             }
 
         } catch (IOException e) {
