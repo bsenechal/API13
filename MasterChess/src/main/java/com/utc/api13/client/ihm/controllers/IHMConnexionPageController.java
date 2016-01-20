@@ -21,6 +21,8 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -53,7 +55,11 @@ public class IHMConnexionPageController {
 
     @FXML
     private void onSignInClicked(Event event) throws IOException {
-        String login = loginTextView.getText();
+        launchGame();
+    }
+    
+    private void launchGame() throws IOException{
+    	String login = loginTextView.getText();
         String pw = passwordTextView.getText();
         String sv = serverAddressTextView.getText();
         String portString = portTextView.getText();
@@ -153,6 +159,13 @@ public class IHMConnexionPageController {
                 importNOK("Error : techninal exception");
                 log.error(e.getMessage(), e);
             }
+        }
+    }
+    
+    @FXML
+    public void handleEnterPressed(KeyEvent event) throws IOException{
+        if (event.getCode() == KeyCode.ENTER) {
+        	launchGame();
         }
     }
 
