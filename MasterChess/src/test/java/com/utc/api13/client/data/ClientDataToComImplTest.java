@@ -156,4 +156,5 @@ public class ClientDataToComImplTest {
         Assert.assertEquals("Current player should be user2",
                 dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user2.getId());
     }
+
 }

@@ -1,6 +1,5 @@
 package com.utc.api13.commun.messages;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -56,7 +55,7 @@ public class ChatMessage extends Message {
         // List<PublicUserEntity> list =
         // comServerManager.getIServerDataToCom().getUsersByGame(partie);
         List<PublicUserEntity> list = comServerManager.getIServerDataToCom().getUsersByGame(partie).stream()
-                .filter(user -> user.getAllowedToChat() == true).collect(Collectors.toList());
+                .filter(user -> user.isAllowedToChat() == true).collect(Collectors.toList());
 
         // Send the message to all allowed listed users
         comServerManager.multicastMessageByUsers(list, this);

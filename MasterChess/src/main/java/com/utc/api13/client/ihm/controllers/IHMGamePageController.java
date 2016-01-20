@@ -9,9 +9,9 @@ import java.util.UUID;
 import javax.swing.SwingUtilities;
 
 import com.utc.api13.client.AppClient;
-import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.client.ihm.models.ChessBoardNode;
 import com.utc.api13.client.ihm.property.ChatProperty;
 import com.utc.api13.commun.entities.GameEntity;
 
@@ -130,8 +130,8 @@ public class IHMGamePageController {
     public void setMainApp(AppClient app) {
         this.mainApp = app;
         GameEntity game = this.myIClientToIHM.getCurrentGame();
-        // final ChessBoardNode cb = new ChessBoardNode(IHMManager);
-        this.IHMManager.getChessBoardNode().setIHMManager(IHMManager);
+        final ChessBoardNode cb = new ChessBoardNode(IHMManager);
+
         final SwingNode swingNode = new SwingNode();
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -145,14 +145,9 @@ public class IHMGamePageController {
         chessBoardStackPane.getChildren().add(swingNode);
 
         // initialisation des différents labels
-        PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
-        if (u.getId() == game.getWhitePlayer().getId()) {
-            playerLoginLabel.setText(u.getLogin());
-            otherPlayerLoginLabel.setText(game.getBlackPlayer().getLogin());
-        } else {
-            otherPlayerLoginLabel.setText(u.getLogin());
-            playerLoginLabel.setText(game.getWhitePlayer().getLogin());
-        }
+        playerLoginLabel.setText(game.getWhitePlayer().getLogin());
+        otherPlayerLoginLabel.setText(game.getBlackPlayer().getLogin());
+
         int nbObservers = game.getObservers().size();
         numberObserversLabel.setText(String.valueOf(nbObservers));
     }
