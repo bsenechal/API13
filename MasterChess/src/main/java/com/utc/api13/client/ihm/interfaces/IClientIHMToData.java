@@ -61,7 +61,7 @@ public interface IClientIHMToData {
      *            answered.
      * @return void
      */
-    public void displayAnswer(UUID uidSender);
+    public void displayAnswer(UUID uidSender, boolean answer);
 
     /**
      * Asks the HMI to display the chessboard when both user have accepted the
