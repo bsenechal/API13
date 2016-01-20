@@ -12,7 +12,11 @@ public class AppServer {
      * @param args
      */
     public static void main(String[] args) {
-        ComServerManager comServerManager = new ComServerManager(8000);
+    	int port = 8000;
+    	if (args.length > 0){
+    		port = Integer.parseInt(args[0]);
+    	}
+        ComServerManager comServerManager = new ComServerManager(port);
 
         DataServerManager dataServerManager = new DataServerManager();
 
