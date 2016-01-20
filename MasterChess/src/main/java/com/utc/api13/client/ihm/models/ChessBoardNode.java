@@ -22,6 +22,7 @@ import javax.swing.border.LineBorder;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.commun.entities.APieceEntity;
+import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.pieces.BishopEntity;
 import com.utc.api13.commun.entities.pieces.KingEntity;
@@ -32,8 +33,11 @@ import com.utc.api13.commun.entities.pieces.RookEntity;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
 public class ChessBoardNode {
-    private IClientDataToIHM myIClientToIHM;
-    private IHMManager myIhmManager;
+    private IClientDataToIHM myIClientToIHM ;
+    
+    private GameEntity myGame;
+	
+	private IHMManager myIhmManager;
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JPanel chessBoard;
     private static final String COLS = "ABCDEFGH";
@@ -76,8 +80,8 @@ public class ChessBoardNode {
                             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
                                 if (movePosition == chessBoardSquares[ii][jj]) {
 
-                                    movePosition.setLine(ii);
-                                    movePosition.setColumn(jj);
+                                    movePosition.setLine(ii+1);
+                                    movePosition.setColumn(jj+1);
                                 }
                             }
                         }
@@ -98,12 +102,12 @@ public class ChessBoardNode {
                                 // passer les cases en surbrillance et activer
                                 // uniquement celles-ci
                                 for (int i = 0; i < positionList.size(); i++) {
-                                    chessBoardSquares[positionList.get(i).getPositionX()][positionList.get(i)
-                                            .getPositionY()].setEnabled(true);
+                                    chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
+                                            .getPositionY()-1].setEnabled(true);
                                     chessBoardSquares[firstPosition.getPositionX()][firstPosition.getPositionY()]
                                             .setBorder(new LineBorder(Color.GREEN));
-                                    chessBoardSquares[positionList.get(i).getPositionX()][positionList.get(i)
-                                            .getPositionY()].setBackground(Color.GREEN);
+                                    chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
+                                            .getPositionY()-1].setBackground(Color.GREEN);
                                 }
                             }
                         }
@@ -216,4 +220,20 @@ public class ChessBoardNode {
     public final Case[][] getChessBoardSquares() {
         return this.chessBoardSquares;
     }
+    
+    public IClientDataToIHM getMyIClientToIHM() {
+		return myIClientToIHM;
+	}
+
+	public void setMyIClientToIHM(IClientDataToIHM myIClientToIHM) {
+		this.myIClientToIHM = myIClientToIHM;
+	}
+	public GameEntity getMyGame() {
+		return myGame;
+	}
+
+	public void setMyGame(GameEntity myGame) {
+		this.myGame = myGame;
+	}
+
 }
