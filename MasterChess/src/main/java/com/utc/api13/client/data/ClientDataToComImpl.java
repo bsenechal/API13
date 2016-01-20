@@ -284,13 +284,23 @@ public class ClientDataToComImpl implements IClientDataToCom {
     }
 
     @Override
-    public void setFinishedStatus(GameStatusEnum status) {
+    public void nextTurn(final GameStatusEnum status, final UUID nextPlayer) {
+        if (GameStatusEnum.CONTINUE.equals(status)) {
+            instanceDataClientManager.getCurrentGame().setCurrentPlayer(
+                    (instanceDataClientManager.getCurrentGame().getBlackPlayer().getId().equals(nextPlayer))
+                            ? instanceDataClientManager.getCurrentGame().getBlackPlayer()
+                            : instanceDataClientManager.getCurrentGame().getWhitePlayer());
+            // TODO : Notifier IHM du changement de joueurs
+            // TODO : active/desactive chessboard
+        }
         Assert.notNull(instanceDataClientManager.getCurrentGames(),
                 "[ClientDataToComImpl][setFinishedStatus] currentGames shouldn't be null");
 
         // set the game status :
         instanceDataClientManager.getCurrentGame().setIsFinished(status);
-
+        
+        //alert IHM:
+        instanceDataClientManager.getIClientIHMToData().activateCases(instanceDataClientManager.getCurrentGame().getCurrentPlayer(), status);
         // do treatment accordingly :
         switch (status) {
 
@@ -302,22 +312,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
             break;
 
         default:
+        	
             break;
 
         }
-    }
-
-    @Override
-    public void nextTurn(final GameStatusEnum status, final UUID nextPlayer) {
-        if (GameStatusEnum.CONTINUE.equals(status)) {
-            instanceDataClientManager.getCurrentGame().setCurrentPlayer(
-                    (instanceDataClientManager.getCurrentGame().getBlackPlayer().getId().equals(nextPlayer))
-                            ? instanceDataClientManager.getCurrentGame().getBlackPlayer()
-                            : instanceDataClientManager.getCurrentGame().getWhitePlayer());
-            // TODO : Notifier IHM du changement de joueurs
-            // TODO : active/desactive chessboard
-        }
-        setFinishedStatus(status);
                 
     }
 }

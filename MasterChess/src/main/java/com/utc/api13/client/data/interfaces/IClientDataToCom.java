@@ -171,15 +171,10 @@ public interface IClientDataToCom {
     public void notifyDisconnection(UUID idUser);
 
     /**
-     * This method will set the status of the game / switch active players /
-     * give points if necessary
-     * 
+     * Com can use this method to set the next turn
      * @author ulyss_000
-     * @param status
-     *            -> the game status (CHECK/CHECKMATE/CONTINUE/DRAW) send by the
-     *            server
+     * @param isFinished
+     * @param nextPlayer
      */
-    public void setFinishedStatus(GameStatusEnum status);
-
     public void nextTurn(GameStatusEnum isFinished, UUID nextPlayer);
 }
