@@ -166,11 +166,17 @@ public class ClientDataToComImpl implements IClientDataToCom {
     }
 
     @Override
-    public void notify(String message) {
-        // TODO décommenter
-        // instanceDataClientManager.getIClientIHMToData().notify(message);
+    public void notifyRejection(UUID uidSender) {
+        instanceDataClientManager.getIClientIHMToData().displayAnswer(uidSender, false);
+        //Appelle la fonction displayAnswer qui n'est censé être utilisée que lorsque le joueur refuse la partie
     }
 
+    public void notify(String message) {
+        //Surement à virer
+    }
+    
+    
+    
     @Override
     public void initGame(GameEntity game) {
         // Set the current game
