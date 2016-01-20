@@ -102,6 +102,7 @@ public class ChessBoardNode {
                                 // désactiver toutes les cases
                                 for (int ii = 0; ii < chessBoardSquares.length; ii++) {
                                     for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
+                                    	if(!(chessBoardSquares[ii][jj].getX() == firstPosition.getPositionX() && chessBoardSquares[ii][jj].getY() == firstPosition.getPositionY()))
                                         chessBoardSquares[ii][jj].setEnabled(false);
                                     }
                                 }
