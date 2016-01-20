@@ -35,7 +35,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     private IHMManager myIHMManager;
     private IClientDataToIHM myIClientDataToIHM;
-    private Map<UUID, IHMGamePageController> gameController = new HashMap<UUID, IHMGamePageController>();
+    private IHMGamePageController controller;
 
     public ClientIHMToDataImpl(IHMManager pIHMManager) {
         myIHMManager = pIHMManager;
@@ -136,7 +136,9 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                                                   // that function
         // TODO Auto-generated method stub
         Platform.runLater(new Runnable() {
-            @Override
+            
+
+			@Override
             public void run() {
 
                 Stage stage;
@@ -145,8 +147,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/gamePage.fxml"));
                 try {
                     root = (Pane) fxmlLoader.load();
-                    IHMGamePageController controller = fxmlLoader.getController();
-                    gameController.put(controller.getCb().getMyGame().getId(),controller);
+                    controller = fxmlLoader.getController();
                     controller.setControllerContext(myIHMManager);
 
                     controller.setMainApp(myIHMManager.getMainApp());
@@ -165,8 +166,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         // TODO Auto-generated method stub
         String dossierIcone = "/pictures/pieces/";
         // récupérer chessboardsquares
-        IHMGamePageController currentGameController = gameController.get(game.getId());
-        Case[][] chessBoardSquares = currentGameController.getCb().getChessBoardSquares();
+        Case[][] chessBoardSquares = controller.getCb().getChessBoardSquares();
         
         // effacer la pièce de l'ancienne case
         chessBoardSquares[line_from][col_from].setIcon(null);
