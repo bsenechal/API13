@@ -26,7 +26,6 @@ public class IHMManager {
     private ErrorProperty error;
     private ChatProperty chat;
     private UUID uisender;
-    private ChessBoardNode cb = new ChessBoardNode();
 
     public ChatProperty getChat() {
         return chat;
@@ -91,9 +90,6 @@ public class IHMManager {
 
     }
 
-    public final ChessBoardNode getChessBoardNode() {
-        return this.cb;
-    }
 
     public IClientDataToIHM getIClientDataToIHM() {
         return this.myIClientToIHM;
