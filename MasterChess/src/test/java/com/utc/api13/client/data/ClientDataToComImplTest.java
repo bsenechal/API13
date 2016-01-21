@@ -3,6 +3,7 @@ package com.utc.api13.client.data;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -155,6 +156,35 @@ public class ClientDataToComImplTest {
         // Status CHECKMATE : On vérifie qu'on a pas changé de joueur
         Assert.assertEquals("Current player should be user2",
                 dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user2.getId());
+    }
+    
+    @Test 
+    public void sendAnswerForLeavingTest(){
+        GameEntity game = new GameEntity(); 
+        PrivateUserEntity userPrivate = new PrivateUserEntity(); 
+        PublicUserEntity whiteUser = new PublicUserEntity(); 
+        PublicUserEntity blackUser = new PublicUserEntity(); 
+        final UUID idWhite = UUID.randomUUID();
+        final UUID idBlack = UUID.randomUUID();
+        userPrivate.setId(idWhite);
+        whiteUser.setId(idWhite);
+        blackUser.setId(idBlack);
+        game.setBlackPlayer(blackUser);
+        game.setWhitePlayer(whiteUser);
+        dataClientManager.setIClientIHMToData(clientIHMToDataImpl);
+        dataClientManager.setUserLocal(userPrivate);
+        dataClientManager.setCurrentGame(game);
+        Assert.assertNotNull(dataClientManager.getCurrentGame());
+      //If false then nothing -> game continue
+        
+        dataClientManager.getClientDataToComImpl().sendAnswerForLeaving(false);
+        Assert.assertNotNull(dataClientManager.getCurrentGame());
+        
+      //If true then quit game without changing stats
+        dataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
+        dataClientManager.getClientDataToComImpl().sendAnswerForLeaving(true);
+        Assert.assertNull(dataClientManager.getCurrentGame());
+        
     }
 
 }
