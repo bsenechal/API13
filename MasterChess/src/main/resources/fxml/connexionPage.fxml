@@ -22,10 +22,10 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="connexionButton" layoutX="248.0" layoutY="234.0" mnemonicParsing="false" onAction="#onSignInClicked" text="Sign in" />
-            <Hyperlink fx:id="signUpLink" layoutX="318.0" layoutY="235.0" onAction="#onSignUpClicked" text="Sign up" />
-            <Hyperlink fx:id="importLink" layoutX="123.0" layoutY="272.0" onAction="#onImportClicked" text="Import a profile" />                        
-         </children>
-      </AnchorPane>
-   </center>
+            <Button fx:id="connexionButton" layoutX="248.0" layoutY="234.0" mnemonicParsing="false" onAction="#onSignInClicked" onKeyPressed="#handleEnterPressed" text="Sign in" />
+             <Hyperlink fx:id="signUpLink" layoutX="318.0" layoutY="235.0" onAction="#onSignUpClicked" onKeyPressed="#handleEnterPressedSignUp" text="Sign up" />
+             <Hyperlink fx:id="importLink" layoutX="123.0" layoutY="272.0" onAction="#onImportClicked" onKeyPressed="#handleEnterPressedImport" text="Import a profile" />                        
+           </children>
+        </AnchorPane>
+     </center>
 </BorderPane>

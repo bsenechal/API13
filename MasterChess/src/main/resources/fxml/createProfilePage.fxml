@@ -18,7 +18,7 @@
             <TextField fx:id="firstNameTextView" layoutX="272.0" layoutY="231.0" />
             <Label fx:id="lastNameLabel" layoutX="180.0" layoutY="274.0" text="Last Name" />
             <TextField fx:id="lastNameTextView" layoutX="272.0" layoutY="267.0" />
-            <Button fx:id="saveProfileButton" layoutX="263.0" layoutY="327.0" mnemonicParsing="false" onAction="#onSaveProfileClicked" text="Enregistrer" />            
+            <Button fx:id="saveProfileButton" layoutX="263.0" layoutY="327.0" mnemonicParsing="false" onAction="#onSaveProfileClicked" onKeyPressed="#handleEnterPressed" text="Enregistrer" /> 
             <Label fx:id="createProfileLabel" layoutX="152.0" layoutY="63.0" text="Create your Profile">
                <font>
                   <Font size="18.0" />

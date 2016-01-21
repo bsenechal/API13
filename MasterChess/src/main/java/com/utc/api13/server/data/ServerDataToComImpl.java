@@ -20,7 +20,6 @@ import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.pieces.KingEntity;
-import com.utc.api13.commun.entities.pieces.RookEntity;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
 import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
@@ -87,12 +86,12 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public boolean computerResult(UUID idPlayer, MoveEntity move) {
-        Assert.notNull(move.getGameID(), "[ServerDataToComImpl][computerResult] gameID shouldn't be null");
-        Assert.notNull(move.getUserID(), "[ServerDataToComImpl][computerResult] userID shouldn't be null");
-        Assert.notNull(move.getPiece(), "[ServerDataToComImpl][computerResult] piece shouldn't be null");
-        Assert.notNull(move.getFromPosition(), "[ServerDataToComImpl][computerResult] fromPosition shouldn't be null");
-        Assert.notNull(move.getToPosition(), "[ServerDataToComImpl][computerResult] toPosition shouldn't be null");
-        Assert.notNull(move.getDate(), "[ServerDataToComImpl][computerResult] date shouldn't be null");
+//        Assert.notNull(move.getGameID(), "[ServerDataToComImpl][computerResult] gameID shouldn't be null");
+//        Assert.notNull(move.getUserID(), "[ServerDataToComImpl][computerResult] userID shouldn't be null");
+//        Assert.notNull(move.getPiece(), "[ServerDataToComImpl][computerResult] piece shouldn't be null");
+//        Assert.notNull(move.getFromPosition(), "[ServerDataToComImpl][computerResult] fromPosition shouldn't be null");
+//        Assert.notNull(move.getToPosition(), "[ServerDataToComImpl][computerResult] toPosition shouldn't be null");
+//        Assert.notNull(move.getDate(), "[ServerDataToComImpl][computerResult] date shouldn't be null");
 
         GameEntity game = dataServerManager.getGameById(move.getGameID());
         Boolean result = move.getPiece().isMovePossible(move, game);
@@ -112,7 +111,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
                         APieceEntity piece = game.getPieceFromPosition(fromPosition);
 
                         MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
-                        move.getPiece().movePiece(moveTmp, game);
+                        moveTmp.getPiece().movePiece(moveTmp, game);
 
                     } else if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() - 2) {
                         // grand roque
@@ -125,40 +124,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
                         APieceEntity piece = game.getPieceFromPosition(fromPosition);
 
                         MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
-                        move.getPiece().movePiece(moveTmp, game);
-
-                    }
-                }
-
-            } else if (move.getPiece().toString() == "Rook") {
-                RookEntity rookTmp = (RookEntity) move.getPiece();
-                if (rookTmp.getHasMove() == Boolean.FALSE) {
-                    if (move.getToPosition().getPositionX() == rookTmp.getPosition().getPositionX() + 3) {
-                        // grand roque
-
-                        PositionEntity fromPosition = new PositionEntity(rookTmp.getPosition().getPositionY(),
-                                rookTmp.getPosition().getPositionX() + 3);
-                        PositionEntity toPosition = new PositionEntity(rookTmp.getPosition().getPositionY(),
-                                rookTmp.getPosition().getPositionX() + 1);
-
-                        APieceEntity piece = game.getPieceFromPosition(fromPosition);
-
-                        MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
-                        move.getPiece().movePiece(moveTmp, game);
-
-                    } else if (move.getToPosition().getPositionX() == rookTmp.getPosition().getPositionX() - 2) {
-                        // petit roque
-
-                        PositionEntity fromPosition = new PositionEntity(rookTmp.getPosition().getPositionY(),
-                                rookTmp.getPosition().getPositionX() - 4);
-                        PositionEntity toPosition = new PositionEntity(rookTmp.getPosition().getPositionY(),
-                                rookTmp.getPosition().getPositionX() - 1);
-
-                        APieceEntity piece = game.getPieceFromPosition(fromPosition);
-
-                        MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
-                        move.getPiece().movePiece(moveTmp, game);
-
+                        moveTmp.getPiece().movePiece(moveTmp, game);
                     }
                 }
 
@@ -167,7 +133,6 @@ public class ServerDataToComImpl implements IServerDataToCom {
             move.getPiece().deleteDestinationPiece(move, game);
             move.getPiece().movePiece(move, game);
 
-            // TODO: Ulysse : When do we switch activeplayers ?
 
         }
 
@@ -368,6 +333,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
         GameEntity newGame = new GameEntity();
         newGame.setBlackPlayer(blackPlayer);
         newGame.setWhitePlayer(whitePlayer);
+        newGame.setCurrentPlayer(whitePlayer);
         newGame.setIsOservable(observable);
         newGame.setIsChattable(chattable);
         newGame.setTimer(timer);
@@ -397,5 +363,11 @@ public class ServerDataToComImpl implements IServerDataToCom {
                 userToRemove.setAllowedToChat(false);
             }
         }
+    }
+
+    @Override
+    public boolean isPlaying(UUID idUser) {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

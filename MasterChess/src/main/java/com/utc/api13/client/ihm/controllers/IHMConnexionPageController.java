@@ -12,6 +12,7 @@ import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
+import javafx.animation.PauseTransition;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,12 +23,15 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class IHMConnexionPageController {
 
@@ -51,9 +55,14 @@ public class IHMConnexionPageController {
     Hyperlink importLink, exportLink, signUpLink;
     @FXML
     PasswordField passwordTextView;
+    private Stage errorStage;
 
     @FXML
     private void onSignInClicked(Event event) throws IOException {
+        launchGame();
+    }
+
+    private void launchGame() throws IOException {
         String login = loginTextView.getText();
         String pw = passwordTextView.getText();
         String sv = serverAddressTextView.getText();
@@ -147,6 +156,10 @@ public class IHMConnexionPageController {
 
     @FXML
     private void onImportClicked(Event event) throws IOException {
+        importProfil();
+    }
+
+    private void importProfil() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Import my profile");
         File f = fileChooser.showOpenDialog(new Stage());
@@ -164,6 +177,27 @@ public class IHMConnexionPageController {
         }
     }
 
+    @FXML
+    public void handleEnterPressed(KeyEvent event) throws IOException {
+        if (event.getCode() == KeyCode.ENTER) {
+            launchGame();
+        }
+    }
+
+    @FXML
+    public void handleEnterPressedSignUp(KeyEvent event) throws IOException {
+        if (event.getCode() == KeyCode.ENTER) {
+            signUp();
+        }
+    }
+
+    @FXML
+    public void handleEnterPressedImport(KeyEvent event) throws IOException {
+        if (event.getCode() == KeyCode.ENTER) {
+            importProfil();
+        }
+    }
+
     public void importOK() throws IOException {
         Stage stage;
         Parent root;
@@ -173,7 +207,6 @@ public class IHMConnexionPageController {
         ConfirmationController controller = fxmlLoader.getController();
 
         controller.setControllerContext(this.IHMManager);
-        mainApp.getCurrentStage().close();
         mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, "Successful import!");
         stage.setScene(new Scene(root));
@@ -201,6 +234,10 @@ public class IHMConnexionPageController {
 
     @FXML
     private void onSignUpClicked(Event event) throws IOException {
+        signUp();
+    }
+
+    private void signUp() throws IOException {
         Stage stage;
         Parent root;
         stage = new Stage();
@@ -244,19 +281,22 @@ public class IHMConnexionPageController {
     }
 
     public void error(String message) throws IOException {
-        Stage stage;
         Parent root;
-        stage = new Stage();
+        errorStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
-        mainApp.setCurrentStage(stage);
+        mainApp.setCurrentStage(errorStage);
         controller.setMainApp(this.mainApp, message);
-        stage.setScene(new Scene(root));
-        stage.setTitle("Error");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        errorStage.setScene(new Scene(root));
+        errorStage.setTitle("Error");
+        errorStage.initModality(Modality.APPLICATION_MODAL);
+        errorStage.show();
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> errorStage.close());
+        delay.play();
     }
 
 }

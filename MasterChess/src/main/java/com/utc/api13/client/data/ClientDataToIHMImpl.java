@@ -264,7 +264,12 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     @Override
     public void surrender() {
         // TODO Auto-generated method stub
-        
+
+        Assert.notNull(dataClientManager.getUserLocal(),
+                "[ClientDataToIHMImpl][requestPlayerForLeaving] UserLocal shouldn't be null");
+        dataClientManager.getIClientComToData().surrender(dataClientManager.getUserLocal().getId());
+
+
     }
 
     @Override
@@ -328,7 +333,14 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public List<PositionEntity> getAvailablesMoves(int line, int col) {
         PositionEntity myposition = new PositionEntity(line, col);
         APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(myposition);
-        return piece.generateAvailableMoves(dataClientManager.getCurrentGame());
+        //On vérifie que la pièce existe et qu'elle est bien de la couleur du joueur courant :
+        if(piece != null){
+        	if(piece.getColor().equals(dataClientManager.getCurrentGame().getCurrentPlayerColor())){
+            	return piece.generateAvailableMoves(dataClientManager.getCurrentGame());
+        	}
+        }
+        return new ArrayList<PositionEntity>();
+        
     }
 
     @Override
@@ -346,7 +358,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(fromposition);
 
         // On instancie un move entity
-        MoveEntity move = new MoveEntity(new Date(), fromposition, toposition, piece);
+        MoveEntity move = new MoveEntity(new Date(), fromposition, toposition, piece, currentplayer, dataClientManager.getCurrentGame().getId());
+ 
 
         // On passe le moveEntity à com
         dataClientManager.getIClientComToData().validateMove(currentplayer, move);

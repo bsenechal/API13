@@ -191,4 +191,44 @@ public class ClientDataToIHMImplTest {
 
         dataClientManager.getClientDataToIHMImpl().playMove(fromLine, fromCol, toLine, toCol);
     }
+    
+    
+    @Test
+    public void moveTest(){
+        PrivateUserEntity whitePrivatePlayer = new PrivateUserEntity("whitelogin", "whitemdp");
+        PublicUserEntity whitePlayer = new PublicUserEntity("whitelogin", "whitemdp");
+
+        PublicUserEntity blackPlayer = new PublicUserEntity("blacklogin", "blackmdp");
+
+        GameEntity newGame = new GameEntity();
+        newGame.setBlackPlayer(blackPlayer);
+        newGame.setWhitePlayer(whitePlayer);
+        newGame.setCurrentPlayer(whitePlayer);
+        
+        dataClientManager.setUserLocal(whitePrivatePlayer);
+        
+        dataClientManager.setCurrentGame(newGame);
+        for (APieceEntity piece: newGame.getWhitePieces()){
+            System.out.println(piece.toString()+"  - X : "+ piece.getPosition().getPositionX() +" , Y : "+piece.getPosition().getPositionY() );
+        }
+        
+        APieceEntity pieceToMove = dataClientManager.getCurrentGame().getPieceFromPosition(new PositionEntity(4, 2));
+        
+        
+        MoveEntity move = new MoveEntity(new Date(), new PositionEntity(4, 2), new PositionEntity(4, 3), pieceToMove);
+        
+        Mockito.doNothing().when(clientComToDataImpl).validateMove(whitePlayer.getId(), move);
+
+        dataClientManager.setIClientComToData(clientComToDataImpl);
+
+       try {
+           
+            dataClientManager.getClientDataToIHMImpl().move(pieceToMove, new PositionEntity(4, 3));
+        } catch (FunctionalException e) {
+            Assert.fail("Error : " + e.getMessage());
+        }  
+       for (APieceEntity piece: newGame.getWhitePieces()){
+           System.out.println(piece.toString()+"  - X : "+ piece.getPosition().getPositionX() +" , Y : "+piece.getPosition().getPositionY() );
+       }
+    }
 }
