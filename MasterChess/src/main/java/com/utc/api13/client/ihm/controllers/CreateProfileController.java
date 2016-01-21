@@ -25,6 +25,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -54,11 +56,15 @@ public class CreateProfileController {
     ImageView changeProfilePicture;
     @FXML
     AnchorPane createProfileAnchorPane;
-	private Stage confirmationStage;
+    private Stage confirmationStage;
+    private Stage errorStage;
 
     @FXML
     public void onSaveProfileClicked() throws IOException {
+        saveProfil();
+    }
 
+    private void saveProfil() throws IOException {
         String login = loginTextView.getText();
         String pw = passwordTextView.getText();
         String firstName = firstNameTextView.getText();
@@ -99,10 +105,10 @@ public class CreateProfileController {
                 mainApp.setCurrentStage(confirmationStage);
                 confirmationStage.initModality(Modality.APPLICATION_MODAL);
                 confirmationStage.show();
-                
+
                 PauseTransition delay = new PauseTransition(Duration.seconds(2));
-            	delay.setOnFinished( event -> confirmationStage.close() );
-            	delay.play();
+                delay.setOnFinished(event -> confirmationStage.close());
+                delay.play();
 
             } catch (TechnicalException e) {
                 try {
@@ -124,6 +130,13 @@ public class CreateProfileController {
                     log.error(((ErrorTypeEnum) erreur.getErrorType()).getCode());
                 }
             }
+        }
+    }
+
+    @FXML
+    public void handleEnterPressed(KeyEvent event) throws IOException {
+        if (event.getCode() == KeyCode.ENTER) {
+            saveProfil();
         }
     }
 
@@ -186,21 +199,24 @@ public class CreateProfileController {
     }
 
     public void error(String message, boolean close) throws IOException {
-        Stage stage;
         Parent root;
-        stage = new Stage();
+        errorStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
         controller.setMainApp(this.mainApp, message);
-        stage.setScene(new Scene(root));
-        stage.setTitle("Error");
+        errorStage.setScene(new Scene(root));
+        errorStage.setTitle("Error");
         if (close == true) {
             mainApp.getCurrentStage().close();
         }
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        errorStage.initModality(Modality.APPLICATION_MODAL);
+        errorStage.show();
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> errorStage.close());
+        delay.play();
     }
 
 }

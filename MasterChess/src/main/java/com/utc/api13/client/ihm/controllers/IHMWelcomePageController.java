@@ -63,7 +63,7 @@ public class IHMWelcomePageController {
     @FXML
     AnchorPane anchorPane, rightAnchorPane, leftAnchorPane, bottomLeftAnchorPane, topLeftAnchorPane;
     @FXML
-    ImageView iconHelp, iconParam, iconProfile, iconNotif, infoTest;
+    ImageView iconHelp, iconParam, iconProfile, infoTest;
     @FXML
     Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel;
     @FXML
@@ -103,10 +103,6 @@ public class IHMWelcomePageController {
 
     @FXML
     private void onParamClicked(Event event) {
-    }
-
-    @FXML
-    private void onNotifClicked(Event event) {
     }
 
     @FXML
@@ -187,8 +183,7 @@ public class IHMWelcomePageController {
             try {
                 // Attention : si la gestion d'erreur n'est pas faite,
                 // exportFile est null et on a une belle NullPointerException
-                Files.copy(exportFile.toPath(), newFile.toPath(),
-                        java.nio.file.StandardCopyOption.REPLACE_EXISTING,
+                Files.copy(exportFile.toPath(), newFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING,
                         java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
                 exportOK(selectedDirectory.getAbsolutePath());
             } catch (IOException e) {
@@ -420,6 +415,9 @@ public class IHMWelcomePageController {
         currentGamesPlayer2.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("blackPlayerLogin"));
         currentGamesTime.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("creationDateDrawable"));
 
+        currentGamesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        savedGamesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        connectedUserTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     public void displayProfile() {

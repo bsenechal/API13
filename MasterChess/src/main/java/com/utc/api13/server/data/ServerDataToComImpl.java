@@ -20,7 +20,6 @@ import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.pieces.KingEntity;
-import com.utc.api13.commun.entities.pieces.RookEntity;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
 import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
@@ -364,5 +363,11 @@ public class ServerDataToComImpl implements IServerDataToCom {
                 userToRemove.setAllowedToChat(false);
             }
         }
+    }
+
+    @Override
+    public boolean isPlaying(UUID idUser) {
+        // TODO Auto-generated method stub
+        return false;
     }
 }
