@@ -18,6 +18,7 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
+import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -44,6 +45,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
 public class IHMWelcomePageController {
     private IHMManager IHMManager;
@@ -282,6 +284,10 @@ public class IHMWelcomePageController {
         stage.setTitle("Export success");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+        
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> stage.close());
+        delay.play();
     }
 
     public void exportNOK() throws IOException {

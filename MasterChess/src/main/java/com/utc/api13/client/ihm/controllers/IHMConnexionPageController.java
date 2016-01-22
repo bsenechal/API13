@@ -213,6 +213,10 @@ public class IHMConnexionPageController {
         stage.setTitle("Import success");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+        
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> stage.close());
+        delay.play();
     }
 
     public void importNOK(String message) throws IOException {
