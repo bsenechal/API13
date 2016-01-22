@@ -158,24 +158,23 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
     @Override
     public void sendAnswerForLeaving(boolean answer) {
-        // Add game in local user saved game (in case the local user wants to
-        // save the game after ending)
-        dataClientManager.getUserLocal().getSavedGames().add(getCurrentGame());
-        // if the local user said yes no it's a win for him
-        dataClientManager.getUserLocal().setNbPlayed(getLocalUser().getNbPlayed() + 1);
-        if (!answer) {
-            dataClientManager.getUserLocal().setNbWon(getLocalUser().getNbWon() + 1);
+        if(answer){
+            // Add game in local user saved game (in case the local user wants to
+            // save the game after ending)
+            dataClientManager.getUserLocal().getSavedGames().add(getCurrentGame());
+            // if the local user said yes no it's a win for him
+            dataClientManager.getUserLocal().setNbPlayed(getLocalUser().getNbPlayed() + 1);
+            // Inform the local user that game is over with result
+            // TODO: à faire
+            // send information to opponent player
+            // dataClientManager.getIClientComToData().sendAnswerForLeaving(answer,
+            // dataClientManager.getUserLocal());
+            // Inform the server
+            // dataClientManager.getIClientComToData().endGameByLeaving(getCurrentGame().getId(),
+            // getLocalUser().getId());
+            // End the game
+            dataClientManager.setCurrentGame(null);
         }
-        // Inform the local user that game is over with result
-        // TODO: à faire
-        // send information to opponent player
-        // dataClientManager.getIClientComToData().sendAnswerForLeaving(answer,
-        // dataClientManager.getUserLocal());
-        // Inform the server
-        // dataClientManager.getIClientComToData().endGameByLeaving(getCurrentGame().getId(),
-        // getLocalUser().getId());
-        // End the game
-        dataClientManager.setCurrentGame(null);
     }
 
     @Override
@@ -263,13 +262,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      */
     @Override
     public void surrender() {
-        // TODO Auto-generated method stub
-
         Assert.notNull(dataClientManager.getUserLocal(),
                 "[ClientDataToIHMImpl][requestPlayerForLeaving] UserLocal shouldn't be null");
         dataClientManager.getIClientComToData().surrender(dataClientManager.getUserLocal().getId());
-
-
+        dataClientManager.getClientDataToComImpl().endGameBySurrender();
     }
 
     @Override
