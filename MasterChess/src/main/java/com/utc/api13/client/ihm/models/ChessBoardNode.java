@@ -79,24 +79,28 @@ public class ChessBoardNode {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
                 Case b = new Case(ii, jj);
                 b.setEnabled(false);
+                
+                if ((jj % 2 == 1 && ii % 2 == 1) || (jj % 2 == 0 && ii % 2 == 0)) {
+                	b.setBackground(Color.WHITE);
+                    b.setColor(Color.WHITE);               	
+                } else {
+                	b.setBackground(Color.GRAY);
+                    b.setColor(Color.GRAY);              	
+                }
+                
                 b.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         Case movePosition = (Case) e.getSource();
-                        System.out.println("case selectionnée : x : " + movePosition.getLine()
-                        		+ " y : " + movePosition.getColumn());
                         for (int ii = 0; ii < chessBoardSquares.length; ii++) {
                             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
                                 if (movePosition == chessBoardSquares[ii][jj]) {
 
                                     movePosition.setLine(ii+1);
                                     movePosition.setColumn(jj+1);
-                                    System.out.println("case trouvée ! ");
                                 }
                             }
                         }
                         if (selection == 1) {
-                        	System.out.println("selection = 1");
-
                             firstPosition.setPositionX(movePosition.getLine());
                             firstPosition.setPositionY(movePosition.getColumn());
                             if(positionList!=null){
@@ -125,30 +129,18 @@ public class ChessBoardNode {
       
                                     chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
                                             .getPositionY()-1].setBackground(Color.GREEN);
-  	
                                 }
                                 
                             }
                         }
 
                         else if (selection == 2) {
-                        	System.out.println("selection = 2");
                             if ((movePosition.getLine() == firstPosition.getPositionX())
                                     && (movePosition.getColumn() == firstPosition.getPositionY())) {                      
-                                activateCases(myGame.getCurrentPlayer());
-                                System.out.println("clic sur bouton identique");
+                                activateCases(myGame.getCurrentPlayer());              
                             } else {
                                 myIClientToIHM.playMove(firstPosition.getPositionX(), firstPosition.getPositionY(),
                                         movePosition.getLine(), movePosition.getColumn());
-                                //décolorer les cases
-                                for (Case[] i : chessBoardSquares) {
-                                	for(Case j : i) {
-                                		if(positionList.contains(j))
-                                			j.setBackground(j.getColor());                                		 
-                                	}
-                                }
-                                chessBoardSquares[firstPosition.getPositionX()-1][firstPosition.getPositionY()-1].setBackground(chessBoardSquares[firstPosition.getPositionX()-1][firstPosition.getPositionY()-1].getColor());
-                                chessBoardSquares[firstPosition.getPositionX()-1][firstPosition.getPositionY()-1].setBorder(null);
                                 // tout rendre unclickable
                                 for(Case i[] : chessBoardSquares) {
                         			for(Case j : i){
@@ -156,19 +148,20 @@ public class ChessBoardNode {
                         			}
                     			}                               
                             }                           
-                            selection = 1;                        
+                            selection = 1;
+                          //décolorer les cases
+                            for (Case[] i : chessBoardSquares) {
+                            	for(Case j : i) {
+                            			j.setBackground(j.getColor());                                		 
+                            	}
+                            }
+                            chessBoardSquares[firstPosition.getPositionX()-1][firstPosition.getPositionY()-1].setBorder(null);
                         }
                     }               
                 });
                 b.setMargin(buttonMargin);
-                if ((jj % 2 == 1 && ii % 2 == 1) || (jj % 2 == 0 && ii % 2 == 0)) {
-                    b.setBackground(Color.WHITE);
-                    b.setColor(Color.WHITE);
-                } else {
-                    b.setBackground(Color.GRAY);
-                    b.setColor(Color.GRAY);
-                }
                 chessBoardSquares[jj][ii] = b;
+
             }
         }
         
