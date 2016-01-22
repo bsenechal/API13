@@ -1,0 +1,44 @@
+Starting server on : 8000
+Starting server on : 8000
+A ConnectMessage has been sent to : 07a76101-1e0d-481d-b6ef-c9e06104ac66
+A AllUserMessage has been sent to : 00000000-0000-0000-0000-000000000000
+A AllGameMessage has been sent to : 00000000-0000-0000-0000-000000000000
+A UserUpdateMessage has been sent to : 00000000-0000-0000-0000-000000000000
+A DisconnectMessage has been sent to : 07a76101-1e0d-481d-b6ef-c9e06104ac66
+User 07a76101-1e0d-481d-b6ef-c9e06104ac66 is alreay connected, please disconnect before reconnect
+A ConnectMessage has been sent to : 07a76101-1e0d-481d-b6ef-c9e06104ac66
+A AllUserMessage has been sent to : 00000000-0000-0000-0000-000000000000
+A AllGameMessage has been sent to : 00000000-0000-0000-0000-000000000000
+A ConnectMessage has been sent to : a98e7697-3737-4f2c-af6f-359e9fdfe6af
+A ConnectMessage has been sent to : 07a76101-1e0d-481d-b6ef-c9e06104ac66
+A AllUserMessage has been sent to : 00000000-0000-0000-0000-000000000000
+A AllGameMessage has been sent to : 00000000-0000-0000-0000-000000000000
+A PublicUserMessage has been sent to : 00000000-0000-0000-0000-000000000000
+A GameRequestMessage has been sent to : 07a76101-1e0d-481d-b6ef-c9e06104ac66
+A DisconnectMessage has been sent to : 07a76101-1e0d-481d-b6ef-c9e06104ac66
+A ConnectMessage has been sent to : a98e7697-3737-4f2c-af6f-359e9fdfe6af
+A AllUserMessage has been sent to : 00000000-0000-0000-0000-000000000000
+A AllGameMessage has been sent to : 00000000-0000-0000-0000-000000000000
+A ConnectMessage has been sent to : a98e7697-3737-4f2c-af6f-359e9fdfe6af
+A ConnectMessage has been sent to : 37a8e770-ccee-446c-83b5-cd80fde59cd3
+A AllUserMessage has been sent to : 00000000-0000-0000-0000-000000000000
+A AllGameMessage has been sent to : 00000000-0000-0000-0000-000000000000
+A PublicUserMessage has been sent to : 00000000-0000-0000-0000-000000000000
+A GameRequestMessage has been sent to : 37a8e770-ccee-446c-83b5-cd80fde59cd3
+A RequestAnswerMessage has been sent to : a98e7697-3737-4f2c-af6f-359e9fdfe6af
+A AllGameMessage has been sent to : a98e7697-3737-4f2c-af6f-359e9fdfe6af
+A AllGameMessage has been sent to : 37a8e770-ccee-446c-83b5-cd80fde59cd3
+A RequestAnswerMessage has been sent to : a98e7697-3737-4f2c-af6f-359e9fdfe6af
+A MoveMessage has been sent to : a98e7697-3737-4f2c-af6f-359e9fdfe6af
+A MoveMessage has been sent to : 37a8e770-ccee-446c-83b5-cd80fde59cd3
+A NextTurnMessage has been sent to : a98e7697-3737-4f2c-af6f-359e9fdfe6af
+A NextTurnMessage has been sent to : 37a8e770-ccee-446c-83b5-cd80fde59cd3
+A MoveMessage has been sent to : a98e7697-3737-4f2c-af6f-359e9fdfe6af
+A MoveMessage has been sent to : 37a8e770-ccee-446c-83b5-cd80fde59cd3
+A NextTurnMessage has been sent to : a98e7697-3737-4f2c-af6f-359e9fdfe6af
+A NextTurnMessage has been sent to : 37a8e770-ccee-446c-83b5-cd80fde59cd3
+A MoveMessage has been sent to : a98e7697-3737-4f2c-af6f-359e9fdfe6af
+A MoveMessage has been sent to : 37a8e770-ccee-446c-83b5-cd80fde59cd3
+A NextTurnMessage has been sent to : a98e7697-3737-4f2c-af6f-359e9fdfe6af
+A NextTurnMessage has been sent to : 37a8e770-ccee-446c-83b5-cd80fde59cd3
+A DisconnectMessage has been sent to : 37a8e770-ccee-446c-83b5-cd80fde59cd3

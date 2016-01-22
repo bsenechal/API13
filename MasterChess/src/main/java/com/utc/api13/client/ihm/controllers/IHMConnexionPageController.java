@@ -2,6 +2,7 @@ package com.utc.api13.client.ihm.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import org.apache.log4j.Logger;
 
@@ -94,19 +95,25 @@ public class IHMConnexionPageController {
             try {
                 Integer port = Integer.parseInt(portString.isEmpty() ? "0" : portTextView.getText());
                 // TODO : gérer la connexion au serveur avec le port
-                myIClientToIHM.connect(login, pw);
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
-                root = (Pane) fxmlLoader.load();
-                IHMWelcomePageController controllerRight = fxmlLoader.getController();
-                controllerRight.setControllerContext(IHMManager);
-                mainApp.getCurrentStage().close();
-                mainApp.setMainStage(stage);
-                controllerRight.setMainApp(mainApp);
-                stage.setTitle("Welcome to MasterChess");
-                stage.setScene(new Scene(root));
-                controllerRight.setDisconnectUserByClosingWindow();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.show();
+              
+                mainApp.launchAppCom(sv, port);
+            
+                if (mainApp.isSucceed()){
+                
+                        myIClientToIHM.connect(login, pw);
+                        fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+                        root = (Pane) fxmlLoader.load();
+                        IHMWelcomePageController controllerRight = fxmlLoader.getController();
+                        controllerRight.setControllerContext(IHMManager);
+                        mainApp.getCurrentStage().close();
+                        mainApp.setMainStage(stage);
+                        controllerRight.setMainApp(mainApp);
+                        stage.setTitle("Welcome to MasterChess");
+                        stage.setScene(new Scene(root));
+                        controllerRight.setDisconnectUserByClosingWindow();
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.show();
+                }
             }
 
             catch (FunctionalException e) {
@@ -127,6 +134,7 @@ public class IHMConnexionPageController {
                 log.error(e.getMessage(), e);
             }
         }
+       
     }
 
     private void wrongData(boolean bool) throws IOException {
@@ -205,6 +213,10 @@ public class IHMConnexionPageController {
         stage.setTitle("Import success");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+        
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> stage.close());
+        delay.play();
     }
 
     public void importNOK(String message) throws IOException {
@@ -251,6 +263,8 @@ public class IHMConnexionPageController {
 
     public void setMainApp(AppClient app) {
         this.mainApp = app;
+        serverAddressTextView.setText("localhost");
+        portTextView.setText("8000");
     }
 
     public void initialize() {
