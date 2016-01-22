@@ -15,6 +15,7 @@ import com.utc.api13.commun.enumerations.ErrorTypeEnum;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,6 +32,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class ModifyProfileController {
     private IHMManager IHMManager;
@@ -54,7 +56,8 @@ public class ModifyProfileController {
     @FXML
     AnchorPane createProfileAnchorPane;
 
-    @FXML
+    @SuppressWarnings("restriction")
+	@FXML
     public void onSaveProfileClicked() throws IOException {
 
         String login = loginTextView.getText();
@@ -98,6 +101,10 @@ public class ModifyProfileController {
                 mainApp.setCurrentStage(stage);
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.show();
+                
+                PauseTransition delay = new PauseTransition(Duration.seconds(2));
+                delay.setOnFinished(event -> stage.close());
+                delay.play();
 
             } catch (TechnicalException e) {
                 try {
