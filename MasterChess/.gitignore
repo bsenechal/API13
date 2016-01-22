@@ -8,3 +8,4 @@
 .recommenders
 /.apt_generated/
 /export/
+*.out
