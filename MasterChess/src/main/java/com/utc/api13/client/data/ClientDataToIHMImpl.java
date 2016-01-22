@@ -262,11 +262,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      */
     @Override
     public void surrender() {
-        // TODO Auto-generated method stub
         Assert.notNull(dataClientManager.getUserLocal(),
                 "[ClientDataToIHMImpl][requestPlayerForLeaving] UserLocal shouldn't be null");
         dataClientManager.getIClientComToData().surrender(dataClientManager.getUserLocal().getId());
-
+        dataClientManager.getClientDataToComImpl().endGameBySurrender();
     }
 
     @Override

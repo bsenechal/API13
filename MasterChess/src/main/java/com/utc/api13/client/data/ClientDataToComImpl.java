@@ -259,7 +259,16 @@ public class ClientDataToComImpl implements IClientDataToCom {
      */
     @Override
     public void victoryBySurrender() {
-        // TODO Auto-generated method stub
+        instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
+        // Modify the played games
+        instanceDataClientManager.getUserLocal()
+                .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
+        //increase the amount of won games
+        instanceDataClientManager.getUserLocal().setNbWon(instanceDataClientManager.getUserLocal().getNbWon() +1);
+        //delete the current game 
+        instanceDataClientManager.setCurrentGame(null);
+        //TODO uncomment when IHM function will be done
+        //instanceDataClientManager.getIClientIHMToData().victoryBySurrend();
     }
 
     /*
@@ -270,7 +279,16 @@ public class ClientDataToComImpl implements IClientDataToCom {
      */
     @Override
     public void endGameBySurrender() {
-        // TODO Auto-generated method stub
+        instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
+        // Modify the played games
+        instanceDataClientManager.getUserLocal()
+                .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
+        //increase the amount of lost games
+        instanceDataClientManager.getUserLocal().setNbLost(instanceDataClientManager.getUserLocal().getNbLost() +1);
+        //delete the current game 
+        instanceDataClientManager.setCurrentGame(null);
+        //TODO uncomment when IHM function will be done
+        //instanceDataClientManager.getIClientIHMToData().endGameBySurrend();
     }
 
     @Override
