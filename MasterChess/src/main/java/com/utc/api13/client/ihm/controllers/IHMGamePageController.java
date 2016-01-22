@@ -89,6 +89,8 @@ public class IHMGamePageController {
             error(" only the two player can remove someone from the Tchat");
         }
     }
+    
+    /* exclude an observer in a game */
 
     private void openUserObservableList() throws IOException {
         // TODO Auto-generated method stub
@@ -121,12 +123,13 @@ public class IHMGamePageController {
 
     @FXML
     private void onAbandonClicked(Event event) {
-
+        myIClientToIHM.surrender();
     }
 
     @FXML
     private void onQuitGameClicked(Event event) {
-
+        myIClientToIHM.requestPlayerForLeaving();
+        
     }
 
     public void setControllerContext(IHMManager ihmManager) {
