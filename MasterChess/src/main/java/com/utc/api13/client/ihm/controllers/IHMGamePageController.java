@@ -29,7 +29,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+ 
 public class IHMGamePageController {
     private IHMManager IHMManager;
     private IClientDataToIHM myIClientToIHM;
