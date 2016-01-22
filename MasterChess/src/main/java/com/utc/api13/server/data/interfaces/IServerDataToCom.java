@@ -166,4 +166,12 @@ public interface IServerDataToCom {
      *            uid of game
      */
     public void removeUserFromChat(UUID idUser, UUID idGame);
+
+    /**
+     * return true if a user is Playing
+     * 
+     * @param idUser
+     *            targeted user
+     */
+    public boolean isPlaying(UUID idUser);
 }

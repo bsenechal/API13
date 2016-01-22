@@ -63,9 +63,9 @@ public class IHMWelcomePageController {
     @FXML
     AnchorPane anchorPane, rightAnchorPane, leftAnchorPane, bottomLeftAnchorPane, topLeftAnchorPane;
     @FXML
-    ImageView iconHelp, iconParam, iconProfile, iconNotif, infoTest;
+    ImageView iconHelp, iconParam, iconProfile, infoTest;
     @FXML
-    Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel, testEcran;
+    Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel;
     @FXML
     Text userLabel;
     @FXML
@@ -80,23 +80,6 @@ public class IHMWelcomePageController {
     SplitMenuButton paramSplitMenuButton;
     @FXML
     ScrollBar currentGamesScrollbar, savedGamesScrollbar, connectedUserScrollbar;
-
-    @FXML
-    public void testEcranFunction() throws IOException {
-        // ne pas effacer cette fonction car utile pour tester les écrans
-        // déclenchés par data !
-        /*
-         * Stage stage; Parent root; stage = new Stage(); FXMLLoader fxmlLoader
-         * = new
-         * FXMLLoader(getClass().getResource("/fxml/answerPropositionPopUp.fxml"
-         * )); root = (Pane) fxmlLoader.load(); AnswerPropositionController
-         * controller = fxmlLoader.getController();
-         * controller.setControllerContext(this.IHMManager);
-         * controller.setMainApp(this.mainApp, "un joueur", "pas d'options");
-         * stage.setScene(new Scene(root)); mainApp.setCurrentStage(stage);
-         * stage.setTitle("My Profile"); stage.show();
-         */
-    }
 
     public ProfilProperty getProfile() {
         return this.profile;
@@ -120,10 +103,6 @@ public class IHMWelcomePageController {
 
     @FXML
     private void onParamClicked(Event event) {
-    }
-
-    @FXML
-    private void onNotifClicked(Event event) {
     }
 
     @FXML
@@ -204,8 +183,7 @@ public class IHMWelcomePageController {
             try {
                 // Attention : si la gestion d'erreur n'est pas faite,
                 // exportFile est null et on a une belle NullPointerException
-                Files.copy(exportFile.toPath(), newFile.toPath(),
-                        java.nio.file.StandardCopyOption.REPLACE_EXISTING,
+                Files.copy(exportFile.toPath(), newFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING,
                         java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
                 exportOK(selectedDirectory.getAbsolutePath());
             } catch (IOException e) {
@@ -437,6 +415,9 @@ public class IHMWelcomePageController {
         currentGamesPlayer2.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("blackPlayerLogin"));
         currentGamesTime.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("creationDateDrawable"));
 
+        currentGamesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        savedGamesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        connectedUserTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     public void displayProfile() {

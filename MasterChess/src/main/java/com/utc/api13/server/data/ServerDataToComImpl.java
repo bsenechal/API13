@@ -20,7 +20,6 @@ import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.pieces.KingEntity;
-import com.utc.api13.commun.entities.pieces.RookEntity;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
 import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
@@ -87,12 +86,12 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public boolean computerResult(UUID idPlayer, MoveEntity move) {
-        Assert.notNull(move.getGameID(), "[ServerDataToComImpl][computerResult] gameID shouldn't be null");
-        Assert.notNull(move.getUserID(), "[ServerDataToComImpl][computerResult] userID shouldn't be null");
-        Assert.notNull(move.getPiece(), "[ServerDataToComImpl][computerResult] piece shouldn't be null");
-        Assert.notNull(move.getFromPosition(), "[ServerDataToComImpl][computerResult] fromPosition shouldn't be null");
-        Assert.notNull(move.getToPosition(), "[ServerDataToComImpl][computerResult] toPosition shouldn't be null");
-        Assert.notNull(move.getDate(), "[ServerDataToComImpl][computerResult] date shouldn't be null");
+//        Assert.notNull(move.getGameID(), "[ServerDataToComImpl][computerResult] gameID shouldn't be null");
+//        Assert.notNull(move.getUserID(), "[ServerDataToComImpl][computerResult] userID shouldn't be null");
+//        Assert.notNull(move.getPiece(), "[ServerDataToComImpl][computerResult] piece shouldn't be null");
+//        Assert.notNull(move.getFromPosition(), "[ServerDataToComImpl][computerResult] fromPosition shouldn't be null");
+//        Assert.notNull(move.getToPosition(), "[ServerDataToComImpl][computerResult] toPosition shouldn't be null");
+//        Assert.notNull(move.getDate(), "[ServerDataToComImpl][computerResult] date shouldn't be null");
 
         GameEntity game = dataServerManager.getGameById(move.getGameID());
         Boolean result = move.getPiece().isMovePossible(move, game);
@@ -364,5 +363,11 @@ public class ServerDataToComImpl implements IServerDataToCom {
                 userToRemove.setAllowedToChat(false);
             }
         }
+    }
+
+    @Override
+    public boolean isPlaying(UUID idUser) {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

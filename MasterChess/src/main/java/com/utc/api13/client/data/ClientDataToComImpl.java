@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import org.springframework.util.Assert;
 
+import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToCom;
 import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
@@ -126,7 +127,9 @@ public class ClientDataToComImpl implements IClientDataToCom {
                 "[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
         move.getPiece().movePiece(move, instanceDataClientManager.getCurrentGame());
                 
-//        instanceDataClientManager.getIClientIHMToData().refreshChessBoard(fromLine, fromCol, toLine, toCol, piece,thisgame);
+
+        instanceDataClientManager.getIClientIHMToData().refreshChessBoard(fromLine, fromCol, toLine, toCol, piece,thisgame);
+         //#Data l'erreur est normale, on attend que IHM mette à jour sa méthode
 
     }
 
@@ -282,40 +285,50 @@ public class ClientDataToComImpl implements IClientDataToCom {
     }
 
     @Override
-    public void setFinishedStatus(GameStatusEnum status) {
-        Assert.notNull(instanceDataClientManager.getCurrentGames(),
-                "[ClientDataToComImpl][setFinishedStatus] currentGames shouldn't be null");
-
+    public void nextTurn(final GameStatusEnum status, final UUID nextPlayer) {
+		// Ulysse : lourd : remplacé par switchCurrentUser
+		//        if (GameStatusEnum.CONTINUE.equals(status)) {
+		//            instanceDataClientManager.getCurrentGame().setCurrentPlayer(
+		//                    (instanceDataClientManager.getCurrentGame().getBlackPlayer().getId().equals(nextPlayer))
+		//                            ? instanceDataClientManager.getCurrentGame().getBlackPlayer()
+		//                            : instanceDataClientManager.getCurrentGame().getWhitePlayer());
+		//        }
+		//        Assert.notNull(instanceDataClientManager.getCurrentGames(),
+		//                "[ClientDataToComImpl][setFinishedStatus] currentGames shouldn't be null");
+    	GameEntity game = instanceDataClientManager.getCurrentGame();
+    	
+    	game.switchCurrentUser();
         // set the game status :
-        instanceDataClientManager.getCurrentGame().setIsFinished(status);
-
-        // do treatment accordingly :
+    	game.setIsFinished(status);
+        
+        //alert IHM:
+        instanceDataClientManager.getIClientIHMToData().activateCases(game.getCurrentPlayer(), status);
+        
+        //TODO Ulysse : virer le switch ?
+        
+        PrivateUserEntity localUser = instanceDataClientManager.getUserLocal();
         switch (status) {
 
-        case CHECK:
-            break;
-        case CHECKMATE:
-            break;
+//        case CHECK:
+//            break;
+        case CHECKMATE :
+        	if(localUser.getId().equals(game.getCurrentPlayer().getId())){
+        		localUser.setNbLost(localUser.getNbLost()+1);
+        	}
+        	else
+        	{
+        		localUser.setNbWon(localUser.getNbWon()+1);
+        	}
         case DRAW:
+        	localUser.setNbPlayed(localUser.getNbPlayed()+1);
+        	instanceDataClientManager.setCurrentGame(null);
             break;
 
         default:
+        	//CHECK & CONTINUE
             break;
 
         }
-    }
-
-    @Override
-    public void nextTurn(final GameStatusEnum status, final UUID nextPlayer) {
-        if (GameStatusEnum.CONTINUE.equals(status)) {
-            instanceDataClientManager.getCurrentGame().setCurrentPlayer(
-                    (instanceDataClientManager.getCurrentGame().getBlackPlayer().getId().equals(nextPlayer))
-                            ? instanceDataClientManager.getCurrentGame().getBlackPlayer()
-                            : instanceDataClientManager.getCurrentGame().getWhitePlayer());
-            // TODO : Notifier IHM du changement de joueurs
-            // TODO : active/desactive chessboard
-        }
-        setFinishedStatus(status);
                 
     }
 }

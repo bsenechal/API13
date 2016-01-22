@@ -20,8 +20,8 @@
                      </font>
                   </Label>
                   <ImageView fx:id="iconProfile" fitHeight="34.0" fitWidth="65.0" layoutX="334.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="abandonButton" layoutX="227.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#onAbandonClicked" text="Abandonner" />
-                  <Button fx:id="quitGameButton" layoutX="341.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#onQuitGameClicked" text="Quitter" />
+                  <Button fx:id="abandonButton" layoutX="227.0" layoutY="17.0" mnemonicParsing="false" onAction="#onGiveUpClicked" onMouseClicked="#onAbandonClicked" text="GiveUp" />
+                  <Button fx:id="quitGameButton" layoutX="341.0" layoutY="17.0" mnemonicParsing="false" onAction="#onLeaveClicked" onMouseClicked="#onQuitGameClicked" text="Leave" />
                </children>
             </AnchorPane>
         </items>
@@ -67,7 +67,10 @@
                   </ImageView>
                   <Button fx:id="excludeChatButton" layoutX="149.0" layoutY="37.0" mnemonicParsing="false" onMouseClicked="#onExcludeChatClicked" prefHeight="25.0" prefWidth="164.0" text="Exclure un joueur du chat" />
                   <TextArea fx:id="sendTextArea" layoutX="14.0" layoutY="478.0" prefHeight="50.0" prefWidth="200.0" />
-                  <TextArea fx:id="chatTextArea" layoutX="14.0" layoutY="76.0" prefHeight="385.0" prefWidth="299.0" />
+                  <TextArea fx:id="chatTextArea" layoutX="14.0" layoutY="76.0" prefHeight="385.0" prefWidth="299.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></TextArea>
                   <Button fx:id="sendTextButton" layoutX="231.0" layoutY="491.0" mnemonicParsing="false" onMouseClicked="#onSendTextClicked" prefHeight="25.0" prefWidth="81.0" text="Envoyer" />
                </children>
             </AnchorPane>
