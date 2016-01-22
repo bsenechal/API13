@@ -134,7 +134,7 @@ public class IHMWelcomePageController {
             }
             log.error(e.getMessage(), e);
         }
-
+           
         catch (FunctionalException e) {
             try {
                 error("Log out error : Functional Exception");
@@ -143,7 +143,10 @@ public class IHMWelcomePageController {
             }
             log.error(e.getMessage(), e);
         }
-
+        finally {
+            mainApp.getComClientManager().close();
+        }
+        
         Stage stage;
         Parent root;
         stage = new Stage();
