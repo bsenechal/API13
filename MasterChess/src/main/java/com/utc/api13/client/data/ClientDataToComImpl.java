@@ -140,25 +140,32 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     @Override
     public void sendAnswerForLeaving(boolean answer) {
-        // Add game in local user saved game (in case the local user wants to
-        // save the game after ending)
-        instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
-        // Modify the played games
-        instanceDataClientManager.getUserLocal()
-                .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
-        // If answer is no the local user loses the game
-        if (!answer) {
+        
+        if (answer){
+            // Add game in local user saved game (in case the local user wants to
+            // save the game after ending)
+            instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
+            // Modify the played games
             instanceDataClientManager.getUserLocal()
-                    .setNbLost(instanceDataClientManager.getUserLocal().getNbLost() + 1);
+                    .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
+            
+            // Display answer to local user
+            UUID senderId = instanceDataClientManager.getUserLocal().getId()
+                    .equals(instanceDataClientManager.getCurrentGame().getBlackPlayer().getId())
+                            ? instanceDataClientManager.getCurrentGame().getWhitePlayer().getId()
+                            : instanceDataClientManager.getCurrentGame().getBlackPlayer().getId();
+            
+            
+            instanceDataClientManager.getIClientIHMToData().displayAnswer(senderId, answer,
+                    "The player has quit the game ");
+            instanceDataClientManager.getIClientIHMToData().displayAnswer(instanceDataClientManager.getUserLocal().getId(), answer,
+                    "You have quit the game ");
+         // End the local game
+            instanceDataClientManager.setCurrentGame(null);
+        }else{
+            instanceDataClientManager.getIClientIHMToData().displayAnswer(instanceDataClientManager.getUserLocal().getId(), answer,
+                    "Your opponent doesn't want to quit the game, you'll keep playing. Surrend it if you want, but your stats will change ! ");
         }
-        // End the local game
-        instanceDataClientManager.setCurrentGame(null);
-        // Display answer to local user
-        UUID senderId = instanceDataClientManager.getUserLocal().getId()
-                .equals(instanceDataClientManager.getCurrentGame().getBlackPlayer().getId())
-                        ? instanceDataClientManager.getCurrentGame().getWhitePlayer().getId()
-                        : instanceDataClientManager.getCurrentGame().getBlackPlayer().getId();
-        instanceDataClientManager.getIClientIHMToData().displayAnswer(senderId, answer, "The player has quit the game ");
     }
 
     @Override
@@ -252,7 +259,16 @@ public class ClientDataToComImpl implements IClientDataToCom {
      */
     @Override
     public void victoryBySurrender() {
-        // TODO Auto-generated method stub
+        instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
+        // Modify the played games
+        instanceDataClientManager.getUserLocal()
+                .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
+        //increase the amount of won games
+        instanceDataClientManager.getUserLocal().setNbWon(instanceDataClientManager.getUserLocal().getNbWon() +1);
+        //delete the current game 
+        instanceDataClientManager.setCurrentGame(null);
+        //TODO uncomment when IHM function will be done
+        //instanceDataClientManager.getIClientIHMToData().victoryBySurrend();
     }
 
     /*
@@ -263,7 +279,16 @@ public class ClientDataToComImpl implements IClientDataToCom {
      */
     @Override
     public void endGameBySurrender() {
-        // TODO Auto-generated method stub
+        instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
+        // Modify the played games
+        instanceDataClientManager.getUserLocal()
+                .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
+        //increase the amount of lost games
+        instanceDataClientManager.getUserLocal().setNbLost(instanceDataClientManager.getUserLocal().getNbLost() +1);
+        //delete the current game 
+        instanceDataClientManager.setCurrentGame(null);
+        //TODO uncomment when IHM function will be done
+        //instanceDataClientManager.getIClientIHMToData().endGameBySurrend();
     }
 
     @Override

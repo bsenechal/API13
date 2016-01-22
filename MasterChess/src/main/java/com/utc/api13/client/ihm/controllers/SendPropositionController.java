@@ -12,6 +12,7 @@ import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.property.ErrorProperty;
 import com.utc.api13.client.ihm.property.PropositionProperty;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,6 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class SendPropositionController {
 
@@ -153,6 +155,10 @@ public class SendPropositionController {
         mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+        
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> stage.close());
+        delay.play();
     }
 
     public FXMLLoader loadProposition() {
