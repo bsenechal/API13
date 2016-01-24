@@ -13,26 +13,23 @@ public final class ChessboardEntity extends ADataEntity {
 
     private static List<PositionEntity> cases;
 
-    public ChessboardEntity() {
-        super();
-        cases = new ArrayList<PositionEntity>();
-
-        for (int x = MIN_COLUMN; x <= MAX_COLUMN; x++) {
-            for (int y = MIN_LINE; y <= MAX_LINE; y++) {
-                cases.add(new PositionEntity(x, y));
-            }
-        }
-    }
 
     /**
      * @return the cases
      */
-    public static List<PositionEntity> getCases() {
+    private static List<PositionEntity> getCases() {
+    	 cases = new ArrayList<PositionEntity>();
+
+         for (int x = MIN_COLUMN; x <= MAX_COLUMN; x++) {
+             for (int y = MIN_LINE; y <= MAX_LINE; y++) {
+                 cases.add(new PositionEntity(x, y));
+             }
+         }
         return cases;
     }
 
     public static boolean isCaseOnChessboard(final PositionEntity position) {
-        for (PositionEntity positionCase : cases) {
+        for (PositionEntity positionCase : getCases()) {
             if (positionCase.equals(position)) {
                 return Boolean.TRUE;
             }
