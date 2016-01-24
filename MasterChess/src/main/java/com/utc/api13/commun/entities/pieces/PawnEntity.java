@@ -18,8 +18,8 @@ import com.utc.api13.commun.enumerations.PieceColorEnum;
  *
  */
 public class PawnEntity extends APieceEntity {
-    private static final int START_LINE_BLACK_PAWN = 7;
-    private static final int START_LINE_WHITE_PAWN = 2;
+    private static final int START_LINE_BLACK_PAWN = 2;
+    private static final int START_LINE_WHITE_PAWN = 7;
 
     /**
      * 
