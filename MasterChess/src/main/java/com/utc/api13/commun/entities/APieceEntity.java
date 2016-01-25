@@ -111,11 +111,11 @@ public abstract class APieceEntity extends ADataEntity {
          * 
          */
                // Ancien code       
-//        setPosition(move.getToPosition());
+        setPosition(move.getToPosition());
 
         // Proposition de correction : à priori fonctionne mais pas totalement testé
         // ATTENTION RISQUE DE BOUCLE INFINI !! (à tester)
-         game.getPieceFromPosition(move.getFromPosition()).setPosition(move.getToPosition());
+        // game.getPieceFromPosition(move.getFromPosition()).setPosition(move.getToPosition());
         
         
         // TODO : Delete adversary pond if needed !!! (managed deleted pond to
