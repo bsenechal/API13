@@ -29,11 +29,15 @@ public final class ChessboardEntity extends ADataEntity {
     }
 
     public static boolean isCaseOnChessboard(final PositionEntity position) {
-        for (PositionEntity positionCase : getCases()) {
-            if (positionCase.equals(position)) {
-                return Boolean.TRUE;
-            }
-        }
-        return Boolean.FALSE;
+//        for (PositionEntity positionCase : getCases()) {
+//            if (positionCase.equals(position)) {
+//                return Boolean.TRUE;
+//            }
+//        }
+//        return Boolean.FALSE;
+    	if(position.getPositionX() >= MIN_COLUMN && position.getPositionX() <= MAX_COLUMN && position.getPositionY() >= MIN_LINE && position.getPositionY() <= MAX_LINE){
+    		return Boolean.TRUE; 
+    	}
+    	return Boolean.FALSE; 
     }
 }
