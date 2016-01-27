@@ -65,12 +65,12 @@ public class KingEntity extends APieceEntity {
     public boolean getHasMove() {
         return this.hasMove;
     }
-    
+
     /**
      * @author Hugo
      */
     public void setHasMove() {
-        if(this.hasMove){
+        if (this.hasMove) {
             this.hasMove = Boolean.FALSE;
         } else {
             this.hasMove = Boolean.TRUE;
@@ -112,70 +112,76 @@ public class KingEntity extends APieceEntity {
         }
 
         if (hasMove == Boolean.FALSE) {
-            if(this.rightCastling(game)){
-                result.add(new PositionEntity(this.getPosition().getPositionX() + 2, this.getPosition().getPositionY()));
+            if (this.rightCastling(game)) {
+                result.add(
+                        new PositionEntity(this.getPosition().getPositionX() + 2, this.getPosition().getPositionY()));
             }
-            if(this.leftCastling(game)){
-                result.add(new PositionEntity(this.getPosition().getPositionX() - 2, this.getPosition().getPositionY()));
+            if (this.leftCastling(game)) {
+                result.add(
+                        new PositionEntity(this.getPosition().getPositionX() - 2, this.getPosition().getPositionY()));
             }
         }
         return result;
     }
-    
-    public boolean rightCastling(GameEntity game){
-        PositionEntity rookPosition = new PositionEntity(this.getPosition().getPositionX() + 3, this.getPosition().getPositionY());
-        
-        if(!this.hasMove 
-                && !APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), rookPosition) 
-                && game.getPieceFromPosition(rookPosition).toString() == "Rook"){
-            
-            RookEntity rookTmp = (RookEntity)game.getPieceFromPosition(rookPosition);
-            PositionEntity emptyPosition1 = new PositionEntity(this.getPosition().getPositionX() + 1, this.getPosition().getPositionY());
-            PositionEntity emptyPosition2 = new PositionEntity(this.getPosition().getPositionX() + 2, this.getPosition().getPositionY());
-            
+
+    public boolean rightCastling(GameEntity game) {
+        PositionEntity rookPosition = new PositionEntity(this.getPosition().getPositionX() + 3,
+                this.getPosition().getPositionY());
+
+        if (!this.hasMove && !APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), rookPosition)
+                && game.getPieceFromPosition(rookPosition).toString() == "Rook") {
+
+            RookEntity rookTmp = (RookEntity) game.getPieceFromPosition(rookPosition);
+            PositionEntity emptyPosition1 = new PositionEntity(this.getPosition().getPositionX() + 1,
+                    this.getPosition().getPositionY());
+            PositionEntity emptyPosition2 = new PositionEntity(this.getPosition().getPositionX() + 2,
+                    this.getPosition().getPositionY());
+
             List<APieceEntity> allPieces = new ArrayList<APieceEntity>(game.getBlackPieces());
             allPieces.addAll(game.getWhitePieces());
-            
-            if(rookTmp.getHasMove() == Boolean.FALSE
+
+            if (rookTmp.getHasMove() == Boolean.FALSE
                     && APieceEntity.isPositionAvailableFromPieces(allPieces, emptyPosition1)
-                    && APieceEntity.isPositionAvailableFromPieces(allPieces, emptyPosition2)){
-                
+                    && APieceEntity.isPositionAvailableFromPieces(allPieces, emptyPosition2)) {
+
                 return Boolean.TRUE;
-                
+
             }
 
         }
-        
+
         return Boolean.FALSE;
     }
-    
-    public boolean leftCastling(GameEntity game){
-        PositionEntity rookPosition = new PositionEntity(this.getPosition().getPositionX() - 4, this.getPosition().getPositionY());
-        
-        if(!this.hasMove 
-                && !APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), rookPosition) 
-                && game.getPieceFromPosition(rookPosition).toString() == "Rook"){
-            
-            RookEntity rookTmp = (RookEntity)game.getPieceFromPosition(rookPosition);
-            PositionEntity emptyPosition1 = new PositionEntity(this.getPosition().getPositionX() - 1, this.getPosition().getPositionY());
-            PositionEntity emptyPosition2 = new PositionEntity(this.getPosition().getPositionX() - 2, this.getPosition().getPositionY());
-            PositionEntity emptyPosition3 = new PositionEntity(this.getPosition().getPositionX() - 3, this.getPosition().getPositionY());
 
-            
+    public boolean leftCastling(GameEntity game) {
+        PositionEntity rookPosition = new PositionEntity(this.getPosition().getPositionX() - 4,
+                this.getPosition().getPositionY());
+
+        if (!this.hasMove && !APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), rookPosition)
+                && game.getPieceFromPosition(rookPosition).toString() == "Rook") {
+
+            RookEntity rookTmp = (RookEntity) game.getPieceFromPosition(rookPosition);
+            PositionEntity emptyPosition1 = new PositionEntity(this.getPosition().getPositionX() - 1,
+                    this.getPosition().getPositionY());
+            PositionEntity emptyPosition2 = new PositionEntity(this.getPosition().getPositionX() - 2,
+                    this.getPosition().getPositionY());
+            PositionEntity emptyPosition3 = new PositionEntity(this.getPosition().getPositionX() - 3,
+                    this.getPosition().getPositionY());
+
             List<APieceEntity> allPieces = new ArrayList<APieceEntity>(game.getBlackPieces());
             allPieces.addAll(game.getWhitePieces());
-            
-            if(rookTmp.getHasMove() == Boolean.FALSE
+
+            if (rookTmp.getHasMove() == Boolean.FALSE
                     && APieceEntity.isPositionAvailableFromPieces(allPieces, emptyPosition1)
                     && APieceEntity.isPositionAvailableFromPieces(allPieces, emptyPosition2)
-                    && APieceEntity.isPositionAvailableFromPieces(allPieces, emptyPosition3)){
-                
+                    && APieceEntity.isPositionAvailableFromPieces(allPieces, emptyPosition3)) {
+
                 return Boolean.TRUE;
-                
+
             }
 
         }
-        
+
         return Boolean.FALSE;
     }
 

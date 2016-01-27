@@ -16,31 +16,33 @@ public class Connection {
         this.port = port;
     }
 
-	/**
-	 * @return the port
-	 */
-	public String getPort() {
-		return port;
-	}
+    /**
+     * @return the port
+     */
+    public String getPort() {
+        return port;
+    }
 
-	/**
-	 * @param port the port to set
-	 */
-	public void setPort(String port) {
-		this.port = port;
-	}
+    /**
+     * @param port
+     *            the port to set
+     */
+    public void setPort(String port) {
+        this.port = port;
+    }
 
-	/**
-	 * @return the serveur
-	 */
-	public String getServeur() {
-		return serveur;
-	}
+    /**
+     * @return the serveur
+     */
+    public String getServeur() {
+        return serveur;
+    }
 
-	/**
-	 * @param serveur the serveur to set
-	 */
-	public void setServeur(String serveur) {
-		this.serveur = serveur;
-	}
+    /**
+     * @param serveur
+     *            the serveur to set
+     */
+    public void setServeur(String serveur) {
+        this.serveur = serveur;
+    }
 }

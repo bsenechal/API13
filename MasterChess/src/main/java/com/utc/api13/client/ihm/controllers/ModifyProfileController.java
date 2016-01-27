@@ -57,7 +57,7 @@ public class ModifyProfileController {
     AnchorPane createProfileAnchorPane;
 
     @SuppressWarnings("restriction")
-	@FXML
+    @FXML
     public void onSaveProfileClicked() throws IOException {
 
         String login = loginTextView.getText();
@@ -101,7 +101,7 @@ public class ModifyProfileController {
                 mainApp.setCurrentStage(stage);
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.show();
-                
+
                 PauseTransition delay = new PauseTransition(Duration.seconds(2));
                 delay.setOnFinished(event -> stage.close());
                 delay.play();

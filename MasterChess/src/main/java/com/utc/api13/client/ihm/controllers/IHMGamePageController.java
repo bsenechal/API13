@@ -29,7 +29,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
- 
+
 public class IHMGamePageController {
     private IHMManager IHMManager;
     private IClientDataToIHM myIClientToIHM;
@@ -48,11 +48,9 @@ public class IHMGamePageController {
     TextArea chatTextArea, sendTextArea;
     @FXML
     StackPane chessBoardStackPane;
-	private ChessBoardNode cb;
+    private ChessBoardNode cb;
 
-    
-
-	public IHMManager getIHMManager() {
+    public IHMManager getIHMManager() {
         return IHMManager;
     }
 
@@ -67,15 +65,15 @@ public class IHMGamePageController {
     public void initialize() {
 
     }
-    
-    @FXML 
+
+    @FXML
     private void onGiveUpClicked() {
-    	
+
     }
-    
-    @FXML 
+
+    @FXML
     private void onLeaveClicked() {
-    	
+
     }
 
     @FXML
@@ -89,7 +87,7 @@ public class IHMGamePageController {
             error(" only the two player can remove someone from the Tchat");
         }
     }
-    
+
     /* exclude an observer in a game */
 
     private void openUserObservableList() throws IOException {
@@ -129,7 +127,7 @@ public class IHMGamePageController {
     @FXML
     private void onQuitGameClicked(Event event) {
         myIClientToIHM.requestPlayerForLeaving();
-        
+
     }
 
     public void setControllerContext(IHMManager ihmManager) {
@@ -148,7 +146,7 @@ public class IHMGamePageController {
         GameEntity game = this.myIClientToIHM.getCurrentGame();
         cb = new ChessBoardNode(IHMManager, game, myIClientToIHM);
         cb.setMyIClientToIHM(myIClientToIHM);
-        
+
         final SwingNode swingNode = new SwingNode();
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -210,12 +208,12 @@ public class IHMGamePageController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
-    
-    public ChessBoardNode getCb() {
-		return cb;
-	}
 
-	public void setCb(ChessBoardNode cb) {
-		this.cb = cb;
-	}
+    public ChessBoardNode getCb() {
+        return cb;
+    }
+
+    public void setCb(ChessBoardNode cb) {
+        this.cb = cb;
+    }
 }

@@ -4,8 +4,8 @@
 package com.utc.api13.client.data;
 
 import java.io.File;
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,10 +16,10 @@ import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.data.services.GameService;
 import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.Erreur;
+import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
-import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.enumerations.ErrorTypeEnum;
@@ -158,8 +158,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
     @Override
     public void sendAnswerForLeaving(boolean answer) {
-        if(answer){
-            // Add game in local user saved game (in case the local user wants to
+        if (answer) {
+            // Add game in local user saved game (in case the local user wants
+            // to
             // save the game after ending)
             dataClientManager.getUserLocal().getSavedGames().add(getCurrentGame());
             // if the local user said yes no it's a win for him
@@ -329,14 +330,15 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public List<PositionEntity> getAvailablesMoves(int line, int col) {
         PositionEntity myposition = new PositionEntity(line, col);
         APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(myposition);
-        //On vérifie que la pièce existe et qu'elle est bien de la couleur du joueur courant :
-        if(piece != null){
-        	if(piece.getColor().equals(dataClientManager.getCurrentGame().getCurrentPlayerColor())){
-            	return piece.generateAvailableMoves(dataClientManager.getCurrentGame());
-        	}
+        // On vérifie que la pièce existe et qu'elle est bien de la couleur du
+        // joueur courant :
+        if (piece != null) {
+            if (piece.getColor().equals(dataClientManager.getCurrentGame().getCurrentPlayerColor())) {
+                return piece.generateAvailableMoves(dataClientManager.getCurrentGame());
+            }
         }
         return new ArrayList<PositionEntity>();
-        
+
     }
 
     @Override
@@ -354,8 +356,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(fromposition);
 
         // On instancie un move entity
-        MoveEntity move = new MoveEntity(new Date(), fromposition, toposition, piece, currentplayer, dataClientManager.getCurrentGame().getId());
- 
+        MoveEntity move = new MoveEntity(new Date(), fromposition, toposition, piece, currentplayer,
+                dataClientManager.getCurrentGame().getId());
 
         // On passe le moveEntity à com
         dataClientManager.getIClientComToData().validateMove(currentplayer, move);

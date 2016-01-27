@@ -191,10 +191,9 @@ public class ClientDataToIHMImplTest {
 
         dataClientManager.getClientDataToIHMImpl().playMove(fromLine, fromCol, toLine, toCol);
     }
-    
-    
+
     @Test
-    public void moveTest(){
+    public void moveTest() {
         PrivateUserEntity whitePrivatePlayer = new PrivateUserEntity("whitelogin", "whitemdp");
         PublicUserEntity whitePlayer = new PublicUserEntity("whitelogin", "whitemdp");
 
@@ -204,34 +203,33 @@ public class ClientDataToIHMImplTest {
         newGame.setBlackPlayer(blackPlayer);
         newGame.setWhitePlayer(whitePlayer);
         newGame.setCurrentPlayer(whitePlayer);
-        
+
         dataClientManager.setUserLocal(whitePrivatePlayer);
-        
+
         dataClientManager.setCurrentGame(newGame);
 
         APieceEntity pieceToMove = dataClientManager.getCurrentGame().getPieceFromPosition(new PositionEntity(4, 2));
-        
-        
+
         MoveEntity move = new MoveEntity(new Date(), new PositionEntity(4, 2), new PositionEntity(4, 3), pieceToMove);
-        
+
         Mockito.doNothing().when(clientComToDataImpl).validateMove(whitePlayer.getId(), move);
 
         dataClientManager.setIClientComToData(clientComToDataImpl);
 
-       try {
-           
+        try {
+
             dataClientManager.getClientDataToIHMImpl().move(pieceToMove, new PositionEntity(4, 3));
         } catch (FunctionalException e) {
             Assert.fail("Error : " + e.getMessage());
-        }  
+        }
     }
-    
+
     @Test
-    public void sendAnswerForLeavingTest(){
-        GameEntity game = new GameEntity(); 
-        PrivateUserEntity userPrivate = new PrivateUserEntity(); 
-        PublicUserEntity whiteUser = new PublicUserEntity(); 
-        PublicUserEntity blackUser = new PublicUserEntity(); 
+    public void sendAnswerForLeavingTest() {
+        GameEntity game = new GameEntity();
+        PrivateUserEntity userPrivate = new PrivateUserEntity();
+        PublicUserEntity whiteUser = new PublicUserEntity();
+        PublicUserEntity blackUser = new PublicUserEntity();
         final UUID idWhite = UUID.randomUUID();
         final UUID idBlack = UUID.randomUUID();
         userPrivate.setId(idWhite);
@@ -242,15 +240,15 @@ public class ClientDataToIHMImplTest {
         dataClientManager.setUserLocal(userPrivate);
         dataClientManager.setCurrentGame(game);
         Assert.assertNotNull(dataClientManager.getCurrentGame());
-        
-        //If false then nothing -> game continue
+
+        // If false then nothing -> game continue
         dataClientManager.getClientDataToIHMImpl().sendAnswerForLeaving(false);
         Assert.assertNotNull(dataClientManager.getCurrentGame());
-        
-      //If true then quit game without changing stats
+
+        // If true then quit game without changing stats
         dataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
         dataClientManager.getClientDataToIHMImpl().sendAnswerForLeaving(true);
         Assert.assertNull(dataClientManager.getCurrentGame());
     }
-    
+
 }

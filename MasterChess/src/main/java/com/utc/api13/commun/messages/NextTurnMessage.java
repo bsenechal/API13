@@ -25,7 +25,7 @@ public class NextTurnMessage extends Message {
 
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) throws Exception {
-         comClientManager.getIClientDataToCom().nextTurn(this.isfinished, this.nexttoplay);
+        comClientManager.getIClientDataToCom().nextTurn(this.isfinished, this.nexttoplay);
     }
 
     @Override

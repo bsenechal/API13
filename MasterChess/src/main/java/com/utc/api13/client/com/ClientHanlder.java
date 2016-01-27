@@ -1,8 +1,11 @@
 package com.utc.api13.client.com;
 
 import java.io.IOException;
+
 import org.apache.log4j.Logger;
+
 import com.utc.api13.commun.messages.Message;
+
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleState;

@@ -76,7 +76,8 @@ public interface IClientIHMToData {
     /**
      * After a piece is moved
      */
-    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, APieceEntity piece, GameEntity game);
+    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, APieceEntity piece,
+            GameEntity game);
 
     /**
      * Method called when distant user sent a chat message, in order the HMI to
@@ -141,6 +142,6 @@ public interface IClientIHMToData {
     // erreurs : il suffit de catcher les exceptions
     // attention dans les fonctions à tout le temps mettre getCardGame pour
     // récup jeu local
-    
+
     public void activateCases(PublicUserEntity currentUser, GameStatusEnum status);
 }

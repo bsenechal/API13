@@ -2,7 +2,6 @@ package com.utc.api13.client.ihm.controllers;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
 
 import org.apache.log4j.Logger;
 
@@ -63,7 +62,7 @@ public class IHMConnexionPageController {
     }
 
     @SuppressWarnings("restriction")
-	private void launchGame() throws IOException {
+    private void launchGame() throws IOException {
         String login = loginTextView.getText();
         String pw = passwordTextView.getText();
         String sv = serverAddressTextView.getText();
@@ -96,24 +95,24 @@ public class IHMConnexionPageController {
             try {
                 Integer port = Integer.parseInt(portString.isEmpty() ? "0" : portTextView.getText());
                 // TODO : gérer la connexion au serveur avec le port
-              
+
                 mainApp.launchAppCom(sv, port);
-            
-                if (mainApp.isSucceed()){
-                
-                        myIClientToIHM.connect(login, pw);
-                        fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
-                        root = (Pane) fxmlLoader.load();
-                        IHMWelcomePageController controllerRight = fxmlLoader.getController();
-                        controllerRight.setControllerContext(IHMManager);
-                        mainApp.getCurrentStage().close();
-                        mainApp.setMainStage(stage);
-                        controllerRight.setMainApp(mainApp);
-                        stage.setTitle("Welcome to MasterChess");
-                        stage.setScene(new Scene(root));
-                        controllerRight.setDisconnectUserByClosingWindow();
-                        stage.initModality(Modality.APPLICATION_MODAL);
-                        stage.show();
+
+                if (mainApp.isSucceed()) {
+
+                    myIClientToIHM.connect(login, pw);
+                    fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
+                    root = (Pane) fxmlLoader.load();
+                    IHMWelcomePageController controllerRight = fxmlLoader.getController();
+                    controllerRight.setControllerContext(IHMManager);
+                    mainApp.getCurrentStage().close();
+                    mainApp.setMainStage(stage);
+                    controllerRight.setMainApp(mainApp);
+                    stage.setTitle("Welcome to MasterChess");
+                    stage.setScene(new Scene(root));
+                    controllerRight.setDisconnectUserByClosingWindow();
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.show();
                 }
             }
 
@@ -135,7 +134,7 @@ public class IHMConnexionPageController {
                 log.error(e.getMessage(), e);
             }
         }
-       
+
     }
 
     private void wrongData(boolean bool) throws IOException {
@@ -214,7 +213,7 @@ public class IHMConnexionPageController {
         stage.setTitle("Import success");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
-        
+
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished(event -> stage.close());
         delay.play();

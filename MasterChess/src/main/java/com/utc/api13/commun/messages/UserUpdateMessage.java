@@ -8,7 +8,6 @@ import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
-import com.utc.api13.commun.messages.Message;
 import com.utc.api13.server.com.ComServerManager;
 
 import io.netty.channel.ChannelHandlerContext;

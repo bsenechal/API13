@@ -50,7 +50,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void validateMove(UUID idPlayer, MoveEntity move) {
-        comClientManagerInstance.sendMessage(new MoveValidationMessage(idPlayer, new UUID(0,0), move));
+        comClientManagerInstance.sendMessage(new MoveValidationMessage(idPlayer, new UUID(0, 0), move));
         return;
     }
 
