@@ -82,6 +82,7 @@ public class IHMGamePageController {
                 myIClientToIHM.requestPlayerForLeaving();
         else
             myIClientToIHM.observerLeave();
+        
     }
     
     @FXML
