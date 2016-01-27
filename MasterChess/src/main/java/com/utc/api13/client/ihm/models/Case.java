@@ -9,9 +9,7 @@ public class Case extends JButton {
     private int column;
     private Color color;
 
-    
-
-	public Case(int x, int y) {
+    public Case(int x, int y) {
         this.line = x;
         this.column = y;
     }
@@ -31,12 +29,12 @@ public class Case extends JButton {
     public void setColumn(int y) {
         this.column = y;
     }
-    
-    public Color getColor() {
-		return color;
-	}
 
-	public void setColor(Color color) {
-		this.color = color;
-	}
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 }

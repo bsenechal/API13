@@ -39,7 +39,6 @@ public class AnswerPropositionController {
     private String timeString;
     private int timeInt;
 
-    
     @FXML
     BorderPane answerPropositionBorderPane;
     @FXML

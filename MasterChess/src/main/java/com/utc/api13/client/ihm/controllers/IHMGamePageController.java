@@ -4,12 +4,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.UUID;
 
 import javax.swing.SwingUtilities;
-import javax.xml.soap.Text;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
@@ -32,7 +29,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
- 
+
 public class IHMGamePageController {
     private IHMManager IHMManager;
     private IClientDataToIHM myIClientToIHM;
@@ -55,7 +52,7 @@ public class IHMGamePageController {
     @FXML
     Label timerText;
 
-	public IHMManager getIHMManager() {
+    public IHMManager getIHMManager() {
         return IHMManager;
     }
 
@@ -70,24 +67,24 @@ public class IHMGamePageController {
     public void initialize() {
 
     }
-    
-    @FXML 
+
+    @FXML
     private void onGiveUpClicked() {
         myIClientToIHM.surrender();
     }
-    
-    @FXML 
+
+    @FXML
     private void onLeaveClicked() {
-        
+
         List<UUID> players = Arrays.asList(myIClientToIHM.getCurrentGame().getBlackPlayer().getId(),
                 myIClientToIHM.getCurrentGame().getWhitePlayer().getId());
-        if (players.contains(myIClientToIHM.getLocalUser().getId())) 
-                myIClientToIHM.requestPlayerForLeaving();
+        if (players.contains(myIClientToIHM.getLocalUser().getId()))
+            myIClientToIHM.requestPlayerForLeaving();
         else
             myIClientToIHM.observerLeave();
-        
+
     }
-    
+
     @FXML
     private void onExcludeChatClicked() throws IOException {
 
@@ -99,7 +96,7 @@ public class IHMGamePageController {
             error(" only the two player can remove someone from the Tchat");
         }
     }
-    
+
     /* exclude an observer in a game */
 
     private void openUserObservableList() throws IOException {
@@ -138,8 +135,8 @@ public class IHMGamePageController {
 
     @FXML
     private void onQuitGameClicked(Event event) {
-       // onGiveUpClicked();
-        String a="slt";
+        // onGiveUpClicked();
+        String a = "slt";
         System.out.println("test when we logout of the app");
     }
 
@@ -153,21 +150,18 @@ public class IHMGamePageController {
         setListenersOnLoad();
         setBindingsOnLoad();
     }
-    
-    
-    
-    
+
     public void setMainApp(AppClient app) {
         this.mainApp = app;
         GameEntity game = this.myIClientToIHM.getCurrentGame();
         cb = new ChessBoardNode(IHMManager, game, myIClientToIHM);
         cb.setMyIClientToIHM(myIClientToIHM);
-        
-        int nbMinutes = game.getTimerInt()/60; 
-        int nbSecondes = game.getTimerInt() % 60; 
-        String myTimer = Integer.toString(nbMinutes) + " : " + Integer.toString(nbSecondes); 
-        
-        //this.timerText.setText(myTimer); 
+
+        int nbMinutes = game.getTimerInt() / 60;
+        int nbSecondes = game.getTimerInt() % 60;
+        String myTimer = Integer.toString(nbMinutes) + " : " + Integer.toString(nbSecondes);
+
+        // this.timerText.setText(myTimer);
         final SwingNode swingNode = new SwingNode();
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -229,12 +223,12 @@ public class IHMGamePageController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
-    
-    public ChessBoardNode getCb() {
-		return cb;
-	}
 
-	public void setCb(ChessBoardNode cb) {
-		this.cb = cb;
-	}
+    public ChessBoardNode getCb() {
+        return cb;
+    }
+
+    public void setCb(ChessBoardNode cb) {
+        this.cb = cb;
+    }
 }

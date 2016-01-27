@@ -1,7 +1,6 @@
 package com.utc.api13.client.data;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +16,6 @@ import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.ihm.ClientIHMToDataImpl;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 /**
  * @author DATA
@@ -135,35 +133,41 @@ public class ClientDataToComImplTest {
 
     @Test
     public void nextTurnTest() {
-//        PublicUserEntity user1 = new PublicUserEntity();
-//        PublicUserEntity user2 = new PublicUserEntity();
-//        GameEntity game = new GameEntity(Boolean.FALSE, Boolean.FALSE, new Date(), user1, user2);
-//
-//        dataClientManager.setCurrentGame(game);
-//
-//        // Test si le currentUser est bien le joueur noir
-//        Assert.assertEquals("Current player should be user1",
-//                dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user1.getId());
-//
-//        dataClientManager.getClientDataToComImpl().nextTurn(GameStatusEnum.CONTINUE, user2.getId());
-//
-//        // Status CONTINUE : On vérifie qu'on a bien changé de currentPlayer
-//        Assert.assertEquals("Current player should be user2",
-//                dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user2.getId());
-//
-//        dataClientManager.getClientDataToComImpl().nextTurn(GameStatusEnum.CHECKMATE, user2.getId());
-//
-//        // Status CHECKMATE : On vérifie qu'on a pas changé de joueur
-//        Assert.assertEquals("Current player should be user2",
-//                dataClientManager.getCurrentGame().getCurrentPlayer().getId(), user2.getId());
+        // PublicUserEntity user1 = new PublicUserEntity();
+        // PublicUserEntity user2 = new PublicUserEntity();
+        // GameEntity game = new GameEntity(Boolean.FALSE, Boolean.FALSE, new
+        // Date(), user1, user2);
+        //
+        // dataClientManager.setCurrentGame(game);
+        //
+        // // Test si le currentUser est bien le joueur noir
+        // Assert.assertEquals("Current player should be user1",
+        // dataClientManager.getCurrentGame().getCurrentPlayer().getId(),
+        // user1.getId());
+        //
+        // dataClientManager.getClientDataToComImpl().nextTurn(GameStatusEnum.CONTINUE,
+        // user2.getId());
+        //
+        // // Status CONTINUE : On vérifie qu'on a bien changé de currentPlayer
+        // Assert.assertEquals("Current player should be user2",
+        // dataClientManager.getCurrentGame().getCurrentPlayer().getId(),
+        // user2.getId());
+        //
+        // dataClientManager.getClientDataToComImpl().nextTurn(GameStatusEnum.CHECKMATE,
+        // user2.getId());
+        //
+        // // Status CHECKMATE : On vérifie qu'on a pas changé de joueur
+        // Assert.assertEquals("Current player should be user2",
+        // dataClientManager.getCurrentGame().getCurrentPlayer().getId(),
+        // user2.getId());
     }
-    
-    @Test 
-    public void sendAnswerForLeavingTest(){
-        GameEntity game = new GameEntity(); 
-        PrivateUserEntity userPrivate = new PrivateUserEntity(); 
-        PublicUserEntity whiteUser = new PublicUserEntity(); 
-        PublicUserEntity blackUser = new PublicUserEntity(); 
+
+    @Test
+    public void sendAnswerForLeavingTest() {
+        GameEntity game = new GameEntity();
+        PrivateUserEntity userPrivate = new PrivateUserEntity();
+        PublicUserEntity whiteUser = new PublicUserEntity();
+        PublicUserEntity blackUser = new PublicUserEntity();
         final UUID idWhite = UUID.randomUUID();
         final UUID idBlack = UUID.randomUUID();
         userPrivate.setId(idWhite);
@@ -175,70 +179,70 @@ public class ClientDataToComImplTest {
         dataClientManager.setUserLocal(userPrivate);
         dataClientManager.setCurrentGame(game);
         Assert.assertNotNull(dataClientManager.getCurrentGame());
-      //If false then nothing -> game continue
-        
+        // If false then nothing -> game continue
+
         dataClientManager.getClientDataToComImpl().sendAnswerForLeaving(false);
         Assert.assertNotNull(dataClientManager.getCurrentGame());
-        
-      //If true then quit game without changing stats
+
+        // If true then quit game without changing stats
         dataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
         dataClientManager.getClientDataToComImpl().sendAnswerForLeaving(true);
         Assert.assertNull(dataClientManager.getCurrentGame());
-        
+
     }
-    
-    @Test 
-    public void endGameBySurrednerTest(){
-        GameEntity game = new GameEntity(); 
-        PrivateUserEntity userPrivate = new PrivateUserEntity(); 
-        PublicUserEntity whiteUser = new PublicUserEntity(); 
-        PublicUserEntity blackUser = new PublicUserEntity(); 
+
+    @Test
+    public void endGameBySurrednerTest() {
+        GameEntity game = new GameEntity();
+        PrivateUserEntity userPrivate = new PrivateUserEntity();
+        PublicUserEntity whiteUser = new PublicUserEntity();
+        PublicUserEntity blackUser = new PublicUserEntity();
         userPrivate.setNbLost(0);
         userPrivate.setNbPlayed(0);
         userPrivate.setNbWon(0);
         game.setBlackPlayer(blackUser);
         game.setWhitePlayer(whiteUser);
-        
+
         dataClientManager.setIClientIHMToData(clientIHMToDataImpl);
         dataClientManager.setUserLocal(userPrivate);
         dataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
         dataClientManager.setCurrentGame(game);
         Assert.assertNotNull(dataClientManager.getCurrentGame());
-        
-        //endGameBySurrend
+
+        // endGameBySurrend
         dataClientManager.getClientDataToComImpl().endGameBySurrender();
         Assert.assertNull(dataClientManager.getCurrentGame());
         Assert.assertEquals(0, dataClientManager.getUserLocal().getNbWon());
         Assert.assertEquals(1, dataClientManager.getUserLocal().getNbPlayed());
         Assert.assertEquals(1, dataClientManager.getUserLocal().getNbLost());
-        
+
     }
-    
+
     @Test
-    public void victoryBySurrenderTest(){
-        GameEntity game = new GameEntity(); 
-        PrivateUserEntity userPrivate = new PrivateUserEntity(); 
-        PublicUserEntity whiteUser = new PublicUserEntity(); 
-        PublicUserEntity blackUser = new PublicUserEntity(); 
+    public void victoryBySurrenderTest() {
+        GameEntity game = new GameEntity();
+        PrivateUserEntity userPrivate = new PrivateUserEntity();
+        PublicUserEntity whiteUser = new PublicUserEntity();
+        PublicUserEntity blackUser = new PublicUserEntity();
         userPrivate.setNbLost(0);
         userPrivate.setNbPlayed(0);
         userPrivate.setNbWon(0);
         game.setBlackPlayer(blackUser);
         game.setWhitePlayer(whiteUser);
-        
+
         dataClientManager.setIClientIHMToData(clientIHMToDataImpl);
         dataClientManager.setUserLocal(userPrivate);
         dataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
         dataClientManager.setCurrentGame(game);
         Assert.assertNotNull(dataClientManager.getCurrentGame());
-        
-        //endGameBySurrend
+
+        // endGameBySurrend
         dataClientManager.getClientDataToComImpl().victoryBySurrender();
         Assert.assertNull(dataClientManager.getCurrentGame());
         Assert.assertEquals(1, dataClientManager.getUserLocal().getNbWon());
         Assert.assertEquals(1, dataClientManager.getUserLocal().getNbPlayed());
         Assert.assertEquals(0, dataClientManager.getUserLocal().getNbLost());
-        
+
     }
 
 }

@@ -2,11 +2,8 @@ package com.utc.api13.client.ihm;
 
 import java.awt.Image;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -14,7 +11,6 @@ import javax.swing.ImageIcon;
 
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.controllers.AnswerPropositionController;
-import com.utc.api13.client.ihm.controllers.ConfirmationController;
 import com.utc.api13.client.ihm.controllers.ErrorController;
 import com.utc.api13.client.ihm.controllers.GiveUpPopUpController;
 import com.utc.api13.client.ihm.controllers.IHMGamePageController;
@@ -25,7 +21,6 @@ import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
 
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,7 +28,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class ClientIHMToDataImpl implements IClientIHMToData {
 
@@ -60,15 +54,15 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         });
     }
 
-    
     @Override
     public void otherPlayerLeaving() {
         // TODO Auto-generated method stub
-       
+
         List<Object> users = Arrays.asList(myIHMManager.getIClientDataToIHM().getUserList().toArray());
         PublicUserEntity user = (PublicUserEntity) users.stream()
-                .filter(u -> ((PublicUserEntity) u).getId().equals(myIHMManager.getUisender())).findFirst().orElse(null);
-        
+                .filter(u -> ((PublicUserEntity) u).getId().equals(myIHMManager.getUisender())).findFirst()
+                .orElse(null);
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -79,12 +73,11 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 try {
                     root = (Pane) fxmlLoader.load();
                     GiveUpPopUpController controller = fxmlLoader.getController();
-                    controller.setMainApp(myIHMManager.getMainApp(),user !=null? user.getLogin() : null);
+                    controller.setMainApp(myIHMManager.getMainApp(), user != null ? user.getLogin() : null);
                     controller.setControllerContext(myIHMManager);
-                    
+
                     myIHMManager.setCurrentStage(stage);
-                  
-                    
+
                     stage.setScene(new Scene(root));
                     stage.setTitle("asking for leave!");
                     stage.initModality(Modality.APPLICATION_MODAL);
@@ -92,7 +85,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                
+
             }
         });
     }
@@ -168,9 +161,8 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                                                   // that function
         // TODO Auto-generated method stub
         Platform.runLater(new Runnable() {
-            
 
-			@Override
+            @Override
             public void run() {
 
                 Stage stage;
@@ -181,7 +173,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     root = (Pane) fxmlLoader.load();
                     controller = fxmlLoader.getController();
                     controller.setControllerContext(myIHMManager);
-                  
+
                     controller.setMainApp(myIHMManager.getMainApp());
                     stage.setScene(new Scene(root));
                     stage.setTitle("Game!");
@@ -195,37 +187,38 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         });
     }
 
-    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, APieceEntity piece, GameEntity game) {
+    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, APieceEntity piece,
+            GameEntity game) {
         // TODO Auto-generated method stub
         String dossierIcone = "/pictures/pieces/";
         // récupérer chessboardsquares
         Case[][] chessBoardSquares = controller.getCb().getChessBoardSquares();
-        
+
         // effacer la pièce de l'ancienne case
-        chessBoardSquares[line_from-1][col_from-1].setIcon(null);
+        chessBoardSquares[line_from - 1][col_from - 1].setIcon(null);
         // trouver le type de piece
-        String pieceType="";
-        if(piece.toString() == "Rook") {
-        	pieceType="T";
-        } else if (piece.toString() == "Knight" )	{
-        	pieceType="C";
+        String pieceType = "";
+        if (piece.toString() == "Rook") {
+            pieceType = "T";
+        } else if (piece.toString() == "Knight") {
+            pieceType = "C";
         } else if (piece.toString() == "Queen") {
-        	pieceType="D";
-        } else if (piece.toString() =="King") {
-        	pieceType="R";
+            pieceType = "D";
+        } else if (piece.toString() == "King") {
+            pieceType = "R";
         } else if (piece.toString() == "Pawn") {
-        	pieceType="P";
-        } else if (piece.toString() =="Bishop" ) {
-        	pieceType="F";
+            pieceType = "P";
+        } else if (piece.toString() == "Bishop") {
+            pieceType = "F";
         }
         // afficher la pièce sur la nouvelle case
         try {
             if (game.getCurrentPlayer() == game.getBlackPlayer()) {
                 Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "B.gif"));
-                chessBoardSquares[line_to-1][col_to-1].setIcon(new ImageIcon(img));
+                chessBoardSquares[line_to - 1][col_to - 1].setIcon(new ImageIcon(img));
             } else {
                 Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "N.gif"));
-                chessBoardSquares[line_to-1][col_to-1].setIcon(new ImageIcon(img));
+                chessBoardSquares[line_to - 1][col_to - 1].setIcon(new ImageIcon(img));
             }
 
         } catch (IOException e) {
@@ -282,43 +275,43 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
             }
         });
     }
+
     public void activateCases(PublicUserEntity currentUser, GameStatusEnum status) {
-    	// en fonction du joueur courant 
-    	GameEntity gameEntity = myIHMManager.getIClientDataToIHM().getCurrentGame();
-    	Case[][] cb = controller.getCb().getChessBoardSquares();
-    	if(status != GameStatusEnum.CHECKMATE) {
-    		if (myIHMManager.getIClientDataToIHM().getLocalUser().getId().equals(currentUser.getId())) {
-    			for(Case i[] : cb) {
-        			for(Case j : i){
-        				j.setEnabled(true);
-        			}
-    			}
-    		}
-    	} 
+        // en fonction du joueur courant
+        GameEntity gameEntity = myIHMManager.getIClientDataToIHM().getCurrentGame();
+        Case[][] cb = controller.getCb().getChessBoardSquares();
+        if (status != GameStatusEnum.CHECKMATE) {
+            if (myIHMManager.getIClientDataToIHM().getLocalUser().getId().equals(currentUser.getId())) {
+                for (Case i[] : cb) {
+                    for (Case j : i) {
+                        j.setEnabled(true);
+                    }
+                }
+            }
+        }
     }
 
     @Override
     public void closeGameScreen(boolean answer) {
         // TODO Auto-generated method stub
-        
-       
+
         Platform.runLater(new Runnable() {
             @Override
-            public void run() { 
-                
-         
-            if (answer)
-                myIHMManager.getMainApp().displayConfirmationPopup( "The other player has accepted your demand Therefore there is no winner in this Game");
-            else
-                myIHMManager.getMainApp().displayErrorPopup("the answer of the other player was NO .Therefore you lose the Game");
-                         
-            myIHMManager.getCurrentGameStage().close();
-        //    myIHMManager.getCurrentGameStage().hide();
-            
+            public void run() {
+
+                if (answer)
+                    myIHMManager.getMainApp().displayConfirmationPopup(
+                            "The other player has accepted your demand Therefore there is no winner in this Game");
+                else
+                    myIHMManager.getMainApp()
+                            .displayErrorPopup("the answer of the other player was NO .Therefore you lose the Game");
+
+                myIHMManager.getCurrentGameStage().close();
+                // myIHMManager.getCurrentGameStage().hide();
+
             }
-            
-      });
+
+        });
     }
-   
-  
+
 }

@@ -92,7 +92,6 @@ public interface IClientDataToCom {
 
     public void notifyRejection(final UUID uidSender, String REJECTION_MESSAGE);
 
-    
     /**
      * La GameEntity est créé sur le serveur.<br/>
      * Cette méthode initialise l'instance de la GameEntity sur le client
@@ -172,6 +171,7 @@ public interface IClientDataToCom {
 
     /**
      * Com can use this method to set the next turn
+     * 
      * @author ulyss_000
      * @param isFinished
      * @param nextPlayer

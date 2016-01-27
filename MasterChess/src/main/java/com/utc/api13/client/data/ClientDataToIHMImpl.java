@@ -152,39 +152,40 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         Assert.notNull(dataClientManager.getUserLocal(),
                 "[ClientDataToIHMImpl][requestPlayerForLeaving] UserLocal shouldn't be null");
         // TODO: le second paramètre, c'est fait pour quoi?
-        
-        GameEntity game=dataClientManager.getCurrentGame();
-    //    UUID receiver=  game.getWhitePlayer().getId().equals(dataClientManager.getUserLocal().getId())? game.getBlackPlayer().getId():game.getWhitePlayer().getId();
-      
+
+        GameEntity game = dataClientManager.getCurrentGame();
+        // UUID receiver=
+        // game.getWhitePlayer().getId().equals(dataClientManager.getUserLocal().getId())?
+        // game.getBlackPlayer().getId():game.getWhitePlayer().getId();
+
         dataClientManager.getIClientComToData().requestPlayerForLeaving(dataClientManager.getUserLocal().getId(),
-                game.getWhitePlayer().getId().equals(dataClientManager.getUserLocal().getId())? 
-                        game.getBlackPlayer().getId():game.getWhitePlayer().getId());
+                game.getWhitePlayer().getId().equals(dataClientManager.getUserLocal().getId())
+                        ? game.getBlackPlayer().getId() : game.getWhitePlayer().getId());
 
     }
 
     @Override
     public void sendAnswerForLeaving(boolean answer) {
-        if(!answer){
-           
-            dataClientManager.getUserLocal().setNbWon(
-                   dataClientManager.getUserLocal().getNbWon() +1
-                   );
-           
+        if (!answer) {
+
+            dataClientManager.getUserLocal().setNbWon(dataClientManager.getUserLocal().getNbWon() + 1);
+
         }
-        
+
         dataClientManager.getUserLocal().getSavedGames().add(getCurrentGame());
         // if the local user said yes no it's a win for him
         dataClientManager.getUserLocal().setNbPlayed(getLocalUser().getNbPlayed() + 1);
-        
-       GameEntity game=getCurrentGame();
-       UUID otherPlayer=dataClientManager.getUserLocal().getId().equals(game.getBlackPlayer().getId())?game.getWhitePlayer().getId():game.getBlackPlayer().getId();
-        dataClientManager.getIClientComToData().endGameByLeaving(dataClientManager.getUserLocal().getId(),otherPlayer, getCurrentGame().getId(),answer);
+
+        GameEntity game = getCurrentGame();
+        UUID otherPlayer = dataClientManager.getUserLocal().getId().equals(game.getBlackPlayer().getId())
+                ? game.getWhitePlayer().getId() : game.getBlackPlayer().getId();
+        dataClientManager.getIClientComToData().endGameByLeaving(dataClientManager.getUserLocal().getId(), otherPlayer,
+                getCurrentGame().getId(), answer);
         dataClientManager.setCurrentGame(null);
         dataClientManager.getIClientIHMToData().closeGameScreen(answer);
-        
+
     }
 
-   
     @Override
     public void updateProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException {
         Assert.notNull(user, "[ClientDataToIHMImpl][updateProfile] user shouldn't be null");
@@ -337,14 +338,15 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public List<PositionEntity> getAvailablesMoves(int line, int col) {
         PositionEntity myposition = new PositionEntity(line, col);
         APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(myposition);
-        //On vérifie que la pièce existe et qu'elle est bien de la couleur du joueur courant :
-        if(piece != null){
-        	if(piece.getColor().equals(dataClientManager.getCurrentGame().getCurrentPlayerColor())){
-            	return piece.generateAvailableMoves(dataClientManager.getCurrentGame());
-        	}
+        // On vérifie que la pièce existe et qu'elle est bien de la couleur du
+        // joueur courant :
+        if (piece != null) {
+            if (piece.getColor().equals(dataClientManager.getCurrentGame().getCurrentPlayerColor())) {
+                return piece.generateAvailableMoves(dataClientManager.getCurrentGame());
+            }
         }
         return new ArrayList<PositionEntity>();
-        
+
     }
 
     @Override
@@ -362,8 +364,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         APieceEntity piece = dataClientManager.getCurrentGame().getPieceFromPosition(fromposition);
 
         // On instancie un move entity
-        MoveEntity move = new MoveEntity(new Date(), fromposition, toposition, piece, currentplayer, dataClientManager.getCurrentGame().getId());
- 
+        MoveEntity move = new MoveEntity(new Date(), fromposition, toposition, piece, currentplayer,
+                dataClientManager.getCurrentGame().getId());
 
         // On passe le moveEntity à com
         dataClientManager.getIClientComToData().validateMove(currentplayer, move);

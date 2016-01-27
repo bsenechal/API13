@@ -59,7 +59,7 @@ public class ModifyProfileController {
     AnchorPane createProfileAnchorPane;
 
     @SuppressWarnings("restriction")
-	@FXML
+    @FXML
     public void onSaveProfileClicked() throws IOException {
 
         String login = loginTextView.getText();
@@ -167,7 +167,7 @@ public class ModifyProfileController {
         this.passwordTextView.setText(u.getPassword());
         this.firstNameTextView.setText(u.getFirstName());
         this.lastNameTextView.setText(u.getLastName());
-        this.userLabelToUpdateWelcomePage= userLabel;
+        this.userLabelToUpdateWelcomePage = userLabel;
 
         Optional.ofNullable(u.getImagePath()).ifPresent(link -> changeProfilePicture.setImage(new Image(link)));
     }

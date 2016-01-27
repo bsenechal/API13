@@ -55,9 +55,9 @@ public class RequestAnswerMessage extends Message {
                     observable, timer, timerInt);
             // On retourne l'info a l'utilisateur
             comServerManager.sendMessage(ctx.channel(), this);
-            //On recupere la liste des parties mise à jour
+            // On recupere la liste des parties mise à jour
             List<GameEntity> games = comServerManager.getIServerDataToCom().getAllGames();
-            //On broadcast la nouvelle liste de partie
+            // On broadcast la nouvelle liste de partie
             comServerManager.broadcastMessage(new AllGameMessage(sender, receiver, games));
         }
         // On envoie aussi le message a l'autre joueur

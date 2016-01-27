@@ -31,15 +31,14 @@ import com.utc.api13.commun.entities.pieces.KnightEntity;
 import com.utc.api13.commun.entities.pieces.PawnEntity;
 import com.utc.api13.commun.entities.pieces.QueenEntity;
 import com.utc.api13.commun.entities.pieces.RookEntity;
-import com.utc.api13.commun.enumerations.GameStatusEnum;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
 public class ChessBoardNode {
-    private IClientDataToIHM myIClientToIHM ;
-   
+    private IClientDataToIHM myIClientToIHM;
+
     private GameEntity myGame;
-	
-	private IHMManager myIhmManager;
+
+    private IHMManager myIhmManager;
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JPanel chessBoard;
     private static final String COLS = "ABCDEFGH";
@@ -79,15 +78,15 @@ public class ChessBoardNode {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
                 Case b = new Case(ii, jj);
                 b.setEnabled(false);
-                
+
                 if ((jj % 2 == 1 && ii % 2 == 1) || (jj % 2 == 0 && ii % 2 == 0)) {
-                	b.setBackground(Color.WHITE);
-                    b.setColor(Color.WHITE);               	
+                    b.setBackground(Color.WHITE);
+                    b.setColor(Color.WHITE);
                 } else {
-                	b.setBackground(Color.GRAY);
-                    b.setColor(Color.GRAY);              	
+                    b.setBackground(Color.GRAY);
+                    b.setColor(Color.GRAY);
                 }
-                
+
                 b.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         Case movePosition = (Case) e.getSource();
@@ -95,76 +94,79 @@ public class ChessBoardNode {
                             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
                                 if (movePosition == chessBoardSquares[ii][jj]) {
 
-                                    movePosition.setLine(ii+1);
-                                    movePosition.setColumn(jj+1);
+                                    movePosition.setLine(ii + 1);
+                                    movePosition.setColumn(jj + 1);
                                 }
                             }
                         }
                         if (selection == 1) {
                             firstPosition.setPositionX(movePosition.getLine());
                             firstPosition.setPositionY(movePosition.getColumn());
-                            if(positionList!=null){
-                            	positionList.clear();
-                            	positionList=null;
+                            if (positionList != null) {
+                                positionList.clear();
+                                positionList = null;
                             }
-                            positionList = myIClientToIHM
-                                    .getAvailablesMoves(firstPosition.getPositionX(), firstPosition.getPositionY());
+                            positionList = myIClientToIHM.getAvailablesMoves(firstPosition.getPositionX(),
+                                    firstPosition.getPositionY());
                             if (!positionList.isEmpty()) {
                                 selection = 2;
                                 // désactiver toutes les cases
                                 for (int ii = 0; ii < chessBoardSquares.length; ii++) {
                                     for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
-                                    	
+
                                         chessBoardSquares[ii][jj].setEnabled(false);
                                     }
                                 }
                                 // passer les cases en surbrillance et activer
-                                // uniquement celles-ci et la position de depart !
-                                chessBoardSquares[firstPosition.getPositionX()-1][firstPosition.getPositionY()-1]
+                                // uniquement celles-ci et la position de depart
+                                // !
+                                chessBoardSquares[firstPosition.getPositionX() - 1][firstPosition.getPositionY() - 1]
                                         .setBorder(new LineBorder(Color.GREEN));
-                                chessBoardSquares[firstPosition.getPositionX()-1][firstPosition.getPositionY()-1].setEnabled(true);
+                                chessBoardSquares[firstPosition.getPositionX() - 1][firstPosition.getPositionY() - 1]
+                                        .setEnabled(true);
                                 for (int i = 0; i < positionList.size(); i++) {
-                                    chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
-                                            .getPositionY()-1].setEnabled(true);
-      
-                                    chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
-                                            .getPositionY()-1].setBackground(Color.GREEN);
+                                    chessBoardSquares[positionList.get(i).getPositionX() - 1][positionList.get(i)
+                                            .getPositionY() - 1].setEnabled(true);
+
+                                    chessBoardSquares[positionList.get(i).getPositionX() - 1][positionList.get(i)
+                                            .getPositionY() - 1].setBackground(Color.GREEN);
                                 }
-                                
+
                             }
                         }
 
                         else if (selection == 2) {
                             if ((movePosition.getLine() == firstPosition.getPositionX())
-                                    && (movePosition.getColumn() == firstPosition.getPositionY())) {                      
-                                activateCases(myGame.getCurrentPlayer());              
+                                    && (movePosition.getColumn() == firstPosition.getPositionY())) {
+                                activateCases(myGame.getCurrentPlayer());
                             } else {
                                 myIClientToIHM.playMove(firstPosition.getPositionX(), firstPosition.getPositionY(),
                                         movePosition.getLine(), movePosition.getColumn());
                                 // tout rendre unclickable
-                                for(Case i[] : chessBoardSquares) {
-                        			for(Case j : i){
-                        				j.setEnabled(false);
-                        			}
-                    			}                               
-                            }                           
-                            selection = 1;
-                          //décolorer les cases
-                            for (Case[] i : chessBoardSquares) {
-                            	for(Case j : i) {
-                            			j.setBackground(j.getColor());                                		 
-                            	}
+                                for (Case i[] : chessBoardSquares) {
+                                    for (Case j : i) {
+                                        j.setEnabled(false);
+                                    }
+                                }
                             }
-                            chessBoardSquares[firstPosition.getPositionX()-1][firstPosition.getPositionY()-1].setBorder(null);
+                            selection = 1;
+                            // décolorer les cases
+                            for (Case[] i : chessBoardSquares) {
+                                for (Case j : i) {
+                                    j.setBackground(j.getColor());
+                                }
+                            }
+                            chessBoardSquares[firstPosition.getPositionX() - 1][firstPosition.getPositionY() - 1]
+                                    .setBorder(null);
                         }
-                    }               
+                    }
                 });
                 b.setMargin(buttonMargin);
                 chessBoardSquares[jj][ii] = b;
 
             }
         }
-        
+
         activateCases(myGame.getCurrentPlayer());
 
         // fill the chess board
@@ -252,32 +254,31 @@ public class ChessBoardNode {
     public final Case[][] getChessBoardSquares() {
         return this.chessBoardSquares;
     }
-    
+
     public IClientDataToIHM getMyIClientToIHM() {
-		return myIClientToIHM;
-	}
-
-	public void setMyIClientToIHM(IClientDataToIHM myIClientToIHM) {
-		this.myIClientToIHM = myIClientToIHM;
-	}
-	public GameEntity getMyGame() {
-		return myGame;
-	}
-
-	public void setMyGame(GameEntity myGame) {
-		this.myGame = myGame;
-	}
-	
-	public void activateCases(PublicUserEntity currentUser) {
-    	// en fonction du joueur courant 
-    	if (myIClientToIHM.getLocalUser().getId().equals(currentUser.getId())) {
-    			for(Case i[] : chessBoardSquares) {
-        			for(Case j : i){
-        				j.setEnabled(true);
-        			}
-    			}
-    		}
-    	} 
+        return myIClientToIHM;
     }
 
+    public void setMyIClientToIHM(IClientDataToIHM myIClientToIHM) {
+        this.myIClientToIHM = myIClientToIHM;
+    }
 
+    public GameEntity getMyGame() {
+        return myGame;
+    }
+
+    public void setMyGame(GameEntity myGame) {
+        this.myGame = myGame;
+    }
+
+    public void activateCases(PublicUserEntity currentUser) {
+        // en fonction du joueur courant
+        if (myIClientToIHM.getLocalUser().getId().equals(currentUser.getId())) {
+            for (Case i[] : chessBoardSquares) {
+                for (Case j : i) {
+                    j.setEnabled(true);
+                }
+            }
+        }
+    }
+}

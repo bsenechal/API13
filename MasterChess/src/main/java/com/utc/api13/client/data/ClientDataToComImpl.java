@@ -116,26 +116,26 @@ public class ClientDataToComImpl implements IClientDataToCom {
      */
     @Override
     public void displayResult(UUID idPlayer, MoveEntity move) {
-        int fromLine=move.getFromPosition().getPositionX();
-        int fromCol=move.getFromPosition().getPositionY();
-        int toLine=move.getToPosition().getPositionX();
-        int toCol=move.getToPosition().getPositionY();
-        APieceEntity piece=move.getPiece();
-        GameEntity thisgame=instanceDataClientManager.getCurrentGame();
-        
+        int fromLine = move.getFromPosition().getPositionX();
+        int fromCol = move.getFromPosition().getPositionY();
+        int toLine = move.getToPosition().getPositionX();
+        int toCol = move.getToPosition().getPositionY();
+        APieceEntity piece = move.getPiece();
+        GameEntity thisgame = instanceDataClientManager.getCurrentGame();
+
         Assert.notNull(instanceDataClientManager.getCurrentGame(),
                 "[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
-      
-        //delete the real destination piece
-        APieceEntity tmp = thisgame.getPieceFromPosition(move.getToPosition());
-        if(tmp != null)
-        {
-        	thisgame.removePiece(tmp);
-        }
-        thisgame.movePiece(move);        
 
-        instanceDataClientManager.getIClientIHMToData().refreshChessBoard(fromLine, fromCol, toLine, toCol, piece,thisgame);
-         //#Data l'erreur est normale, on attend que IHM mette à jour sa méthode
+        // delete the real destination piece
+        APieceEntity tmp = thisgame.getPieceFromPosition(move.getToPosition());
+        if (tmp != null) {
+            thisgame.removePiece(tmp);
+        }
+        thisgame.movePiece(move);
+
+        instanceDataClientManager.getIClientIHMToData().refreshChessBoard(fromLine, fromCol, toLine, toCol, piece,
+                thisgame);
+        // #Data l'erreur est normale, on attend que IHM mette à jour sa méthode
 
     }
 
@@ -146,43 +146,46 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     @Override
     public void sendAnswerForLeaving(boolean answer) {
-        
+
         // Add game in local user saved game (in case the local user wants to
         // save the game after ending)
         instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
         // Modify the played games
         instanceDataClientManager.getUserLocal()
                 .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
-        
+
         instanceDataClientManager.setCurrentGame(null);
-        
-        if(!answer){
-            
-            instanceDataClientManager.getUserLocal().setNbWon(
-                    instanceDataClientManager.getUserLocal().getNbLost() +1
-                   );
+
+        if (!answer) {
+
+            instanceDataClientManager.getUserLocal().setNbWon(instanceDataClientManager.getUserLocal().getNbLost() + 1);
         }
-        
-//        if (answer){
-//           
-//            
-//            // Display answer to local user
-//            UUID senderId = instanceDataClientManager.getUserLocal().getId()
-//                    .equals(instanceDataClientManager.getCurrentGame().getBlackPlayer().getId())
-//                            ? instanceDataClientManager.getCurrentGame().getWhitePlayer().getId()
-//                            : instanceDataClientManager.getCurrentGame().getBlackPlayer().getId();
-//            
-//            
-//            instanceDataClientManager.getIClientIHMToData().displayAnswer(senderId, answer,
-//                    "The player has quit the game ");
-//            instanceDataClientManager.getIClientIHMToData().displayAnswer(instanceDataClientManager.getUserLocal().getId(), answer,
-//                    "You have quit the game ");
-//         // End the local game
-//            instanceDataClientManager.setCurrentGame(null);
-//        }else{
-//            instanceDataClientManager.getIClientIHMToData().displayAnswer(instanceDataClientManager.getUserLocal().getId(), answer,
-//                    "Your opponent doesn't want to quit the game, you'll keep playing. Surrend it if you want, but your stats will change ! ");
-//        }
+
+        // if (answer){
+        //
+        //
+        // // Display answer to local user
+        // UUID senderId = instanceDataClientManager.getUserLocal().getId()
+        // .equals(instanceDataClientManager.getCurrentGame().getBlackPlayer().getId())
+        // ? instanceDataClientManager.getCurrentGame().getWhitePlayer().getId()
+        // :
+        // instanceDataClientManager.getCurrentGame().getBlackPlayer().getId();
+        //
+        //
+        // instanceDataClientManager.getIClientIHMToData().displayAnswer(senderId,
+        // answer,
+        // "The player has quit the game ");
+        // instanceDataClientManager.getIClientIHMToData().displayAnswer(instanceDataClientManager.getUserLocal().getId(),
+        // answer,
+        // "You have quit the game ");
+        // // End the local game
+        // instanceDataClientManager.setCurrentGame(null);
+        // }else{
+        // instanceDataClientManager.getIClientIHMToData().displayAnswer(instanceDataClientManager.getUserLocal().getId(),
+        // answer,
+        // "Your opponent doesn't want to quit the game, you'll keep playing.
+        // Surrend it if you want, but your stats will change ! ");
+        // }
     }
 
     @Override
@@ -202,15 +205,14 @@ public class ClientDataToComImpl implements IClientDataToCom {
     @Override
     public void notifyRejection(UUID uidSender, String REJECTION_MESSAGE) {
         instanceDataClientManager.getIClientIHMToData().displayAnswer(uidSender, false, REJECTION_MESSAGE);
-        //Appelle la fonction displayAnswer qui n'est censé être utilisée que lorsque le joueur refuse la partie
+        // Appelle la fonction displayAnswer qui n'est censé être utilisée que
+        // lorsque le joueur refuse la partie
     }
 
     public void notify(String message) {
-        //Surement à virer
+        // Surement à virer
     }
-    
-    
-    
+
     @Override
     public void initGame(GameEntity game) {
         // Set the current game
@@ -280,12 +282,12 @@ public class ClientDataToComImpl implements IClientDataToCom {
         // Modify the played games
         instanceDataClientManager.getUserLocal()
                 .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
-        //increase the amount of won games
-        instanceDataClientManager.getUserLocal().setNbWon(instanceDataClientManager.getUserLocal().getNbWon() +1);
-        //delete the current game 
+        // increase the amount of won games
+        instanceDataClientManager.getUserLocal().setNbWon(instanceDataClientManager.getUserLocal().getNbWon() + 1);
+        // delete the current game
         instanceDataClientManager.setCurrentGame(null);
-        //TODO uncomment when IHM function will be done
-        //instanceDataClientManager.getIClientIHMToData().victoryBySurrend();
+        // TODO uncomment when IHM function will be done
+        // instanceDataClientManager.getIClientIHMToData().victoryBySurrend();
     }
 
     /*
@@ -300,12 +302,12 @@ public class ClientDataToComImpl implements IClientDataToCom {
         // Modify the played games
         instanceDataClientManager.getUserLocal()
                 .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
-        //increase the amount of lost games
-        instanceDataClientManager.getUserLocal().setNbLost(instanceDataClientManager.getUserLocal().getNbLost() +1);
-        //delete the current game 
+        // increase the amount of lost games
+        instanceDataClientManager.getUserLocal().setNbLost(instanceDataClientManager.getUserLocal().getNbLost() + 1);
+        // delete the current game
         instanceDataClientManager.setCurrentGame(null);
-        //TODO uncomment when IHM function will be done
-        //instanceDataClientManager.getIClientIHMToData().endGameBySurrend();
+        // TODO uncomment when IHM function will be done
+        // instanceDataClientManager.getIClientIHMToData().endGameBySurrend();
     }
 
     @Override
@@ -328,49 +330,48 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     @Override
     public void nextTurn(final GameStatusEnum status, final UUID nextPlayer) {
-		// Ulysse : lourd : remplacé par switchCurrentUser
-		//        if (GameStatusEnum.CONTINUE.equals(status)) {
-		//            instanceDataClientManager.getCurrentGame().setCurrentPlayer(
-		//                    (instanceDataClientManager.getCurrentGame().getBlackPlayer().getId().equals(nextPlayer))
-		//                            ? instanceDataClientManager.getCurrentGame().getBlackPlayer()
-		//                            : instanceDataClientManager.getCurrentGame().getWhitePlayer());
-		//        }
-		//        Assert.notNull(instanceDataClientManager.getCurrentGames(),
-		//                "[ClientDataToComImpl][setFinishedStatus] currentGames shouldn't be null");
-    	GameEntity game = instanceDataClientManager.getCurrentGame();
-    	
-    	game.switchCurrentUser();
+        // Ulysse : lourd : remplacé par switchCurrentUser
+        // if (GameStatusEnum.CONTINUE.equals(status)) {
+        // instanceDataClientManager.getCurrentGame().setCurrentPlayer(
+        // (instanceDataClientManager.getCurrentGame().getBlackPlayer().getId().equals(nextPlayer))
+        // ? instanceDataClientManager.getCurrentGame().getBlackPlayer()
+        // : instanceDataClientManager.getCurrentGame().getWhitePlayer());
+        // }
+        // Assert.notNull(instanceDataClientManager.getCurrentGames(),
+        // "[ClientDataToComImpl][setFinishedStatus] currentGames shouldn't be
+        // null");
+        GameEntity game = instanceDataClientManager.getCurrentGame();
+
+        game.switchCurrentUser();
         // set the game status :
-    	game.setIsFinished(status);
-        
-        //alert IHM:
+        game.setIsFinished(status);
+
+        // alert IHM:
         instanceDataClientManager.getIClientIHMToData().activateCases(game.getCurrentPlayer(), status);
-        
-        //TODO Ulysse : virer le switch ?
-        
+
+        // TODO Ulysse : virer le switch ?
+
         PrivateUserEntity localUser = instanceDataClientManager.getUserLocal();
         switch (status) {
 
-//        case CHECK:
-//            break;
-        case CHECKMATE :
-        	if(localUser.getId().equals(game.getCurrentPlayer().getId())){
-        		localUser.setNbLost(localUser.getNbLost()+1);
-        	}
-        	else
-        	{
-        		localUser.setNbWon(localUser.getNbWon()+1);
-        	}
+        // case CHECK:
+        // break;
+        case CHECKMATE:
+            if (localUser.getId().equals(game.getCurrentPlayer().getId())) {
+                localUser.setNbLost(localUser.getNbLost() + 1);
+            } else {
+                localUser.setNbWon(localUser.getNbWon() + 1);
+            }
         case DRAW:
-        	localUser.setNbPlayed(localUser.getNbPlayed()+1);
-        	instanceDataClientManager.setCurrentGame(null);
+            localUser.setNbPlayed(localUser.getNbPlayed() + 1);
+            instanceDataClientManager.setCurrentGame(null);
             break;
 
         default:
-        	//CHECK & CONTINUE
+            // CHECK & CONTINUE
             break;
 
         }
-                
+
     }
 }

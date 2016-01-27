@@ -31,7 +31,7 @@ public class MyInfoPopUpController {
     private IClientDataToIHM myIClientToIHM;
     // private boolean newProfile = false;
     private Stage currentStage;
-    private  Text userLabelToUpdateWelcomePage;
+    private Text userLabelToUpdateWelcomePage;
 
     /*
      * public boolean isNewProfile() { return newProfile; }

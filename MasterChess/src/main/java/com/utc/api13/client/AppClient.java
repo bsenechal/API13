@@ -24,12 +24,10 @@ import javafx.stage.Stage;
 public class AppClient extends Application {
     public static Stage stage;
     private Stage currentStage;
-    
-    private  ComClientManager comClientManager;
-    private  IHMManager ihmManager;
-    private  boolean succeed=true;
 
- 
+    private ComClientManager comClientManager;
+    private IHMManager ihmManager;
+    private boolean succeed = true;
 
     public ComClientManager getComClientManager() {
         return comClientManager;
@@ -48,13 +46,13 @@ public class AppClient extends Application {
     }
 
     @SuppressWarnings("restriction")
-	@Override
+    @Override
     public void start(Stage stage) throws Exception {
-        
+
         /**
          * JAVAFX STAGE <<<<<<<<<<<<<<<<<<<<<<<
          */
-         ihmManager = new IHMManager();
+        ihmManager = new IHMManager();
         comClientManager = new ComClientManager();
         ihmManager.setMainApp(this);
 
@@ -64,8 +62,7 @@ public class AppClient extends Application {
 
         ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
         comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
-        
-        
+
         this.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
         Pane root = (Pane) fxmlLoader.load();
@@ -88,8 +85,6 @@ public class AppClient extends Application {
          * MAIN <<<<<<<<<<<<<<<<<<<<<<<
          */
 
-       
-    
     }
 
     // private static final Logger LOGGER = Logger.getLogger(AppClient.class);
@@ -114,35 +109,32 @@ public class AppClient extends Application {
         launch(args);
 
     }
-   public void  launchAppCom(String host,int port){
-       
-    //   comClientManager.launchAppCom(host, port);
-       try {
-           comClientManager.launchAppCom(host,port);
-    } catch (Exception e) {
-        // TODO Auto-generated catch block
-        succeed=false;
-        displayErrorPopup(" wrong server port and server address");
-        e.printStackTrace();
-        
+
+    public void launchAppCom(String host, int port) {
+
+        // comClientManager.launchAppCom(host, port);
+        try {
+            comClientManager.launchAppCom(host, port);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            succeed = false;
+            displayErrorPopup(" wrong server port and server address");
+            e.printStackTrace();
+
+        }
+        /**
+         * >>>>>>>>>>>>>>>>>>>>>>>
+         */
+
+        // TODO : Faire une vrai gestion d'erreur
+        // comClientManager.close();
+
     }
-       /**
-        * >>>>>>>>>>>>>>>>>>>>>>>
-        */
-
-
-       // TODO : Faire une vrai gestion d'erreur
-       // comClientManager.close();
-
-   }
-
-   
-
 
     public void displayErrorPopup(String message) {
         // TODO Auto-generated method stub
         Stage stage;
-        Parent root=null;
+        Parent root = null;
         stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         try {
@@ -158,12 +150,13 @@ public class AppClient extends Application {
         stage.setTitle("error");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
-        
+
     }
-    public void displayConfirmationPopup(String message){
-        
+
+    public void displayConfirmationPopup(String message) {
+
         Stage stage;
-        Parent root=null;
+        Parent root = null;
         stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
         try {
@@ -177,13 +170,12 @@ public class AppClient extends Application {
         controller.setMainApp(this, message);
         stage.setScene(new Scene(root));
         stage.setTitle("confirmation");
-       
-     //   myIHMManager.getCurrentStage().close(); 
-//        mainApp.getCurrentStage().close();
-//        mainApp.setCurrentStage(stage);
+
+        // myIHMManager.getCurrentStage().close();
+        // mainApp.getCurrentStage().close();
+        // mainApp.setCurrentStage(stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
-       
-        
+
     }
 }

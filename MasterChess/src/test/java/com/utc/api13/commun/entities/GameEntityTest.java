@@ -68,19 +68,17 @@ public class GameEntityTest {
         piece = game.getPieceFromPosition(null);
         Assert.assertNull("piece should be null", piece);
     }
-    
-    
+
     /**
      * Test method for
-     * {@link com.utc.api13.commun.entities.GameEntity#isFinished()}
-     * .
+     * {@link com.utc.api13.commun.entities.GameEntity#isFinished()} .
      */
     @Test
     public void testIsFinished() {
 
         // test du statut initial du game :
-    	Assert.assertEquals("Game should continue", game.isFinished(), GameStatusEnum.CONTINUE);
-    	
+        Assert.assertEquals("Game should continue", game.isFinished(), GameStatusEnum.CONTINUE);
+
         // Suppression des pièces autre que le roi pour tester les déplacement
         // sur un plateau vide
         game.setBlackPieces(new ArrayList<APieceEntity>());
@@ -88,16 +86,16 @@ public class GameEntityTest {
 
         game.setWhitePieces(new ArrayList<APieceEntity>());
         game.getWhitePieces().add(new KingEntity(PieceColorEnum.WHITE));
-        
+
         game.setCurrentPlayer(whitePlayer);
-        
+
         // ajout tour :
         RookEntity rook = new RookEntity(PieceColorEnum.BLACK, 8);
         game.getBlackPieces().add(rook);
         rook.movePiece(new MoveEntity(new Date(), new PositionEntity(8, 8), new PositionEntity(8, 1), rook), game);
-        
+
         // test du statut en echec du game :
-    	Assert.assertEquals("Game should be check", game.isFinished(), GameStatusEnum.CHECK);
+        Assert.assertEquals("Game should be check", game.isFinished(), GameStatusEnum.CHECK);
     }
 
 }

@@ -100,9 +100,9 @@ public class IHMWelcomePageController {
     }
 
     @SuppressWarnings("restriction")
-	@FXML
+    @FXML
     private void onHelpClicked(Event event) throws IOException {
-    	Stage stage;
+        Stage stage;
         Parent root;
         stage = new Stage();
         FXMLLoader fxmlLoader;
@@ -151,7 +151,7 @@ public class IHMWelcomePageController {
             }
             log.error(e.getMessage(), e);
         }
-           
+
         catch (FunctionalException e) {
             try {
                 error("Log out error : Functional Exception");
@@ -159,11 +159,10 @@ public class IHMWelcomePageController {
                 log.error(e1.getMessage(), e1);
             }
             log.error(e.getMessage(), e);
-        }
-        finally {
+        } finally {
             mainApp.getComClientManager().close();
         }
-        
+
         Stage stage;
         Parent root;
         stage = new Stage();
@@ -299,7 +298,7 @@ public class IHMWelcomePageController {
         stage.setTitle("Export success");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
-        
+
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished(event -> stage.close());
         delay.play();

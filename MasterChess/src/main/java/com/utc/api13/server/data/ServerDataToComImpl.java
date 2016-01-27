@@ -86,12 +86,20 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public boolean computerResult(UUID idPlayer, MoveEntity move) {
-//        Assert.notNull(move.getGameID(), "[ServerDataToComImpl][computerResult] gameID shouldn't be null");
-//        Assert.notNull(move.getUserID(), "[ServerDataToComImpl][computerResult] userID shouldn't be null");
-//        Assert.notNull(move.getPiece(), "[ServerDataToComImpl][computerResult] piece shouldn't be null");
-//        Assert.notNull(move.getFromPosition(), "[ServerDataToComImpl][computerResult] fromPosition shouldn't be null");
-//        Assert.notNull(move.getToPosition(), "[ServerDataToComImpl][computerResult] toPosition shouldn't be null");
-//        Assert.notNull(move.getDate(), "[ServerDataToComImpl][computerResult] date shouldn't be null");
+        // Assert.notNull(move.getGameID(),
+        // "[ServerDataToComImpl][computerResult] gameID shouldn't be null");
+        // Assert.notNull(move.getUserID(),
+        // "[ServerDataToComImpl][computerResult] userID shouldn't be null");
+        // Assert.notNull(move.getPiece(),
+        // "[ServerDataToComImpl][computerResult] piece shouldn't be null");
+        // Assert.notNull(move.getFromPosition(),
+        // "[ServerDataToComImpl][computerResult] fromPosition shouldn't be
+        // null");
+        // Assert.notNull(move.getToPosition(),
+        // "[ServerDataToComImpl][computerResult] toPosition shouldn't be
+        // null");
+        // Assert.notNull(move.getDate(), "[ServerDataToComImpl][computerResult]
+        // date shouldn't be null");
 
         GameEntity game = dataServerManager.getGameById(move.getGameID());
         Boolean result = move.getPiece().isMovePossible(move, game);
@@ -111,7 +119,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
                         APieceEntity piece = game.getPieceFromPosition(fromPosition);
 
                         MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
-                        //moveTmp.getPiece().movePiece(moveTmp, game);
+                        // moveTmp.getPiece().movePiece(moveTmp, game);
                         game.movePiece(moveTmp);
 
                     } else if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() - 2) {
@@ -125,7 +133,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
                         APieceEntity piece = game.getPieceFromPosition(fromPosition);
 
                         MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
-                        //moveTmp.getPiece().movePiece(moveTmp, game);
+                        // moveTmp.getPiece().movePiece(moveTmp, game);
                         game.movePiece(moveTmp);
                     }
                 }
@@ -133,9 +141,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
             }
 
             move.getPiece().deleteDestinationPiece(move, game);
-            //move.getPiece().movePiece(move, game);
+            // move.getPiece().movePiece(move, game);
             game.movePiece(move);
-
 
         }
 
@@ -355,7 +362,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
     @Override
     public void endGame(UUID idGame) {
         dataServerManager.getCurrentGames().removeIf(g -> idGame.equals(g.getId()));
-      
+
     }
 
     @Override

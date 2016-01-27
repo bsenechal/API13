@@ -52,7 +52,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void validateMove(UUID idPlayer, MoveEntity move) {
-        comClientManagerInstance.sendMessage(new MoveValidationMessage(idPlayer, new UUID(0,0), move));
+        comClientManagerInstance.sendMessage(new MoveValidationMessage(idPlayer, new UUID(0, 0), move));
         return;
     }
 
@@ -101,12 +101,10 @@ public class ClientComToDataImpl implements IClientComToData {
 
     }
 
-   
-
     @Override
     public void requestPlayerForLeaving(UUID sender, UUID receiver) {
         // TODO Auto-generated method stub
-        comClientManagerInstance.sendMessage(new  RequestPlayerLeaving(sender,receiver));
+        comClientManagerInstance.sendMessage(new RequestPlayerLeaving(sender, receiver));
 
     }
 
@@ -219,8 +217,8 @@ public class ClientComToDataImpl implements IClientComToData {
     }
 
     @Override
-    public void endGameByLeaving(UUID sender,UUID receiver, UUID gameId, boolean answer) {
+    public void endGameByLeaving(UUID sender, UUID receiver, UUID gameId, boolean answer) {
         // TODO Auto-generated method stub
-        comClientManagerInstance.sendMessage(new GameFinishedMessage(sender,receiver, gameId, answer));
+        comClientManagerInstance.sendMessage(new GameFinishedMessage(sender, receiver, gameId, answer));
     }
 }

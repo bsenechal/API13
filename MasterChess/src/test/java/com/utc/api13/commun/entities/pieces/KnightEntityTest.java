@@ -82,12 +82,12 @@ public class KnightEntityTest {
                 availablesPositionsWhiteKnight.isEmpty());
         Assert.assertEquals("availablesPositionsWhiteKnight should be equal to 1",
                 availablesPositionsWhiteKnight.size(), 1);
-        
+
         // Vérification des positions dans un chessboard vide
         game.setBlackPieces(new ArrayList<APieceEntity>());
         game.setWhitePieces(new ArrayList<APieceEntity>());
-        
-        whiteKnight.setPosition(new PositionEntity(4,4));
+
+        whiteKnight.setPosition(new PositionEntity(4, 4));
         availablesPositionsWhiteKnight = whiteKnight.generateAvailableMoves(game);
         game.getWhitePieces().add(whiteKnight);
         Assert.assertFalse("availablesPositionsWhiteKnight shouldn't be empty",
