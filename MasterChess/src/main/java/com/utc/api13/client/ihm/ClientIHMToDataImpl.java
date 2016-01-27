@@ -33,235 +33,235 @@ import javafx.stage.Stage;
 
 public class ClientIHMToDataImpl implements IClientIHMToData {
 
-    private IHMManager myIHMManager;
-    private IClientDataToIHM myIClientDataToIHM;
-    private IHMGamePageController controller;
+	private IHMManager myIHMManager;
+	private IClientDataToIHM myIClientDataToIHM;
+	private IHMGamePageController controller;
 
-    public ClientIHMToDataImpl(IHMManager pIHMManager) {
-        myIHMManager = pIHMManager;
-    }
+	public ClientIHMToDataImpl(IHMManager pIHMManager) {
+		myIHMManager = pIHMManager;
+	}
 
-    @SuppressWarnings("restriction")
-    @Override
-    public void displayProfile(PublicUserEntity u) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                myIHMManager.getProfil().loginProperty().set(u.getLogin());
-                myIHMManager.getProfil().firstNameProperty().set(u.getFirstName());
-                myIHMManager.getProfil().lastNameProperty().set(u.getLastName());
-                myIHMManager.getProfil().statPlayerProperty().setAll(u);
-                myIHMManager.getProfil().userUUID().set(u.getId().toString());
-            }
-        });
-    }
+	@SuppressWarnings("restriction")
+	@Override
+	public void displayProfile(PublicUserEntity u) {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				myIHMManager.getProfil().loginProperty().set(u.getLogin());
+				myIHMManager.getProfil().firstNameProperty().set(u.getFirstName());
+				myIHMManager.getProfil().lastNameProperty().set(u.getLastName());
+				myIHMManager.getProfil().statPlayerProperty().setAll(u);
+				myIHMManager.getProfil().userUUID().set(u.getId().toString());
+			}
+		});
+	}
 
-    
-    @Override
-    public void otherPlayerLeaving() {
-        // TODO Auto-generated method stub
+	@Override
+	public void otherPlayerLeaving() {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
-    @SuppressWarnings("restriction")
-    @Override
-    public void displayProposition(UUID uidSender, boolean observable, boolean chattable, boolean timer,
-            Integer timeInt) {
-        myIHMManager.setUIDistant(uidSender);
+	@SuppressWarnings("restriction")
+	@Override
+	public void displayProposition(UUID uidSender, boolean observable, boolean chattable, boolean timer,
+			Integer timeInt) {
+		myIHMManager.setUIDistant(uidSender);
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
 
-                // PublicUserEntity user=
-                // myIHMManager.getIClientDataToIHM().getUserList().stream()
-                // .filter(u->u.getId().equals(uidSender)).findFirst().orElse(null);
-                List<Object> users = Arrays.asList(myIHMManager.getIClientDataToIHM().getUserList().toArray());
-                PublicUserEntity user = (PublicUserEntity) users.stream()
-                        .filter(u -> ((PublicUserEntity) u).getId().equals(uidSender)).findFirst().orElse(null);
+				// PublicUserEntity user=
+				// myIHMManager.getIClientDataToIHM().getUserList().stream()
+				// .filter(u->u.getId().equals(uidSender)).findFirst().orElse(null);
+				List<Object> users = Arrays.asList(myIHMManager.getIClientDataToIHM().getUserList().toArray());
+				PublicUserEntity user = (PublicUserEntity) users.stream()
+						.filter(u -> ((PublicUserEntity) u).getId().equals(uidSender)).findFirst().orElse(null);
 
-                Stage stage;
-                Parent root = null;
-                String l = "";
-                stage = new Stage();
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AnswerPropositionPopUp.fxml"));
-                try {
-                    root = (Pane) fxmlLoader.load();
-                    AnswerPropositionController controller = fxmlLoader.getController();
-                    controller.setControllerContext(myIHMManager);
-                    myIHMManager.setCurrentStage(stage);
-                    controller.setMainApp(myIHMManager.getMainApp(), user.getLogin(), chattable, timer, observable,
-                            timeInt);
+				Stage stage;
+				Parent root = null;
+				String l = "";
+				stage = new Stage();
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AnswerPropositionPopUp.fxml"));
+				try {
+					root = (Pane) fxmlLoader.load();
+					AnswerPropositionController controller = fxmlLoader.getController();
+					controller.setControllerContext(myIHMManager);
+					myIHMManager.setCurrentStage(stage);
+					controller.setMainApp(myIHMManager.getMainApp(), user.getLogin(), chattable, timer, observable,
+							timeInt);
 
-                    stage.setScene(new Scene(root));
-                    stage.setTitle("You've got a new game proposition!");
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+					stage.setScene(new Scene(root));
+					stage.setTitle("You've got a new game proposition!");
+					stage.initModality(Modality.APPLICATION_MODAL);
+					stage.show();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-    @SuppressWarnings("restriction")
-    @Override
-    public void displayAnswer(UUID uidSender, boolean answer, String message) {
-        // uniquement si réponse négative
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Stage stage;
-                Parent root = null;
-                stage = new Stage();
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
-                try {
-                    root = (Pane) fxmlLoader.load();
-                    ErrorController controller = fxmlLoader.getController();
-                    controller.setControllerContext(myIHMManager);
-                    controller.setMainApp(myIHMManager.getMainApp(), message);
-                    stage.setScene(new Scene(root));
-                    stage.setTitle("Proposition refused");
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+	@SuppressWarnings("restriction")
+	@Override
+	public void displayAnswer(UUID uidSender, boolean answer, String message) {
+		// uniquement si réponse négative
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				Stage stage;
+				Parent root = null;
+				stage = new Stage();
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+				try {
+					root = (Pane) fxmlLoader.load();
+					ErrorController controller = fxmlLoader.getController();
+					controller.setControllerContext(myIHMManager);
+					controller.setMainApp(myIHMManager.getMainApp(), message);
+					stage.setScene(new Scene(root));
+					stage.setTitle("Proposition refused");
+					stage.initModality(Modality.APPLICATION_MODAL);
+					stage.show();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-    @SuppressWarnings("restriction")
-    @Override
-    public void displayChessBoard(GameEntity g) { // si yep data should call
-                                                  // that function
-        // TODO Auto-generated method stub
-        Platform.runLater(new Runnable() {
-            
+	@SuppressWarnings("restriction")
+	@Override
+	public void displayChessBoard(GameEntity g) { // si yep data should call
+													// that function
+		// TODO Auto-generated method stub
+		Platform.runLater(new Runnable() {
 
 			@Override
-            public void run() {
+			public void run() {
 
-                Stage stage;
-                Parent root = null;
-                stage = new Stage();
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/gamePage.fxml"));
-                try {
-                    root = (Pane) fxmlLoader.load();
-                    controller = fxmlLoader.getController();
-                    controller.setControllerContext(myIHMManager);
+				Stage stage;
+				Parent root = null;
+				stage = new Stage();
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/gamePage.fxml"));
+				try {
+					root = (Pane) fxmlLoader.load();
+					controller = fxmlLoader.getController();
+					controller.setControllerContext(myIHMManager);
 
-                    controller.setMainApp(myIHMManager.getMainApp());
-                    stage.setScene(new Scene(root));
-                    stage.setTitle("Game!");
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+					controller.setMainApp(myIHMManager.getMainApp());
+					stage.setScene(new Scene(root));
+					stage.setTitle("Game!");
+					stage.initModality(Modality.APPLICATION_MODAL);
+					stage.show();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, APieceEntity piece, GameEntity game) {
-        // TODO Auto-generated method stub
-        String dossierIcone = "/pictures/pieces/";
-        // récupérer chessboardsquares
-        Case[][] chessBoardSquares = controller.getCb().getChessBoardSquares();
-        
-        // effacer la pièce de l'ancienne case
-        chessBoardSquares[line_from-1][8-col_from].setIcon(null);
-        // trouver le type de piece
-        String pieceType="";
-        if(piece.toString() == "Rook") {
-        	pieceType="T";
-        } else if (piece.toString() == "Knight" )	{
-        	pieceType="C";
-        } else if (piece.toString() == "Queen") {
-        	pieceType="D";
-        } else if (piece.toString() =="King") {
-        	pieceType="R";
-        } else if (piece.toString() == "Pawn") {
-        	pieceType="P";
-        } else if (piece.toString() =="Bishop" ) {
-        	pieceType="F";
-        }
-        // afficher la pièce sur la nouvelle case
-        try {
-            if (!game.getCurrentPlayer().getId().equals(game.getBlackPlayer().getId())) {
-                Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "B.gif"));
-                chessBoardSquares[line_to-1][8-col_to].setIcon(new ImageIcon(img));
-            } else {
-                Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "N.gif"));
-                chessBoardSquares[line_to-1][8-col_to].setIcon(new ImageIcon(img));
-            }
+	public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, APieceEntity piece,
+			GameEntity game) {
+		// TODO Auto-generated method stub
+		String dossierIcone = "/pictures/pieces/";
+		// récupérer chessboardsquares
+		Case[][] chessBoardSquares = controller.getCb().getChessBoardSquares();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+		// effacer la pièce de l'ancienne case
+		chessBoardSquares[line_from - 1][8 - col_from].setIcon(null);
+		// trouver le type de piece
+		String pieceType = "";
+		if (piece.toString() == "Rook") {
+			pieceType = "T";
+		} else if (piece.toString() == "Knight") {
+			pieceType = "C";
+		} else if (piece.toString() == "Queen") {
+			pieceType = "D";
+		} else if (piece.toString() == "King") {
+			pieceType = "R";
+		} else if (piece.toString() == "Pawn") {
+			pieceType = "P";
+		} else if (piece.toString() == "Bishop") {
+			pieceType = "F";
+		}
+		// afficher la pièce sur la nouvelle case
+		try {
+			if (!game.getCurrentPlayer().getId().equals(game.getBlackPlayer().getId())) {
+				Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "B.gif"));
+				chessBoardSquares[line_to - 1][8 - col_to].setIcon(new ImageIcon(img));
+			} else {
+				Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "N.gif"));
+				chessBoardSquares[line_to - 1][8 - col_to].setIcon(new ImageIcon(img));
+			}
 
-    @SuppressWarnings("restriction")
-    @Override
-    public void displayError(String errorMessage) {
-        // TODO Auto-generated method stub
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                myIHMManager.getError().errorMessageProperty().set(errorMessage);
-            }
-        });
-    }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    @SuppressWarnings("restriction")
-    @Override
-    public void displayConfirmation(String confirmationMessage) {
-        // TODO Auto-generated method stub
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                myIHMManager.getConfirmation().confirmationMessageProperty().set(confirmationMessage);
-            }
-        });
-    }
+	@SuppressWarnings("restriction")
+	@Override
+	public void displayError(String errorMessage) {
+		// TODO Auto-generated method stub
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				myIHMManager.getError().errorMessageProperty().set(errorMessage);
+			}
+		});
+	}
 
-    @Override
-    public void refreshObserverList() {
-        // TODO Auto-generated method stub
+	@SuppressWarnings("restriction")
+	@Override
+	public void displayConfirmation(String confirmationMessage) {
+		// TODO Auto-generated method stub
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				myIHMManager.getConfirmation().confirmationMessageProperty().set(confirmationMessage);
+			}
+		});
+	}
 
-    }
+	@Override
+	public void refreshObserverList() {
+		// TODO Auto-generated method stub
 
-    @Override
-    public void displayGameLiveObserver() {
-        // TODO Auto-generated method stub
+	}
 
-    }
+	@Override
+	public void displayGameLiveObserver() {
+		// TODO Auto-generated method stub
 
-    @SuppressWarnings("restriction")
-    @Override
-    public void displayMessage(String newMessage) {
+	}
 
-        // TODO Auto-generated method stub
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                String sms = myIHMManager.getChat().getMessage().get();
-                myIHMManager.getChat().getMessage().set((sms == null ? "" : sms) + "\n" + newMessage);
-            }
-        });
-    }
-    public void activateCases(PublicUserEntity currentUser, GameStatusEnum status) {
-    	// en fonction du joueur courant 
-    	GameEntity gameEntity = myIHMManager.getIClientDataToIHM().getCurrentGame();
-    	Case[][] cb = controller.getCb().getChessBoardSquares();
-    	if(status != GameStatusEnum.CHECKMATE) {
-    		if (myIHMManager.getIClientDataToIHM().getLocalUser().getId().equals(currentUser.getId())) {
-    			for(Case i[] : cb) {
-        			for(Case j : i){
-        				j.setEnabled(true);
-        			}
-    			}
-    		}
-    	} 
-    }
+	@SuppressWarnings("restriction")
+	@Override
+	public void displayMessage(String newMessage) {
+
+		// TODO Auto-generated method stub
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				String sms = myIHMManager.getChat().getMessage().get();
+				myIHMManager.getChat().getMessage().set((sms == null ? "" : sms) + "\n" + newMessage);
+			}
+		});
+	}
+
+	public void activateCases(PublicUserEntity currentUser, GameStatusEnum status) {
+		// en fonction du joueur courant
+		GameEntity gameEntity = myIHMManager.getIClientDataToIHM().getCurrentGame();
+		Case[][] cb = controller.getCb().getChessBoardSquares();
+		if (status != GameStatusEnum.CHECKMATE) {
+			if (myIHMManager.getIClientDataToIHM().getLocalUser().getId().equals(currentUser.getId())) {
+				for (Case i[] : cb) {
+					for (Case j : i) {
+						j.setEnabled(true);
+					}
+				}
+			}
+		}
+	}
 }

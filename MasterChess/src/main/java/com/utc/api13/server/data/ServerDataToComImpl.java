@@ -28,357 +28,368 @@ import com.utc.api13.server.data.interfaces.IServerDataToCom;
  *
  */
 public class ServerDataToComImpl implements IServerDataToCom {
-    private DataServerManager dataServerManager;
+	private DataServerManager dataServerManager;
 
-    /**
-     * @param dataServerManager
-     */
-    public ServerDataToComImpl(DataServerManager dataServerManager) {
-        super();
-        Assert.notNull(dataServerManager, "[ServerDataToComImpl][Constructor] dataServerManager shouldn't be null");
-        this.dataServerManager = dataServerManager;
-    }
+	/**
+	 * @param dataServerManager
+	 */
+	public ServerDataToComImpl(DataServerManager dataServerManager) {
+		super();
+		Assert.notNull(dataServerManager, "[ServerDataToComImpl][Constructor] dataServerManager shouldn't be null");
+		this.dataServerManager = dataServerManager;
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.utc.api13.server.data.interfaces.IServerToComm#getUsers()
-     */
-    @Override
-    public List<PublicUserEntity> getUsers() {
-        return null;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.utc.api13.server.data.interfaces.IServerToComm#getUsers()
+	 */
+	@Override
+	public List<PublicUserEntity> getUsers() {
+		return null;
+	}
 
-    @Override
-    public PublicUserEntity getUserInfo(final UUID idUser) {
-        Assert.notNull(idUser, "[ServerDataToComImpl][getUserInfo] idUser shouldn't be null");
-        Assert.notNull(dataServerManager.getCurrentUsers(),
-                "[ServerDataToComImpl][getUserInfo] currentUsers shouldn't be null");
-        return dataServerManager.getCurrentUsers().stream().filter(u -> u.getId().equals(idUser)).findFirst()
-                .orElse(null);
-    }
+	@Override
+	public PublicUserEntity getUserInfo(final UUID idUser) {
+		Assert.notNull(idUser, "[ServerDataToComImpl][getUserInfo] idUser shouldn't be null");
+		Assert.notNull(dataServerManager.getCurrentUsers(),
+				"[ServerDataToComImpl][getUserInfo] currentUsers shouldn't be null");
+		return dataServerManager.getCurrentUsers().stream().filter(u -> u.getId().equals(idUser)).findFirst()
+				.orElse(null);
+	}
 
-    @Override
-    public List<GameEntity> getAllGames() {
-        return dataServerManager.getCurrentGames();
-    }
+	@Override
+	public List<GameEntity> getAllGames() {
+		return dataServerManager.getCurrentGames();
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.server.data.interfaces.IServerToComm#notifyConnections(com.
-     * utc.api13.commun.entities.UserEntity)
-     */
-    @Override
-    public void notifyConnections(final PublicUserEntity player) {
-        Assert.notNull(dataServerManager.getCurrentUsers(),
-                "[ServerDataToComImpl][notifyConnections] currentUsers shouldn't be null");
-        dataServerManager.getCurrentUsers().add(player);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.utc.api13.server.data.interfaces.IServerToComm#notifyConnections(com.
+	 * utc.api13.commun.entities.UserEntity)
+	 */
+	@Override
+	public void notifyConnections(final PublicUserEntity player) {
+		Assert.notNull(dataServerManager.getCurrentUsers(),
+				"[ServerDataToComImpl][notifyConnections] currentUsers shouldn't be null");
+		dataServerManager.getCurrentUsers().add(player);
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.server.data.interfaces.IServerToComm#computerResult(int,
-     * com.utc.api13.commun.entities.MoveEntity)
-     */
-    @Override
-    public boolean computerResult(UUID idPlayer, MoveEntity move) {
-//        Assert.notNull(move.getGameID(), "[ServerDataToComImpl][computerResult] gameID shouldn't be null");
-//        Assert.notNull(move.getUserID(), "[ServerDataToComImpl][computerResult] userID shouldn't be null");
-//        Assert.notNull(move.getPiece(), "[ServerDataToComImpl][computerResult] piece shouldn't be null");
-//        Assert.notNull(move.getFromPosition(), "[ServerDataToComImpl][computerResult] fromPosition shouldn't be null");
-//        Assert.notNull(move.getToPosition(), "[ServerDataToComImpl][computerResult] toPosition shouldn't be null");
-//        Assert.notNull(move.getDate(), "[ServerDataToComImpl][computerResult] date shouldn't be null");
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.utc.api13.server.data.interfaces.IServerToComm#computerResult(int,
+	 * com.utc.api13.commun.entities.MoveEntity)
+	 */
+	@Override
+	public boolean computerResult(UUID idPlayer, MoveEntity move) {
+		// Assert.notNull(move.getGameID(),
+		// "[ServerDataToComImpl][computerResult] gameID shouldn't be null");
+		// Assert.notNull(move.getUserID(),
+		// "[ServerDataToComImpl][computerResult] userID shouldn't be null");
+		// Assert.notNull(move.getPiece(),
+		// "[ServerDataToComImpl][computerResult] piece shouldn't be null");
+		// Assert.notNull(move.getFromPosition(),
+		// "[ServerDataToComImpl][computerResult] fromPosition shouldn't be
+		// null");
+		// Assert.notNull(move.getToPosition(),
+		// "[ServerDataToComImpl][computerResult] toPosition shouldn't be
+		// null");
+		// Assert.notNull(move.getDate(), "[ServerDataToComImpl][computerResult]
+		// date shouldn't be null");
 
-        System.out.println("computerResult : move : " + move.getFromPosition().getPositionX() + "," + + move.getFromPosition().getPositionY() + ";" + move.getToPosition().getPositionX() + "," + move.getToPosition().getPositionY() + ";" + move.getPiece().toString());
-    	
-        GameEntity game = dataServerManager.getGameById(move.getGameID());
-        //!!! Il est nécessaire de récupérer la pièce locale et non celle du move récupéré côté client -> ce n'est pas le même object
-        APieceEntity mypiece = game.getPieceFromPosition(move.getFromPosition());
-        Boolean result = mypiece.isMovePossible(move, game);
-        System.out.println("isMovePossible " + result);
-        if (result) {
+		System.out.println("computerResult : move : " + move.getFromPosition().getPositionX() + ","
+				+ +move.getFromPosition().getPositionY() + ";" + move.getToPosition().getPositionX() + ","
+				+ move.getToPosition().getPositionY() + ";" + move.getPiece().toString());
 
-            if (move.getPiece().toString() == "King") {
-                KingEntity kingTmp = (KingEntity) move.getPiece();
-                if (kingTmp.getHasMove() == Boolean.FALSE) {
-                    if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() + 2) {
-                        // petit roque
+		GameEntity game = dataServerManager.getGameById(move.getGameID());
+		// !!! Il est nécessaire de récupérer la pièce locale et non celle du
+		// move récupéré côté client -> ce n'est pas le même object
+		APieceEntity mypiece = game.getPieceFromPosition(move.getFromPosition());
+		Boolean result = mypiece.isMovePossible(move, game);
+		System.out.println("isMovePossible " + result);
+		if (result) {
 
-                        PositionEntity fromPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
-                                kingTmp.getPosition().getPositionX() + 3);
-                        PositionEntity toPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
-                                kingTmp.getPosition().getPositionX() + 1);
+			if (move.getPiece().toString() == "King") {
+				KingEntity kingTmp = (KingEntity) move.getPiece();
+				if (kingTmp.getHasMove() == Boolean.FALSE) {
+					if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() + 2) {
+						// petit roque
 
-                        APieceEntity piece = game.getPieceFromPosition(fromPosition);
+						PositionEntity fromPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
+								kingTmp.getPosition().getPositionX() + 3);
+						PositionEntity toPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
+								kingTmp.getPosition().getPositionX() + 1);
 
-                        MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
-                        //moveTmp.getPiece().movePiece(moveTmp, game);
-                        game.movePiece(moveTmp);
+						APieceEntity piece = game.getPieceFromPosition(fromPosition);
 
-                    } else if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() - 2) {
-                        // grand roque
+						MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
+						// moveTmp.getPiece().movePiece(moveTmp, game);
+						game.movePiece(moveTmp);
 
-                        PositionEntity fromPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
-                                kingTmp.getPosition().getPositionX() - 4);
-                        PositionEntity toPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
-                                kingTmp.getPosition().getPositionX() - 1);
+					} else if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() - 2) {
+						// grand roque
 
-                        APieceEntity piece = game.getPieceFromPosition(fromPosition);
+						PositionEntity fromPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
+								kingTmp.getPosition().getPositionX() - 4);
+						PositionEntity toPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
+								kingTmp.getPosition().getPositionX() - 1);
 
-                        MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
-                        //moveTmp.getPiece().movePiece(moveTmp, game);
-                        game.movePiece(moveTmp);
-                    }
-                }
+						APieceEntity piece = game.getPieceFromPosition(fromPosition);
 
-            }
+						MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
+						// moveTmp.getPiece().movePiece(moveTmp, game);
+						game.movePiece(moveTmp);
+					}
+				}
 
-            
-            game.removePieceFromPosition(move.getToPosition());
-            game.movePiece(move);
-            
-            System.out.println("computerResult : move : " + move.getFromPosition().getPositionX() + "," + + move.getFromPosition().getPositionY() + ";" + move.getToPosition().getPositionX() + "," + move.getToPosition().getPositionY() + ";" + move.getPiece().toString());
+			}
 
+			game.removePieceFromPosition(move.getToPosition());
+			game.movePiece(move);
 
-        }
+			System.out.println("computerResult : move : " + move.getFromPosition().getPositionX() + ","
+					+ +move.getFromPosition().getPositionY() + ";" + move.getToPosition().getPositionX() + ","
+					+ move.getToPosition().getPositionY() + ";" + move.getPiece().toString());
 
-        return result;
+		}
 
-    }
+		return result;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.server.data.interfaces.IServerToComm#isFinished(java.lang.
-     * String)
-     */
-    @Override
-    public GameStatusEnum isFinished(UUID idGame) {
-        Assert.notNull(dataServerManager.getGameById(idGame),
-                "[ServerDataToComImpl][isFinished] The specified idGame doesn't have a linked game");
+	}
 
-        // verify game :
-        GameEntity game = dataServerManager.getGameById(idGame);
-        GameStatusEnum result = game.isFinished();
-        System.out.println("serverdatatocomimpt : isfinished : status : " + result);
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.utc.api13.server.data.interfaces.IServerToComm#isFinished(java.lang.
+	 * String)
+	 */
+	@Override
+	public GameStatusEnum isFinished(UUID idGame) {
+		Assert.notNull(dataServerManager.getGameById(idGame),
+				"[ServerDataToComImpl][isFinished] The specified idGame doesn't have a linked game");
 
-        game.switchCurrentUser();
+		// verify game :
+		GameEntity game = dataServerManager.getGameById(idGame);
+		GameStatusEnum result = game.isFinished();
+		System.out.println("serverdatatocomimpt : isfinished : status : " + result);
 
-        // TODO : Ulysse : isn't it a tad brutal ?
-        if (result.equals(GameStatusEnum.CHECKMATE) || result.equals(GameStatusEnum.DRAW)) {
-            // Clean the serveur game-entity :
-            dataServerManager.getCurrentGames().remove(game);
-        }
-        return result;
-    }
+		game.switchCurrentUser();
 
-    @Override
-    public void observerLeave(final UUID idUser) {
-        Assert.notNull(dataServerManager.getCurrentUsers(),
-                "[ServerDataToComImpl][observerLeave] currentUsers shouldn't be null");
-        dataServerManager.getCurrentGames().stream().forEach(game -> {
-            game.getObservers().removeIf(u -> idUser.equals(u.getId()));
-        });
+		// TODO : Ulysse : isn't it a tad brutal ?
+		if (result.equals(GameStatusEnum.CHECKMATE) || result.equals(GameStatusEnum.DRAW)) {
+			// Clean the serveur game-entity :
+			dataServerManager.getCurrentGames().remove(game);
+		}
+		return result;
+	}
 
-        // TODO: dataServerManager.getIServeurComToData().sendMessageToChat()
+	@Override
+	public void observerLeave(final UUID idUser) {
+		Assert.notNull(dataServerManager.getCurrentUsers(),
+				"[ServerDataToComImpl][observerLeave] currentUsers shouldn't be null");
+		dataServerManager.getCurrentGames().stream().forEach(game -> {
+			game.getObservers().removeIf(u -> idUser.equals(u.getId()));
+		});
 
-    }
+		// TODO: dataServerManager.getIServeurComToData().sendMessageToChat()
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.server.data.interfaces.IServerToComm#getListObservers()
-     */
-    @Override
-    public List<PublicUserEntity> getListObservers() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	}
 
-    @Override
-    public boolean saveUserData(final PublicUserEntity user) {
-        Assert.notNull(dataServerManager.getCurrentUsers(),
-                "[ServerDataToComImpl][saveUserData] currentUsers shouldn't be null");
-        Map<Boolean, List<PublicUserEntity>> map = dataServerManager.getCurrentUsers().stream()
-                .collect(Collectors.partitioningBy(u -> u.getId().equals(user.getId())));
-        List<PublicUserEntity> currentUsers = map.get(false);
-        currentUsers.add(user);
-        dataServerManager.setCurrentUsers(currentUsers);
-        return true;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.utc.api13.server.data.interfaces.IServerToComm#getListObservers()
+	 */
+	@Override
+	public List<PublicUserEntity> getListObservers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.utc.api13.server.data.interfaces.IServerToComm#newObserver(int,
-     * java.util.UUID)
-     */
-    @Override
-    public void newObserver(UUID idGame, UUID idUser) {
-        GameEntity game = getGameById(idGame);
-        PublicUserEntity userToAdd = getUserInfo(idUser);
-        if (game != null && userToAdd != null) {
-            game.getObservers().add(userToAdd);
-        }
-    }
+	@Override
+	public boolean saveUserData(final PublicUserEntity user) {
+		Assert.notNull(dataServerManager.getCurrentUsers(),
+				"[ServerDataToComImpl][saveUserData] currentUsers shouldn't be null");
+		Map<Boolean, List<PublicUserEntity>> map = dataServerManager.getCurrentUsers().stream()
+				.collect(Collectors.partitioningBy(u -> u.getId().equals(user.getId())));
+		List<PublicUserEntity> currentUsers = map.get(false);
+		currentUsers.add(user);
+		dataServerManager.setCurrentUsers(currentUsers);
+		return true;
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.server.data.interfaces.IServerToComm#createReplay(com.utc.
-     * api13.commun.entities.GameEntity,
-     * com.utc.api13.commun.entities.UserEntity)
-     */
-    @Override
-    public void createReplay(GameEntity game, PublicUserEntity user) {
-        // TODO Auto-generated method stub
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.utc.api13.server.data.interfaces.IServerToComm#newObserver(int,
+	 * java.util.UUID)
+	 */
+	@Override
+	public void newObserver(UUID idGame, UUID idUser) {
+		GameEntity game = getGameById(idGame);
+		PublicUserEntity userToAdd = getUserInfo(idUser);
+		if (game != null && userToAdd != null) {
+			game.getObservers().add(userToAdd);
+		}
+	}
 
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.utc.api13.server.data.interfaces.IServerToComm#createReplay(com.utc.
+	 * api13.commun.entities.GameEntity,
+	 * com.utc.api13.commun.entities.UserEntity)
+	 */
+	@Override
+	public void createReplay(GameEntity game, PublicUserEntity user) {
+		// TODO Auto-generated method stub
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.server.data.interfaces.IServerToComm#getConnectedUsers()
-     */
-    @Override
-    public List<PublicUserEntity> getConnectedUsers() {
-        return dataServerManager.getCurrentUsers();
-    }
+	}
 
-    public List<PublicUserEntity> getUsersByGame(final UUID idGame) {
-        Assert.notNull(dataServerManager.getCurrentGames(),
-                "[ServerDataToComImpl][getUsersByGame] currentGames shouldn't be null");
-        List<PublicUserEntity> listUsersByGame = new ArrayList<PublicUserEntity>();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.utc.api13.server.data.interfaces.IServerToComm#getConnectedUsers()
+	 */
+	@Override
+	public List<PublicUserEntity> getConnectedUsers() {
+		return dataServerManager.getCurrentUsers();
+	}
 
-        // variable containing the corresponding idGame Game.
-        final GameEntity gameFound = getGameById(idGame);
+	public List<PublicUserEntity> getUsersByGame(final UUID idGame) {
+		Assert.notNull(dataServerManager.getCurrentGames(),
+				"[ServerDataToComImpl][getUsersByGame] currentGames shouldn't be null");
+		List<PublicUserEntity> listUsersByGame = new ArrayList<PublicUserEntity>();
 
-        // If the idGame exist on the server
-        if (gameFound != null) {
-            // Else get all observer + two players
-            if (gameFound.getObservers() != null) {
-                listUsersByGame.addAll(gameFound.getObservers());
-            }
-            if (gameFound.getBlackPlayer() != null) {
-                listUsersByGame.add(gameFound.getBlackPlayer());
-            }
+		// variable containing the corresponding idGame Game.
+		final GameEntity gameFound = getGameById(idGame);
 
-            if (gameFound.getWhitePlayer() != null) {
-                listUsersByGame.add(gameFound.getWhitePlayer());
-            }
-            return listUsersByGame;
-        }
+		// If the idGame exist on the server
+		if (gameFound != null) {
+			// Else get all observer + two players
+			if (gameFound.getObservers() != null) {
+				listUsersByGame.addAll(gameFound.getObservers());
+			}
+			if (gameFound.getBlackPlayer() != null) {
+				listUsersByGame.add(gameFound.getBlackPlayer());
+			}
 
-        // If the idGame doesn't exist on the server, the method sends back
-        // 'null'
-        return null;
-    }
+			if (gameFound.getWhitePlayer() != null) {
+				listUsersByGame.add(gameFound.getWhitePlayer());
+			}
+			return listUsersByGame;
+		}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.server.data.interfaces.IServerToComm#surrender(java.util.
-     * UUID)
-     */
-    @Override
-    public void surrender(UUID idPlayer) {
-        // Get the game played by the user
-        GameEntity playedGame = dataServerManager.getCurrentGames().stream()
-                .filter(game -> game.getBlackPlayer().getId().equals(idPlayer)
-                        || game.getWhitePlayer().getId().equals(idPlayer))
-                .findFirst().orElse(null);
-        // Erase the game from server
-        endGame(playedGame.getId());
-    }
+		// If the idGame doesn't exist on the server, the method sends back
+		// 'null'
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.server.data.interfaces.IServerToComm#disconnect(java.util.
-     * UUID)
-     */
-    @Override
-    public void disconnect(final UUID idUser) {
-        Assert.notNull(dataServerManager.getCurrentUsers(),
-                "[ServerDataToComImpl][disconnect] currentUsers shouldn't be null");
-        dataServerManager.getCurrentUsers().removeIf(user -> user.getId().equals(idUser));
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.utc.api13.server.data.interfaces.IServerToComm#surrender(java.util.
+	 * UUID)
+	 */
+	@Override
+	public void surrender(UUID idPlayer) {
+		// Get the game played by the user
+		GameEntity playedGame = dataServerManager.getCurrentGames().stream()
+				.filter(game -> game.getBlackPlayer().getId().equals(idPlayer)
+						|| game.getWhitePlayer().getId().equals(idPlayer))
+				.findFirst().orElse(null);
+		// Erase the game from server
+		endGame(playedGame.getId());
+	}
 
-    @Override
-    public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable, boolean timer,
-            Integer timerInt) {
-        PublicUserEntity whitePlayer;
-        PublicUserEntity blackPlayer;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.utc.api13.server.data.interfaces.IServerToComm#disconnect(java.util.
+	 * UUID)
+	 */
+	@Override
+	public void disconnect(final UUID idUser) {
+		Assert.notNull(dataServerManager.getCurrentUsers(),
+				"[ServerDataToComImpl][disconnect] currentUsers shouldn't be null");
+		dataServerManager.getCurrentUsers().removeIf(user -> user.getId().equals(idUser));
+	}
 
-        /*
-         * generate a random number to choose between 0 and 1 to choose who will
-         * be the white player and who will be the black player
-         */
-        Random r = new Random();
-        int valeur = 0 + r.nextInt(2 - 0);
+	@Override
+	public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable, boolean timer,
+			Integer timerInt) {
+		PublicUserEntity whitePlayer;
+		PublicUserEntity blackPlayer;
 
-        if (valeur == 1) {
-            whitePlayer = getUserInfo(j1);
-            blackPlayer = getUserInfo(j2);
-        } else {
-            whitePlayer = getUserInfo(j2);
-            blackPlayer = getUserInfo(j1);
-        }
+		/*
+		 * generate a random number to choose between 0 and 1 to choose who will
+		 * be the white player and who will be the black player
+		 */
+		Random r = new Random();
+		int valeur = 0 + r.nextInt(2 - 0);
 
-        Assert.notNull(whitePlayer, "[ServerDataToComImpl][createGame] player 1 is not online");
-        Assert.notNull(blackPlayer, "[ServerDataToComImpl][createGame] player 2 is not online");
-        // Enable chat for the two players
-        whitePlayer.setAllowedToChat(true);
-        blackPlayer.setAllowedToChat(true);
-        // Create a game
-        GameEntity newGame = new GameEntity();
-        newGame.setBlackPlayer(blackPlayer);
-        newGame.setWhitePlayer(whitePlayer);
-        newGame.setCurrentPlayer(whitePlayer);
-        newGame.setIsOservable(observable);
-        newGame.setIsChattable(chattable);
-        newGame.setTimer(timer);
-        newGame.setTimerInt(timerInt);
-        // Add to the list of current games
-        dataServerManager.getCurrentGames().add(newGame);
-        return newGame;
-    }
+		if (valeur == 1) {
+			whitePlayer = getUserInfo(j1);
+			blackPlayer = getUserInfo(j2);
+		} else {
+			whitePlayer = getUserInfo(j2);
+			blackPlayer = getUserInfo(j1);
+		}
 
-    @Override
-    public GameEntity getGameById(UUID idGame) {
-        return dataServerManager.getCurrentGames().stream().filter(u -> u.getId().equals(idGame)).findFirst()
-                .orElse(null);
-    }
+		Assert.notNull(whitePlayer, "[ServerDataToComImpl][createGame] player 1 is not online");
+		Assert.notNull(blackPlayer, "[ServerDataToComImpl][createGame] player 2 is not online");
+		// Enable chat for the two players
+		whitePlayer.setAllowedToChat(true);
+		blackPlayer.setAllowedToChat(true);
+		// Create a game
+		GameEntity newGame = new GameEntity();
+		newGame.setBlackPlayer(blackPlayer);
+		newGame.setWhitePlayer(whitePlayer);
+		newGame.setCurrentPlayer(whitePlayer);
+		newGame.setIsOservable(observable);
+		newGame.setIsChattable(chattable);
+		newGame.setTimer(timer);
+		newGame.setTimerInt(timerInt);
+		// Add to the list of current games
+		dataServerManager.getCurrentGames().add(newGame);
+		return newGame;
+	}
 
-    @Override
-    public void endGame(UUID idGame) {
-        dataServerManager.getCurrentGames().removeIf(g -> idGame.equals(g.getId()));
-    }
+	@Override
+	public GameEntity getGameById(UUID idGame) {
+		return dataServerManager.getCurrentGames().stream().filter(u -> u.getId().equals(idGame)).findFirst()
+				.orElse(null);
+	}
 
-    @Override
-    public void removeUserFromChat(UUID idUser, UUID idGame) {
-        GameEntity game = getGameById(idGame);
-        if (game != null) {
-            PublicUserEntity userToRemove = getUserInfo(idUser);
-            if (userToRemove != null) {
-                userToRemove.setAllowedToChat(false);
-            }
-        }
-    }
+	@Override
+	public void endGame(UUID idGame) {
+		dataServerManager.getCurrentGames().removeIf(g -> idGame.equals(g.getId()));
+	}
 
-    @Override
-    public boolean isPlaying(UUID idUser) {
-        // TODO Auto-generated method stub
-        return false;
-    }
+	@Override
+	public void removeUserFromChat(UUID idUser, UUID idGame) {
+		GameEntity game = getGameById(idGame);
+		if (game != null) {
+			PublicUserEntity userToRemove = getUserInfo(idUser);
+			if (userToRemove != null) {
+				userToRemove.setAllowedToChat(false);
+			}
+		}
+	}
+
+	@Override
+	public boolean isPlaying(UUID idUser) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
