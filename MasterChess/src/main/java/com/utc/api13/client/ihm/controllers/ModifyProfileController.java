@@ -29,6 +29,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -40,6 +41,7 @@ public class ModifyProfileController {
     private IClientDataToIHM myIClientToIHM;
     private final Logger log = Logger.getLogger(getClass());
     private Stage currentStage;
+    private Text userLabelToUpdateWelcomePage;
 
     @FXML
     BorderPane createProfileBorderPane;
@@ -74,13 +76,10 @@ public class ModifyProfileController {
         }
 
         else {
-
-            PrivateUserEntity user = new PrivateUserEntity();
-
-            user.setLogin(login);
-            user.setPassword(pw);
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
+            myIClientToIHM.getLocalUser().setLogin(login);
+            myIClientToIHM.getLocalUser().setPassword(pw);
+            myIClientToIHM.getLocalUser().setFirstName(firstName);
+            myIClientToIHM.getLocalUser().setLastName(lastName);
 
             Stage stage;
             Parent root;
@@ -89,7 +88,7 @@ public class ModifyProfileController {
 
             try {
 
-                this.myIClientToIHM.updateProfile(user);
+                this.myIClientToIHM.updateProfile(myIClientToIHM.getLocalUser());
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
                 root = (Pane) fxmlLoader.load();
                 ConfirmationController controller = fxmlLoader.getController();
@@ -101,7 +100,7 @@ public class ModifyProfileController {
                 mainApp.setCurrentStage(stage);
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.show();
-                
+                userLabelToUpdateWelcomePage.setText(myIClientToIHM.getLocalUser().getLogin());
                 PauseTransition delay = new PauseTransition(Duration.seconds(2));
                 delay.setOnFinished(event -> stage.close());
                 delay.play();
@@ -161,13 +160,14 @@ public class ModifyProfileController {
     public void initialize() {
     }
 
-    public void setMainApp(AppClient app) {
+    public void setMainApp(AppClient app, Text userLabel) {
         this.mainApp = app;
         PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
         this.loginTextView.setText(u.getLogin());
         this.passwordTextView.setText(u.getPassword());
         this.firstNameTextView.setText(u.getFirstName());
         this.lastNameTextView.setText(u.getLastName());
+        this.userLabelToUpdateWelcomePage= userLabel;
 
         Optional.ofNullable(u.getImagePath()).ifPresent(link -> changeProfilePicture.setImage(new Image(link)));
     }
