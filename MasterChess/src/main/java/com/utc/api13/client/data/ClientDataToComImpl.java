@@ -340,6 +340,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
     	GameEntity game = instanceDataClientManager.getCurrentGame();
     	
     	game.switchCurrentUser();
+    	game.startTimer();
         // set the game status :
     	game.setIsFinished(status);
         
