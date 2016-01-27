@@ -21,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class MyInfoPopUpController {
@@ -30,6 +31,7 @@ public class MyInfoPopUpController {
     private IClientDataToIHM myIClientToIHM;
     // private boolean newProfile = false;
     private Stage currentStage;
+    private Text userLabelToUpdateWelcomePage;
 
     /*
      * public boolean isNewProfile() { return newProfile; }
@@ -62,7 +64,7 @@ public class MyInfoPopUpController {
         controller.setControllerContext(this.IHMManager);
         mainApp.getCurrentStage().close();
         mainApp.setCurrentStage(stage);
-        controller.setMainApp(this.mainApp);
+        controller.setMainApp(this.mainApp, userLabelToUpdateWelcomePage);
         stage.setScene(new Scene(root));
         stage.setTitle("Update my Profile");
         stage.show();
@@ -75,7 +77,7 @@ public class MyInfoPopUpController {
     public void initialize() {
     }
 
-    public void setMainApp(AppClient app) {
+    public void setMainApp(AppClient app, Text userLabel) {
         this.mainApp = app;
 
         // if (!newProfile) {
@@ -89,6 +91,7 @@ public class MyInfoPopUpController {
         this.userInfoFirstName.setText(u.getFirstName());
         this.userInfoLastName.setText(u.getLastName());
         userInfoTableView.setItems(statsPlayer);
+        userLabelToUpdateWelcomePage = userLabel;
 
     }
 

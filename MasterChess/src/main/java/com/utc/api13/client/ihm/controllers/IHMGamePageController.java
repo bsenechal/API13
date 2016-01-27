@@ -36,6 +36,7 @@ public class IHMGamePageController {
     private AppClient mainApp;
     private Stage currentStage;
     private ChatProperty chat;
+    private ChessBoardNode cb;
 
     @FXML
     Label chatLabel, otherPlayerLoginLabel, otherPlayerTimeLabel, playerLoginLabel, playerTimeLabel,
@@ -48,7 +49,8 @@ public class IHMGamePageController {
     TextArea chatTextArea, sendTextArea;
     @FXML
     StackPane chessBoardStackPane;
-    private ChessBoardNode cb;
+    @FXML
+    Label timerText;
 
     public IHMManager getIHMManager() {
         return IHMManager;
@@ -68,19 +70,26 @@ public class IHMGamePageController {
 
     @FXML
     private void onGiveUpClicked() {
-
+        myIClientToIHM.surrender();
     }
 
     @FXML
     private void onLeaveClicked() {
 
+        List<UUID> players = Arrays.asList(myIClientToIHM.getCurrentGame().getBlackPlayer().getId(),
+                myIClientToIHM.getCurrentGame().getWhitePlayer().getId());
+        if (players.contains(myIClientToIHM.getLocalUser().getId()))
+            myIClientToIHM.requestPlayerForLeaving();
+        else
+            myIClientToIHM.observerLeave();
+
     }
 
     @FXML
-    private void onExcludeChatClicked(Event event) throws IOException {
+    private void onExcludeChatClicked() throws IOException {
 
         List<UUID> players = Arrays.asList(myIClientToIHM.getCurrentGame().getBlackPlayer().getId(),
-                myIClientToIHM.getCurrentGame().getBlackPlayer().getId());
+                myIClientToIHM.getCurrentGame().getWhitePlayer().getId());
         if (!players.contains(myIClientToIHM.getLocalUser().getId())) {
             openUserObservableList();
         } else {
@@ -126,8 +135,9 @@ public class IHMGamePageController {
 
     @FXML
     private void onQuitGameClicked(Event event) {
-        myIClientToIHM.requestPlayerForLeaving();
-
+        // onGiveUpClicked();
+        String a = "slt";
+        System.out.println("test when we logout of the app");
     }
 
     public void setControllerContext(IHMManager ihmManager) {
@@ -147,6 +157,11 @@ public class IHMGamePageController {
         cb = new ChessBoardNode(IHMManager, game, myIClientToIHM);
         cb.setMyIClientToIHM(myIClientToIHM);
 
+        int nbMinutes = game.getTimerInt() / 60;
+        int nbSecondes = game.getTimerInt() % 60;
+        String myTimer = Integer.toString(nbMinutes) + " : " + Integer.toString(nbSecondes);
+
+        // this.timerText.setText(myTimer);
         final SwingNode swingNode = new SwingNode();
 
         SwingUtilities.invokeLater(new Runnable() {

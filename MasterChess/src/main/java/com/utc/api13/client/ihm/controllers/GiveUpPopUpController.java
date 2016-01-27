@@ -1,7 +1,7 @@
 package com.utc.api13.client.ihm.controllers;
 
-import java.awt.Button;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -35,7 +36,7 @@ public class GiveUpPopUpController {
     private ObservableList<PublicUserEntity> listUserPublic;
     private ObservableList<GameEntity> listCurrentGames;
     private final Logger log = Logger.getLogger(getClass());
-    private UUID opponentUUID;
+    private UUID opponentUUID; 
 
     @FXML
     BorderPane mainBorderPane;
@@ -44,14 +45,21 @@ public class GiveUpPopUpController {
     @FXML
     Label opponentLabel, messageLabel;
     @FXML
-    Button yesButton, noButton;
-
+    Button yesButton, noButton; 
+    
+    @FXML
     public void OnYesClicked() {
-
+        IHMManager.getCurrentStage().close();
+        IHMManager.getCurrentGameStage().close();
+        myIClientToIHM.sendAnswerForLeaving(true);
+    	
     }
-
+    
+    @FXML
     public void OnNoClicked() {
-
+        IHMManager.getCurrentStage().close();
+        IHMManager.getCurrentGameStage().close();
+        myIClientToIHM.sendAnswerForLeaving(false);	
     }
 
     public IHMManager getIHMManager() {
@@ -69,20 +77,20 @@ public class GiveUpPopUpController {
         initialize();
     }
 
-    public void setMainApp(AppClient app, UUID opponent) {
+    public void setMainApp(AppClient app,String login) {
         this.mainApp = app;
-        this.opponentUUID = opponent;
+       // this.opponentUUID=string; 
+        Optional.ofNullable(login).ifPresent(u->{
+            messageLabel.setText(u+ " "+messageLabel.getText());
+        });
+
+            
     }
 
     public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null) {
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
-            profile = new ProfilProperty();
-
-            this.IHMManager.setProfil(profile);
-            setListenersOnLoad();
-            setBindingsOnLoad();
         }
     }
 
@@ -93,12 +101,13 @@ public class GiveUpPopUpController {
     }
 
     public void setListenersOnLoad() {
-
+        
     }
 
     public void setBindingsOnLoad() {
 
     }
+
 
     public Stage getCurrentStage() {
         return currentStage;
@@ -123,5 +132,5 @@ public class GiveUpPopUpController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
-
+    
 }

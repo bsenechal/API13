@@ -132,7 +132,7 @@ public class IHMWelcomePageController {
         ModifyProfileController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
         mainApp.setCurrentStage(stage);
-        controller.setMainApp(this.mainApp);
+        controller.setMainApp(this.mainApp, this.userLabel);
         stage.setScene(new Scene(root));
         stage.setTitle("My Profile");
         stage.show();
@@ -264,7 +264,7 @@ public class IHMWelcomePageController {
         MyInfoPopUpController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
         mainApp.setCurrentStage(stage);
-        controller.setMainApp(this.mainApp);
+        controller.setMainApp(this.mainApp, this.userLabel);
         stage.setScene(new Scene(root));
         stage.setTitle("My Information");
         stage.initModality(Modality.APPLICATION_MODAL);

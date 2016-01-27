@@ -152,7 +152,15 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         Assert.notNull(dataClientManager.getUserLocal(),
                 "[ClientDataToIHMImpl][requestPlayerForLeaving] UserLocal shouldn't be null");
         // TODO: le second paramètre, c'est fait pour quoi?
-        dataClientManager.getIClientComToData().requestPlayerForLeaving(dataClientManager.getUserLocal().getId(), true);
+
+        GameEntity game = dataClientManager.getCurrentGame();
+        // UUID receiver=
+        // game.getWhitePlayer().getId().equals(dataClientManager.getUserLocal().getId())?
+        // game.getBlackPlayer().getId():game.getWhitePlayer().getId();
+
+        dataClientManager.getIClientComToData().requestPlayerForLeaving(dataClientManager.getUserLocal().getId(),
+                game.getWhitePlayer().getId().equals(dataClientManager.getUserLocal().getId())
+                        ? game.getBlackPlayer().getId() : game.getWhitePlayer().getId());
 
     }
 
@@ -176,6 +184,19 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
             // End the game
             dataClientManager.setCurrentGame(null);
         }
+
+        dataClientManager.getUserLocal().getSavedGames().add(getCurrentGame());
+        // if the local user said yes no it's a win for him
+        dataClientManager.getUserLocal().setNbPlayed(getLocalUser().getNbPlayed() + 1);
+
+        GameEntity game = getCurrentGame();
+        UUID otherPlayer = dataClientManager.getUserLocal().getId().equals(game.getBlackPlayer().getId())
+                ? game.getWhitePlayer().getId() : game.getBlackPlayer().getId();
+        dataClientManager.getIClientComToData().endGameByLeaving(dataClientManager.getUserLocal().getId(), otherPlayer,
+                getCurrentGame().getId(), answer);
+        dataClientManager.setCurrentGame(null);
+        dataClientManager.getIClientIHMToData().closeGameScreen(answer);
+
     }
 
     @Override

@@ -158,6 +158,21 @@ public class ComServerManager {
     }
 
     /**
+     * To send message to every connected users except sender
+     */
+    public void broadcastMessageExceptUser(Message msg, UUID userId) {
+        synchronized (this) {
+            for (UUID idUser : channelHandlerContextMap.keySet()) {
+                if (!idUser.equals(userId)) {
+                    msg.setReceiver(idUser);
+                    sendMessage(channelHandlerContextMap.get(idUser).channel(), msg);
+                }
+
+            }
+        }
+    }
+
+    /**
      * To send message to a list of users
      */
     public void multicastMessageByIds(List<UUID> userIds, Message msg) {

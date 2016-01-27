@@ -12,12 +12,14 @@ import com.utc.api13.commun.messages.ChatMessage;
 import com.utc.api13.commun.messages.ConnectMessage;
 import com.utc.api13.commun.messages.DisconnectMessage;
 import com.utc.api13.commun.messages.ExcludeObserverMessage;
+import com.utc.api13.commun.messages.GameFinishedMessage;
 import com.utc.api13.commun.messages.GameRequestMessage;
 import com.utc.api13.commun.messages.MoveValidationMessage;
 import com.utc.api13.commun.messages.ObserverLeaveMessage;
 import com.utc.api13.commun.messages.ObserverRequestMessage;
 import com.utc.api13.commun.messages.PublicUserMessage;
 import com.utc.api13.commun.messages.RequestAnswerMessage;
+import com.utc.api13.commun.messages.RequestPlayerLeaving;
 import com.utc.api13.commun.messages.UserUpdateMessage;
 
 public class ClientComToDataImpl implements IClientComToData {
@@ -100,14 +102,9 @@ public class ClientComToDataImpl implements IClientComToData {
     }
 
     @Override
-    public void endGameByLeaving() {
+    public void requestPlayerForLeaving(UUID sender, UUID receiver) {
         // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void requestPlayerForLeaving(UUID uid, boolean answer) {
-        // TODO Auto-generated method stub
+        comClientManagerInstance.sendMessage(new RequestPlayerLeaving(sender, receiver));
 
     }
 
@@ -217,5 +214,11 @@ public class ClientComToDataImpl implements IClientComToData {
         // TODO Auto-generated method stub
         comClientManagerInstance.sendMessage(new ExcludeObserverMessage(userId, gameId));
 
+    }
+
+    @Override
+    public void endGameByLeaving(UUID sender, UUID receiver, UUID gameId, boolean answer) {
+        // TODO Auto-generated method stub
+        comClientManagerInstance.sendMessage(new GameFinishedMessage(sender, receiver, gameId, answer));
     }
 }

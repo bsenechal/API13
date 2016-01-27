@@ -144,4 +144,6 @@ public interface IClientIHMToData {
     // récup jeu local
 
     public void activateCases(PublicUserEntity currentUser, GameStatusEnum status);
+
+    public void closeGameScreen(boolean bool);
 }

@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 public class StorageUtils {
-    private static File PATH = new File(StorageUtils.class.getClassLoader().getResource("user").getFile());
+    private static File PATH = Paths.get("user").toFile();
 
     private static ObjectOutputStream oos;
     private static ObjectInputStream ois;
@@ -41,6 +42,9 @@ public class StorageUtils {
     public static void write(final PrivateUserEntity user) throws TechnicalException {
         Assert.notNull(user, "[StorageUtils] User shouldn't be null");
         try {
+            if (!PATH.exists()) {
+                PATH.mkdirs();
+            }
             String filePath = PATH.getAbsolutePath() + File.separator + user.getLogin() + "_" + user.getId() + ".ser";
             // First let's try to create the file
             File file = new File(filePath);

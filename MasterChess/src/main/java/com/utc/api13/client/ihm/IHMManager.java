@@ -25,6 +25,15 @@ public class IHMManager {
     private ErrorProperty error;
     private ChatProperty chat;
     private UUID uisender;
+    private Stage currentGameStage;
+
+    public Stage getCurrentGameStage() {
+        return currentGameStage;
+    }
+
+    public void setCurrentGameStage(Stage currentGameStage) {
+        this.currentGameStage = currentGameStage;
+    }
 
     public ChatProperty getChat() {
         return chat;

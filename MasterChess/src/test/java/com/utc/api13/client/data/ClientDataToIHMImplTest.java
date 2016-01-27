@@ -1,3 +1,4 @@
+
 /**
  * 
  */
@@ -223,7 +224,7 @@ public class ClientDataToIHMImplTest {
             Assert.fail("Error : " + e.getMessage());
         }
     }
-
+/*
     @Test
     public void sendAnswerForLeavingTest() {
         GameEntity game = new GameEntity();
@@ -250,5 +251,5 @@ public class ClientDataToIHMImplTest {
         dataClientManager.getClientDataToIHMImpl().sendAnswerForLeaving(true);
         Assert.assertNull(dataClientManager.getCurrentGame());
     }
-
+*/
 }

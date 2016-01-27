@@ -45,6 +45,8 @@ public class UserUpdateMessage extends Message {
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // When received on the client, calls data to display whether the update
         comClientManager.getIClientDataToCom().notify(result_message);
+        // TODO ACTIVE
+        // comClientManager.getIClientDataToCom().updateDistantProfile(usr);
     }
 
     @Override
@@ -53,17 +55,20 @@ public class UserUpdateMessage extends Message {
         boolean result = false;
         try {
             result = comServerManager.getIServerDataToCom().saveUserData(usr);
+            comServerManager.broadcastMessageExceptUser(this, usr.getId());
         } catch (TechnicalException e) {
             e.printStackTrace();
         } catch (FunctionalException e) {
             e.printStackTrace();
+        } finally {
+            if (result) {
+                this.result_message = UPDATE_SUCCESSFUL;
+            } else {
+                logger.error(result_message);
+                this.result_message = UPDATE_FAILED;
+            }
         }
-        if (result) {
-            this.result_message = UPDATE_SUCCESSFUL;
-        } else {
-            this.result_message = UPDATE_FAILED;
-        }
-        comServerManager.sendMessage(ctx.channel(), this);
+
     }
 
     public PublicUserEntity getUsr() {

@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.controllers.AnswerPropositionController;
 import com.utc.api13.client.ihm.controllers.ErrorController;
+import com.utc.api13.client.ihm.controllers.GiveUpPopUpController;
 import com.utc.api13.client.ihm.controllers.IHMGamePageController;
 import com.utc.api13.client.ihm.interfaces.IClientIHMToData;
 import com.utc.api13.client.ihm.models.Case;
@@ -57,6 +58,36 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     public void otherPlayerLeaving() {
         // TODO Auto-generated method stub
 
+        List<Object> users = Arrays.asList(myIHMManager.getIClientDataToIHM().getUserList().toArray());
+        PublicUserEntity user = (PublicUserEntity) users.stream()
+                .filter(u -> ((PublicUserEntity) u).getId().equals(myIHMManager.getUisender())).findFirst()
+                .orElse(null);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Stage stage;
+                Parent root = null;
+                stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/giveUpPopUp.fxml"));
+                try {
+                    root = (Pane) fxmlLoader.load();
+                    GiveUpPopUpController controller = fxmlLoader.getController();
+                    controller.setMainApp(myIHMManager.getMainApp(), user != null ? user.getLogin() : null);
+                    controller.setControllerContext(myIHMManager);
+
+                    myIHMManager.setCurrentStage(stage);
+
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("asking for leave!");
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 
     @SuppressWarnings("restriction")
@@ -69,9 +100,6 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
             @Override
             public void run() {
 
-                // PublicUserEntity user=
-                // myIHMManager.getIClientDataToIHM().getUserList().stream()
-                // .filter(u->u.getId().equals(uidSender)).findFirst().orElse(null);
                 List<Object> users = Arrays.asList(myIHMManager.getIClientDataToIHM().getUserList().toArray());
                 PublicUserEntity user = (PublicUserEntity) users.stream()
                         .filter(u -> ((PublicUserEntity) u).getId().equals(uidSender)).findFirst().orElse(null);
@@ -149,6 +177,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     controller.setMainApp(myIHMManager.getMainApp());
                     stage.setScene(new Scene(root));
                     stage.setTitle("Game!");
+                    myIHMManager.setCurrentGameStage(stage);
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (IOException e) {
@@ -261,4 +290,27 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
             }
         }
     }
+    @Override
+    public void closeGameScreen(boolean answer) {
+        // TODO Auto-generated method stub
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+                if (answer)
+                    myIHMManager.getMainApp().displayConfirmationPopup(
+                            "The other player has accepted your demand Therefore there is no winner in this Game");
+                else
+                    myIHMManager.getMainApp()
+                            .displayErrorPopup("the answer of the other player was NO .Therefore you lose the Game");
+
+                myIHMManager.getCurrentGameStage().close();
+                // myIHMManager.getCurrentGameStage().hide();
+
+            }
+
+        });
+    }
+
 }

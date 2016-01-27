@@ -170,6 +170,32 @@ public class ClientDataToComImpl implements IClientDataToCom {
                             .getId(), answer,
                     "Your opponent doesn't want to quit the game, you'll keep playing. Surrend it if you want, but your stats will change ! ");
         }
+
+        // if (answer){
+        //
+        //
+        // // Display answer to local user
+        // UUID senderId = instanceDataClientManager.getUserLocal().getId()
+        // .equals(instanceDataClientManager.getCurrentGame().getBlackPlayer().getId())
+        // ? instanceDataClientManager.getCurrentGame().getWhitePlayer().getId()
+        // :
+        // instanceDataClientManager.getCurrentGame().getBlackPlayer().getId();
+        //
+        //
+        // instanceDataClientManager.getIClientIHMToData().displayAnswer(senderId,
+        // answer,
+        // "The player has quit the game ");
+        // instanceDataClientManager.getIClientIHMToData().displayAnswer(instanceDataClientManager.getUserLocal().getId(),
+        // answer,
+        // "You have quit the game ");
+        // // End the local game
+        // instanceDataClientManager.setCurrentGame(null);
+        // }else{
+        // instanceDataClientManager.getIClientIHMToData().displayAnswer(instanceDataClientManager.getUserLocal().getId(),
+        // answer,
+        // "Your opponent doesn't want to quit the game, you'll keep playing.
+        // Surrend it if you want, but your stats will change ! ");
+        // }
     }
 
     @Override
