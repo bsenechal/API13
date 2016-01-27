@@ -46,7 +46,8 @@ public class AppClient extends Application {
         this.succeed = succeed;
     }
 
-    @Override
+    @SuppressWarnings("restriction")
+	@Override
     public void start(Stage stage) throws Exception {
         
         /**
@@ -71,6 +72,7 @@ public class AppClient extends Application {
         controller.setControllerContext(ihmManager);
         this.setCurrentStage(stage);
         controller.setMainApp(this);
+        controller.setCurrentStage(stage);
         Scene scene = new Scene(root, 800, 600);
         scene.getStylesheets().add(getClass().getResource("/css/masterCSS.css").toExternalForm());
         stage.setTitle("Connexion");

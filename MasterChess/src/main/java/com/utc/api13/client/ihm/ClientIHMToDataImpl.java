@@ -56,6 +56,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         });
     }
 
+    
     @Override
     public void otherPlayerLeaving() {
         // TODO Auto-generated method stub

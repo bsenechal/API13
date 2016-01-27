@@ -99,8 +99,23 @@ public class IHMWelcomePageController {
         this.IHMManager = iHMManager;
     }
 
-    @FXML
-    private void onHelpClicked(Event event) {
+    @SuppressWarnings("restriction")
+	@FXML
+    private void onHelpClicked(Event event) throws IOException {
+    	Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader;
+        fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/helpPage.fxml"));
+        root = (Pane) fxmlLoader.load();
+        IHMHelpPageController controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager);
+        controller.setCurrentStage(stage);
+        controller.setMainApp(this.mainApp);
+        stage.setScene(new Scene(root));
+        stage.setTitle("Help page");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
 
     @FXML
