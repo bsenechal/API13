@@ -59,26 +59,26 @@ public class PawnEntity extends APieceEntity {
             positionTemp = new PositionEntity(positionX, positionY + 1);
             if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)
                     && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
-                result.add(positionTemp);
+                addPossibleSolution(game, positionX, positionY, 0, 1, result, verifyCheck);
             }
 
             if (positionY == START_LINE_WHITE_PAWN) {
                 positionTemp = new PositionEntity(positionX, positionY + 2);
                 if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)
                         && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
-                    result.add(positionTemp);
+                    addPossibleSolution(game, positionX, positionY, 0, 2, result, verifyCheck);
                 }
             }
 
             // ennemis dans les diagonales
             positionTemp = new PositionEntity(positionX + 1, positionY + 1);
             if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                addPossibleSolution(game, positionX, positionY, 1, 1, result, Boolean.FALSE);
+                addPossibleSolution(game, positionX, positionY, 1, 1, result, verifyCheck);
             }
 
             positionTemp = new PositionEntity(positionX - 1, positionY + 1);
             if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                addPossibleSolution(game, positionX, positionY, -1, 1, result, Boolean.FALSE);
+                addPossibleSolution(game, positionX, positionY, -1, 1, result, verifyCheck);
             }
 
         } else if (this.getColor().equals(PieceColorEnum.BLACK)) {
@@ -87,26 +87,27 @@ public class PawnEntity extends APieceEntity {
             positionTemp = new PositionEntity(positionX, positionY - 1);
             if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)
                     && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
-                result.add(positionTemp);
+                addPossibleSolution(game, positionX, positionY, 0, -1, result, verifyCheck);
             }
 
             if (positionY == START_LINE_BLACK_PAWN) {
                 positionTemp = new PositionEntity(positionX, positionY - 2);
                 if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)
                         && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
-                    result.add(positionTemp);
+                    addPossibleSolution(game, positionX, positionY, 0, -2, result, verifyCheck);
+
                 }
             }
 
             // ennemis dans les diagonales
             positionTemp = new PositionEntity(positionX + 1, positionY - 1);
             if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                addPossibleSolution(game, positionX, positionY, 1, -1, result, Boolean.FALSE);
+                addPossibleSolution(game, positionX, positionY, 1, -1, result, verifyCheck);
             }
 
             positionTemp = new PositionEntity(positionX - 1, positionY - 1);
             if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
-                addPossibleSolution(game, positionX, positionY, -1, -1, result, Boolean.FALSE);
+                addPossibleSolution(game, positionX, positionY, -1, -1, result, verifyCheck);
             }
         }
 

@@ -123,7 +123,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
         APieceEntity piece=move.getPiece();
         GameEntity thisgame=instanceDataClientManager.getCurrentGame();
         
-        Assert.notNull(instanceDataClientManager.getCurrentGame(),
+        Assert.notNull(thisgame,
                 "[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
       
         //delete the real destination piece
