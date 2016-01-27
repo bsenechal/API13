@@ -558,6 +558,12 @@ public class GameEntity extends ADataEntity {
         }
     }
 
+    public void removePieceFromPosition(PositionEntity myposition){
+    	APieceEntity piece = this.getPieceFromPosition(myposition);
+        if(piece != null){
+        	this.removePiece(piece);
+        }
+    }
 
     /**
      * Return a piece from a position
