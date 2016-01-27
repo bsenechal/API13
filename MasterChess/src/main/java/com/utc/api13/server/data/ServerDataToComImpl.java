@@ -94,7 +94,9 @@ public class ServerDataToComImpl implements IServerDataToCom {
 //        Assert.notNull(move.getDate(), "[ServerDataToComImpl][computerResult] date shouldn't be null");
 
         GameEntity game = dataServerManager.getGameById(move.getGameID());
-        Boolean result = move.getPiece().isMovePossible(move, game);
+        //!!! Il est nécessaire de récupérer la pièce locale et non celle du move récupéré côté client -> ce n'est pas le même object
+        APieceEntity mypiece = game.getPieceFromPosition(move.getFromPosition());
+        Boolean result = mypiece.isMovePossible(move, game);
         if (result) {
 
             if (move.getPiece().toString() == "King") {
@@ -135,6 +137,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
             
             game.removePieceFromPosition(move.getToPosition());
             game.movePiece(move);
+            
+            System.out.println("computerResult : move : " + move.getFromPosition().getPositionX() + "," + + move.getFromPosition().getPositionY() + ";" + move.getToPosition().getPositionX() + "," + move.getToPosition().getPositionY() + ";" + move.getPiece().toString());
 
 
         }
@@ -158,6 +162,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
         // verify game :
         GameEntity game = dataServerManager.getGameById(idGame);
         GameStatusEnum result = game.isFinished();
+        System.out.println("serverdatatocomimpt : isfinished : status : " + result);
 
         game.switchCurrentUser();
 
