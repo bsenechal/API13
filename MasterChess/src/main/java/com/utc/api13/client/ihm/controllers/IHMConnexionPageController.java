@@ -62,7 +62,8 @@ public class IHMConnexionPageController {
         launchGame();
     }
 
-    private void launchGame() throws IOException {
+    @SuppressWarnings("restriction")
+	private void launchGame() throws IOException {
         String login = loginTextView.getText();
         String pw = passwordTextView.getText();
         String sv = serverAddressTextView.getText();
