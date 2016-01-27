@@ -120,9 +120,9 @@ public class ClientDataToComImpl implements IClientDataToCom {
         int fromCol=move.getFromPosition().getPositionY();
         int toLine=move.getToPosition().getPositionX();
         int toCol=move.getToPosition().getPositionY();
-        APieceEntity piece=move.getPiece();
-        GameEntity thisgame=instanceDataClientManager.getCurrentGame();
         
+        GameEntity thisgame=instanceDataClientManager.getCurrentGame();
+        APieceEntity piece=thisgame.getPieceFromPosition(move.getFromPosition());
         Assert.notNull(thisgame,
                 "[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
       

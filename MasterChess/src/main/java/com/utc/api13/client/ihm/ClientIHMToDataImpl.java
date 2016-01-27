@@ -170,7 +170,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         Case[][] chessBoardSquares = controller.getCb().getChessBoardSquares();
         
         // effacer la pièce de l'ancienne case
-        chessBoardSquares[line_from-1][col_from-1].setIcon(null);
+        chessBoardSquares[line_from-1][8-col_from].setIcon(null);
         // trouver le type de piece
         String pieceType="";
         if(piece.toString() == "Rook") {
@@ -188,12 +188,12 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         }
         // afficher la pièce sur la nouvelle case
         try {
-            if (game.getCurrentPlayer() == game.getBlackPlayer()) {
+            if (!game.getCurrentPlayer().getId().equals(game.getBlackPlayer().getId())) {
                 Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "B.gif"));
-                chessBoardSquares[line_to-1][col_to-1].setIcon(new ImageIcon(img));
+                chessBoardSquares[line_to-1][8-col_to].setIcon(new ImageIcon(img));
             } else {
                 Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "N.gif"));
-                chessBoardSquares[line_to-1][col_to-1].setIcon(new ImageIcon(img));
+                chessBoardSquares[line_to-1][8-col_to].setIcon(new ImageIcon(img));
             }
 
         } catch (IOException e) {

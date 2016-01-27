@@ -77,15 +77,19 @@ public class ChessBoardNode {
         Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int ii = 0; ii < chessBoardSquares.length; ii++) {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
-                Case b = new Case(ii, jj);
+            	Case b = new Case(ii, jj);
                 b.setEnabled(false);
                 
                 if ((jj % 2 == 1 && ii % 2 == 1) || (jj % 2 == 0 && ii % 2 == 0)) {
-                	b.setBackground(Color.WHITE);
-                    b.setColor(Color.WHITE);               	
+//                	b.setBackground(Color.GRAY);
+//                    b.setColor(Color.GRAY);   
+                	 b.setBackground(Color.WHITE);
+                     b.setColor(Color.WHITE);
                 } else {
                 	b.setBackground(Color.GRAY);
-                    b.setColor(Color.GRAY);              	
+                    b.setColor(Color.GRAY);  
+//                    b.setBackground(Color.WHITE);
+//                    b.setColor(Color.WHITE); 
                 }
                 
                 b.addActionListener(new ActionListener() {
@@ -96,10 +100,13 @@ public class ChessBoardNode {
                                 if (movePosition == chessBoardSquares[ii][jj]) {
 
                                     movePosition.setLine(ii+1);
-                                    movePosition.setColumn(jj+1);
+                                    movePosition.setColumn(8-jj);
                                 }
                             }
                         }
+                        
+                        System.out.println("ligne " + movePosition.getLine()
+                        		+ " coloone " + movePosition.getColumn());
                         if (selection == 1) {
                             firstPosition.setPositionX(movePosition.getLine());
                             firstPosition.setPositionY(movePosition.getColumn());
@@ -120,15 +127,15 @@ public class ChessBoardNode {
                                 }
                                 // passer les cases en surbrillance et activer
                                 // uniquement celles-ci et la position de depart !
-                                chessBoardSquares[firstPosition.getPositionX()-1][firstPosition.getPositionY()-1]
+                                chessBoardSquares[firstPosition.getPositionX()-1][8-firstPosition.getPositionY()]
                                         .setBorder(new LineBorder(Color.GREEN));
-                                chessBoardSquares[firstPosition.getPositionX()-1][firstPosition.getPositionY()-1].setEnabled(true);
+                                chessBoardSquares[firstPosition.getPositionX()-1][8-firstPosition.getPositionY()].setEnabled(true);
                                 for (int i = 0; i < positionList.size(); i++) {
-                                    chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
-                                            .getPositionY()-1].setEnabled(true);
+                                    chessBoardSquares[positionList.get(i).getPositionX()-1][8-positionList.get(i)
+                                            .getPositionY()].setEnabled(true);
       
-                                    chessBoardSquares[positionList.get(i).getPositionX()-1][positionList.get(i)
-                                            .getPositionY()-1].setBackground(Color.GREEN);
+                                    chessBoardSquares[positionList.get(i).getPositionX()-1][8-positionList.get(i)
+                                            .getPositionY()].setBackground(Color.GREEN);
                                 }
                                 
                             }
@@ -139,6 +146,7 @@ public class ChessBoardNode {
                                     && (movePosition.getColumn() == firstPosition.getPositionY())) {                      
                                 activateCases(myGame.getCurrentPlayer());              
                             } else {
+                            	System.out.println("firstPosition.getPositionX() :" + firstPosition.getPositionX() + "firstPosition.getPositionY() :" + firstPosition.getPositionY() + " movePosition.getLine() :" + movePosition.getLine() + " movePosition.getColumn() :" + movePosition.getColumn());
                                 myIClientToIHM.playMove(firstPosition.getPositionX(), firstPosition.getPositionY(),
                                         movePosition.getLine(), movePosition.getColumn());
                                 // tout rendre unclickable
