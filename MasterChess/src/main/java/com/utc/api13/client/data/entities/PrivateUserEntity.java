@@ -1,5 +1,6 @@
 package com.utc.api13.client.data.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.utc.api13.commun.entities.AUserEntity;
@@ -40,7 +41,10 @@ public class PrivateUserEntity extends AUserEntity {
     // connections = new HashMap<String,Integer>();
 
     public PrivateUserEntity() {
+       
         super();
+        savedGames=new ArrayList<GameEntity>();
+        
     }
 
     /**
@@ -49,6 +53,8 @@ public class PrivateUserEntity extends AUserEntity {
     public PrivateUserEntity(String login, String password) {
         super(login, password);
         this.password = password;
+        savedGames=new ArrayList<GameEntity>();
+       
     }
 
     /**

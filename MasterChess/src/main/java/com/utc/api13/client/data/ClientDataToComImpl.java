@@ -141,31 +141,42 @@ public class ClientDataToComImpl implements IClientDataToCom {
     @Override
     public void sendAnswerForLeaving(boolean answer) {
         
-        if (answer){
-            // Add game in local user saved game (in case the local user wants to
-            // save the game after ending)
-            instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
-            // Modify the played games
-            instanceDataClientManager.getUserLocal()
-                    .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
+        // Add game in local user saved game (in case the local user wants to
+        // save the game after ending)
+        instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
+        // Modify the played games
+        instanceDataClientManager.getUserLocal()
+                .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
+        
+        instanceDataClientManager.setCurrentGame(null);
+        
+        if(!answer){
             
-            // Display answer to local user
-            UUID senderId = instanceDataClientManager.getUserLocal().getId()
-                    .equals(instanceDataClientManager.getCurrentGame().getBlackPlayer().getId())
-                            ? instanceDataClientManager.getCurrentGame().getWhitePlayer().getId()
-                            : instanceDataClientManager.getCurrentGame().getBlackPlayer().getId();
-            
-            
-            instanceDataClientManager.getIClientIHMToData().displayAnswer(senderId, answer,
-                    "The player has quit the game ");
-            instanceDataClientManager.getIClientIHMToData().displayAnswer(instanceDataClientManager.getUserLocal().getId(), answer,
-                    "You have quit the game ");
-         // End the local game
-            instanceDataClientManager.setCurrentGame(null);
-        }else{
-            instanceDataClientManager.getIClientIHMToData().displayAnswer(instanceDataClientManager.getUserLocal().getId(), answer,
-                    "Your opponent doesn't want to quit the game, you'll keep playing. Surrend it if you want, but your stats will change ! ");
+            instanceDataClientManager.getUserLocal().setNbWon(
+                    instanceDataClientManager.getUserLocal().getNbLost() +1
+                   );
         }
+        
+//        if (answer){
+//           
+//            
+//            // Display answer to local user
+//            UUID senderId = instanceDataClientManager.getUserLocal().getId()
+//                    .equals(instanceDataClientManager.getCurrentGame().getBlackPlayer().getId())
+//                            ? instanceDataClientManager.getCurrentGame().getWhitePlayer().getId()
+//                            : instanceDataClientManager.getCurrentGame().getBlackPlayer().getId();
+//            
+//            
+//            instanceDataClientManager.getIClientIHMToData().displayAnswer(senderId, answer,
+//                    "The player has quit the game ");
+//            instanceDataClientManager.getIClientIHMToData().displayAnswer(instanceDataClientManager.getUserLocal().getId(), answer,
+//                    "You have quit the game ");
+//         // End the local game
+//            instanceDataClientManager.setCurrentGame(null);
+//        }else{
+//            instanceDataClientManager.getIClientIHMToData().displayAnswer(instanceDataClientManager.getUserLocal().getId(), answer,
+//                    "Your opponent doesn't want to quit the game, you'll keep playing. Surrend it if you want, but your stats will change ! ");
+//        }
     }
 
     @Override

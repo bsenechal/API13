@@ -5,19 +5,14 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc.api13.client.ihm.controllers.GiveUpPopUpController">
    <center>
       <AnchorPane fx:id="mainAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="opponentLabel" layoutX="286.0" layoutY="145.0">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
             <Label fx:id="messageLabel" layoutX="194.0" layoutY="183.0" text="wants to leave the game. Do you agree?" />
             <Button fx:id="yesButton" layoutX="252.0" layoutY="225.0" mnemonicParsing="false" onAction="#OnYesClicked" text="Yes" />
             <Button fx:id="NoButton" layoutX="314.0" layoutY="225.0" mnemonicParsing="false" onAction="#OnNoClicked" text="No" />
+            <Text layoutX="286.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" />
          </children>
       </AnchorPane>
    </center>

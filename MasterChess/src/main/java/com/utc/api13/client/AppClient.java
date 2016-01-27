@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.client.ihm.controllers.ConfirmationController;
 import com.utc.api13.client.ihm.controllers.ErrorController;
 import com.utc.api13.client.ihm.controllers.IHMConnexionPageController;
 
@@ -138,7 +139,7 @@ public class AppClient extends Application {
    
 
 
-    private void displayErrorPopup(String message) {
+    public void displayErrorPopup(String message) {
         // TODO Auto-generated method stub
         Stage stage;
         Parent root=null;
@@ -157,6 +158,32 @@ public class AppClient extends Application {
         stage.setTitle("error");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+        
+    }
+    public void displayConfirmationPopup(String message){
+        
+        Stage stage;
+        Parent root=null;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
+        try {
+            root = (Pane) fxmlLoader.load();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        ConfirmationController controller = fxmlLoader.getController();
+        controller.setControllerContext(ihmManager);
+        controller.setMainApp(this, message);
+        stage.setScene(new Scene(root));
+        stage.setTitle("confirmation");
+       
+     //   myIHMManager.getCurrentStage().close(); 
+//        mainApp.getCurrentStage().close();
+//        mainApp.setCurrentStage(stage);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+       
         
     }
 }
