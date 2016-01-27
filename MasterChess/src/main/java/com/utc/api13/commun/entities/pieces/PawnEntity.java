@@ -62,7 +62,7 @@ public class PawnEntity extends APieceEntity {
                 result.add(positionTemp);
             }
 
-            if (positionX == START_LINE_WHITE_PAWN) {
+            if (positionY == START_LINE_WHITE_PAWN) {
                 positionTemp = new PositionEntity(positionX, positionY + 2);
                 if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)
                         && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
@@ -90,7 +90,7 @@ public class PawnEntity extends APieceEntity {
                 result.add(positionTemp);
             }
 
-            if (positionX == START_LINE_BLACK_PAWN) {
+            if (positionY == START_LINE_BLACK_PAWN) {
                 positionTemp = new PositionEntity(positionX, positionY - 2);
                 if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)
                         && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {

@@ -11,25 +11,25 @@
       <AnchorPane fx:id="createProfileAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="loginLabel" layoutX="180.0" layoutY="161.0" text="Login" />
+            <TextField fx:id="loginTextView" layoutX="272.0" layoutY="157.0" />            
             <Label fx:id="passwordLabel" layoutX="180.0" layoutY="195.0" text="Password" />
+            <PasswordField fx:id="passwordTextView" layoutX="272.0" layoutY="194.0" />
             <Label fx:id="firstNameLabel" layoutX="180.0" layoutY="235.0" text="First Name" />
-            <Button fx:id="saveProfileButton" layoutX="263.0" layoutY="327.0" mnemonicParsing="false" onAction="#onSaveProfileClicked" text="Enregistrer" />
-            <TextField fx:id="loginTextView" layoutX="272.0" layoutY="157.0" />
             <TextField fx:id="firstNameTextView" layoutX="272.0" layoutY="231.0" />
+            <Label fx:id="lastNameLabel" layoutX="180.0" layoutY="274.0" text="Last Name" />
+            <TextField fx:id="lastNameTextView" layoutX="272.0" layoutY="267.0" />
+            <Button fx:id="saveProfileButton" layoutX="263.0" layoutY="327.0" mnemonicParsing="false" onAction="#onSaveProfileClicked" onKeyPressed="#handleEnterPressed" text="Enregistrer" /> 
             <Label fx:id="createProfileLabel" layoutX="152.0" layoutY="63.0" text="Create your Profile">
                <font>
                   <Font size="18.0" />
                </font>
-            </Label>
-            <Label fx:id="lastNameLabel" layoutX="180.0" layoutY="274.0" text="Last Name" />
-            <TextField fx:id="lastNameTextView" layoutX="272.0" layoutY="267.0" />
+            </Label>           
             <ImageView fx:id="changeProfilePicture" fitHeight="104.0" fitWidth="95.0" layoutX="362.0" layoutY="32.0" onMouseClicked="#onChangePictureClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../pictures/profilePicture-modify.png" />
                </image>
             </ImageView>
-            <Label fx:id="errorInfo" layoutX="150.0" layoutY="4.0" prefHeight="21.0" prefWidth="200.0" textFill="#da1010" />
-            <PasswordField fx:id="passwordTextView" layoutX="272.0" layoutY="194.0" />
+            <Label fx:id="errorInfo" layoutX="150.0" layoutY="4.0" prefHeight="21.0" prefWidth="200.0" textFill="#da1010" />            
          </children>
       </AnchorPane>
    </top>

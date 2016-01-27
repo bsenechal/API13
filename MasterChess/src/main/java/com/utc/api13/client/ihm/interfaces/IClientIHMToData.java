@@ -2,8 +2,10 @@ package com.utc.api13.client.ihm.interfaces;
 
 import java.util.UUID;
 
+import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 public interface IClientIHMToData {
 
@@ -53,18 +55,15 @@ public interface IClientIHMToData {
 
     /**
      * This method notifies local user (who proposed a game) that distant user
-     * accepted or rejected the proposition of game
+     * rejected the proposition of game
      * 
      * @param uidSender
      *            The unique identifier of the distant answer who accepted or
      *            rejected the game proposition. Allows to identify which user
      *            answered.
-     * @param observable
-     *            Boolean indicating the answer of the distant user (TRUE ->
-     *            YES, FALSE -> NO)
      * @return void
      */
-    public void displayAnswer(UUID uidSender, boolean observable);
+    public void displayAnswer(UUID uidSender, boolean answer, String message);
 
     /**
      * Asks the HMI to display the chessboard when both user have accepted the
@@ -77,7 +76,7 @@ public interface IClientIHMToData {
     /**
      * After a piece is moved
      */
-    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, String pieceType);
+    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, APieceEntity piece, GameEntity game);
 
     /**
      * Method called when distant user sent a chat message, in order the HMI to
@@ -142,4 +141,8 @@ public interface IClientIHMToData {
     // erreurs : il suffit de catcher les exceptions
     // attention dans les fonctions à tout le temps mettre getCardGame pour
     // récup jeu local
+    
+    public void activateCases(PublicUserEntity currentUser, GameStatusEnum status);
+
+    public void closeGameScreen(boolean bool);
 }

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane fx:id="helpBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc.api13.client.ihm.controllers.IHMHelpPageController">
+   <center>
+      <AnchorPane fx:id="helpAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="closeButton" layoutX="484.0" layoutY="38.0" mnemonicParsing="false" onAction="#onBackClicked" text="Go Back" />
+            <Label fx:id="welcomeLabel" layoutX="191.0" layoutY="42.0" text="Welcome to the game documentation!">
+               <effect>
+                  <Bloom />
+               </effect>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TabPane fx:id="helpTabPane" layoutX="26.0" layoutY="100.0" prefHeight="265.0" prefWidth="548.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Presentation">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Hyperlink fx:id="rulesHyperlink" layoutX="150.0" layoutY="42.0" onAction="#onRulesClicked" text="this link." />
+                              <Label fx:id="presLabel1" layoutX="17.0" layoutY="19.0" text="MasterChess is a traditional chess game, following normal rules." />
+                              <Label fx:id="presLabel2" layoutX="17.0" layoutY="45.0" text="You can find the rules on " />
+                              <Label fx:id="presLabel3" layoutX="16.0" layoutY="68.0" prefHeight="23.0" prefWidth="746.0" text="The welcome page displays: a toolbar, the connected user list and the current game list. Those are " />
+                              <Label fx:id="presLabel4" layoutX="17.0" layoutY="91.0" text="the main elements for you to use the app. " />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Launch the game">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="13.0" layoutY="14.0" text="You have 2 ways of launching a game: " />
+                              <Label layoutX="15.0" layoutY="105.0" text="A pop up appears where you can see the user's information. You just have to click on the &quot;play&quot;" />
+                              <Label layoutX="15.0" layoutY="122.0" text="button to choose the game options, and send a proposition." />
+                              <Label layoutX="14.0" layoutY="79.0" text="You can only play with a user if you have sent a game proposition that has been accepted." />
+                              <Label layoutX="15.0" layoutY="139.0" text="The game can be observed by any connected user, use a chat, and use a timer if you choose so." />
+                              <Label layoutX="11.0" layoutY="61.0" text=" You just have to double click on the user you want to play with on the right-side connected user list. " />
+                              <Label layoutX="48.0" layoutY="40.0" text="To ask a specific connected user to play with you:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="50.0" layoutY="170.0" text="To accept to play with another user that has sent a game proposition to you:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="16.0" layoutY="187.0" text="When you receive a game proposition, a pop up appears where you can see the options of the game." />
+                              <Label layoutX="16.0" layoutY="204.0" text="You just have to click on &quot;yes&quot; or &quot;no&quot; to send your answer. If you accept, the game with be " />
+                              <Label layoutX="16.0" layoutY="220.0" text="automatically launched." />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                <Tab text="Update your profile">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="14.0" layoutY="14.0" text="At some point, you may want to change your information. " />
+                              <Label layoutX="14.0" layoutY="38.0" text="You have 2 ways to do it on the welcome page:" />
+                              <Label layoutX="29.0" layoutY="64.0" text="On the top, double click on your login. ">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="29.0" layoutY="81.0" text="Your current information will be displayed, and you can update it by clicking on the &quot;modify&quot; " />
+                              <Label layoutX="29.0" layoutY="98.0" text="button." />
+                              <Label layoutX="29.0" layoutY="156.0" text="Click on the arrow near the parameter wheel.">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="29.0" layoutY="174.0" text="Click on &quot;modify my profile&quot;. Change the pieces of information you want, and save your changes." />
+                              <Label layoutX="29.0" layoutY="118.0" text="Change the pieces of information you want, and save your changes." />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Observe a game">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="7.0" layoutY="23.0" text="Do you want to see a current game, without playing? It is possible!" />
+                              <Label layoutX="7.0" layoutY="48.0" text="Have a look at the left-side current game list, displayed on the welcome page: just double click on " />
+                              <Label layoutX="7.0" layoutY="65.0" text="the game you want to see. If the creator has allowed it, you are also able to join the chat of this" />
+                              <Label layoutX="7.0" layoutY="82.0" text="game." />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+            <ImageView fx:id="helpImage" fitHeight="61.0" fitWidth="112.0" layoutX="69.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/help-pic.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

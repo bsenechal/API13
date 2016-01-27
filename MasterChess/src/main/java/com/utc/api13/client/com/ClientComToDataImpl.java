@@ -6,16 +6,20 @@ import com.utc.api13.client.com.interfaces.IClientComToData;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
+import com.utc.api13.commun.messages.AllGameMessage;
 import com.utc.api13.commun.messages.AllUserMessage;
 import com.utc.api13.commun.messages.ChatMessage;
 import com.utc.api13.commun.messages.ConnectMessage;
 import com.utc.api13.commun.messages.DisconnectMessage;
 import com.utc.api13.commun.messages.ExcludeObserverMessage;
+import com.utc.api13.commun.messages.GameFinishedMessage;
 import com.utc.api13.commun.messages.GameRequestMessage;
+import com.utc.api13.commun.messages.MoveValidationMessage;
 import com.utc.api13.commun.messages.ObserverLeaveMessage;
 import com.utc.api13.commun.messages.ObserverRequestMessage;
 import com.utc.api13.commun.messages.PublicUserMessage;
 import com.utc.api13.commun.messages.RequestAnswerMessage;
+import com.utc.api13.commun.messages.RequestPlayerLeaving;
 import com.utc.api13.commun.messages.UserUpdateMessage;
 
 public class ClientComToDataImpl implements IClientComToData {
@@ -48,8 +52,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void validateMove(UUID idPlayer, MoveEntity move) {
-        // comClientManagerInstance.sendMessage(new
-        // MoveValidationMessage(idPlayer, new UUID(0,0), move));
+        comClientManagerInstance.sendMessage(new MoveValidationMessage(idPlayer, new UUID(0,0), move));
         return;
     }
 
@@ -98,15 +101,12 @@ public class ClientComToDataImpl implements IClientComToData {
 
     }
 
-    @Override
-    public void endGameByLeaving() {
-        // TODO Auto-generated method stub
-
-    }
+   
 
     @Override
-    public void requestPlayerForLeaving(UUID uid, boolean answer) {
+    public void requestPlayerForLeaving(UUID sender, UUID receiver) {
         // TODO Auto-generated method stub
+        comClientManagerInstance.sendMessage(new  RequestPlayerLeaving(sender,receiver));
 
     }
 
@@ -118,7 +118,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void getAllParties() {
-        // TODO Auto-generated method stub
+        comClientManagerInstance.sendMessage(new AllGameMessage(new UUID(0, 0), new UUID(0, 0), null));
         return;
     }
 
@@ -154,9 +154,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void getUserInfo(UUID iduser) {
-
         comClientManagerInstance.sendMessage(new PublicUserMessage(null, new UUID(0, 0), iduser));
-
     }
 
     @Override
@@ -218,5 +216,11 @@ public class ClientComToDataImpl implements IClientComToData {
         // TODO Auto-generated method stub
         comClientManagerInstance.sendMessage(new ExcludeObserverMessage(userId, gameId));
 
+    }
+
+    @Override
+    public void endGameByLeaving(UUID sender,UUID receiver, UUID gameId, boolean answer) {
+        // TODO Auto-generated method stub
+        comClientManagerInstance.sendMessage(new GameFinishedMessage(sender,receiver, gameId, answer));
     }
 }

@@ -46,13 +46,13 @@ public class KnightEntity extends APieceEntity {
 
         for (int x = MIN_MOVE; x <= MAX_MOVE; x += INCREMENT_NUMBER) {
             for (int y = MIN_MOVE; y <= MAX_MOVE; y += INCREMENT_NUMBER) {
-                if (x == 0) {
+                if (x == 0 && y != 0) {
                     addPossibleSolution(game, positionX, positionY, x + LEFT_MOVE, y, result, verifyCheck);
 
                     addPossibleSolution(game, positionX, positionY, x + RIGHT_MOVE, y, result, verifyCheck);
                 }
 
-                if (y == 0) {
+                if (y == 0 && x != 0) {
                     addPossibleSolution(game, positionX, positionY, x, y + LEFT_MOVE, result, verifyCheck);
 
                     addPossibleSolution(game, positionX, positionY, x, y + RIGHT_MOVE, result, verifyCheck);

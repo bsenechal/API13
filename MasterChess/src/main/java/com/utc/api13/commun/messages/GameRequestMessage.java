@@ -38,7 +38,13 @@ public class GameRequestMessage extends Message {
 
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-        comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
+        if (comServerManager.getIServerDataToCom().isPlaying(receiver)) {
+            comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(sender).channel(),
+                    new RequestAnswerMessage(sender, receiver, chattable, observable, false, timer, timerInt));
+        } else {
+            comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(),
+                    this);
+        }
     }
 
     public boolean isChattable() {

@@ -1,14 +1,20 @@
 package com.utc.api13.client;
 
+import java.io.IOException;
+
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.ihm.IHMManager;
+import com.utc.api13.client.ihm.controllers.ConfirmationController;
+import com.utc.api13.client.ihm.controllers.ErrorController;
 import com.utc.api13.client.ihm.controllers.IHMConnexionPageController;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -18,16 +24,38 @@ import javafx.stage.Stage;
 public class AppClient extends Application {
     public static Stage stage;
     private Stage currentStage;
+    
+    private  ComClientManager comClientManager;
+    private  IHMManager ihmManager;
+    private  boolean succeed=true;
 
-    @Override
+ 
+
+    public ComClientManager getComClientManager() {
+        return comClientManager;
+    }
+
+    public void setComClientManager(ComClientManager comClientManager) {
+        this.comClientManager = comClientManager;
+    }
+
+    public boolean isSucceed() {
+        return succeed;
+    }
+
+    public void setSucceed(boolean succeed) {
+        this.succeed = succeed;
+    }
+
+    @SuppressWarnings("restriction")
+	@Override
     public void start(Stage stage) throws Exception {
-
+        
         /**
-         * MAIN <<<<<<<<<<<<<<<<<<<<<<<
+         * JAVAFX STAGE <<<<<<<<<<<<<<<<<<<<<<<
          */
-
-        IHMManager ihmManager = new IHMManager();
-        ComClientManager comClientManager = new ComClientManager();
+         ihmManager = new IHMManager();
+        comClientManager = new ComClientManager();
         ihmManager.setMainApp(this);
 
         DataClientManager dataClientManager = new DataClientManager();
@@ -36,15 +64,8 @@ public class AppClient extends Application {
 
         ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
         comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
-        comClientManager.launchAppCom("localhost", 8000);
-
-        /**
-         * >>>>>>>>>>>>>>>>>>>>>>>
-         */
-
-        /**
-         * JAVAFX STAGE <<<<<<<<<<<<<<<<<<<<<<<
-         */
+        
+        
         this.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
         Pane root = (Pane) fxmlLoader.load();
@@ -52,6 +73,7 @@ public class AppClient extends Application {
         controller.setControllerContext(ihmManager);
         this.setCurrentStage(stage);
         controller.setMainApp(this);
+        controller.setCurrentStage(stage);
         Scene scene = new Scene(root, 800, 600);
         scene.getStylesheets().add(getClass().getResource("/css/masterCSS.css").toExternalForm());
         stage.setTitle("Connexion");
@@ -62,9 +84,12 @@ public class AppClient extends Application {
          * >>>>>>>>>>>>>>>>>>>>>>>
          */
 
-        // TODO : Faire une vrai gestion d'erreur
-        // comClientManager.close();
+        /**
+         * MAIN <<<<<<<<<<<<<<<<<<<<<<<
+         */
 
+       
+    
     }
 
     // private static final Logger LOGGER = Logger.getLogger(AppClient.class);
@@ -88,5 +113,77 @@ public class AppClient extends Application {
     public static void main(String[] args) {
         launch(args);
 
+    }
+   public void  launchAppCom(String host,int port){
+       
+    //   comClientManager.launchAppCom(host, port);
+       try {
+           comClientManager.launchAppCom(host,port);
+    } catch (Exception e) {
+        // TODO Auto-generated catch block
+        succeed=false;
+        displayErrorPopup(" wrong server port and server address");
+        e.printStackTrace();
+        
+    }
+       /**
+        * >>>>>>>>>>>>>>>>>>>>>>>
+        */
+
+
+       // TODO : Faire une vrai gestion d'erreur
+       // comClientManager.close();
+
+   }
+
+   
+
+
+    public void displayErrorPopup(String message) {
+        // TODO Auto-generated method stub
+        Stage stage;
+        Parent root=null;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+        try {
+            root = (Pane) fxmlLoader.load();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        ErrorController controller = fxmlLoader.getController();
+        controller.setControllerContext(ihmManager);
+        controller.setMainApp(this, message);
+        stage.setScene(new Scene(root));
+        stage.setTitle("error");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+        
+    }
+    public void displayConfirmationPopup(String message){
+        
+        Stage stage;
+        Parent root=null;
+        stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
+        try {
+            root = (Pane) fxmlLoader.load();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        ConfirmationController controller = fxmlLoader.getController();
+        controller.setControllerContext(ihmManager);
+        controller.setMainApp(this, message);
+        stage.setScene(new Scene(root));
+        stage.setTitle("confirmation");
+       
+     //   myIHMManager.getCurrentStage().close(); 
+//        mainApp.getCurrentStage().close();
+//        mainApp.setCurrentStage(stage);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+       
+        
     }
 }

@@ -1,9 +1,12 @@
 package com.utc.api13.commun.entities;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -384,6 +387,22 @@ public class GameEntity extends ADataEntity {
 
         }
     }
+    
+    /**
+     * @author ulyss_000
+     * @return the current player color
+     */
+    public PieceColorEnum getCurrentPlayerColor() {
+        if (this.getCurrentPlayer().getId().equals(this.getBlackPlayer().getId())) {
+            // ActivePlayer is BlackPlayer
+            return PieceColorEnum.BLACK;
+
+        } else {
+            // ActivePlayer is WhitePlayer
+            return PieceColorEnum.WHITE;
+
+        }
+    }
 
     /**
      * @author ulyss_000
@@ -442,16 +461,10 @@ public class GameEntity extends ADataEntity {
         Boolean check = false;
 
         // set local variables according to the local player color :
-        if (this.getCurrentPlayer().getId().equals(this.getBlackPlayer().getId())) {
-            // ActivePlayer is BlackPlayer
-            opponentPieces = this.getWhitePieces();
-        } else {
-            // ActivePlayer is WhitePlayer
-            opponentPieces = this.getBlackPieces();
 
-        }
-        king = (KingEntity) opponentPieces.stream().filter(bp -> bp.getClass().isInstance(KingEntity.class)).findFirst()
-                .orElse(null);
+        opponentPieces = this.getOpponentPieces();
+
+        king = (KingEntity) opponentPieces.stream().filter(bp -> bp.toString().equals("King")).findFirst().orElse(null);
 
         // Check check
         if (this.isCheck()) {
@@ -461,10 +474,16 @@ public class GameEntity extends ADataEntity {
 
         // Checkmate check :
         if (check == true) {
-            // check if the king can't move :
-            if (king.generateAvailableMoves(this).isEmpty()) {
-                // check if no piece can save him :
-                // TODO !!!
+            // get all availables moves of the current player, if null ->
+            // checkmate :
+            List<APieceEntity> currentPlayerPieces = new ArrayList<APieceEntity>();
+            currentPlayerPieces.addAll(this.getCurrentPlayerPieces());
+            List<PositionEntity> currentPlayerAvailableMoves = new ArrayList<PositionEntity>();
+            for (APieceEntity piece : currentPlayerPieces) {
+                currentPlayerAvailableMoves.addAll(piece.generateAvailableMoves(this));
+            }
+            // check if nothing can save the king :
+            if (currentPlayerAvailableMoves.isEmpty()) {
                 result = GameStatusEnum.CHECKMATE;
             }
         }
@@ -539,6 +558,7 @@ public class GameEntity extends ADataEntity {
         }
     }
 
+
     /**
      * Return a piece from a position
      * 
@@ -554,5 +574,30 @@ public class GameEntity extends ADataEntity {
 
         return piecelist.stream().filter(piece -> piece.getPosition().equals(myposition)).findFirst().orElse(null);
 
+    }
+
+    // utilise pour binder a une partie sur l'ecran d'accueil
+    public String getWhitePlayerLogin() {
+        return whitePlayer.getLogin();
+    }
+
+    public String getBlackPlayerLogin() {
+        return blackPlayer.getLogin();
+    }
+
+    public String getCreationDateDrawable() {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        String reportDate = df.format(creationDate);
+        return reportDate;
+    }
+    
+    /**
+     * apply a move on a game entity
+     * @author ulyss_000
+     * @param move
+     */
+    public void movePiece(MoveEntity move){
+    	//ulysse: en mode fast :
+    	this.getPieceFromPosition(move.getFromPosition()).setPosition(move.getToPosition());
     }
 }

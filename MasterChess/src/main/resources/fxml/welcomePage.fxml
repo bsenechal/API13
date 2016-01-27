@@ -27,14 +27,6 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <ImageView fx:id="iconNotif" fitHeight="34.0" fitWidth="35.0" layoutX="585.0" layoutY="12.0" onMouseClicked="#onNotifClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../pictures/Icone-cloche.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
                   <Text fx:id="userLabel" layoutX="463.0" layoutY="35.0" onMouseClicked="#onMyInfoClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="ConnectedPlayer">
                      <font>
                         <Font size="15.0" />
@@ -71,11 +63,11 @@
                            <children>
                               <TableView fx:id="currentGamesTable" layoutX="27.0" layoutY="52.0" prefHeight="200.0" prefWidth="418.0">
                                 <columns>
-                                  <TableColumn fx:id="currentGamesId" prefWidth="57.0" resizable="false" text="Game ID" />
-                                  <TableColumn fx:id="currentGamesPlayer1" prefWidth="130.0" resizable="false" text="Player 1" />
-                                    <TableColumn fx:id="currentGamesPlayer2" prefWidth="130.0" resizable="false" text="Player 2" />
-                                    <TableColumn fx:id="currentGamesTime" prefWidth="61.0" resizable="false" text="Time" />
-                                    <TableColumn fx:id="currentGamesObs" prefWidth="39.0" resizable="false" />
+                                <TableColumn fx:id="currentGamesId" prefWidth="57.0" resizable="true" text="Game ID" />
+                                   <TableColumn fx:id="currentGamesPlayer1" prefWidth="130.0" resizable="true" text="Player 1" />
+                                   <TableColumn fx:id="currentGamesPlayer2" prefWidth="130.0" resizable="true" text="Player 2" />
+                                   <TableColumn fx:id="currentGamesTime" prefWidth="61.0" resizable="true" text="Time" />
+                                   <TableColumn fx:id="currentGamesObs" prefWidth="39.0" resizable="true" text="Observateurs"/>
                                 </columns>
                               </TableView>
                               <Label fx:id="currentGamesLabel" layoutX="35.0" layoutY="14.0" text="Current Games">
@@ -84,7 +76,6 @@
                                  </font>
                               </Label>
                               <ScrollBar fx:id="currentGamesScrollbar" layoutX="450.0" layoutY="2.0" orientation="VERTICAL" prefHeight="262.0" prefWidth="14.0" />
-                              <Label fx:id="testEcran" layoutX="287.0" layoutY="18.0" onMouseClicked="#testEcranFunction" text="testEcran" /> 
                            </children>
                         </AnchorPane>
                       <AnchorPane fx:id="bottomLeftAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="207.0" prefWidth="471.0">
@@ -96,12 +87,11 @@
                               </Label>
                               <TableView fx:id="savedGamesTable" layoutX="27.0" layoutY="52.0" prefHeight="200.0" prefWidth="418.0">
                                  <columns>
-                                    <TableColumn fx:id="savedGamesId" prefWidth="57.0" resizable="false" text="Game ID" />
-                                    <TableColumn fx:id="savedGamesPlayer1" prefWidth="130.0" resizable="false" text="Player 1" />
-                                    <TableColumn fx:id="savedGamesPlayer2" prefWidth="130.0" resizable="false" text="Player 2" />
-                                    <TableColumn fx:id="savedGamesDate" prefWidth="61.0" resizable="false" text="Date" />
-                                    <TableColumn fx:id="savedGamesReplay" prefWidth="39.0" resizable="false" />
-                                 </columns>
+                                     <TableColumn fx:id="savedGamesId" prefWidth="57.0" resizable="true" text="Game ID" />
+                                     <TableColumn fx:id="savedGamesPlayer1" prefWidth="130.0" resizable="true" text="Player 1" />
+                                     <TableColumn fx:id="savedGamesPlayer2" prefWidth="130.0" resizable="true" text="Player 2" />
+                                     <TableColumn fx:id="savedGamesDate" prefWidth="61.0" resizable="true" text="Date" />
+                                     <TableColumn fx:id="savedGamesReplay" prefWidth="39.0" resizable="true" text="Replay"/>                                 </columns>
                               </TableView>
                               <ScrollBar fx:id="savedGamesScrollbar" layoutX="447.0" layoutY="2.0" orientation="VERTICAL" prefHeight="264.0" prefWidth="14.0" />
                            </children>
@@ -119,9 +109,9 @@
                   </Label>
                   <TableView fx:id="connectedUserTable" layoutX="8.0" layoutY="41.0" prefHeight="490.0" prefWidth="297.0">
                      <columns>
-                        <TableColumn fx:id="connectedUserLogin" prefWidth="94.0" resizable="false" text="Login" />
-                        <TableColumn fx:id="connectedUserStatus" prefWidth="92.0" resizable="false" text="Status" />
-                        <TableColumn fx:id="connectedUserStat" prefWidth="82.0" resizable="false" text="Won/Lost" />
+                       <TableColumn fx:id="connectedUserLogin" prefWidth="94.0" resizable="true" text="Login" />
+                       <TableColumn fx:id="connectedUserStatus" prefWidth="92.0" resizable="true" text="Status" />
+                       <TableColumn fx:id="connectedUserStat" prefWidth="82.0" resizable="true" text="Won/Lost" />
                      </columns>
                   </TableView>
                   <ScrollBar fx:id="connectedUserScrollbar" layoutX="313.0" layoutY="6.0" orientation="VERTICAL" prefHeight="527.0" prefWidth="14.0" />

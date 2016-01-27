@@ -93,10 +93,11 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        // cause.printStackTrace();
+        cause.printStackTrace();
         UUID userId = comServerManager.findUserIdFromChannelHandlerContext(ctx);
         logger.warn("User : " + userId + " quit application, broadcast disconnection");
         comServerManager.unlinkUserToChannelHandlerContext(userId);
+        comServerManager.getIServerDataToCom().disconnect(userId);
         DisconnectMessage msg = new DisconnectMessage(userId, new UUID(0, 0), userId);
         comServerManager.broadcastMessage(msg);
         ctx.close();

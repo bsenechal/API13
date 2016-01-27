@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
@@ -17,6 +18,7 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
+import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -43,6 +45,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
 public class IHMWelcomePageController {
     private IHMManager IHMManager;
@@ -62,9 +65,9 @@ public class IHMWelcomePageController {
     @FXML
     AnchorPane anchorPane, rightAnchorPane, leftAnchorPane, bottomLeftAnchorPane, topLeftAnchorPane;
     @FXML
-    ImageView iconHelp, iconParam, iconProfile, iconNotif, infoTest;
+    ImageView iconHelp, iconParam, iconProfile, infoTest;
     @FXML
-    Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel, testEcran;
+    Label title, currentGamesLabel, savedGamesLabel, connectedUsersLabel;
     @FXML
     Text userLabel;
     @FXML
@@ -79,23 +82,6 @@ public class IHMWelcomePageController {
     SplitMenuButton paramSplitMenuButton;
     @FXML
     ScrollBar currentGamesScrollbar, savedGamesScrollbar, connectedUserScrollbar;
-
-    @FXML
-    public void testEcranFunction() throws IOException {
-        // ne pas effacer cette fonction car utile pour tester les écrans
-        // déclenchés par data !
-        /*
-         * Stage stage; Parent root; stage = new Stage(); FXMLLoader fxmlLoader
-         * = new
-         * FXMLLoader(getClass().getResource("/fxml/answerPropositionPopUp.fxml"
-         * )); root = (Pane) fxmlLoader.load(); AnswerPropositionController
-         * controller = fxmlLoader.getController();
-         * controller.setControllerContext(this.IHMManager);
-         * controller.setMainApp(this.mainApp, "un joueur", "pas d'options");
-         * stage.setScene(new Scene(root)); mainApp.setCurrentStage(stage);
-         * stage.setTitle("My Profile"); stage.show();
-         */
-    }
 
     public ProfilProperty getProfile() {
         return this.profile;
@@ -113,16 +99,27 @@ public class IHMWelcomePageController {
         this.IHMManager = iHMManager;
     }
 
-    @FXML
-    private void onHelpClicked(Event event) {
+    @SuppressWarnings("restriction")
+	@FXML
+    private void onHelpClicked(Event event) throws IOException {
+    	Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader fxmlLoader;
+        fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/helpPage.fxml"));
+        root = (Pane) fxmlLoader.load();
+        IHMHelpPageController controller = fxmlLoader.getController();
+        controller.setControllerContext(this.IHMManager);
+        controller.setCurrentStage(stage);
+        controller.setMainApp(this.mainApp);
+        stage.setScene(new Scene(root));
+        stage.setTitle("Help page");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
 
     @FXML
     private void onParamClicked(Event event) {
-    }
-
-    @FXML
-    private void onNotifClicked(Event event) {
     }
 
     @FXML
@@ -154,7 +151,7 @@ public class IHMWelcomePageController {
             }
             log.error(e.getMessage(), e);
         }
-
+           
         catch (FunctionalException e) {
             try {
                 error("Log out error : Functional Exception");
@@ -163,7 +160,10 @@ public class IHMWelcomePageController {
             }
             log.error(e.getMessage(), e);
         }
-
+        finally {
+            mainApp.getComClientManager().close();
+        }
+        
         Stage stage;
         Parent root;
         stage = new Stage();
@@ -198,13 +198,12 @@ public class IHMWelcomePageController {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Export to ...");
         File selectedDirectory = directoryChooser.showDialog(new Stage());
-
+        File newFile = new File(selectedDirectory.getAbsolutePath() + File.separator + exportFile.getName());
         if (selectedDirectory != null) {
             try {
                 // Attention : si la gestion d'erreur n'est pas faite,
                 // exportFile est null et on a une belle NullPointerException
-                Files.copy(exportFile.toPath(), selectedDirectory.toPath(),
-                        java.nio.file.StandardCopyOption.REPLACE_EXISTING,
+                Files.copy(exportFile.toPath(), newFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING,
                         java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
                 exportOK(selectedDirectory.getAbsolutePath());
             } catch (IOException e) {
@@ -300,6 +299,10 @@ public class IHMWelcomePageController {
         stage.setTitle("Export success");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+        
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> stage.close());
+        delay.play();
     }
 
     public void exportNOK() throws IOException {
@@ -367,19 +370,19 @@ public class IHMWelcomePageController {
         // Demande de la liste des jeux
         // -------------------------------
 
-        /*
-         * this.listCurrentGames= myIClientToIHM.getGamesList();
-         * this.listCurrentGames.addListener // add listener on observableList
-         * in DATA ( new ListChangeListener<GameEntity>() {
-         * 
-         * @Override public void
-         * onChanged(javafx.collections.ListChangeListener.Change<? extends
-         * GameEntity> c) {
-         * currentGamesTable.setItems(myIClientToIHM.getGamesList()); } } );
-         * 
-         * listCurrentGames.setItems(this.listCurrentGames);
-         * myIClientToIHM.getAllGames(); // ask for list of game to DATA
-         */
+        this.listCurrentGames = myIClientToIHM.getGamesList();
+        this.listCurrentGames.addListener // add listener on observableList in
+                                          // DATA
+        (new ListChangeListener<GameEntity>() {
+
+            @Override
+            public void onChanged(javafx.collections.ListChangeListener.Change<? extends GameEntity> c) {
+                currentGamesTable.setItems(myIClientToIHM.getGamesList());
+            }
+        });
+
+        currentGamesTable.setItems(this.listCurrentGames);
+        myIClientToIHM.getAllGames(); // ask for list of game to DATA
 
         // Demande de la liste des parties sauvegardées
         // -------------------------------
@@ -430,17 +433,15 @@ public class IHMWelcomePageController {
 
         // liste des jeux en cours
         // ---------------
-        /*
-         * currentGamesId.setCellValueFactory(new
-         * PropertyValueFactory<GameEntity, UUID>("id"));
-         * currentGamesPlayer1.setCellValueFactory(new
-         * PropertyValueFactory<GameEntity, String>("whitePlayer"));
-         * currentGamesPlayer2.setCellValueFactory(new
-         * PropertyValueFactory<GameEntity, String>("blackPlayer"));
-         * currentGamesTime.setCellValueFactory(new
-         * PropertyValueFactory<GameEntity, Date>("creationDate"));
-         */
 
+        currentGamesId.setCellValueFactory(new PropertyValueFactory<GameEntity, UUID>("id"));
+        currentGamesPlayer1.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("whitePlayerLogin"));
+        currentGamesPlayer2.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("blackPlayerLogin"));
+        currentGamesTime.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("creationDateDrawable"));
+
+        currentGamesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        savedGamesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        connectedUserTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     public void displayProfile() {

@@ -16,41 +16,37 @@ public class GameFinishedMessage extends Message {
      */
     private static final long serialVersionUID = 3446575915066676519L;
     private static final Logger logger = Logger.getLogger(GameFinishedMessage.class);
-    GameEntity game;
+    private UUID game;
+   
+    private boolean answer;
+    
 
     /**
      * @param sender
      * @param receiver
      * @param game
      */
-    public GameFinishedMessage(UUID sender, UUID receiver, GameEntity game) {
+    public GameFinishedMessage(UUID sender,UUID receiver, UUID game, boolean answer) {
         super(sender, receiver);
         this.game = game;
+        this.answer=answer;
+        
     }
 
+ 
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // TODO Auto-generated method stub
-
+        comClientManager.getIClientDataToCom().sendAnswerForLeaving(answer);
+        
     }
-
-    public GameEntity getGame() {
-        return game;
-    }
-
-    public void setGame(GameEntity game) {
-        this.game = game;
-    }
-
+    
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-        // try {
-        // ServerHanlder.getInstance().replyAll(ctx,new GameFinishedMessage(new
-        // UUID(0, 0), new UUID(0, 0), game ));
-        // } catch (Exception e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
+    
+        comServerManager.getIServerDataToCom().endGame(this.game);
+        comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(),
+                this);
 
     }
 

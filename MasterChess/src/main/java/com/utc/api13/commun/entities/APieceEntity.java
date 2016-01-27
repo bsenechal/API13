@@ -102,8 +102,22 @@ public abstract class APieceEntity extends ADataEntity {
         Assert.notNull(game.getMovesHistory(), "[APieceEntity][move] MovesHistory shouldn't be null");
 
         // Déplacement de la pièce
+        
+        
+        /*
+         * TODO : Corriger
+         *  ********************* BUG ********************************
+         * Lorqu'on fait un move, la position ne change pas dans le game... En d'autres termes la fonction setPosition ne fait rien -_-
+         * 
+         */
+               // Ancien code       
         setPosition(move.getToPosition());
 
+        // Proposition de correction : à priori fonctionne mais pas totalement testé
+        // ATTENTION RISQUE DE BOUCLE INFINI !! (à tester)
+        // game.getPieceFromPosition(move.getFromPosition()).setPosition(move.getToPosition());
+        
+        
         // TODO : Delete adversary pond if needed !!! (managed deleted pond to
         // allow canceling a move ?)
 
