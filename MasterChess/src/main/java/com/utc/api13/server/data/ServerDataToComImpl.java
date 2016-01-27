@@ -355,6 +355,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
     @Override
     public void endGame(UUID idGame) {
         dataServerManager.getCurrentGames().removeIf(g -> idGame.equals(g.getId()));
+      
     }
 
     @Override

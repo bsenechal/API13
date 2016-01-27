@@ -1,43 +1,30 @@
 package com.utc.api13.client.ihm.controllers;
 
-import java.awt.Button;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
 import com.utc.api13.client.AppClient;
-import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.property.ProfilProperty;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.exceptions.FunctionalException;
-import com.utc.api13.commun.exceptions.TechnicalException;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 public class GiveUpPopUpController {
     private IHMManager IHMManager;
@@ -60,12 +47,19 @@ public class GiveUpPopUpController {
     @FXML
     Button yesButton, noButton; 
     
+    @FXML
     public void OnYesClicked() {
+        IHMManager.getCurrentStage().close();
+        IHMManager.getCurrentGameStage().close();
+        myIClientToIHM.sendAnswerForLeaving(true);
     	
     }
     
+    @FXML
     public void OnNoClicked() {
-    	
+        IHMManager.getCurrentStage().close();
+        IHMManager.getCurrentGameStage().close();
+        myIClientToIHM.sendAnswerForLeaving(false);	
     }
 
     public IHMManager getIHMManager() {
@@ -83,20 +77,20 @@ public class GiveUpPopUpController {
         initialize();
     }
 
-    public void setMainApp(AppClient app, UUID opponent) {
+    public void setMainApp(AppClient app,String login) {
         this.mainApp = app;
-        this.opponentUUID=opponent; 
+       // this.opponentUUID=string; 
+        Optional.ofNullable(login).ifPresent(u->{
+            messageLabel.setText(u+ " "+messageLabel.getText());
+        });
+
+            
     }
 
     public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null) {
             this.myIClientToIHM = IHMManager.getIClientDataToIHM();
-            profile = new ProfilProperty();
-
-            this.IHMManager.setProfil(profile);
-            setListenersOnLoad();
-            setBindingsOnLoad();
         }
     }
 
@@ -138,5 +132,5 @@ public class GiveUpPopUpController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
-
+    
 }

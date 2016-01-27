@@ -6,12 +6,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javafx.application.Platform;
+
+import org.mockito.Mock;
 import org.springframework.util.Assert;
 
+import com.utc.api13.client.data.ClientDataToIHMImpl;
 import com.utc.api13.commun.entities.pieces.BishopEntity;
 import com.utc.api13.commun.entities.pieces.KingEntity;
 import com.utc.api13.commun.entities.pieces.KnightEntity;
@@ -86,7 +92,7 @@ public class GameEntity extends ADataEntity {
         this.blackPieces = generatePieces(PieceColorEnum.BLACK);
         this.whitePieces = generatePieces(PieceColorEnum.WHITE);
     }
-
+    
     /**
      * @return the creationDate
      */
@@ -597,7 +603,7 @@ public class GameEntity extends ADataEntity {
      * @param move
      */
     public void movePiece(MoveEntity move){
-    	//ulysse: en mode fast :
-    	this.getPieceFromPosition(move.getFromPosition()).setPosition(move.getToPosition());
+        //ulysse: en mode fast :
+        this.getPieceFromPosition(move.getFromPosition()).setPosition(move.getToPosition());
     }
 }
