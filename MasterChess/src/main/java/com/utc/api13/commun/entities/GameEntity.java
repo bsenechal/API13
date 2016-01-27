@@ -12,6 +12,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javafx.application.Platform;
+
 import org.mockito.Mock;
 import org.springframework.util.Assert;
 
@@ -44,14 +46,12 @@ public class GameEntity extends ADataEntity {
     private List<APieceEntity> whitePieces;
     private List<APieceEntity> blackPieces;
     private List<MessageEntity> messages;
-    private Timer playerTimer; 
 
     /**
      * 
      */
     public GameEntity() {
         super();
-        this.playerTimer = new Timer(); 
         this.movesHistory = new ArrayList<MoveEntity>();
         this.observers = new ArrayList<PublicUserEntity>();
         this.chessboardEntity = new ChessboardEntity();
@@ -78,7 +78,6 @@ public class GameEntity extends ADataEntity {
     public GameEntity(Boolean idOservable, Boolean isChattable, Date limit, PublicUserEntity whitePlayer,
             PublicUserEntity blackPlayer) {
         super();
-        this.playerTimer = new Timer(); 
         this.isObservable = idOservable;
         this.isChattable = isChattable;
         this.limit = limit;
@@ -92,26 +91,6 @@ public class GameEntity extends ADataEntity {
         this.isFinished = null;
         this.blackPieces = generatePieces(PieceColorEnum.BLACK);
         this.whitePieces = generatePieces(PieceColorEnum.WHITE);
-    }
-
-    class endTask extends TimerTask{
-        @Mock
-        private ClientDataToIHMImpl clientDataToIHMImpl;
-        
-        public void run(){
-            clientDataToIHMImpl.surrender();
-            System.out.println("Exécution de la tache");
-            cancel();
-        }
-    }
-        
-    public void startTimer(){
-        playerTimer.schedule(new endTask(), 
-                (long)this.getTimerInt()*1000);
-    }
-    
-    public void endTimer(){
-        playerTimer.cancel(); 
     }
     
     /**
