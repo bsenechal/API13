@@ -606,3 +606,4 @@ public class GameEntity extends ADataEntity {
     	//ulysse: en mode fast :
     	this.getPieceFromPosition(move.getFromPosition()).setPosition(move.getToPosition());
     }
+}
