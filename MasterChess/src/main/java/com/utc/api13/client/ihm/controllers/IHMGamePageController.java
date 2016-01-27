@@ -70,12 +70,12 @@ public class IHMGamePageController {
     
     @FXML 
     private void onGiveUpClicked() {
-    	
+    	this.IHMManager.getIClientDataToIHM().surrender();
     }
     
     @FXML 
     private void onLeaveClicked() {
-    	
+    	this.IHMManager.getIClientDataToIHM().requestPlayerForLeaving();
     }
 
     @FXML
