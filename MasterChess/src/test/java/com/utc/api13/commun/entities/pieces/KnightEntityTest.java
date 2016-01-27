@@ -3,6 +3,7 @@
  */
 package com.utc.api13.commun.entities.pieces;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -80,6 +82,18 @@ public class KnightEntityTest {
                 availablesPositionsWhiteKnight.isEmpty());
         Assert.assertEquals("availablesPositionsWhiteKnight should be equal to 1",
                 availablesPositionsWhiteKnight.size(), 1);
+        
+        // Vérification des positions dans un chessboard vide
+        game.setBlackPieces(new ArrayList<APieceEntity>());
+        game.setWhitePieces(new ArrayList<APieceEntity>());
+        
+        whiteKnight.setPosition(new PositionEntity(4,4));
+        availablesPositionsWhiteKnight = whiteKnight.generateAvailableMoves(game);
+        game.getWhitePieces().add(whiteKnight);
+        Assert.assertFalse("availablesPositionsWhiteKnight shouldn't be empty",
+                availablesPositionsWhiteKnight.isEmpty());
+        Assert.assertEquals("availablesPositionsWhiteKnight should be equal to 8",
+                availablesPositionsWhiteKnight.size(), 8);
     }
 
 }
