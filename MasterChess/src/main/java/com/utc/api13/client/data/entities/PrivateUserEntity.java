@@ -1,5 +1,6 @@
 package com.utc.api13.client.data.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.utc.api13.commun.entities.AUserEntity;
@@ -13,34 +14,11 @@ public class PrivateUserEntity extends AUserEntity {
     // List of saved games by the local user
     private List<GameEntity> savedGames;
     private GameEntity game;
-
-    public class Conn {
-        String port;
-        String serveur;
-
-        public Conn(String serv, String port) {
-            this.serveur = serv;
-            this.port = port;
-        }
-
-        public String getPort() {
-            return port;
-        }
-
-        public void setPort(String port) {
-            this.port = port;
-        }
-
-    }
-
-    private List<Conn> connections;
-
-    // TODO Lors du merge de l'integ et donc de l'ajout du constructeur ajouter
-    // la ligne suivante
-    // connections = new HashMap<String,Integer>();
+    private List<Connection> connections;
 
     public PrivateUserEntity() {
         super();
+        connections = new ArrayList<Connection>();
     }
 
     /**
@@ -114,7 +92,7 @@ public class PrivateUserEntity extends AUserEntity {
     /**
      * @return the connections list (serveur and port)
      */
-    public List<Conn> getConnections() {
+    public List<Connection> getConnections() {
         return connections;
     }
 
@@ -122,7 +100,7 @@ public class PrivateUserEntity extends AUserEntity {
      * @param List<Conn>
      *            the used connections by the user
      */
-    public void setConnections(List<Conn> connections) {
+    public void setConnections(List<Connection> connections) {
         this.connections = connections;
     }
 
@@ -130,7 +108,7 @@ public class PrivateUserEntity extends AUserEntity {
      * @return the last connection by the user
      */
 
-    public Conn getLastConnection() {
+    public Connection getLastConnection() {
         return connections.get(connections.size());
     }
 
@@ -141,6 +119,6 @@ public class PrivateUserEntity extends AUserEntity {
      *            port the used port by the user
      */
     public void addConnection(String serveur, String port) {
-        connections.add(new Conn(serveur, port));
+        connections.add(new Connection(serveur, port));
     }
 }
