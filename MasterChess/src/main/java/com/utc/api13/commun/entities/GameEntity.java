@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -556,6 +557,7 @@ public class GameEntity extends ADataEntity {
             this.whitePieces.remove(piece);
         }
     }
+
 
     /**
      * Return a piece from a position

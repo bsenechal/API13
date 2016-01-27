@@ -125,7 +125,13 @@ public class ClientDataToComImpl implements IClientDataToCom {
         
         Assert.notNull(instanceDataClientManager.getCurrentGame(),
                 "[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
-        //move.getPiece().movePiece(move, instanceDataClientManager.getCurrentGame());
+      
+        //delete the real destination piece
+        APieceEntity tmp = thisgame.getPieceFromPosition(move.getToPosition());
+        if(tmp != null)
+        {
+        	thisgame.removePiece(tmp);
+        }
         thisgame.movePiece(move);        
 
         instanceDataClientManager.getIClientIHMToData().refreshChessBoard(fromLine, fromCol, toLine, toCol, piece,thisgame);
