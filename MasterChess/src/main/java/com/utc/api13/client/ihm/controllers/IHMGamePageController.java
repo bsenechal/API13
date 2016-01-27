@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import javax.swing.SwingUtilities;
+import javax.xml.soap.Text;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
@@ -36,6 +39,7 @@ public class IHMGamePageController {
     private AppClient mainApp;
     private Stage currentStage;
     private ChatProperty chat;
+    private ChessBoardNode cb;
 
     @FXML
     Label chatLabel, otherPlayerLoginLabel, otherPlayerTimeLabel, playerLoginLabel, playerTimeLabel,
@@ -48,9 +52,8 @@ public class IHMGamePageController {
     TextArea chatTextArea, sendTextArea;
     @FXML
     StackPane chessBoardStackPane;
-	private ChessBoardNode cb;
-
-    
+    @FXML
+    Label timerText;
 
 	public IHMManager getIHMManager() {
         return IHMManager;
@@ -150,13 +153,21 @@ public class IHMGamePageController {
         setListenersOnLoad();
         setBindingsOnLoad();
     }
-
+    
+    
+    
+    
     public void setMainApp(AppClient app) {
         this.mainApp = app;
         GameEntity game = this.myIClientToIHM.getCurrentGame();
         cb = new ChessBoardNode(IHMManager, game, myIClientToIHM);
         cb.setMyIClientToIHM(myIClientToIHM);
         
+        int nbMinutes = game.getTimerInt()/60; 
+        int nbSecondes = game.getTimerInt() % 60; 
+        String myTimer = Integer.toString(nbMinutes) + " : " + Integer.toString(nbSecondes); 
+        
+        //this.timerText.setText(myTimer); 
         final SwingNode swingNode = new SwingNode();
 
         SwingUtilities.invokeLater(new Runnable() {
