@@ -132,13 +132,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
             }
 
-            
-//            move.getPiece().deleteDestinationPiece(move, game);
-            
-            APieceEntity piece = game.getPieceFromPosition(move.getToPosition());
-            if(piece != null){
-            	game.removePiece(piece);
-            }
+            move.getPiece().deleteDestinationPiece(move, game);
             //move.getPiece().movePiece(move, game);
             game.movePiece(move);
 
