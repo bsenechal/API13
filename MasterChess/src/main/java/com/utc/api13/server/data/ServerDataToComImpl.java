@@ -111,7 +111,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
                         APieceEntity piece = game.getPieceFromPosition(fromPosition);
 
                         MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
-                        moveTmp.getPiece().movePiece(moveTmp, game);
+                        //moveTmp.getPiece().movePiece(moveTmp, game);
+                        game.movePiece(moveTmp);
 
                     } else if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() - 2) {
                         // grand roque
@@ -124,14 +125,16 @@ public class ServerDataToComImpl implements IServerDataToCom {
                         APieceEntity piece = game.getPieceFromPosition(fromPosition);
 
                         MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
-                        moveTmp.getPiece().movePiece(moveTmp, game);
+                        //moveTmp.getPiece().movePiece(moveTmp, game);
+                        game.movePiece(moveTmp);
                     }
                 }
 
             }
 
             move.getPiece().deleteDestinationPiece(move, game);
-            move.getPiece().movePiece(move, game);
+            //move.getPiece().movePiece(move, game);
+            game.movePiece(move);
 
 
         }
