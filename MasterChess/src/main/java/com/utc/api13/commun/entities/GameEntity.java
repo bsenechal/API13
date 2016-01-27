@@ -588,4 +588,14 @@ public class GameEntity extends ADataEntity {
         String reportDate = df.format(creationDate);
         return reportDate;
     }
+    
+    /**
+     * apply a move on a game entity
+     * @author ulyss_000
+     * @param move
+     */
+    public void movePiece(MoveEntity move){
+    	//ulysse: en mode fast :
+    	this.getPieceFromPosition(move.getFromPosition()).setPosition(move.getToPosition());
+    }
 }
