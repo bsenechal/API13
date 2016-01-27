@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -557,6 +558,7 @@ public class GameEntity extends ADataEntity {
         }
     }
 
+
     /**
      * Return a piece from a position
      * 
@@ -587,5 +589,15 @@ public class GameEntity extends ADataEntity {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         String reportDate = df.format(creationDate);
         return reportDate;
+    }
+    
+    /**
+     * apply a move on a game entity
+     * @author ulyss_000
+     * @param move
+     */
+    public void movePiece(MoveEntity move){
+    	//ulysse: en mode fast :
+    	this.getPieceFromPosition(move.getFromPosition()).setPosition(move.getToPosition());
     }
 }
