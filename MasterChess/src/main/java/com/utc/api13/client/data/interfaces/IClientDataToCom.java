@@ -177,4 +177,11 @@ public interface IClientDataToCom {
      * @param nextPlayer
      */
     public void nextTurn(GameStatusEnum isFinished, UUID nextPlayer);
+    
+    /**
+     * Updates the info about the given user<br/>
+     * Method called when the given user updates its local profile
+     * @param userToUpdate user to update
+     */
+    void updateDistantProfile(PublicUserEntity userToUpdate);
 }

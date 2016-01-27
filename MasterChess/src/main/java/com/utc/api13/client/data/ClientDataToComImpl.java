@@ -362,4 +362,15 @@ public class ClientDataToComImpl implements IClientDataToCom {
         }
                 
     }
+
+    @Override
+    public void updateDistantProfile(PublicUserEntity userToUpdate) {
+        Assert.notNull(instanceDataClientManager.getCurrentUsers(),
+                "[ClientDataToComImpl][updateDistantProfile] current users shouldn't be null");
+        Assert.notNull(instanceDataClientManager.getCurrentUsers(),
+                "[ClientDataToComImpl][updateDistantProfile] Given user shouldn't be null");
+        
+        instanceDataClientManager.getCurrentUsers().removeIf(u -> u.getId().equals(userToUpdate.getId()));
+        instanceDataClientManager.getCurrentUsers().add(userToUpdate);
+    }
 }
