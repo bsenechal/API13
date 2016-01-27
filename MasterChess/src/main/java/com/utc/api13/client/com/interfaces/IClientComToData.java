@@ -98,7 +98,7 @@ public interface IClientComToData {
     /**
      * Ends the game when the player exits the game window
      */
-    public void endGameByLeaving();
+    public void endGameByLeaving(UUID sender,UUID receiver, UUID gameId,boolean answer);
 
     /**
      * Sends leaving request to the opponent
@@ -107,7 +107,7 @@ public interface IClientComToData {
      *            ID of the opponent
      * @param answer
      */
-    public void requestPlayerForLeaving(UUID uid, boolean answer);
+    public void requestPlayerForLeaving(UUID sender, UUID receiver);
 
     /**
      * Sends chat message to a game

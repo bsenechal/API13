@@ -70,19 +70,25 @@ public class IHMGamePageController {
     
     @FXML 
     private void onGiveUpClicked() {
-    	this.IHMManager.getIClientDataToIHM().surrender();
+        myIClientToIHM.surrender();
     }
     
     @FXML 
     private void onLeaveClicked() {
-    	this.IHMManager.getIClientDataToIHM().requestPlayerForLeaving();
+        
+        List<UUID> players = Arrays.asList(myIClientToIHM.getCurrentGame().getBlackPlayer().getId(),
+                myIClientToIHM.getCurrentGame().getWhitePlayer().getId());
+        if (players.contains(myIClientToIHM.getLocalUser().getId())) 
+                myIClientToIHM.requestPlayerForLeaving();
+        else
+            myIClientToIHM.observerLeave();
     }
-
+    
     @FXML
-    private void onExcludeChatClicked(Event event) throws IOException {
+    private void onExcludeChatClicked() throws IOException {
 
         List<UUID> players = Arrays.asList(myIClientToIHM.getCurrentGame().getBlackPlayer().getId(),
-                myIClientToIHM.getCurrentGame().getBlackPlayer().getId());
+                myIClientToIHM.getCurrentGame().getWhitePlayer().getId());
         if (!players.contains(myIClientToIHM.getLocalUser().getId())) {
             openUserObservableList();
         } else {
@@ -128,8 +134,9 @@ public class IHMGamePageController {
 
     @FXML
     private void onQuitGameClicked(Event event) {
-        myIClientToIHM.requestPlayerForLeaving();
-        
+       // onGiveUpClicked();
+        String a="slt";
+        System.out.println("test when we logout of the app");
     }
 
     public void setControllerContext(IHMManager ihmManager) {
