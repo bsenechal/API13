@@ -163,7 +163,7 @@ public class ChessBoardNode {
                             			j.setBackground(j.getColor());                                		 
                             	}
                             }
-                            chessBoardSquares[firstPosition.getPositionX()-1][firstPosition.getPositionY()-1].setBorder(null);
+                            chessBoardSquares[firstPosition.getPositionX()-1][8-firstPosition.getPositionY()].setBorder(null);
                         }
                     }               
                 });
