@@ -46,7 +46,7 @@ public class UserUpdateMessage extends Message {
         // When received on the client, calls data to display whether the update
         comClientManager.getIClientDataToCom().notify(result_message);
         // TODO ACTIVE
-        // comClientManager.getIClientDataToCom().updateDistantProfile(usr);
+        comClientManager.getIClientDataToCom().updateDistantProfile(usr);
     }
 
     @Override
