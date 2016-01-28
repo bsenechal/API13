@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -50,12 +53,18 @@ public class ChessBoardNode {
     // setter une variable d'etat pour savoir si on selectionne une piece ou une
     // position pour les déplacements dans le listener
     private int selection = 1;
+    
+    private BooleanProperty checkProperty;
+    private BooleanProperty checkMateProperty;
 
-    public ChessBoardNode(IHMManager ihmManager, GameEntity game, IClientDataToIHM myIClientToIHM2) {
+    public ChessBoardNode(IHMManager ihmManager, GameEntity game, IClientDataToIHM myIClientToIHM2
+    		, BooleanProperty isCheck, BooleanProperty isCheckMate) {
         myIhmManager = ihmManager;
         myGame = game;
         myIClientToIHM = myIClientToIHM2;
         initializeGui();
+        checkProperty = isCheck;
+        checkMateProperty = isCheckMate;
     }
 
     public final void initializeGui() {
@@ -152,6 +161,12 @@ public class ChessBoardNode {
                                         + " movePosition.getColumn() :" + movePosition.getColumn());
                                 myIClientToIHM.playMove(firstPosition.getPositionX(), firstPosition.getPositionY(),
                                         movePosition.getLine(), movePosition.getColumn());
+                                
+                                //sortir de la position d'echec si echec
+                                if(checkProperty.get()){
+                                	changeCheckSituation();
+                                }                        
+                                
                                 // tout rendre unclickable
                                 for (Case i[] : chessBoardSquares) {
                                     for (Case j : i) {
@@ -291,4 +306,13 @@ public class ChessBoardNode {
             }
         }
     }
+    
+    public void changeCheckSituation(){
+    	checkProperty.set(!checkProperty.get());
+    }
+    
+    public void changeCheckMateSituation(){
+    	checkMateProperty.set(!checkMateProperty.get());
+    }
+        
 }
