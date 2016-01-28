@@ -175,10 +175,15 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
         // verify game :
         GameEntity game = dataServerManager.getGameById(idGame);
+        
+        //first : switch user to verify that he is not checked !
+        game.switchCurrentUser();
+        
+        //then verify the game status :
         GameStatusEnum result = game.isFinished();
         System.out.println("serverdatatocomimpt : isfinished : status : " + result);
 
-        game.switchCurrentUser();
+        
 
         // TODO : Ulysse : isn't it a tad brutal ?
         if (result.equals(GameStatusEnum.CHECKMATE) || result.equals(GameStatusEnum.DRAW)) {
