@@ -645,6 +645,10 @@ public class GameEntity extends ADataEntity {
         }
     }
     
+    /**
+     * undo a movePiece
+     * @param moveToCancel
+     */
     public void cancelMove(MoveEntity moveToCancel) {
          
         //check if it was a castling to undo it :
