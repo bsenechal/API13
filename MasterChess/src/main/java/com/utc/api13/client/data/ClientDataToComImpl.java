@@ -383,8 +383,6 @@ public class ClientDataToComImpl implements IClientDataToCom {
         // alert IHM:
         instanceDataClientManager.getIClientIHMToData().activateCases(game.getCurrentPlayer(), status);
 
-        // TODO Ulysse : virer le switch ?
-
         PrivateUserEntity localUser = instanceDataClientManager.getUserLocal();
         switch (status) {
 

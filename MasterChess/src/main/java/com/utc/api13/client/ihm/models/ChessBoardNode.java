@@ -53,12 +53,12 @@ public class ChessBoardNode {
     // setter une variable d'etat pour savoir si on selectionne une piece ou une
     // position pour les déplacements dans le listener
     private int selection = 1;
-    
+
     private BooleanProperty checkProperty;
     private BooleanProperty checkMateProperty;
 
-    public ChessBoardNode(IHMManager ihmManager, GameEntity game, IClientDataToIHM myIClientToIHM2
-    		, BooleanProperty isCheck, BooleanProperty isCheckMate) {
+    public ChessBoardNode(IHMManager ihmManager, GameEntity game, IClientDataToIHM myIClientToIHM2,
+            BooleanProperty isCheck, BooleanProperty isCheckMate) {
         myIhmManager = ihmManager;
         myGame = game;
         myIClientToIHM = myIClientToIHM2;
@@ -161,12 +161,12 @@ public class ChessBoardNode {
                                         + " movePosition.getColumn() :" + movePosition.getColumn());
                                 myIClientToIHM.playMove(firstPosition.getPositionX(), firstPosition.getPositionY(),
                                         movePosition.getLine(), movePosition.getColumn());
-                                
-                                //sortir de la position d'echec si echec
-                                if(checkProperty.get()){
-                                	changeCheckSituation();
-                                }                        
-                                
+
+                                // sortir de la position d'echec si echec
+                                if (checkProperty.get()) {
+                                    changeCheckSituation();
+                                }
+
                                 // tout rendre unclickable
                                 for (Case i[] : chessBoardSquares) {
                                     for (Case j : i) {
@@ -218,6 +218,8 @@ public class ChessBoardNode {
                 try {
                     Image img = ImageIO.read(getClass().getResource(dossierIcone + ordrePiece[ctr] + couleur + ".gif"));
                     chessBoardSquares[ctr][ligne].setIcon(new ImageIcon(img));
+                    // TODO : remove if IHM is not happy :)
+                    chessBoardSquares[ctr][ligne].setDisabledIcon(new ImageIcon(img));
                 } catch (IOException e) {
 
                 }
@@ -247,6 +249,8 @@ public class ChessBoardNode {
                 try {
                     Image img = ImageIO.read(getClass().getResource(dossierIcone + 'P' + couleur + ".gif"));
                     chessBoardSquares[ctr][ligne + increment].setIcon(new ImageIcon(img));
+                    // TODO : remove if IHM is not happy :)
+                    chessBoardSquares[ctr][ligne + increment].setDisabledIcon(new ImageIcon(img));
 
                 } catch (IOException e) {
 
@@ -306,13 +310,13 @@ public class ChessBoardNode {
             }
         }
     }
-    
-    public void changeCheckSituation(){
-    	checkProperty.set(!checkProperty.get());
+
+    public void changeCheckSituation() {
+        checkProperty.set(!checkProperty.get());
     }
-    
-    public void changeCheckMateSituation(){
-    	checkMateProperty.set(!checkMateProperty.get());
+
+    public void changeCheckMateSituation() {
+        checkMateProperty.set(!checkMateProperty.get());
     }
-        
+
 }
