@@ -187,11 +187,11 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
         
 
-        // TODO : Ulysse : isn't it a tad brutal ?
-        if (result.equals(GameStatusEnum.CHECKMATE) || result.equals(GameStatusEnum.DRAW)) {
-            // Clean the serveur game-entity :
-            dataServerManager.getCurrentGames().remove(game);
-        }
+        // TODO : Ulysse : isn't it a tad brutal ? -> C'est plutôt à Com de le faire dans le proceed
+//        if (result.equals(GameStatusEnum.CHECKMATE) || result.equals(GameStatusEnum.DRAW)) {
+//            // Clean the serveur game-entity :
+//            dataServerManager.getCurrentGames().remove(game);
+//        }
         return result;
     }
 

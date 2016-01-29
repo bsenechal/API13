@@ -401,7 +401,9 @@ public class ClientDataToComImpl implements IClientDataToCom {
             }
         case DRAW:
             localUser.setNbPlayed(localUser.getNbPlayed() + 1);
-            instanceDataClientManager.setCurrentGame(null);
+            //instanceDataClientManager.setCurrentGame(null);
+            instanceDataClientManager.getCurrentGames().remove(game);
+            game = null;
             break;
 
         default:
