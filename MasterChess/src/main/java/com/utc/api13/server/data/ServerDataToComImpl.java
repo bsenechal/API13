@@ -112,7 +112,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
         Boolean result = mypiece.isMovePossible(move, game);
         System.out.println("isMovePossible " + result);
         if (result) {
-
+            
+            /*
             if (move.getPiece().toString() == "King") {
                 KingEntity kingTmp = (KingEntity) move.getPiece();
                 if (kingTmp.getHasMove() == Boolean.FALSE) {
@@ -145,9 +146,10 @@ public class ServerDataToComImpl implements IServerDataToCom {
                         game.movePiece(moveTmp);
                     }
                 }
+                
 
-            }
-
+            }   */
+            
             game.removePieceFromPosition(move.getToPosition());
             game.movePiece(move);
 

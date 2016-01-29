@@ -57,6 +57,9 @@ public class RookEntity extends APieceEntity {
     public boolean getHasMove() {
         return this.hasMove;
     }
+    public void setHasMove(Boolean value) {
+        this.hasMove = value;
+    }
 
     public RookEntity(final PieceColorEnum color, final int startColumn) {
         super(color);
