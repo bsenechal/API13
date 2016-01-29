@@ -367,16 +367,6 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     @Override
     public void nextTurn(final GameStatusEnum status, final UUID nextPlayer) {
-        // Ulysse : lourd : remplacé par switchCurrentUser
-        // if (GameStatusEnum.CONTINUE.equals(status)) {
-        // instanceDataClientManager.getCurrentGame().setCurrentPlayer(
-        // (instanceDataClientManager.getCurrentGame().getBlackPlayer().getId().equals(nextPlayer))
-        // ? instanceDataClientManager.getCurrentGame().getBlackPlayer()
-        // : instanceDataClientManager.getCurrentGame().getWhitePlayer());
-        // }
-        // Assert.notNull(instanceDataClientManager.getCurrentGames(),
-        // "[ClientDataToComImpl][setFinishedStatus] currentGames shouldn't be
-        // null");
         GameEntity game = instanceDataClientManager.getCurrentGame();
 
         game.switchCurrentUser();
@@ -401,8 +391,6 @@ public class ClientDataToComImpl implements IClientDataToCom {
             }
         case DRAW:
             localUser.setNbPlayed(localUser.getNbPlayed() + 1);
-            //instanceDataClientManager.setCurrentGame(null);
-//            instanceDataClientManager.getCurrentGames().remove(game);
             instanceDataClientManager.getCurrentGames().removeIf(g -> instanceDataClientManager.getCurrentGame().getId().equals(g.getId()));
             game = null;
             break;

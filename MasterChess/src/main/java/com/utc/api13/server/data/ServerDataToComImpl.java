@@ -86,24 +86,10 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public boolean computerResult(UUID idPlayer, MoveEntity move) {
-        // Assert.notNull(move.getGameID(),
-        // "[ServerDataToComImpl][computerResult] gameID shouldn't be null");
-        // Assert.notNull(move.getUserID(),
-        // "[ServerDataToComImpl][computerResult] userID shouldn't be null");
-        // Assert.notNull(move.getPiece(),
-        // "[ServerDataToComImpl][computerResult] piece shouldn't be null");
-        // Assert.notNull(move.getFromPosition(),
-        // "[ServerDataToComImpl][computerResult] fromPosition shouldn't be
-        // null");
-        // Assert.notNull(move.getToPosition(),
-        // "[ServerDataToComImpl][computerResult] toPosition shouldn't be
-        // null");
-        // Assert.notNull(move.getDate(), "[ServerDataToComImpl][computerResult]
-        // date shouldn't be null");
 
-        System.out.println("computerResult : move : " + move.getFromPosition().getPositionX() + ","
-                + +move.getFromPosition().getPositionY() + ";" + move.getToPosition().getPositionX() + ","
-                + move.getToPosition().getPositionY() + ";" + move.getPiece().toString());
+//        System.out.println("computerResult : move : " + move.getFromPosition().getPositionX() + ","
+//                + +move.getFromPosition().getPositionY() + ";" + move.getToPosition().getPositionX() + ","
+//                + move.getToPosition().getPositionY() + ";" + move.getPiece().toString());
 
         GameEntity game = dataServerManager.getGameById(move.getGameID());
         // !!! Il est nécessaire de récupérer la pièce locale et non celle du
@@ -112,43 +98,6 @@ public class ServerDataToComImpl implements IServerDataToCom {
         Boolean result = mypiece.isMovePossible(move, game);
         System.out.println("isMovePossible " + result);
         if (result) {
-            
-            /*
-            if (move.getPiece().toString() == "King") {
-                KingEntity kingTmp = (KingEntity) move.getPiece();
-                if (kingTmp.getHasMove() == Boolean.FALSE) {
-                    if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() + 2) {
-                        // petit roque
-
-                        PositionEntity fromPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
-                                kingTmp.getPosition().getPositionX() + 3);
-                        PositionEntity toPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
-                                kingTmp.getPosition().getPositionX() + 1);
-
-                        APieceEntity piece = game.getPieceFromPosition(fromPosition);
-
-                        MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
-                        // moveTmp.getPiece().movePiece(moveTmp, game);
-                        game.movePiece(moveTmp);
-
-                    } else if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() - 2) {
-                        // grand roque
-
-                        PositionEntity fromPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
-                                kingTmp.getPosition().getPositionX() - 4);
-                        PositionEntity toPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
-                                kingTmp.getPosition().getPositionX() - 1);
-
-                        APieceEntity piece = game.getPieceFromPosition(fromPosition);
-
-                        MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
-                        // moveTmp.getPiece().movePiece(moveTmp, game);
-                        game.movePiece(moveTmp);
-                    }
-                }
-                
-
-            }   */
             
             game.removePieceFromPosition(move.getToPosition());
             game.movePiece(move);
