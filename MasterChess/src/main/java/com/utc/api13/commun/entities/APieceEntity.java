@@ -112,15 +112,8 @@ public abstract class APieceEntity extends ADataEntity {
          * 
          */
         // Ancien code
+        //On utilise mnt le movePiece de gameEntity qui corrige ça !
         setPosition(move.getToPosition());
-
-        // Proposition de correction : à priori fonctionne mais pas totalement
-        // testé
-        // ATTENTION RISQUE DE BOUCLE INFINI !! (à tester)
-        // game.getPieceFromPosition(move.getFromPosition()).setPosition(move.getToPosition());
-
-        // TODO : Delete adversary pond if needed !!! (managed deleted pond to
-        // allow canceling a move ?)
 
         // Ajout dans l'historique des coups
         game.getMovesHistory().add(move);
@@ -231,7 +224,9 @@ public abstract class APieceEntity extends ADataEntity {
                 if (verifyCheck) {
                     MoveEntity tmpMove = new MoveEntity(new Date(), this.getPosition(), positionTemp, this);
 
-                    this.movePiece(tmpMove, game);
+                    //this.movePiece(tmpMove, game);
+                    //TODO :  do that !
+                    
                     // on supprime le piont adverse s'il y en a un a destination
                     APieceEntity tmpOpponentPiece = null;
                     boolean haskilledAnother = Boolean.FALSE;
@@ -242,15 +237,22 @@ public abstract class APieceEntity extends ADataEntity {
                         haskilledAnother = Boolean.TRUE;
                         isStopped = Boolean.TRUE;
                     }
+                    
+                    //on joue le coup qu'on annulera ensuite :
+                    game.movePiece(tmpMove);
 
                     if (!game.isCheck()) {
                         result.add(positionTemp);
                     }
 
+                    // on annule le coup joué
+                    //this.cancelMove(game, tmpMove);
+                    game.cancelMove(tmpMove);
+                    
+                    //on remet en place le pion adverse si jamais :
                     if (haskilledAnother == Boolean.TRUE) {
                         game.addPiece(tmpOpponentPiece);
                     }
-                    this.cancelMove(game, tmpMove);
                 } else {
                     // without game.isCheck
                     result.add(positionTemp);
