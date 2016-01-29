@@ -682,7 +682,7 @@ public class GameEntity extends ADataEntity {
      * @param move
      */
     public void transformPawnToQueen(MoveEntity move){
-        if(this.getPieceFromPosition(move.getFromPosition()).toString().equals("Pawn") && (move.getFromPosition().getPositionY() == 8 || move.getFromPosition().getPositionY() == 1) ){
+        if(move.getPiece().toString().equals("Pawn") && (move.getToPosition().getPositionY() == 8 || move.getToPosition().getPositionY() == 1) ){
             this.removePieceFromPosition(move.getFromPosition());
             QueenEntity newQueen = new QueenEntity(this.getCurrentPlayerColor());
             newQueen.setPosition(new PositionEntity(move.getFromPosition().getPositionX(), move.getFromPosition().getPositionY()));
