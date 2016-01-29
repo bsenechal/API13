@@ -73,12 +73,12 @@ public class PawnEntity extends APieceEntity {
 
             // ennemis dans les diagonales
             positionTemp = new PositionEntity(positionX + 1, positionY + 1);
-            if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
+            if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)  || !verifyCheck) {
                 addPossibleSolution(game, positionX, positionY, 1, 1, result, verifyCheck);
             }
 
             positionTemp = new PositionEntity(positionX - 1, positionY + 1);
-            if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
+            if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp) || !verifyCheck) {
                 addPossibleSolution(game, positionX, positionY, -1, 1, result, verifyCheck);
             }
 
@@ -104,12 +104,12 @@ public class PawnEntity extends APieceEntity {
 
             // ennemis dans les diagonales
             positionTemp = new PositionEntity(positionX + 1, positionY - 1);
-            if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
+            if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)|| !verifyCheck) {
                 addPossibleSolution(game, positionX, positionY, 1, -1, result, verifyCheck);
             }
 
             positionTemp = new PositionEntity(positionX - 1, positionY - 1);
-            if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)) {
+            if (!APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)|| !verifyCheck) {
                 addPossibleSolution(game, positionX, positionY, -1, -1, result, verifyCheck);
             }
         }
