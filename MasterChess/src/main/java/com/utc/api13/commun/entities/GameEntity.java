@@ -647,6 +647,7 @@ public class GameEntity extends ADataEntity {
     
     /**
      * undo a movePiece
+     * @author ulyss_000
      * @param moveToCancel
      */
     public void cancelMove(MoveEntity moveToCancel) {
@@ -673,5 +674,20 @@ public class GameEntity extends ADataEntity {
         
         //remove from play history :
         this.getMovesHistory().remove(moveToCancel);
+    }
+    
+    /**
+     * this method will transform a Pawn to a queen if it reaches the ennemy camp !
+     * @author ulyss_000
+     * @param move
+     */
+    public void transformPawnToQueen(MoveEntity move){
+        if(this.getPieceFromPosition(move.getFromPosition()).toString().equals("Pawn") && (move.getFromPosition().getPositionY() == 8 || move.getFromPosition().getPositionY() == 1) ){
+            this.removePieceFromPosition(move.getFromPosition());
+            QueenEntity newQueen = new QueenEntity(this.getCurrentPlayerColor());
+            newQueen.setPosition(new PositionEntity(move.getFromPosition().getPositionX(), move.getFromPosition().getPositionY()));
+            this.addPiece(newQueen);
+            move.setPiece(newQueen);
+        }
     }
 }

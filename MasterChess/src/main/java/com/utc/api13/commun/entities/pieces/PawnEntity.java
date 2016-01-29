@@ -89,16 +89,18 @@ public class PawnEntity extends APieceEntity {
             if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)
                     && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
                 addPossibleSolution(game, positionX, positionY, 0, -1, result, verifyCheck);
-            }
+                
+                if (positionY == START_LINE_BLACK_PAWN) {
+                    positionTemp = new PositionEntity(positionX, positionY - 2);
+                    if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)
+                            && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
+                        addPossibleSolution(game, positionX, positionY, 0, -2, result, verifyCheck);
 
-            if (positionY == START_LINE_BLACK_PAWN) {
-                positionTemp = new PositionEntity(positionX, positionY - 2);
-                if (APieceEntity.isPositionAvailableFromPieces(game.getOpponentPieces(), positionTemp)
-                        && APieceEntity.isPositionAvailableFromPieces(game.getCurrentPlayerPieces(), positionTemp)) {
-                    addPossibleSolution(game, positionX, positionY, 0, -2, result, verifyCheck);
-
+                    }
                 }
             }
+
+
 
             // ennemis dans les diagonales
             positionTemp = new PositionEntity(positionX + 1, positionY - 1);

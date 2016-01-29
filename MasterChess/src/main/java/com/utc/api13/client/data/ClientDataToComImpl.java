@@ -151,6 +151,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
         
         // delete the real destination piece
         thisgame.removePieceFromPosition(move.getToPosition());
+        thisgame.transformPawnToQueen(move);
         thisgame.movePiece(move);
 
         instanceDataClientManager.getIClientIHMToData().refreshChessBoard(fromLine, fromCol, toLine, toCol, piece,

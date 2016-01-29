@@ -20,6 +20,7 @@ import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.entities.pieces.KingEntity;
+import com.utc.api13.commun.entities.pieces.QueenEntity;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
 import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
@@ -100,11 +101,17 @@ public class ServerDataToComImpl implements IServerDataToCom {
         if (result) {
             
             game.removePieceFromPosition(move.getToPosition());
+            
+            //will transform a pawn to a queen if need be :
+            game.transformPawnToQueen(move);
+            
             game.movePiece(move);
 
             System.out.println("computerResult : move : " + move.getFromPosition().getPositionX() + ","
                     + +move.getFromPosition().getPositionY() + ";" + move.getToPosition().getPositionX() + ","
                     + move.getToPosition().getPositionY() + ";" + move.getPiece().toString());
+            
+
 
         }
 
