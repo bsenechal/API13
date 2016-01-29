@@ -31,29 +31,6 @@ public class RookEntity extends APieceEntity {
      */
     private static final long serialVersionUID = 2587319077980898398L;
 
-    @Override
-    public void movePiece(final MoveEntity move, GameEntity game) {
-        super.movePiece(move, game);
-
-        if (hasMove == Boolean.FALSE && itIsFirstMove == Boolean.FALSE) {
-            hasMove = Boolean.TRUE;
-            itIsFirstMove = Boolean.TRUE;
-        } else if (itIsFirstMove = Boolean.TRUE) {
-            itIsFirstMove = Boolean.FALSE;
-        }
-
-    }
-
-    @Override
-    public void cancelLastMove(GameEntity game) {
-        super.cancelLastMove(game);
-
-        if (itIsFirstMove == Boolean.TRUE) {
-            hasMove = Boolean.FALSE;
-            itIsFirstMove = Boolean.FALSE;
-        }
-    }
-
     public boolean getHasMove() {
         return this.hasMove;
     }
