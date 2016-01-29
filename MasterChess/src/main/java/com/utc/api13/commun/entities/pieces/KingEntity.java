@@ -19,45 +19,12 @@ public class KingEntity extends APieceEntity {
     private static final int MIN_MOVE = -1;
     private static final int MAX_MOVE = 1;
     private boolean hasMove = Boolean.FALSE;
-    private boolean itIsFirstMove = Boolean.FALSE;
 
     /**
      * 
      */
     private static final long serialVersionUID = 3721412295018328472L;
 
-    /**
-     * @author Hugo
-     * @param move
-     * @param game
-     * 
-     */
-    @Override
-    public void movePiece(final MoveEntity move, GameEntity game) {
-        super.movePiece(move, game);
-
-        if (hasMove == Boolean.FALSE && itIsFirstMove == Boolean.FALSE) {
-            hasMove = Boolean.TRUE;
-            itIsFirstMove = Boolean.TRUE;
-        } else if (itIsFirstMove = Boolean.TRUE) {
-            itIsFirstMove = Boolean.FALSE;
-        }
-
-    }
-
-    /**
-     * @author Hugo
-     * @param game
-     */
-    @Override
-    public void cancelLastMove(GameEntity game) {
-        super.cancelLastMove(game);
-
-        if (itIsFirstMove == Boolean.TRUE) {
-            hasMove = Boolean.FALSE;
-            itIsFirstMove = Boolean.FALSE;
-        }
-    }
 
     /**
      * @author Hugo
@@ -70,12 +37,8 @@ public class KingEntity extends APieceEntity {
     /**
      * @author Hugo
      */
-    public void setHasMove() {
-        if (this.hasMove) {
-            this.hasMove = Boolean.FALSE;
-        } else {
-            this.hasMove = Boolean.TRUE;
-        }
+    public void setHasMove(Boolean value) {
+        this.hasMove = value;
     }
 
     /**
@@ -112,7 +75,7 @@ public class KingEntity extends APieceEntity {
             }
         }
 
-        if (hasMove == Boolean.FALSE) {
+        if (hasMove == Boolean.FALSE && verifyCheck == Boolean.TRUE) {
             if (this.rightCastling(game)) {
                 result.add(
                         new PositionEntity(this.getPosition().getPositionX() + 2, this.getPosition().getPositionY()));

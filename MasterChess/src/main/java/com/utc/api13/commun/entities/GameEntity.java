@@ -603,6 +603,36 @@ public class GameEntity extends ADataEntity {
      * @param move
      */
     public void movePiece(MoveEntity move) {
+        //Hugo : ajout pour la gestion des roques
+        //A faire avant le reste sinon on ne peut plus utiliser le getFromPosition
+        if(this.getPieceFromPosition(move.getFromPosition()).toString().equals("King")){
+            KingEntity tmpKing = (KingEntity)this.getPieceFromPosition(move.getFromPosition());
+            tmpKing.setHasMove(Boolean.TRUE);
+            if(move.getFromPosition().getPositionX() == move.getToPosition().getPositionX() - 2){
+                PositionEntity rookPositionTmp = new PositionEntity(move.getFromPosition().getPositionX() + 3, move.getFromPosition().getPositionY());
+                PositionEntity rookPositionToGo = new PositionEntity(move.getFromPosition().getPositionX() + 1, move.getFromPosition().getPositionY());
+
+                /*
+                APieceEntity tmpRook = this.getPieceFromPosition(rookPositionTmp);
+                
+                MoveEntity rookMove = new MoveEntity(new Date(), rookPositionTmp, rookPositionToGo, tmpRook, this.getCurrentPlayer().getId(),this.getId());
+                */
+                this.getPieceFromPosition(rookPositionTmp).setPosition(rookPositionToGo);
+            }
+            
+            if(move.getFromPosition().getPositionX() == move.getToPosition().getPositionX() + 2){
+                PositionEntity rookPositionTmp = new PositionEntity(move.getFromPosition().getPositionX() - 4, move.getFromPosition().getPositionY());
+                PositionEntity rookPositionToGo = new PositionEntity(move.getFromPosition().getPositionX() - 1, move.getFromPosition().getPositionY());
+                
+                this.getPieceFromPosition(rookPositionTmp).setPosition(rookPositionToGo);
+            }
+            
+        }
+        if(this.getPieceFromPosition(move.getFromPosition()).toString().equals("Rook")){
+            RookEntity tmpRook = (RookEntity)this.getPieceFromPosition(move.getFromPosition());
+            tmpRook.setHasMove(Boolean.TRUE);
+        }
+        
         // ulysse: en mode fast :
         this.getPieceFromPosition(move.getFromPosition()).setPosition(move.getToPosition());
     }
