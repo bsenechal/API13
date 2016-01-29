@@ -91,6 +91,7 @@ public class MoveValidationMessage extends Message {
             
             if (status.equals(GameStatusEnum.CHECKMATE) || status.equals(GameStatusEnum.DRAW)) {
                 // Clean the serveur game-entity :
+                comServerManager.getIServerDataToCom().endGame(game.getId());
                 game = null;
             }
         } else {
