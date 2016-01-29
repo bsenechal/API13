@@ -218,8 +218,6 @@ public class ChessBoardNode {
                 try {
                     Image img = ImageIO.read(getClass().getResource(dossierIcone + ordrePiece[ctr] + couleur + ".gif"));
                     chessBoardSquares[ctr][ligne].setIcon(new ImageIcon(img));
-                    // TODO : remove if IHM is not happy :)
-                    chessBoardSquares[ctr][ligne].setDisabledIcon(new ImageIcon(img));
                 } catch (IOException e) {
 
                 }
@@ -249,8 +247,6 @@ public class ChessBoardNode {
                 try {
                     Image img = ImageIO.read(getClass().getResource(dossierIcone + 'P' + couleur + ".gif"));
                     chessBoardSquares[ctr][ligne + increment].setIcon(new ImageIcon(img));
-                    // TODO : remove if IHM is not happy :)
-                    chessBoardSquares[ctr][ligne + increment].setDisabledIcon(new ImageIcon(img));
 
                 } catch (IOException e) {
 

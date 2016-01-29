@@ -220,8 +220,6 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "N.gif"));
             }
             chessBoardSquares[line_to - 1][8 - col_to].setIcon(new ImageIcon(img));
-            //TODO : remove if IHM is not happy :)
-            chessBoardSquares[line_to - 1][8 - col_to].setDisabledIcon(new ImageIcon(img));
 
         } catch (IOException e) {
             e.printStackTrace();
