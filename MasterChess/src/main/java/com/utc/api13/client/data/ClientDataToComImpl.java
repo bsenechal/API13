@@ -128,7 +128,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
         
       //gestion des roques
-        if(thisgame.getPieceFromPosition(move.getFromPosition()).toString().equals("King")){
+        if(piece.toString().equals("King")){
             if(move.getFromPosition().getPositionX() == move.getToPosition().getPositionX() - 2){
                 PositionEntity rookPositionTmp = new PositionEntity(move.getFromPosition().getPositionX() + 3, move.getFromPosition().getPositionY());
                 PositionEntity rookPositionToGo = new PositionEntity(move.getFromPosition().getPositionX() + 1, move.getFromPosition().getPositionY());
@@ -151,7 +151,13 @@ public class ClientDataToComImpl implements IClientDataToCom {
         
         // delete the real destination piece
         thisgame.removePieceFromPosition(move.getToPosition());
-        thisgame.transformPawnToQueen(move);
+        
+        // transorm a Pawn to a queen if the pawn is in the ennemy camp :
+        if(thisgame.transformPawnToQueen(move)){
+            //you need to get the new Piece if it is now a queen
+            piece = thisgame.getPieceFromPosition(move.getFromPosition());
+        };
+        
         thisgame.movePiece(move);
 
         instanceDataClientManager.getIClientIHMToData().refreshChessBoard(fromLine, fromCol, toLine, toCol, piece,

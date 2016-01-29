@@ -680,14 +680,19 @@ public class GameEntity extends ADataEntity {
      * this method will transform a Pawn to a queen if it reaches the ennemy camp !
      * @author ulyss_000
      * @param move
+     * @return TRUE is the Pawn has been transformed to a queen, FALSE if not.
      */
-    public void transformPawnToQueen(MoveEntity move){
+    public boolean transformPawnToQueen(MoveEntity move){
+        System.out.println("transformPawnToQueen: getPiece : " + move.getPiece().toString() + ", getToPostion : " + move.getToPosition().getPositionY());
         if(move.getPiece().toString().equals("Pawn") && (move.getToPosition().getPositionY() == 8 || move.getToPosition().getPositionY() == 1) ){
+            System.out.println("transformPawnToQueen: yes");
             this.removePieceFromPosition(move.getFromPosition());
             QueenEntity newQueen = new QueenEntity(this.getCurrentPlayerColor());
             newQueen.setPosition(new PositionEntity(move.getFromPosition().getPositionX(), move.getFromPosition().getPositionY()));
             this.addPiece(newQueen);
-            move.setPiece(newQueen);
+            return Boolean.TRUE;
+            //move.setPiece(newQueen);
         }
+        return Boolean.FALSE;
     }
 }
