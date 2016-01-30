@@ -2,7 +2,6 @@
 package com.utc.api13.commun.entities;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -97,65 +96,6 @@ public abstract class APieceEntity extends ADataEntity {
 
     }
 
-    public void movePiece(final MoveEntity move, GameEntity game) {
-        Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
-        Assert.notNull(move, "[APieceEntity][move] move shouldn't be null");
-        Assert.notNull(game.getMovesHistory(), "[APieceEntity][move] MovesHistory shouldn't be null");
-
-        // Déplacement de la pièce
-
-        /*
-         * TODO : Corriger ********************* BUG
-         * ******************************** Lorqu'on fait un move, la position
-         * ne change pas dans le game... En d'autres termes la fonction
-         * setPosition ne fait rien -_-
-         * 
-         */
-        // Ancien code
-        setPosition(move.getToPosition());
-
-        // Proposition de correction : à priori fonctionne mais pas totalement
-        // testé
-        // ATTENTION RISQUE DE BOUCLE INFINI !! (à tester)
-        // game.getPieceFromPosition(move.getFromPosition()).setPosition(move.getToPosition());
-
-        // TODO : Delete adversary pond if needed !!! (managed deleted pond to
-        // allow canceling a move ?)
-
-        // Ajout dans l'historique des coups
-        game.getMovesHistory().add(move);
-    }
-
-    public void cancelLastMove(GameEntity game) {
-        Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
-        Assert.notNull(game.getMovesHistory(), "[APieceEntity][move] MovesHistory shouldn't be null");
-
-        MoveEntity lastMove = game.getMovesHistory().stream().max(new Comparator<MoveEntity>() {
-            @Override
-            public int compare(MoveEntity o1, MoveEntity o2) {
-                return o1.getDate().compareTo(o2.getDate());
-            }
-
-        }).get();
-
-        // annulation du dernier mouvement
-        setPosition(lastMove.getFromPosition());
-
-        // Enlever de l'historique
-        game.getMovesHistory().remove(lastMove);
-    }
-
-    public void cancelMove(GameEntity game, final MoveEntity move) {
-        Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
-        Assert.notNull(game.getMovesHistory(), "[APieceEntity][move] MovesHistory shouldn't be null");
-
-        // annulation du dernier mouvement
-        setPosition(move.getFromPosition());
-
-        // Enlever de l'historique
-        game.getMovesHistory().remove(move);
-    }
-
     public boolean isMovePossible(final MoveEntity move, final GameEntity game) {
         Assert.notNull(move, "[APieceEntity][isMovePossible] move shouldn't be null");
         Assert.notNull(game, "[APieceEntity][isMovePossible] game shouldn't be null");
@@ -231,7 +171,6 @@ public abstract class APieceEntity extends ADataEntity {
                 if (verifyCheck) {
                     MoveEntity tmpMove = new MoveEntity(new Date(), this.getPosition(), positionTemp, this);
 
-                    this.movePiece(tmpMove, game);
                     // on supprime le piont adverse s'il y en a un a destination
                     APieceEntity tmpOpponentPiece = null;
                     boolean haskilledAnother = Boolean.FALSE;
@@ -243,14 +182,20 @@ public abstract class APieceEntity extends ADataEntity {
                         isStopped = Boolean.TRUE;
                     }
 
+                    // on joue le coup qu'on annulera ensuite :
+                    game.movePiece(tmpMove);
+
                     if (!game.isCheck()) {
                         result.add(positionTemp);
                     }
 
+                    // on annule le coup joué
+                    game.cancelMove(tmpMove);
+
+                    // on remet en place le pion adverse si jamais :
                     if (haskilledAnother == Boolean.TRUE) {
                         game.addPiece(tmpOpponentPiece);
                     }
-                    this.cancelMove(game, tmpMove);
                 } else {
                     // without game.isCheck
                     result.add(positionTemp);
