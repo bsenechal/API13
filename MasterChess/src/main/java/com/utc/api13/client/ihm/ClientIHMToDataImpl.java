@@ -280,28 +280,29 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     }
 
     public void activateCases(PublicUserEntity currentUser, GameStatusEnum status) {
-    	//Check the game status
-    	if(status.equals(GameStatusEnum.CHECK)){
-    		controller.getCb().changeCheckSituation();
-    	}
-    	
-    	if(status.equals(GameStatusEnum.CHECKMATE)){
-    		controller.getCb().changeCheckMateSituation();
-    	}else{ 	
-	        // en fonction du joueur courant
-	        GameEntity gameEntity = myIHMManager.getIClientDataToIHM().getCurrentGame();
-	        Case[][] cb = controller.getCb().getChessBoardSquares();
-	        if (status != GameStatusEnum.CHECKMATE) {
-	            if (myIHMManager.getIClientDataToIHM().getLocalUser().getId().equals(currentUser.getId())) {
-	                for (Case i[] : cb) {
-	                    for (Case j : i) {
-	                        j.setEnabled(true);
-	                    }
-	                }
-	            }
-	        }
-    	}
+        // Check the game status
+        if (status.equals(GameStatusEnum.CHECK)) {
+            controller.getCb().changeCheckSituation();
+        }
+
+        if (status.equals(GameStatusEnum.CHECKMATE)) {
+            controller.getCb().changeCheckMateSituation();
+        } else {
+            // en fonction du joueur courant
+            GameEntity gameEntity = myIHMManager.getIClientDataToIHM().getCurrentGame();
+            Case[][] cb = controller.getCb().getChessBoardSquares();
+            if (status != GameStatusEnum.CHECKMATE) {
+                if (myIHMManager.getIClientDataToIHM().getLocalUser().getId().equals(currentUser.getId())) {
+                    for (Case i[] : cb) {
+                        for (Case j : i) {
+                            j.setEnabled(true);
+                        }
+                    }
+                }
+            }
+        }
     }
+
     @Override
     public void closeGameScreen(boolean answer) {
         // TODO Auto-generated method stub

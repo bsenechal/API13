@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -454,17 +453,10 @@ public class GameEntity extends ADataEntity {
         Assert.notNull(this.getBlackPieces(), "[GameEntity][isFinished] blackPieces shouldn't be null");
         Assert.notNull(this.getWhitePieces(), "[GameEntity][isFinished] whitePieces shouldn't be null");
 
-        // Local variables :
-        KingEntity king;
-        List<APieceEntity> opponentPieces;
         GameStatusEnum result = GameStatusEnum.CONTINUE;
         Boolean check = false;
 
         // set local variables according to the local player color :
-
-        opponentPieces = this.getOpponentPieces();
-
-        king = (KingEntity) opponentPieces.stream().filter(bp -> bp.toString().equals("King")).findFirst().orElse(null);
 
         // Check check
         if (this.isCheck()) {
@@ -604,93 +596,105 @@ public class GameEntity extends ADataEntity {
      * @param move
      */
     public void movePiece(MoveEntity move) {
-        //Hugo : ajout pour la gestion des roques
-        //A faire avant le reste sinon on ne peut plus utiliser le getFromPosition
-        if(move.getPiece().toString().equals("King")){
-            KingEntity tmpKing = (KingEntity)this.getPieceFromPosition(move.getFromPosition());
+        // Hugo : ajout pour la gestion des roques
+        // A faire avant le reste sinon on ne peut plus utiliser le
+        // getFromPosition
+        if (move.getPiece().toString().equals("King")) {
+            KingEntity tmpKing = (KingEntity) this.getPieceFromPosition(move.getFromPosition());
             tmpKing.setHasMove(Boolean.TRUE);
-            
-            //left castling :
+
+            // left castling :
             moveRookIfCastling(move, -2, 3, 1);
-            //right casting :
+            // right casting :
             moveRookIfCastling(move, 2, -4, -1);
-            
+
         }
-        if(move.getPiece().toString().equals("Rook")){
-            RookEntity tmpRook = (RookEntity)this.getPieceFromPosition(move.getFromPosition());
+        if (move.getPiece().toString().equals("Rook")) {
+            RookEntity tmpRook = (RookEntity) this.getPieceFromPosition(move.getFromPosition());
             tmpRook.setHasMove(Boolean.TRUE);
         }
-        
+
         // ulysse: en mode fast :
         this.getPieceFromPosition(move.getFromPosition()).setPosition(move.getToPosition());
-        
-        //ajout dans l'historique des coups :
+
+        // ajout dans l'historique des coups :
         this.getMovesHistory().add(move);
     }
-    
+
     /**
      * Factor Castling rook move (for HU)
+     * 
      * @author ulyss_000
      * @param move
-     * @param newKingX -> -2 ou 2
-     * @param rookOldX -> 3 ou -4
-     * @param rookNewX -> 1 ou -1
+     * @param newKingX
+     *            -> -2 ou 2
+     * @param rookOldX
+     *            -> 3 ou -4
+     * @param rookNewX
+     *            -> 1 ou -1
      */
-    public void moveRookIfCastling(MoveEntity move, int newKingX, int rookOldX,int rookNewX){
-        if(move.getFromPosition().getPositionX() == move.getToPosition().getPositionX() + newKingX){
-            PositionEntity rookPositionTmp = new PositionEntity(move.getFromPosition().getPositionX() + rookOldX, move.getFromPosition().getPositionY());
-            PositionEntity rookPositionToGo = new PositionEntity(move.getFromPosition().getPositionX() + rookNewX, move.getFromPosition().getPositionY());
-            
+    public void moveRookIfCastling(MoveEntity move, int newKingX, int rookOldX, int rookNewX) {
+        if (move.getFromPosition().getPositionX() == move.getToPosition().getPositionX() + newKingX) {
+            PositionEntity rookPositionTmp = new PositionEntity(move.getFromPosition().getPositionX() + rookOldX,
+                    move.getFromPosition().getPositionY());
+            PositionEntity rookPositionToGo = new PositionEntity(move.getFromPosition().getPositionX() + rookNewX,
+                    move.getFromPosition().getPositionY());
+
             this.getPieceFromPosition(rookPositionTmp).setPosition(rookPositionToGo);
         }
     }
-    
+
     /**
      * undo a movePiece
+     * 
      * @author ulyss_000
      * @param moveToCancel
      */
     public void cancelMove(MoveEntity moveToCancel) {
-         
-        //check if it was a castling to undo it :
-        if(moveToCancel.getPiece().toString().equals("King")){
-            KingEntity tmpKing = (KingEntity)this.getPieceFromPosition(moveToCancel.getToPosition());
+
+        // check if it was a castling to undo it :
+        if (moveToCancel.getPiece().toString().equals("King")) {
+            KingEntity tmpKing = (KingEntity) this.getPieceFromPosition(moveToCancel.getToPosition());
             tmpKing.setHasMove(Boolean.FALSE);
-            
-            //left castling undo :
+
+            // left castling undo :
             moveRookIfCastling(moveToCancel, -2, 1, 3);
-            //right casting undo :
+            // right casting undo :
             moveRookIfCastling(moveToCancel, 2, -1, -4);
-            
+
         }
-        
-        if(moveToCancel.getPiece().toString().equals("Rook")){
-            RookEntity tmpRook = (RookEntity)this.getPieceFromPosition(moveToCancel.getToPosition());
+
+        if (moveToCancel.getPiece().toString().equals("Rook")) {
+            RookEntity tmpRook = (RookEntity) this.getPieceFromPosition(moveToCancel.getToPosition());
             tmpRook.setHasMove(Boolean.FALSE);
         }
-        
-        //reset position
+
+        // reset position
         this.getPieceFromPosition(moveToCancel.getToPosition()).setPosition(moveToCancel.getFromPosition());
-        
-        //remove from play history :
+
+        // remove from play history :
         this.getMovesHistory().remove(moveToCancel);
     }
-    
+
     /**
-     * this method will transform a Pawn to a queen if it reaches the ennemy camp !
+     * this method will transform a Pawn to a queen if it reaches the ennemy
+     * camp !
+     * 
      * @author ulyss_000
      * @param move
      * @return TRUE is the Pawn has been transformed to a queen, FALSE if not.
      */
-    public boolean transformPawnToQueen(MoveEntity move){
-        if(move.getPiece().toString().equals("Pawn") && (move.getToPosition().getPositionY() == 8 || move.getToPosition().getPositionY() == 1) ){
+    public boolean transformPawnToQueen(MoveEntity move) {
+        if (move.getPiece().toString().equals("Pawn")
+                && (move.getToPosition().getPositionY() == 8 || move.getToPosition().getPositionY() == 1)) {
             System.out.println("transformPawnToQueen: yes");
             this.removePieceFromPosition(move.getFromPosition());
             QueenEntity newQueen = new QueenEntity(this.getCurrentPlayerColor());
-            newQueen.setPosition(new PositionEntity(move.getFromPosition().getPositionX(), move.getFromPosition().getPositionY()));
+            newQueen.setPosition(
+                    new PositionEntity(move.getFromPosition().getPositionX(), move.getFromPosition().getPositionY()));
             this.addPiece(newQueen);
             return Boolean.TRUE;
-            //move.setPiece(newQueen);
+            // move.setPiece(newQueen);
         }
         return Boolean.FALSE;
     }

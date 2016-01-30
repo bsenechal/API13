@@ -2,8 +2,6 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
-import org.apache.log4j.Logger;
-
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.server.com.ComServerManager;
 
@@ -14,8 +12,6 @@ public class ExcludeObserverMessage extends Message {
      * 
      */
     private static final long serialVersionUID = -5882266964398566864L;
-
-    private static final Logger logger = Logger.getLogger(ObserverRequestMessage.class);
 
     private UUID game; // Game on which we request to observe
     private UUID userId;

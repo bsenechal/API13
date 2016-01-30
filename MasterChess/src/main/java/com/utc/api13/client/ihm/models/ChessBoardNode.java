@@ -10,9 +10,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -24,17 +21,11 @@ import javax.swing.border.LineBorder;
 
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
-import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.pieces.BishopEntity;
-import com.utc.api13.commun.entities.pieces.KingEntity;
-import com.utc.api13.commun.entities.pieces.KnightEntity;
-import com.utc.api13.commun.entities.pieces.PawnEntity;
-import com.utc.api13.commun.entities.pieces.QueenEntity;
-import com.utc.api13.commun.entities.pieces.RookEntity;
-import com.utc.api13.commun.enumerations.PieceColorEnum;
+
+import javafx.beans.property.BooleanProperty;
 
 public class ChessBoardNode {
     private IClientDataToIHM myIClientToIHM;
@@ -46,7 +37,6 @@ public class ChessBoardNode {
     private JPanel chessBoard;
     private static final String COLS = "ABCDEFGH";
     private static final int TAILLE = 8;
-    private static final int TAILLE_CASE = 25;
     private Case[][] chessBoardSquares = new Case[TAILLE][TAILLE];
     private PositionEntity firstPosition = new PositionEntity(-1, -1);
     List<PositionEntity> positionList;
@@ -73,8 +63,6 @@ public class ChessBoardNode {
         int increment = 1;
         int ligne = 0;
         char couleur = 'N';
-        APieceEntity tempo = null;
-
         gui.setBorder(new EmptyBorder(5, 5, 5, 5));
         chessBoard = new JPanel(new GridLayout(0, 9));
         chessBoard.setBorder(new LineBorder(Color.BLACK));
@@ -226,23 +214,18 @@ public class ChessBoardNode {
 
                 switch (ordrePiece[ctr]) {
                 case 'T':
-                    tempo = new RookEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
                     break;
 
                 case 'C':
-                    tempo = new KnightEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
                     break;
 
                 case 'F':
-                    tempo = new BishopEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
                     break;
 
                 case 'D':
-                    tempo = new QueenEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                     break;
 
                 case 'R':
-                    tempo = new KingEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                     break;
                 }
                 String iconePathPawn = dossierIcone + 'P' + couleur;
@@ -255,7 +238,6 @@ public class ChessBoardNode {
                 } catch (IOException e) {
 
                 }
-                tempo = new PawnEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
 
             }
             couleur = 'B';
