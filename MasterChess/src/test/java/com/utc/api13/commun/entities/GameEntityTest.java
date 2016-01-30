@@ -92,7 +92,7 @@ public class GameEntityTest {
         // ajout tour :
         RookEntity rook = new RookEntity(PieceColorEnum.BLACK, 8);
         game.getBlackPieces().add(rook);
-        rook.movePiece(new MoveEntity(new Date(), new PositionEntity(8, 8), new PositionEntity(8, 1), rook), game);
+        game.movePiece(new MoveEntity(new Date(), new PositionEntity(8, 8), new PositionEntity(8, 1), rook));
 
         // test du statut en echec du game :
         Assert.assertEquals("Game should be check", game.isFinished(), GameStatusEnum.CHECK);

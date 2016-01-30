@@ -88,6 +88,12 @@ public class MoveValidationMessage extends Message {
             // // A vérifier, mais ne pas utiliser
             NextTurnMessage ntm = new NextTurnMessage(new UUID(0, 0), null, status, nexttoplay);
             comServerManager.multicastMessageByUsers(list, ntm);
+            
+            if (status.equals(GameStatusEnum.CHECKMATE) || status.equals(GameStatusEnum.DRAW)) {
+                // Clean the serveur game-entity :
+                comServerManager.getIServerDataToCom().endGame(game.getId());
+                game = null;
+            }
         } else {
             // TODO : Error !
         }
