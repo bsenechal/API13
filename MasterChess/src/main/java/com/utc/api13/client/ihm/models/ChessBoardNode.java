@@ -215,9 +215,12 @@ public class ChessBoardNode {
         // Je place les icônes des pièces sur leur case respective
         while (increment >= -1) {
             for (int ctr = 0; ctr <= 7; ctr++) {
+                String iconePath = dossierIcone + ordrePiece[ctr] + couleur;
                 try {
-                    Image img = ImageIO.read(getClass().getResource(dossierIcone + ordrePiece[ctr] + couleur + ".gif"));
+                    Image img = ImageIO.read(getClass().getResource(iconePath + ".gif"));
                     chessBoardSquares[ctr][ligne].setIcon(new ImageIcon(img));
+                    Image img_disabled = ImageIO.read(getClass().getResource(iconePath + "_disabled.gif"));
+                    chessBoardSquares[ctr][ligne].setDisabledIcon(new ImageIcon(img_disabled));
                 } catch (IOException e) {
 
                 }
@@ -243,10 +246,12 @@ public class ChessBoardNode {
                     tempo = new KingEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                     break;
                 }
-
+                String iconePathPawn = dossierIcone + 'P' + couleur;
                 try {
-                    Image img = ImageIO.read(getClass().getResource(dossierIcone + 'P' + couleur + ".gif"));
+                    Image img = ImageIO.read(getClass().getResource(iconePathPawn + ".gif"));
                     chessBoardSquares[ctr][ligne + increment].setIcon(new ImageIcon(img));
+                    Image img_disabled = ImageIO.read(getClass().getResource(iconePathPawn + "_disabled" + ".gif"));
+                    chessBoardSquares[ctr][ligne + increment].setDisabledIcon(new ImageIcon(img_disabled));
 
                 } catch (IOException e) {
 
