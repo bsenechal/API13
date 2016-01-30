@@ -88,6 +88,7 @@ public class KnightEntityTest {
         game.setWhitePieces(new ArrayList<APieceEntity>());
 
         whiteKnight.setPosition(new PositionEntity(4, 4));
+        game.getWhitePieces().add(whiteKnight);
         availablesPositionsWhiteKnight = whiteKnight.generateAvailableMoves(game);
         game.getWhitePieces().add(whiteKnight);
         Assert.assertFalse("availablesPositionsWhiteKnight shouldn't be empty",
