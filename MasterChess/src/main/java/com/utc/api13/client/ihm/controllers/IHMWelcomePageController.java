@@ -56,7 +56,7 @@ public class IHMWelcomePageController {
     private IClientDataToIHM myIClientToIHM;
     private ObservableList<PublicUserEntity> listUserPublic;
     private ObservableList<GameEntity> listCurrentGames;
-    private final Logger log = Logger.getLogger(getClass());
+    private final Logger LOGGER = Logger.getLogger(getClass());
 
     @FXML
     BorderPane mainBorderPane;
@@ -99,7 +99,6 @@ public class IHMWelcomePageController {
         this.IHMManager = iHMManager;
     }
 
-    @SuppressWarnings("restriction")
     @FXML
     private void onHelpClicked(Event event) throws IOException {
         Stage stage;
@@ -138,7 +137,6 @@ public class IHMWelcomePageController {
         stage.show();
     }
 
-    @SuppressWarnings("restriction")
     @FXML
     public void onLogOutClicked() throws IOException {
         try {
@@ -147,18 +145,18 @@ public class IHMWelcomePageController {
             try {
                 error("Log out error : Technical Exception");
             } catch (IOException e1) {
-                log.error(e1.getMessage(), e1);
+                LOGGER.error(e1.getMessage(), e1);
             }
-            log.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
 
         catch (FunctionalException e) {
             try {
                 error("Log out error : Functional Exception");
             } catch (IOException e1) {
-                log.error(e1.getMessage(), e1);
+                LOGGER.error(e1.getMessage(), e1);
             }
-            log.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         } finally {
             mainApp.getComClientManager().close();
         }
@@ -179,7 +177,6 @@ public class IHMWelcomePageController {
         stage.show();
     }
 
-    @SuppressWarnings("restriction")
     @FXML
     public void onExportClicked() throws IOException {
         File exportFile = null;
@@ -189,9 +186,9 @@ public class IHMWelcomePageController {
             try {
                 error("Export error : Technical Exception");
             } catch (IOException e1) {
-                log.error(e1.getMessage(), e1);
+                LOGGER.error(e1.getMessage(), e1);
             }
-            log.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -209,14 +206,13 @@ public class IHMWelcomePageController {
                 try {
                     exportNOK();
                 } catch (IOException e1) {
-                    log.error(e1.getMessage(), e1);
+                    LOGGER.error(e1.getMessage(), e1);
                 }
-                log.error(e.getMessage(), e);
+                LOGGER.error(e.getMessage(), e);
             }
         }
     }
 
-    @SuppressWarnings("restriction")
     @FXML
     public void onUserInfoClicked() throws IOException {
 
@@ -241,9 +237,9 @@ public class IHMWelcomePageController {
             try {
                 error("Error when loading user info : IOException");
             } catch (IOException e1) {
-                log.error(e1.getMessage(), e1);
+                LOGGER.error(e1.getMessage(), e1);
             }
-            log.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -387,11 +383,8 @@ public class IHMWelcomePageController {
         // -------------------------------
         connectedUserTable.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
 
-            @SuppressWarnings("unchecked")
             @Override
             public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
-                // TODO Auto-generated method stub
-
                 Optional.ofNullable(listUserPublic.get((int) newValue))
                         .ifPresent(user -> myIClientToIHM.getUserInfo(user.getId()));
 
@@ -414,9 +407,9 @@ public class IHMWelcomePageController {
                     try {
                         error("Error when loading user info : IOException");
                     } catch (IOException e1) {
-                        log.error(e1.getMessage(), e1);
+                        LOGGER.error(e1.getMessage(), e1);
                     }
-                    log.error(e.getMessage(), e);
+                    LOGGER.error(e.getMessage(), e);
                 }
             }
         });
@@ -480,7 +473,7 @@ public class IHMWelcomePageController {
                 try {
                     onLogOutClicked();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error(e.getMessage());
                 }
             }
         });

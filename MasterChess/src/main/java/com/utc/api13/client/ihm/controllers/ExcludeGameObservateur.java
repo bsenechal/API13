@@ -2,9 +2,6 @@ package com.utc.api13.client.ihm.controllers;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.UUID;
-
-import org.apache.log4j.Logger;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
@@ -30,8 +27,6 @@ public class ExcludeGameObservateur {
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
-    private final Logger log = Logger.getLogger(getClass());
-    private UUID enquirerUUID;
     private ObservableList gameObserver;
 
     @FXML
@@ -69,7 +64,6 @@ public class ExcludeGameObservateur {
         stage.show();
     }
 
-    @SuppressWarnings("restriction")
     public void setMainApp(
             AppClient app /*
                            * , String login, Boolean chattable, Boolean timer,
@@ -78,14 +72,9 @@ public class ExcludeGameObservateur {
         this.mainApp = app;
     }
 
-    @SuppressWarnings("unchecked")
     private void loadDataFromTable() {
-        // TODO Auto-generated method stub
-
         gameObserver = FXCollections.observableList(myIClientToIHM.getCurrentGame().getObservers());
-
         observateurUserTable.setItems(gameObserver);
-
     }
 
     public void setControllerContext(IHMManager ihmManager) {

@@ -27,7 +27,6 @@ import javafx.stage.Stage;
 
 public class IHMManageProfileController {
     private IHMManager IHMManager;
-    private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private final Logger log = Logger.getLogger(getClass());
     private boolean newProfile = false;
@@ -72,20 +71,13 @@ public class IHMManageProfileController {
                 this.myIClientToIHM.createProfile(user);
             else
                 this.myIClientToIHM.updateProfile(user);
-            // }
 
         } catch (TechnicalException e) {
-            // TODO afficher a l'utlisateur l'erreur soit dans une popup ou dans
-            // la fenetre courante
             log.error(e.getMessage(), e);
-            e.printStackTrace();
         } catch (FunctionalException e) {
-            // TODO Auto-generated catch block
             for (Erreur erreur : e.getErreurs()) {
-                // TODO gerer les multi langues ant de remplir les fichiers logs
                 log.error(((ErrorTypeEnum) erreur.getErrorType()).getCode());
             }
-            e.printStackTrace();
         }
 
     }
@@ -97,8 +89,7 @@ public class IHMManageProfileController {
         fileChooser.setTitle("Ouvrir le document");
         fileChooser.setInitialDirectory(new File("/"));
         File f = fileChooser.showOpenDialog(new Stage());
-        System.out.println(" le chemin est :" + f.getAbsolutePath());
-        Image newProfil = null;
+
         try {
 
             changeProfilePicture.setImage(new Image("file:///" + f.getAbsolutePath()));
@@ -122,7 +113,6 @@ public class IHMManageProfileController {
 
     public void setMainApp(AppClient app) {
 
-        this.mainApp = app;
         if (!newProfile) {
             PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
             this.loginTextView.setText(u.getLogin());

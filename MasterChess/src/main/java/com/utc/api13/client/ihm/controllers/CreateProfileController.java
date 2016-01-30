@@ -39,7 +39,7 @@ public class CreateProfileController {
     private IHMManager IHMManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
-    private final Logger log = Logger.getLogger(getClass());
+    private final Logger LOGGER = Logger.getLogger(getClass());
     private Stage currentStage;
 
     @FXML
@@ -74,7 +74,7 @@ public class CreateProfileController {
             try {
                 error("Error : please fill all the fields!", false);
             } catch (IOException e1) {
-                log.error(e1.getMessage(), e1);
+                LOGGER.error(e1.getMessage(), e1);
             }
         }
 
@@ -114,20 +114,18 @@ public class CreateProfileController {
                 try {
                     error("Error when saving your profile : Technical Exception", true);
                 } catch (IOException e1) {
-                    log.error(e1.getMessage(), e1);
+                    LOGGER.error(e1.getMessage(), e1);
                 }
-                log.error(e.getMessage(), e);
+                LOGGER.error(e.getMessage(), e);
 
             } catch (FunctionalException e) {
                 try {
                     error("Error when saving your profile : Functional Exception", true);
                 } catch (IOException e1) {
-                    log.error(e1.getMessage(), e1);
+                    LOGGER.error(e1.getMessage(), e1);
                 }
                 for (Erreur erreur : e.getErreurs()) {
-                    // TODO gerer les multi langues ant de remplir les fichiers
-                    // logs
-                    log.error(((ErrorTypeEnum) erreur.getErrorType()).getCode());
+                    LOGGER.error(((ErrorTypeEnum) erreur.getErrorType()).getCode());
                 }
             }
         }
@@ -147,10 +145,8 @@ public class CreateProfileController {
         fileChooser.setTitle("Ouvrir le document");
         fileChooser.setInitialDirectory(new File("/"));
         File f = fileChooser.showOpenDialog(new Stage());
-        System.out.println(" le chemin est :" + f.getAbsolutePath());
-        Image newProfil = null;
-        try {
 
+        try {
             changeProfilePicture.setImage(new Image("file:///" + f.getAbsolutePath()));
             this.myIClientToIHM.getLocalUser().setImagePath("file:///" + f.getAbsolutePath());
 
@@ -158,9 +154,9 @@ public class CreateProfileController {
             try {
                 error("Error when changing your picture", false);
             } catch (IOException e1) {
-                log.error(e1.getMessage(), e1);
+                LOGGER.error(e1.getMessage(), e1);
             }
-            log.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
 
     }

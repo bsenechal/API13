@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
-import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.property.ProfilProperty;
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -36,10 +35,9 @@ import javafx.stage.Stage;
 public class UserInfoPopUpController {
     private IHMManager IHMManager;
     private AppClient mainApp;
-    private IClientDataToIHM myIClientToIHM;
     public PublicUserEntity u;
     private Stage currentStage;
-    private final Logger log = Logger.getLogger(getClass());
+    private final Logger LOGGER = Logger.getLogger(getClass());
 
     @FXML
     BorderPane userInfoBorderPane;
@@ -87,7 +85,7 @@ public class UserInfoPopUpController {
     public void setIHMMandClient(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null) {
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            IHMManager.getIClientDataToIHM();
 
         }
 
@@ -133,7 +131,6 @@ public class UserInfoPopUpController {
         this.currentStage = currentStage;
     }
 
-    @SuppressWarnings("restriction")
     public void sendProposition() throws IOException {
         Stage stage;
         Parent root;
@@ -154,9 +151,9 @@ public class UserInfoPopUpController {
             try {
                 error("Error when loading proposition window : IOException");
             } catch (IOException e1) {
-                log.error(e1.getMessage(), e1);
+                LOGGER.error(e1.getMessage(), e1);
             }
-            log.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
 
     }

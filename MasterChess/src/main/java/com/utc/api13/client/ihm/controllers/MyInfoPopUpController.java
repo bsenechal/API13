@@ -29,16 +29,8 @@ public class MyInfoPopUpController {
     private IHMManager IHMManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
-    // private boolean newProfile = false;
     private Stage currentStage;
     private Text userLabelToUpdateWelcomePage;
-
-    /*
-     * public boolean isNewProfile() { return newProfile; }
-     * 
-     * public void setNewProfile(boolean newProfile) { this.newProfile =
-     * newProfile; }
-     */
 
     @FXML
     BorderPane userInfoBorderPane;
