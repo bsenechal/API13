@@ -34,8 +34,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -112,7 +110,6 @@ public class IHMGamePageController {
     /* exclude an observer in a game */
 
     private void openUserObservableList() throws IOException {
-        // TODO Auto-generated method stub
         Stage stage;
         Parent root;
         stage = new Stage();
@@ -148,8 +145,6 @@ public class IHMGamePageController {
     @FXML
     private void onQuitGameClicked(Event event) {
         // onGiveUpClicked();
-        String a = "slt";
-        System.out.println("test when we logout of the app");
     }
 
     public void setControllerContext(IHMManager ihmManager) {
@@ -169,11 +164,6 @@ public class IHMGamePageController {
         cb = new ChessBoardNode(IHMManager, game, myIClientToIHM, checkProperty, checkMateProperty);
         cb.setMyIClientToIHM(myIClientToIHM);
 
-        int nbMinutes = game.getTimerInt() / 60;
-        int nbSecondes = game.getTimerInt() % 60;
-        String myTimer = Integer.toString(nbMinutes) + " : " + Integer.toString(nbSecondes);
-
-        // this.timerText.setText(myTimer);
         final SwingNode swingNode = new SwingNode();
 
         SwingUtilities.invokeLater(new Runnable() {

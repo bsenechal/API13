@@ -43,7 +43,6 @@ public class BishopEntity extends APieceEntity {
 
     @Override
     public List<PositionEntity> generateAvailableMoves(GameEntity game, boolean verifyCheck) {
-        // TODO Auto-generated method stub
         Assert.notNull(getPosition(), "[BishopEntity][generateAvailableMoves] Position shouldn't be null");
 
         List<PositionEntity> result = new ArrayList<PositionEntity>();

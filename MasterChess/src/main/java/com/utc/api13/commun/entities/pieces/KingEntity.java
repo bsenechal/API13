@@ -8,7 +8,6 @@ import org.springframework.util.Assert;
 
 import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
-import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 

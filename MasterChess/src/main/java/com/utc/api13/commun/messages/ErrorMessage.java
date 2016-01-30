@@ -2,8 +2,6 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
-import org.apache.log4j.Logger;
-
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.server.com.ComServerManager;
 
@@ -14,7 +12,6 @@ public class ErrorMessage extends Message {
      * 
      */
     private static final long serialVersionUID = -6008159212103570714L;
-    private static final Logger logger = Logger.getLogger(ErrorMessage.class);
     private Exception exception;
 
     @Override
@@ -43,7 +40,6 @@ public class ErrorMessage extends Message {
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         // TODO Auto-generated method stub
-
     }
 
 }

@@ -126,45 +126,49 @@ public class ClientDataToComImpl implements IClientDataToCom {
         APieceEntity piece = thisgame.getPieceFromPosition(move.getFromPosition());
         Assert.notNull(thisgame, "[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
 
-        
-      //gestion des roques
-        if(piece.toString().equals("King")){
-            if(move.getFromPosition().getPositionX() == move.getToPosition().getPositionX() - 2){
-                PositionEntity rookPositionTmp = new PositionEntity(move.getFromPosition().getPositionX() + 3, move.getFromPosition().getPositionY());
-                PositionEntity rookPositionToGo = new PositionEntity(move.getFromPosition().getPositionX() + 1, move.getFromPosition().getPositionY());
+        // gestion des roques
+        if (piece.toString().equals("King")) {
+            if (move.getFromPosition().getPositionX() == move.getToPosition().getPositionX() - 2) {
+                PositionEntity rookPositionTmp = new PositionEntity(move.getFromPosition().getPositionX() + 3,
+                        move.getFromPosition().getPositionY());
+                PositionEntity rookPositionToGo = new PositionEntity(move.getFromPosition().getPositionX() + 1,
+                        move.getFromPosition().getPositionY());
                 APieceEntity rookTmp = thisgame.getPieceFromPosition(rookPositionTmp);
-                
-                instanceDataClientManager.getIClientIHMToData().refreshChessBoard(rookPositionTmp.getPositionX(), rookPositionTmp.getPositionY(),
-                        rookPositionToGo.getPositionX(), rookPositionToGo.getPositionY(), rookTmp, thisgame);
+
+                instanceDataClientManager.getIClientIHMToData().refreshChessBoard(rookPositionTmp.getPositionX(),
+                        rookPositionTmp.getPositionY(), rookPositionToGo.getPositionX(),
+                        rookPositionToGo.getPositionY(), rookTmp, thisgame);
             }
-            
-            if(move.getFromPosition().getPositionX() == move.getToPosition().getPositionX() + 2){
-                PositionEntity rookPositionTmp = new PositionEntity(move.getFromPosition().getPositionX() - 4, move.getFromPosition().getPositionY());
-                PositionEntity rookPositionToGo = new PositionEntity(move.getFromPosition().getPositionX() - 1, move.getFromPosition().getPositionY());
+
+            if (move.getFromPosition().getPositionX() == move.getToPosition().getPositionX() + 2) {
+                PositionEntity rookPositionTmp = new PositionEntity(move.getFromPosition().getPositionX() - 4,
+                        move.getFromPosition().getPositionY());
+                PositionEntity rookPositionToGo = new PositionEntity(move.getFromPosition().getPositionX() - 1,
+                        move.getFromPosition().getPositionY());
                 APieceEntity rookTmp = thisgame.getPieceFromPosition(rookPositionTmp);
-                
-                instanceDataClientManager.getIClientIHMToData().refreshChessBoard(rookPositionTmp.getPositionX(), rookPositionTmp.getPositionY(),
-                        rookPositionToGo.getPositionX(), rookPositionToGo.getPositionY(), rookTmp, thisgame);
+
+                instanceDataClientManager.getIClientIHMToData().refreshChessBoard(rookPositionTmp.getPositionX(),
+                        rookPositionTmp.getPositionY(), rookPositionToGo.getPositionX(),
+                        rookPositionToGo.getPositionY(), rookTmp, thisgame);
             }
-            
+
         }
-        
+
         // delete the real destination piece
         thisgame.removePieceFromPosition(move.getToPosition());
-        
+
         // transorm a Pawn to a queen if the pawn is in the ennemy camp :
-        if(thisgame.transformPawnToQueen(move)){
-            //you need to get the new Piece if it is now a queen
+        if (thisgame.transformPawnToQueen(move)) {
+            // you need to get the new Piece if it is now a queen
             piece = thisgame.getPieceFromPosition(move.getFromPosition());
-        };
-        
+        }
+        ;
+
         thisgame.movePiece(move);
 
         instanceDataClientManager.getIClientIHMToData().refreshChessBoard(fromLine, fromCol, toLine, toCol, piece,
                 thisgame);
-        
-        
-        
+
         // #Data l'erreur est normale, on attend que IHM mette à jour sa méthode
 
     }
@@ -386,8 +390,6 @@ public class ClientDataToComImpl implements IClientDataToCom {
         PrivateUserEntity localUser = instanceDataClientManager.getUserLocal();
         switch (status) {
 
-        // case CHECK:
-        // break;
         case CHECKMATE:
             if (localUser.getId().equals(game.getCurrentPlayer().getId())) {
                 localUser.setNbLost(localUser.getNbLost() + 1);
@@ -396,7 +398,8 @@ public class ClientDataToComImpl implements IClientDataToCom {
             }
         case DRAW:
             localUser.setNbPlayed(localUser.getNbPlayed() + 1);
-            instanceDataClientManager.getCurrentGames().removeIf(g -> instanceDataClientManager.getCurrentGame().getId().equals(g.getId()));
+            instanceDataClientManager.getCurrentGames()
+                    .removeIf(g -> instanceDataClientManager.getCurrentGame().getId().equals(g.getId()));
             game = null;
             break;
 

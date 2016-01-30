@@ -76,13 +76,6 @@ public class ClientComToDataImpl implements IClientComToData {
 
     }
 
-    /* DEPRECATED !!! */
-    // @Override
-    // public void sendAnswer(String answer, PublicUserEntity sender) {
-    // // TODO Auto-generated method stub
-    // return;
-    // }
-
     @Override
     public void surrender(UUID uid) {
         // TODO Auto-generated method stub
@@ -110,14 +103,12 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void sendTextChat(String text, UUID idPartie) {
-        // TODO Auto-generated method stub
         comClientManagerInstance.sendMessage(new ChatMessage(null, null, idPartie, text));
     }
 
     @Override
     public void getAllParties() {
         comClientManagerInstance.sendMessage(new AllGameMessage(new UUID(0, 0), new UUID(0, 0), null));
-        return;
     }
 
     @Override
@@ -211,14 +202,12 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void removeUserFromChat(UUID userId, UUID gameId) {
-        // TODO Auto-generated method stub
         comClientManagerInstance.sendMessage(new ExcludeObserverMessage(userId, gameId));
 
     }
 
     @Override
     public void endGameByLeaving(UUID sender, UUID receiver, UUID gameId, boolean answer) {
-        // TODO Auto-generated method stub
         comClientManagerInstance.sendMessage(new GameFinishedMessage(sender, receiver, gameId, answer));
     }
 }
