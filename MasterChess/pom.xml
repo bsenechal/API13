@@ -87,7 +87,7 @@
               </descriptorRefs>
               <archive>
                 <manifest>
-                  <mainClass>com.utc.api13.server.AppServer</mainClass>
+                  <mainClass>com.utc.api13.client.AppClient</mainClass>
                 </manifest>
               </archive>
            </configuration>
@@ -95,5 +95,10 @@
         </executions>
       </plugin>
     </plugins>
+    <resources>
+        <resource>
+            <directory>src/main/config</directory>
+        </resource>
+    </resources>
   </build>
 </project>

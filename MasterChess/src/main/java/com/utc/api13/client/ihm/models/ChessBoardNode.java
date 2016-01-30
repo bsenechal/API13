@@ -53,12 +53,12 @@ public class ChessBoardNode {
     // setter une variable d'etat pour savoir si on selectionne une piece ou une
     // position pour les déplacements dans le listener
     private int selection = 1;
-    
+
     private BooleanProperty checkProperty;
     private BooleanProperty checkMateProperty;
 
-    public ChessBoardNode(IHMManager ihmManager, GameEntity game, IClientDataToIHM myIClientToIHM2
-    		, BooleanProperty isCheck, BooleanProperty isCheckMate) {
+    public ChessBoardNode(IHMManager ihmManager, GameEntity game, IClientDataToIHM myIClientToIHM2,
+            BooleanProperty isCheck, BooleanProperty isCheckMate) {
         myIhmManager = ihmManager;
         myGame = game;
         myIClientToIHM = myIClientToIHM2;
@@ -113,7 +113,6 @@ public class ChessBoardNode {
                             }
                         }
 
-                        System.out.println("ligne " + movePosition.getLine() + " coloone " + movePosition.getColumn());
                         if (selection == 1) {
                             firstPosition.setPositionX(movePosition.getLine());
                             firstPosition.setPositionY(movePosition.getColumn());
@@ -161,12 +160,12 @@ public class ChessBoardNode {
                                         + " movePosition.getColumn() :" + movePosition.getColumn());
                                 myIClientToIHM.playMove(firstPosition.getPositionX(), firstPosition.getPositionY(),
                                         movePosition.getLine(), movePosition.getColumn());
-                                
-                                //sortir de la position d'echec si echec
-                                if(checkProperty.get()){
-                                	changeCheckSituation();
-                                }                        
-                                
+
+                                // sortir de la position d'echec si echec
+                                if (checkProperty.get()) {
+                                    changeCheckSituation();
+                                }
+
                                 // tout rendre unclickable
                                 for (Case i[] : chessBoardSquares) {
                                     for (Case j : i) {
@@ -215,9 +214,12 @@ public class ChessBoardNode {
         // Je place les icônes des pièces sur leur case respective
         while (increment >= -1) {
             for (int ctr = 0; ctr <= 7; ctr++) {
+                String iconePath = dossierIcone + ordrePiece[ctr] + couleur;
                 try {
-                    Image img = ImageIO.read(getClass().getResource(dossierIcone + ordrePiece[ctr] + couleur + ".gif"));
+                    Image img = ImageIO.read(getClass().getResource(iconePath + ".gif"));
                     chessBoardSquares[ctr][ligne].setIcon(new ImageIcon(img));
+                    Image img_disabled = ImageIO.read(getClass().getResource(iconePath + "_disabled.gif"));
+                    chessBoardSquares[ctr][ligne].setDisabledIcon(new ImageIcon(img_disabled));
                 } catch (IOException e) {
 
                 }
@@ -243,10 +245,12 @@ public class ChessBoardNode {
                     tempo = new KingEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                     break;
                 }
-
+                String iconePathPawn = dossierIcone + 'P' + couleur;
                 try {
-                    Image img = ImageIO.read(getClass().getResource(dossierIcone + 'P' + couleur + ".gif"));
+                    Image img = ImageIO.read(getClass().getResource(iconePathPawn + ".gif"));
                     chessBoardSquares[ctr][ligne + increment].setIcon(new ImageIcon(img));
+                    Image img_disabled = ImageIO.read(getClass().getResource(iconePathPawn + "_disabled" + ".gif"));
+                    chessBoardSquares[ctr][ligne + increment].setDisabledIcon(new ImageIcon(img_disabled));
 
                 } catch (IOException e) {
 
@@ -306,13 +310,13 @@ public class ChessBoardNode {
             }
         }
     }
-    
-    public void changeCheckSituation(){
-    	checkProperty.set(!checkProperty.get());
+
+    public void changeCheckSituation() {
+        checkProperty.set(!checkProperty.get());
     }
-    
-    public void changeCheckMateSituation(){
-    	checkMateProperty.set(!checkMateProperty.get());
+
+    public void changeCheckMateSituation() {
+        checkMateProperty.set(!checkMateProperty.get());
     }
-        
+
 }

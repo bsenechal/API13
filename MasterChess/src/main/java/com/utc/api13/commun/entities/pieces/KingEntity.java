@@ -77,12 +77,10 @@ public class KingEntity extends APieceEntity {
 
         if (hasMove == Boolean.FALSE && verifyCheck == Boolean.TRUE) {
             if (this.rightCastling(game)) {
-                result.add(
-                        new PositionEntity(this.getPosition().getPositionX() + 2, this.getPosition().getPositionY()));
+                addPossibleSolution(game, positionX, positionY, 2, 0, result, verifyCheck);
             }
             if (this.leftCastling(game)) {
-                result.add(
-                        new PositionEntity(this.getPosition().getPositionX() - 2, this.getPosition().getPositionY()));
+                addPossibleSolution(game, positionX, positionY, - 2, 0, result, verifyCheck);
             }
         }
         return result;
