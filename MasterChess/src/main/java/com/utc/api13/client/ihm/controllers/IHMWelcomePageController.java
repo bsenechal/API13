@@ -71,13 +71,17 @@ public class IHMWelcomePageController {
     @FXML
     Text userLabel;
     @FXML
-    TableView currentGamesTable, savedGamesTable, connectedUserTable;
+    TableView<GameEntity> currentGamesTable, savedGamesTable; 
     @FXML
-    TableColumn currentGamesId, currentGamesPlayer1, currentGamesPlayer2, currentGamesTime, currentGamesObs;
+    TableView<PublicUserEntity> connectedUserTable;
     @FXML
-    TableColumn savedGamesId, savedGamesPlayer1, savedGamesPlayer2, savedGamesDate, savedGamesReplay;
+    TableColumn<GameEntity, UUID> currentGamesId;
     @FXML
-    TableColumn connectedUserLogin, connectedUserStatus, connectedUserStat, connectedUserActionIcon;
+    TableColumn<GameEntity, String> currentGamesPlayer1, currentGamesPlayer2, currentGamesTime, currentGamesObs;
+//    @FXML
+//    TableColumn savedGamesId, savedGamesPlayer1, savedGamesPlayer2, savedGamesDate, savedGamesReplay;
+    @FXML
+    TableColumn<PublicUserEntity, String> connectedUserLogin, connectedUserStatus, connectedUserStat, connectedUserActionIcon;
     @FXML
     SplitMenuButton paramSplitMenuButton;
     @FXML

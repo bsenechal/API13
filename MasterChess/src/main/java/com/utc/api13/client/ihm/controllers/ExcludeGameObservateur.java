@@ -27,12 +27,12 @@ public class ExcludeGameObservateur {
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
-    private ObservableList gameObserver;
+    private ObservableList<PublicUserEntity> gameObserver;
 
     @FXML
-    TableView observateurUserTable;
+    TableView<PublicUserEntity> observateurUserTable;
     @FXML
-    TableColumn observateurUserLogin, observateurUserFirstName, observateurLastName;
+    TableColumn<PublicUserEntity, String> observateurUserLogin, observateurUserFirstName, observateurLastName;
 
     public ExcludeGameObservateur() {
         initialize();
@@ -112,5 +112,4 @@ public class ExcludeGameObservateur {
         observateurUserFirstName.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("firstName"));
         observateurLastName.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("lastName"));
     }
-
 }

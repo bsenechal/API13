@@ -46,11 +46,11 @@ public class UserInfoPopUpController {
     @FXML
     Label userInfoLogin, userInfoFirstName, userInfoLastName, userUUID;
     @FXML
-    TableView userInfoTableView;
+    TableView<PublicUserEntity> userInfoTableView;
     @FXML
     ImageView userInfoImage;
     @FXML
-    TableColumn userInfoWon, userInfoLost, userInfoPlayed;
+    TableColumn<PrivateUserEntity, Integer> userInfoWon, userInfoLost, userInfoPlayed;
     @FXML
     Button sendPropositionButton;
 
@@ -106,7 +106,6 @@ public class UserInfoPopUpController {
         return SwingFXUtils.toFXImage(image, null);
     }
 
-    @SuppressWarnings("restriction")
     public void setBindings(ProfilProperty profile) {
         userInfoLogin.textProperty().bind(profile.loginProperty());
         userInfoFirstName.textProperty().bind(profile.firstNameProperty());

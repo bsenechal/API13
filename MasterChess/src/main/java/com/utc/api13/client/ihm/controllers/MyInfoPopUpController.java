@@ -39,9 +39,9 @@ public class MyInfoPopUpController {
     @FXML
     Label userInfoLogin, userInfoFirstName, userInfoLastName;
     @FXML
-    TableView userInfoTableView;
+    TableView<PrivateUserEntity> userInfoTableView;
     @FXML
-    TableColumn userInfoWon, userInfoLost, userInfoPlayed;
+    TableColumn<PrivateUserEntity, Integer> userInfoWon, userInfoLost, userInfoPlayed;
     @FXML
     Button modifyButton;
 
