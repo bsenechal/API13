@@ -1,6 +1,8 @@
 package com.utc.api13.client.ihm;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -22,9 +24,11 @@ import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -50,6 +54,16 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 myIHMManager.getProfil().lastNameProperty().set(u.getLastName());
                 myIHMManager.getProfil().statPlayerProperty().setAll(u);
                 myIHMManager.getProfil().userUUID().set(u.getId().toString());
+                if(u.getImage()!=null){
+                    try {
+                        ByteArrayInputStream bais=  new ByteArrayInputStream(u.getImage());
+                        BufferedImage bi = ImageIO.read(bais);
+                        WritableImage img = SwingFXUtils.toFXImage(bi, null);
+                        myIHMManager.getProfil().imageProperty().set(img);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
     }

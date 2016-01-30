@@ -118,6 +118,7 @@ public class UserInfoPopUpController {
         userInfoWon.setCellValueFactory(new PropertyValueFactory<PrivateUserEntity, Integer>("nbWon"));
         userInfoLost.setCellValueFactory(new PropertyValueFactory<PrivateUserEntity, Integer>("nbLost"));
         userInfoPlayed.setCellValueFactory(new PropertyValueFactory<PrivateUserEntity, Integer>("nbPlayed"));
+        userInfoImage.imageProperty().bind(profile.imageProperty());
 
         profile.statPlayerProperty().addListener((ListChangeListener.Change<? extends PublicUserEntity> el) -> {
             userInfoTableView.setItems(profile.statPlayerProperty());
