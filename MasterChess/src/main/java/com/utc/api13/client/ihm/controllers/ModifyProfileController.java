@@ -43,11 +43,10 @@ public class ModifyProfileController {
     private IHMManager IHMManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
-    private final Logger log = Logger.getLogger(getClass());
+    private final Logger LOGGER = Logger.getLogger(getClass());
     private Stage currentStage;
     private Text userLabelToUpdateWelcomePage;
-    private String imageProfilePath;
-
+    
     @FXML
     BorderPane createProfileBorderPane;
     @FXML
@@ -63,7 +62,6 @@ public class ModifyProfileController {
     @FXML
     AnchorPane createProfileAnchorPane;
 
-    @SuppressWarnings("restriction")
     @FXML
     public void onSaveProfileClicked() throws IOException {
 
@@ -77,7 +75,7 @@ public class ModifyProfileController {
             try {
                 error("Error : please fill all the fields!", false);
             } catch (IOException e1) {
-                log.error(e1.getMessage(), e1);
+                LOGGER.error(e1.getMessage(), e1);
             }
         }
 
@@ -115,20 +113,18 @@ public class ModifyProfileController {
                 try {
                     error("Error when saving your profile : Technical Exception", true);
                 } catch (IOException e1) {
-                    log.error(e1.getMessage(), e1);
+                    LOGGER.error(e1.getMessage(), e1);
                 }
-                log.error(e.getMessage(), e);
+                LOGGER.error(e.getMessage(), e);
 
             } catch (FunctionalException e) {
                 try {
                     error("Error when saving your profile : Functional Exception", true);
                 } catch (IOException e1) {
-                    log.error(e1.getMessage(), e1);
+                    LOGGER.error(e1.getMessage(), e1);
                 }
                 for (Erreur erreur : e.getErreurs()) {
-                    // TODO gerer les multi langues ant de remplir les fichiers
-                    // logs
-                    log.error(((ErrorTypeEnum) erreur.getErrorType()).getCode());
+                    LOGGER.error(((ErrorTypeEnum) erreur.getErrorType()).getCode());
                 }
             }
         }
@@ -172,20 +168,19 @@ public class ModifyProfileController {
         fileChooser.setTitle("Ouvrir le document");
         fileChooser.setInitialDirectory(new File("/"));
         File f = fileChooser.showOpenDialog(new Stage());
-        Image newProfil = null;
         try {
             String extensionFile = FilenameUtils.getExtension(f.getAbsolutePath());
             File dest = new File("src/main/resources/user/avatar_"+ UUID.randomUUID().toString() +"."+extensionFile);
             copyFile(f, dest);
             changeProfilePicture.setImage(new Image("file://" + dest.getAbsolutePath()));
-            imageProfilePath = dest.getAbsolutePath();
+            dest.getAbsolutePath();
         } catch (Exception e) {
             try {
                 error("Error when changing your picture", false);
             } catch (IOException e1) {
-                log.error(e1.getMessage(), e1);
+                LOGGER.error(e1.getMessage(), e1);
             }
-            log.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
 
     }

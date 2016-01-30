@@ -1,7 +1,6 @@
 package com.utc.api13.client.ihm.controllers;
 
 import com.utc.api13.client.AppClient;
-import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.client.ihm.property.ErrorProperty;
 
@@ -15,8 +14,6 @@ import javafx.stage.Stage;
 public class ErrorController {
 
     private IHMManager IHMManager;
-    private AppClient mainApp;
-    private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
 
     @FXML
@@ -33,7 +30,6 @@ public class ErrorController {
     }
 
     public void setMainApp(AppClient app, String s) {
-        this.mainApp = app;
         this.errorLabel.setText(s);
     }
 
@@ -44,13 +40,13 @@ public class ErrorController {
     public void setManager(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null)
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            IHMManager.getIClientDataToIHM();
     }
 
     public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null)
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            IHMManager.getIClientDataToIHM();
         setListenersOnLoad();
         setBindingsOnLoad();
     }

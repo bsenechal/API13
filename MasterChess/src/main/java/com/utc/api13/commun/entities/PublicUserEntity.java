@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.exceptions.TechnicalException;
-import com.utc.api13.commun.utils.ImageUtils;
 
 public class PublicUserEntity extends AUserEntity {
 

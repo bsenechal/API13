@@ -1,7 +1,6 @@
 package com.utc.api13.client.ihm.controllers;
 
 import com.utc.api13.client.AppClient;
-import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 
 import javafx.fxml.FXML;
@@ -11,8 +10,6 @@ import javafx.scene.layout.BorderPane;
 
 public class ExportOKPopUpController {
     private IHMManager IHMManager;
-    private AppClient mainApp;
-    private IClientDataToIHM myIClientToIHM;
 
     @FXML
     BorderPane popUpBorderPane;
@@ -29,13 +26,12 @@ public class ExportOKPopUpController {
     }
 
     public void setMainApp(AppClient app, String path) {
-        this.mainApp = app;
         this.popUpLabel3.setText(path);
     }
 
     public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null)
-            this.myIClientToIHM = this.IHMManager.getIClientDataToIHM();
+            this.IHMManager.getIClientDataToIHM();
     }
 }

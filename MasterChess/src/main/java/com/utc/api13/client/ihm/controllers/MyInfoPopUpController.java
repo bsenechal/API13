@@ -32,16 +32,8 @@ public class MyInfoPopUpController {
     private IHMManager IHMManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
-    // private boolean newProfile = false;
     private Stage currentStage;
     private Text userLabelToUpdateWelcomePage;
-
-    /*
-     * public boolean isNewProfile() { return newProfile; }
-     * 
-     * public void setNewProfile(boolean newProfile) { this.newProfile =
-     * newProfile; }
-     */
 
     @FXML
     BorderPane userInfoBorderPane;
@@ -50,9 +42,9 @@ public class MyInfoPopUpController {
     @FXML
     Label userInfoLogin, userInfoFirstName, userInfoLastName;
     @FXML
-    TableView userInfoTableView;
+    TableView<PrivateUserEntity> userInfoTableView;
     @FXML
-    TableColumn userInfoWon, userInfoLost, userInfoPlayed;
+    TableColumn<PrivateUserEntity, Integer> userInfoWon, userInfoLost, userInfoPlayed;
     @FXML
     Button modifyButton;
     @FXML
