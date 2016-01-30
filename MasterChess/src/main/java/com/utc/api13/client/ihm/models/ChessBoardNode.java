@@ -113,7 +113,6 @@ public class ChessBoardNode {
                             }
                         }
 
-                        System.out.println("ligne " + movePosition.getLine() + " coloone " + movePosition.getColumn());
                         if (selection == 1) {
                             firstPosition.setPositionX(movePosition.getLine());
                             firstPosition.setPositionY(movePosition.getColumn());

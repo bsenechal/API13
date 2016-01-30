@@ -683,7 +683,6 @@ public class GameEntity extends ADataEntity {
      * @return TRUE is the Pawn has been transformed to a queen, FALSE if not.
      */
     public boolean transformPawnToQueen(MoveEntity move){
-        System.out.println("transformPawnToQueen: getPiece : " + move.getPiece().toString() + ", getToPostion : " + move.getToPosition().getPositionY());
         if(move.getPiece().toString().equals("Pawn") && (move.getToPosition().getPositionY() == 8 || move.getToPosition().getPositionY() == 1) ){
             System.out.println("transformPawnToQueen: yes");
             this.removePieceFromPosition(move.getFromPosition());
