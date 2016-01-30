@@ -44,7 +44,7 @@ public class CreateProfileController {
     private IClientDataToIHM myIClientToIHM;
     private final Logger log = Logger.getLogger(getClass());
     private Stage currentStage;
-    private String imageProfilePath;
+    private String imageProfilePath = getClass().getResource("/pictures/icone-profil.png").getPath();
 
     @FXML
     BorderPane createProfileBorderPane;
@@ -179,7 +179,8 @@ public class CreateProfileController {
 
     @FXML
     public void onChangePictureClicked() throws IOException {
-
+    	 System.out.println(imageProfilePath);
+    	    
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Ouvrir le document");
         fileChooser.setInitialDirectory(new File("/"));
