@@ -128,7 +128,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
         
       //gestion des roques
-        if(thisgame.getPieceFromPosition(move.getFromPosition()).toString().equals("King")){
+        if(piece.toString().equals("King")){
             if(move.getFromPosition().getPositionX() == move.getToPosition().getPositionX() - 2){
                 PositionEntity rookPositionTmp = new PositionEntity(move.getFromPosition().getPositionX() + 3, move.getFromPosition().getPositionY());
                 PositionEntity rookPositionToGo = new PositionEntity(move.getFromPosition().getPositionX() + 1, move.getFromPosition().getPositionY());
@@ -151,6 +151,13 @@ public class ClientDataToComImpl implements IClientDataToCom {
         
         // delete the real destination piece
         thisgame.removePieceFromPosition(move.getToPosition());
+        
+        // transorm a Pawn to a queen if the pawn is in the ennemy camp :
+        if(thisgame.transformPawnToQueen(move)){
+            //you need to get the new Piece if it is now a queen
+            piece = thisgame.getPieceFromPosition(move.getFromPosition());
+        };
+        
         thisgame.movePiece(move);
 
         instanceDataClientManager.getIClientIHMToData().refreshChessBoard(fromLine, fromCol, toLine, toCol, piece,
@@ -367,16 +374,6 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     @Override
     public void nextTurn(final GameStatusEnum status, final UUID nextPlayer) {
-        // Ulysse : lourd : remplacé par switchCurrentUser
-        // if (GameStatusEnum.CONTINUE.equals(status)) {
-        // instanceDataClientManager.getCurrentGame().setCurrentPlayer(
-        // (instanceDataClientManager.getCurrentGame().getBlackPlayer().getId().equals(nextPlayer))
-        // ? instanceDataClientManager.getCurrentGame().getBlackPlayer()
-        // : instanceDataClientManager.getCurrentGame().getWhitePlayer());
-        // }
-        // Assert.notNull(instanceDataClientManager.getCurrentGames(),
-        // "[ClientDataToComImpl][setFinishedStatus] currentGames shouldn't be
-        // null");
         GameEntity game = instanceDataClientManager.getCurrentGame();
 
         game.switchCurrentUser();
@@ -385,8 +382,6 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
         // alert IHM:
         instanceDataClientManager.getIClientIHMToData().activateCases(game.getCurrentPlayer(), status);
-
-        // TODO Ulysse : virer le switch ?
 
         PrivateUserEntity localUser = instanceDataClientManager.getUserLocal();
         switch (status) {
@@ -401,7 +396,8 @@ public class ClientDataToComImpl implements IClientDataToCom {
             }
         case DRAW:
             localUser.setNbPlayed(localUser.getNbPlayed() + 1);
-            instanceDataClientManager.setCurrentGame(null);
+            instanceDataClientManager.getCurrentGames().removeIf(g -> instanceDataClientManager.getCurrentGame().getId().equals(g.getId()));
+            game = null;
             break;
 
         default:
