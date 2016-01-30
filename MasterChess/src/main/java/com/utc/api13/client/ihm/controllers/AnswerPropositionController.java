@@ -31,7 +31,6 @@ public class AnswerPropositionController {
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
     private final Logger log = Logger.getLogger(getClass());
-    private UUID enquirerUUID;
     private boolean answer = true;
     private boolean chattable;
     private boolean observable;
@@ -78,7 +77,6 @@ public class AnswerPropositionController {
         stage.show();
     }
 
-    @SuppressWarnings("restriction")
     public void setMainApp(AppClient app, String login, Boolean chattable, Boolean timer, Boolean observable,
             int time) {
         this.mainApp = app;
@@ -91,14 +89,18 @@ public class AnswerPropositionController {
         this.observable = observable;
 
         String options = new String("");
-        if (chattable)
-            options = options + "chattable ; ";
-        if (observable)
-            options = options + "observable ; ";
-        if (timer)
-            options = options + "timer : " + timeString;
-        if (options.length() == 0)
+        if (chattable) {
+            options.concat("chattable ; ");
+        }
+        if (observable) {
+            options.concat("observable ; ");
+        }
+        if (timer) {
+            options.concat("timer : " + timeString);
+        }
+        if (options.length() == 0) {
             options = "None";
+        }
 
         this.chosenOptionsLabel.setText(options);
         this.invintingPlayerLogin.setText(login);
@@ -111,7 +113,6 @@ public class AnswerPropositionController {
         }
     }
 
-    @SuppressWarnings("restriction")
     public void onYesClicked() {
         PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
         UUID answeringUser = u.getId();
@@ -136,13 +137,6 @@ public class AnswerPropositionController {
 
     public void setBindings(PropositionProperty proposition) {
         invintingPlayerLogin.textProperty().bind(proposition.loginAskingPayerProperty());
-        // invitationLabel, optionsLabel, chosenOptionsLabel;
         optionsLabel.textProperty().bind(proposition.chattableProperty().asString()); // can
-                                                                                      // be
-                                                                                      // change
-                                                                                      // to
-                                                                                      // String
-                                                                                      // Property
-
     }
 }

@@ -21,7 +21,6 @@ public class AllUserMessage extends Message {
 
     public AllUserMessage(UUID sender, UUID receiver) {
         super(sender, receiver);
-        // TODO Auto-generated constructor stub
     }
 
     /**

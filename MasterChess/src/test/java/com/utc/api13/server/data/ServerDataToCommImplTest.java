@@ -190,8 +190,6 @@ public class ServerDataToCommImplTest {
         // Create a game and add it
         GameEntity game = new GameEntity();
         final UUID idGame = UUID.randomUUID();
-        final PublicUserEntity whitePlayer = new PublicUserEntity();
-        final PublicUserEntity blackPlayer = new PublicUserEntity();
         final PublicUserEntity observer1 = new PublicUserEntity();
         final PublicUserEntity observer2 = new PublicUserEntity();
         List<PublicUserEntity> observers = new ArrayList<PublicUserEntity>();
@@ -211,8 +209,6 @@ public class ServerDataToCommImplTest {
         // Create a game and add it
         GameEntity game = new GameEntity();
         final UUID idGame = UUID.randomUUID();
-        final PublicUserEntity whitePlayer = new PublicUserEntity();
-        final PublicUserEntity blackPlayer = new PublicUserEntity();
         final PublicUserEntity observer1 = new PublicUserEntity();
         final PublicUserEntity observer2 = new PublicUserEntity();
         List<PublicUserEntity> observers = new ArrayList<PublicUserEntity>();

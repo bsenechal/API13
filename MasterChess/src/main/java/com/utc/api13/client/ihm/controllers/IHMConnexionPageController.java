@@ -39,7 +39,7 @@ public class IHMConnexionPageController {
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
-    private final Logger log = Logger.getLogger(getClass());
+    private final Logger LOGGER = Logger.getLogger(getClass());
 
     @FXML
     BorderPane connexionBorderPane;
@@ -62,7 +62,6 @@ public class IHMConnexionPageController {
         launchGame();
     }
 
-    @SuppressWarnings("restriction")
     private void launchGame() throws IOException {
         String login = loginTextView.getText();
         String pw = passwordTextView.getText();
@@ -77,7 +76,7 @@ public class IHMConnexionPageController {
             try {
                 error("Error : please fill all the fields!");
             } catch (IOException e1) {
-                log.error(e1.getMessage(), e1);
+                LOGGER.error(e1.getMessage(), e1);
             }
         }
 
@@ -87,7 +86,7 @@ public class IHMConnexionPageController {
             try {
                 error("Error : please use digits for the port field!");
             } catch (IOException e1) {
-                log.error(e1.getMessage(), e1);
+                LOGGER.error(e1.getMessage(), e1);
             }
         }
 
@@ -95,7 +94,6 @@ public class IHMConnexionPageController {
 
             try {
                 Integer port = Integer.parseInt(portString.isEmpty() ? "0" : portTextView.getText());
-                // TODO : gérer la connexion au serveur avec le port
 
                 mainApp.launchAppCom(sv, port);
 
@@ -121,18 +119,18 @@ public class IHMConnexionPageController {
                 try {
                     wrongData(true);
                 } catch (IOException e1) {
-                    log.error(e1.getMessage(), e1);
+                    LOGGER.error(e1.getMessage(), e1);
                 }
-                log.error(e.getMessage(), e);
+                LOGGER.error(e.getMessage(), e);
             }
 
             catch (TechnicalException e) {
                 try {
                     wrongData(false);
                 } catch (IOException e1) {
-                    log.error(e1.getMessage(), e1);
+                    LOGGER.error(e1.getMessage(), e1);
                 }
-                log.error(e.getMessage(), e);
+                LOGGER.error(e.getMessage(), e);
             }
         }
 
@@ -170,10 +168,10 @@ public class IHMConnexionPageController {
                 importOK();
             } catch (FunctionalException e) {
                 importNOK("Error : functional exception");
-                log.error(e.getMessage(), e);
+                LOGGER.error(e.getMessage(), e);
             } catch (TechnicalException e) {
                 importNOK("Error : techninal exception");
-                log.error(e.getMessage(), e);
+                LOGGER.error(e.getMessage(), e);
             }
         }
     }

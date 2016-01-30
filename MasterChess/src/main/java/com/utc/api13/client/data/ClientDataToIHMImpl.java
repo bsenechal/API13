@@ -151,12 +151,8 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public void requestPlayerForLeaving() {
         Assert.notNull(dataClientManager.getUserLocal(),
                 "[ClientDataToIHMImpl][requestPlayerForLeaving] UserLocal shouldn't be null");
-        // TODO: le second paramètre, c'est fait pour quoi?
 
         GameEntity game = dataClientManager.getCurrentGame();
-        // UUID receiver=
-        // game.getWhitePlayer().getId().equals(dataClientManager.getUserLocal().getId())?
-        // game.getBlackPlayer().getId():game.getWhitePlayer().getId();
 
         dataClientManager.getIClientComToData().requestPlayerForLeaving(dataClientManager.getUserLocal().getId(),
                 game.getWhitePlayer().getId().equals(dataClientManager.getUserLocal().getId())

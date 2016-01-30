@@ -2,8 +2,6 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
-import org.apache.log4j.Logger;
-
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.server.com.ComServerManager;
 
@@ -14,7 +12,6 @@ public class DisconnectMessage extends Message {
      * 
      */
     private static final long serialVersionUID = -8917480597959281133L;
-    private static final Logger logger = Logger.getLogger(ConnectMessage.class);
     private UUID idPubUser;
 
     /**

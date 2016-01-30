@@ -2,8 +2,6 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
-import org.apache.log4j.Logger;
-
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.server.com.ComServerManager;
@@ -15,7 +13,6 @@ public class ConnectMessage extends Message {
      * 
      */
     private static final long serialVersionUID = 4221107628906920944L;
-    private static final Logger logger = Logger.getLogger(ConnectMessage.class);
     private PublicUserEntity pubUser;
 
     /**
