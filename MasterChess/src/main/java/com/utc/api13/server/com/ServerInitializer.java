@@ -5,7 +5,6 @@ import com.utc.api13.client.com.ClientInitializer;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
@@ -30,9 +29,9 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
     protected void initChannel(SocketChannel arg0) throws Exception {
         ChannelPipeline pipeline = arg0.pipeline();
         serverHanlder = new ServerHanlder(comServerManager);
-        
+
         pipeline.addLast("idlestatehandler", new IdleStateHandler(0, 5, 0));
-        pipeline.addLast("decoder", new ObjectDecoder(1024*1024*100,ClassResolvers.cacheDisabled(null)));
+        pipeline.addLast("decoder", new ObjectDecoder(1024 * 1024 * 100, ClassResolvers.cacheDisabled(null)));
         pipeline.addLast("encoder", new ObjectEncoder());
         pipeline.addLast("handler", serverHanlder);
 
