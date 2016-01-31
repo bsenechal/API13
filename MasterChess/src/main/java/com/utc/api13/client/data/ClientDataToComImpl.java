@@ -397,9 +397,11 @@ public class ClientDataToComImpl implements IClientDataToCom {
                 localUser.setNbWon(localUser.getNbWon() + 1);
             }
         case DRAW:
+            instanceDataClientManager.getUserLocal().getSavedGames().add(game);
             localUser.setNbPlayed(localUser.getNbPlayed() + 1);
+            UUID gameID = game.getId();
             instanceDataClientManager.getCurrentGames()
-                    .removeIf(g -> instanceDataClientManager.getCurrentGame().getId().equals(g.getId()));
+                    .removeIf(g -> gameID.equals(g.getId()));
             game = null;
             break;
 

@@ -389,5 +389,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         // dataClientManager.getIClientComToData().removeUserFromChat(idUser,
         // dataClientManager.getCurrentGame().getId());
     }
+    
+    @Override
+    public void killCurrentGame() {
+        dataClientManager.setCurrentGame(null);
+    }
 
 }
