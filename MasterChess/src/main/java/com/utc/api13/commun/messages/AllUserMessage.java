@@ -39,7 +39,11 @@ public class AllUserMessage extends Message {
     public void setUsers(List<PublicUserEntity> users) {
         this.users = users;
     }
-
+    
+    /**
+     * Handles the message when received on the client.
+     * Calls the 'displayUsersList' method from Data.
+     */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         if (users != null) {
@@ -49,6 +53,10 @@ public class AllUserMessage extends Message {
         }
     }
 
+    /**
+     * Handles the message when received on the server.
+     * Gets the list of all currently connected players and is sent back to the client.
+     */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         users = comServerManager.getIServerDataToCom().getConnectedUsers();

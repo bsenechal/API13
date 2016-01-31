@@ -27,6 +27,11 @@ public class NextTurnMessage extends Message {
         this.nexttoplay = nexttoplay;
     }
 
+    /**
+     * Handles the message when received on the client.
+     * Calls the 'nextTurn' method from Data.
+     * Starts next turn
+     */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) throws Exception {
         comClientManager.getIClientDataToCom().nextTurn(this.isfinished, this.nexttoplay);

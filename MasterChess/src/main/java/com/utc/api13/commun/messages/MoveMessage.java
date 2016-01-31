@@ -35,6 +35,10 @@ public class MoveMessage extends Message {
         this.move = move;
     }
 
+    /**
+     * Handles the message when received on the client.
+     * Asks for the client to register a move.
+     */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         comClientManager.getIClientDataToCom().displayResult(move.getUserID(), move);

@@ -25,6 +25,10 @@ public class HeartBeat extends Message {
         this.ping = ping;
     }
 
+    /**
+     * Handles the message when received on the client.
+     * Request for ping -> sending ping
+     */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // logger.info("Hello message received from server, answering Hello");
@@ -39,9 +43,12 @@ public class HeartBeat extends Message {
         this.ping = ping;
     }
 
+    /**
+     * Handles the message when received on the server.
+     * When ping is received, assuming that client is alive
+     */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-        // TODO Auto-generated method stub
         // logger.info("Hello message received, peer is alive !");
     }
 

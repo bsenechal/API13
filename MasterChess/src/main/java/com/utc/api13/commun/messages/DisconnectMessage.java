@@ -24,11 +24,22 @@ public class DisconnectMessage extends Message {
         this.idPubUser = sender;
     }
 
+    /**
+     * Handles the message when received on the client.
+     * Calls the 'notifyDiconnection' method from Data.
+     * Registers new client disconnection on the client side.
+     */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         comClientManager.getIClientDataToCom().notifyDisconnection(idPubUser);
     }
 
+    /**
+     * Handles the message when received on the server.
+     * Removes the user chanel from registered channels
+     * Notifies disconection to Data
+     * Notifies disconnection to the connected users 
+     */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         comServerManager.unlinkUserToChannelHandlerContext(idPubUser);

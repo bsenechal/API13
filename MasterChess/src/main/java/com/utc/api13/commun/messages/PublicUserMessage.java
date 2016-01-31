@@ -22,6 +22,10 @@ public class PublicUserMessage extends Message {
         this.target = target;
     }
 
+    /**
+     * Handles the message when received on the client.
+     * Calls the 'displayProfile' method from Data.
+     */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) throws Exception {
         // When receiving answer message on the client.
@@ -29,12 +33,16 @@ public class PublicUserMessage extends Message {
         comClientManager.getIClientDataToCom().displayProfile(this.usr);
     }
 
+    /**
+     * Handles the message when received on the server.
+     * Gets the info and is sent back to the client.
+     */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         // Get the selected user information by calling method from data :
         PublicUserEntity usr = comServerManager.getIServerDataToCom().getUserInfo(this.target);
         this.setUsr(usr);
-        // Send back the message to the sender !!!
+        // Send back the message to the sender
         comServerManager.sendMessage(ctx.channel(), this);
     }
 
