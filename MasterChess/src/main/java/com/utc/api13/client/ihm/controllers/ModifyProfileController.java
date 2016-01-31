@@ -172,8 +172,9 @@ public class ModifyProfileController {
             String extensionFile = FilenameUtils.getExtension(f.getAbsolutePath());
             File dest = new File("src/main/resources/user/avatar_"+ UUID.randomUUID().toString() +"."+extensionFile);
             copyFile(f, dest);
-            changeProfilePicture.setImage(new Image("file://" + dest.getAbsolutePath()));
+            changeProfilePicture.setImage(new Image("file://"+dest.getAbsolutePath()));
             dest.getAbsolutePath();
+            myIClientToIHM.getLocalUser().setImagePath(dest.getAbsolutePath());
         } catch (Exception e) {
             try {
                 error("Error when changing your picture", false);

@@ -82,14 +82,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
      * com.utc.api13.commun.entities.MoveEntity)
      */
     @Override
-    public boolean computerResult(UUID idPlayer, MoveEntity move) {
-
-        // System.out.println("computerResult : move : " +
-        // move.getFromPosition().getPositionX() + ","
-        // + +move.getFromPosition().getPositionY() + ";" +
-        // move.getToPosition().getPositionX() + ","
-        // + move.getToPosition().getPositionY() + ";" +
-        // move.getPiece().toString());
+    public boolean computerResult(MoveEntity move) {
 
         GameEntity game = dataServerManager.getGameById(move.getGameID());
         // !!! Il est nécessaire de récupérer la pièce locale et non celle du
@@ -138,12 +131,6 @@ public class ServerDataToComImpl implements IServerDataToCom {
         GameStatusEnum result = game.isFinished();
         System.out.println("serverdatatocomimpt : isfinished : status : " + result);
 
-        // TODO : Ulysse : isn't it a tad brutal ? -> C'est plutôt à Com de le
-        // faire dans le proceed
-        if (result.equals(GameStatusEnum.CHECKMATE) || result.equals(GameStatusEnum.DRAW)) {
-            // Clean the serveur game-entity :
-            // dataServerManager.getCurrentGames().remove(game);
-        }
         return result;
     }
 

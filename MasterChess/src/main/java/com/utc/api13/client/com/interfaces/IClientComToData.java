@@ -133,21 +133,6 @@ public interface IClientComToData {
 
     public void sendLeavingMessage(UUID idPartie);
 
-    /**
-     * Getter for manager instance
-     * 
-     * @return Manager instance
-     */
-    public ComClientManager getComClientManagerInstance();
-
-    /**
-     * Setter for manager instance
-     * 
-     * @param comClientManagerInstance
-     *            Manager to set
-     */
-    public void setComClientManagerInstance(ComClientManager comClientManagerInstance);
-
     public void removeUserFromChat(UUID idUser, UUID game);
 
 }

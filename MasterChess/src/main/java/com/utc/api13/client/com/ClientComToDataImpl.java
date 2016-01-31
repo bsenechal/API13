@@ -90,13 +90,13 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void endGameBySurrender(UUID idPlayer, UUID idOtherPlayer) {
-    	comClientManagerInstance.sendMessage(new RequestPlayerLeaving(idPlayer, idOtherPlayer,true));
+        comClientManagerInstance.sendMessage(new RequestPlayerLeaving(idPlayer, idOtherPlayer, true));
 
     }
 
     @Override
     public void requestPlayerForLeaving(UUID idPlayer, UUID idOtherPlayer) {
-        comClientManagerInstance.sendMessage(new RequestPlayerLeaving(idPlayer, idOtherPlayer,false));
+        comClientManagerInstance.sendMessage(new RequestPlayerLeaving(idPlayer, idOtherPlayer, false));
 
     }
 
@@ -119,25 +119,6 @@ public class ClientComToDataImpl implements IClientComToData {
     public void sendLeavingMessage(UUID idPartie) {
         // TODO Auto-generated method stub
 
-    }
-
-    // TODO: UME : Euh why do you want to give access to the manager using the
-    // interface ? -> seems wrong !
-    /**
-     * @return the comClientManagerInstance
-     */
-    @Override
-    public ComClientManager getComClientManagerInstance() {
-        return comClientManagerInstance;
-    }
-
-    /**
-     * @param comClientManagerInstance
-     *            the comClientManagerInstance to set
-     */
-    @Override
-    public void setComClientManagerInstance(ComClientManager comClientManagerInstance) {
-        this.comClientManagerInstance = comClientManagerInstance;
     }
 
     @Override
