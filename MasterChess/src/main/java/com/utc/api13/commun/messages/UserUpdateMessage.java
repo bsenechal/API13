@@ -33,7 +33,6 @@ public class UserUpdateMessage extends Message {
      */
     public UserUpdateMessage(UUID sender, UUID receiver) {
         super(sender, receiver);
-        // TODO Auto-generated constructor stub
     }
 
     public UserUpdateMessage(UUID sender, UUID receiver, PublicUserEntity u) {

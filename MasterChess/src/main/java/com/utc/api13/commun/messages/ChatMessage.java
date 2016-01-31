@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
-
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.server.com.ComServerManager;
@@ -18,7 +16,6 @@ public class ChatMessage extends Message {
     * 
     */
     private static final long serialVersionUID = -55526017055065873L;
-    private static final Logger logger = Logger.getLogger(ChatMessage.class);
     UUID partie; // game in which the message will be sent
     String message; // message to be sent
 

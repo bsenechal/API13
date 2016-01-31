@@ -13,7 +13,6 @@ public class GameProperty {
     private boolean observable;
     private boolean timer;
     private StringProperty time;
-    // private StringProperty otherPlayerUUID;
 
     public GameProperty() {
         super();

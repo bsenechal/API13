@@ -6,36 +6,56 @@ import java.awt.Color;
 import javax.swing.JButton;
 
 public class Case extends JButton {
+
+    private static final long serialVersionUID = 6292971463823922156L;
     private int line;
     private int column;
     private Color color;
 
-    public Case(int x, int y) {
-        this.line = x;
-        this.column = y;
+    /**
+     * @param line
+     * @param column
+     */
+    public Case(int line, int column) {
+        super();
+        this.line = line;
+        this.column = column;
     }
-
+    /**
+     * @return the line
+     */
     public int getLine() {
-        return this.line;
+        return line;
     }
-
+    /**
+     * @param line the line to set
+     */
+    public void setLine(int line) {
+        this.line = line;
+    }
+    /**
+     * @return the column
+     */
     public int getColumn() {
-        return this.column;
+        return column;
     }
-
-    public void setLine(int x) {
-        this.line = x;
+    /**
+     * @param column the column to set
+     */
+    public void setColumn(int column) {
+        this.column = column;
     }
-
-    public void setColumn(int y) {
-        this.column = y;
-    }
-
+    /**
+     * @return the color
+     */
     public Color getColor() {
         return color;
     }
-
+    /**
+     * @param color the color to set
+     */
     public void setColor(Color color) {
         this.color = color;
     }
+
 }

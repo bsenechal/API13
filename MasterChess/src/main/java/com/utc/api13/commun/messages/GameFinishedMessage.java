@@ -2,8 +2,6 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
-import org.apache.log4j.Logger;
-
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.server.com.ComServerManager;
 
@@ -14,7 +12,6 @@ public class GameFinishedMessage extends Message {
      * 
      */
     private static final long serialVersionUID = 3446575915066676519L;
-    private static final Logger logger = Logger.getLogger(GameFinishedMessage.class);
     private UUID game;
 
     private boolean answer;

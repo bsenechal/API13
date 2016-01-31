@@ -9,7 +9,8 @@ import java.util.UUID;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-import com.utc.api13.client.data.interfaces.IClientDataToIHM;
+import org.apache.log4j.Logger;
+
 import com.utc.api13.client.ihm.controllers.AnswerPropositionController;
 import com.utc.api13.client.ihm.controllers.ErrorController;
 import com.utc.api13.client.ihm.controllers.GiveUpPopUpController;
@@ -32,14 +33,13 @@ import javafx.stage.Stage;
 public class ClientIHMToDataImpl implements IClientIHMToData {
 
     private IHMManager myIHMManager;
-    private IClientDataToIHM myIClientDataToIHM;
     private IHMGamePageController controller;
+    private static final Logger LOGGER = Logger.getLogger(ClientIHMToDataImpl.class);
 
     public ClientIHMToDataImpl(IHMManager pIHMManager) {
         myIHMManager = pIHMManager;
     }
 
-    @SuppressWarnings("restriction")
     @Override
     public void displayProfile(PublicUserEntity u) {
         Platform.runLater(new Runnable() {
@@ -56,8 +56,6 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     @Override
     public void otherPlayerLeaving() {
-        // TODO Auto-generated method stub
-
         List<Object> users = Arrays.asList(myIHMManager.getIClientDataToIHM().getUserList().toArray());
         PublicUserEntity user = (PublicUserEntity) users.stream()
                 .filter(u -> ((PublicUserEntity) u).getId().equals(myIHMManager.getUisender())).findFirst()
@@ -83,14 +81,12 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("[ClientIHMToDataImpl][otherPlayerLeaving] " + e.getMessage());
                 }
-
             }
         });
     }
 
-    @SuppressWarnings("restriction")
     @Override
     public void displayProposition(UUID uidSender, boolean observable, boolean chattable, boolean timer,
             Integer timeInt) {
@@ -106,7 +102,6 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
                 Stage stage;
                 Parent root = null;
-                String l = "";
                 stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AnswerPropositionPopUp.fxml"));
                 try {
@@ -122,13 +117,12 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("[ClientIHMToDataImpl][displayProposition] " + e.getMessage());
                 }
             }
         });
     }
 
-    @SuppressWarnings("restriction")
     @Override
     public void displayAnswer(UUID uidSender, boolean answer, String message) {
         // uniquement si réponse négative
@@ -149,17 +143,15 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("[ClientIHMToDataImpl][displayAnswer] " + e.getMessage());
                 }
             }
         });
     }
 
-    @SuppressWarnings("restriction")
     @Override
     public void displayChessBoard(GameEntity g) { // si yep data should call
                                                   // that function
-        // TODO Auto-generated method stub
         Platform.runLater(new Runnable() {
 
             @Override
@@ -181,7 +173,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("[ClientIHMToDataImpl][displayAnswer] " + e.getMessage());
                 }
             }
         });
@@ -189,7 +181,6 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, APieceEntity piece,
             GameEntity game) {
-        // TODO Auto-generated method stub
         String dossierIcone = "/pictures/pieces/";
         // récupérer chessboardsquares
         Case[][] chessBoardSquares = controller.getCb().getChessBoardSquares();
@@ -198,38 +189,54 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         chessBoardSquares[line_from - 1][8 - col_from].setIcon(null);
         // trouver le type de piece
         String pieceType = "";
-        if (piece.toString() == "Rook") {
+
+        switch (piece.toString()) {
+        case "Rook": {
             pieceType = "T";
-        } else if (piece.toString() == "Knight") {
-            pieceType = "C";
-        } else if (piece.toString() == "Queen") {
-            pieceType = "D";
-        } else if (piece.toString() == "King") {
-            pieceType = "R";
-        } else if (piece.toString() == "Pawn") {
-            pieceType = "P";
-        } else if (piece.toString() == "Bishop") {
-            pieceType = "F";
+            break;
         }
+        case "Knight": {
+            pieceType = "C";
+            break;
+        }
+        case "Queen": {
+            pieceType = "D";
+            break;
+        }
+        case "King": {
+            pieceType = "R";
+            break;
+        }
+        case "Pawn": {
+            pieceType = "P";
+            break;
+        }
+        case "Bishop": {
+            pieceType = "F";
+            break;
+        }
+        }
+
         // afficher la pièce sur la nouvelle case
         try {
+            String iconePath;
             if (!game.getCurrentPlayer().getId().equals(game.getBlackPlayer().getId())) {
-                Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "B.gif"));
-                chessBoardSquares[line_to - 1][8 - col_to].setIcon(new ImageIcon(img));
+                iconePath = dossierIcone + pieceType + "B";
             } else {
-                Image img = ImageIO.read(getClass().getResource(dossierIcone + pieceType + "N.gif"));
-                chessBoardSquares[line_to - 1][8 - col_to].setIcon(new ImageIcon(img));
+                iconePath = dossierIcone + pieceType + "N";
             }
+            Image img = ImageIO.read(getClass().getResource(iconePath + ".gif"));
+            chessBoardSquares[line_to - 1][8 - col_to].setIcon(new ImageIcon(img));
+            Image img_disabled = ImageIO.read(getClass().getResource(iconePath + "_disabled.gif"));
+            chessBoardSquares[line_to - 1][8 - col_to].setDisabledIcon(new ImageIcon(img_disabled));
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("[ClientIHMToDataImpl][refreshChessBoard] " + e.getMessage());
         }
     }
 
-    @SuppressWarnings("restriction")
     @Override
     public void displayError(String errorMessage) {
-        // TODO Auto-generated method stub
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -238,10 +245,8 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         });
     }
 
-    @SuppressWarnings("restriction")
     @Override
     public void displayConfirmation(String confirmationMessage) {
-        // TODO Auto-generated method stub
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -253,7 +258,6 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     @Override
     public void refreshObserverList() {
         // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -262,11 +266,8 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     }
 
-    @SuppressWarnings("restriction")
     @Override
     public void displayMessage(String newMessage) {
-
-        // TODO Auto-generated method stub
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -277,23 +278,29 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     }
 
     public void activateCases(PublicUserEntity currentUser, GameStatusEnum status) {
-        // en fonction du joueur courant
-        GameEntity gameEntity = myIHMManager.getIClientDataToIHM().getCurrentGame();
-        Case[][] cb = controller.getCb().getChessBoardSquares();
-        if (status != GameStatusEnum.CHECKMATE) {
-            if (myIHMManager.getIClientDataToIHM().getLocalUser().getId().equals(currentUser.getId())) {
-                for (Case i[] : cb) {
-                    for (Case j : i) {
-                        j.setEnabled(true);
+        // Check the game status
+        if (status.equals(GameStatusEnum.CHECK)) {
+            controller.getCb().changeCheckSituation();
+        }
+
+        if (status.equals(GameStatusEnum.CHECKMATE)) {
+            controller.getCb().changeCheckMateSituation();
+        } else {
+            Case[][] cb = controller.getCb().getChessBoardSquares();
+            if (status != GameStatusEnum.CHECKMATE) {
+                if (myIHMManager.getIClientDataToIHM().getLocalUser().getId().equals(currentUser.getId())) {
+                    for (Case i[] : cb) {
+                        for (Case j : i) {
+                            j.setEnabled(true);
+                        }
                     }
                 }
             }
         }
     }
+
     @Override
     public void closeGameScreen(boolean answer) {
-        // TODO Auto-generated method stub
-
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -309,8 +316,6 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 // myIHMManager.getCurrentGameStage().hide();
 
             }
-
         });
     }
-
 }

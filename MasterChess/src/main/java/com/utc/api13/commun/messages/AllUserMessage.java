@@ -1,3 +1,4 @@
+
 package com.utc.api13.commun.messages;
 
 import java.util.List;
@@ -57,3 +58,4 @@ public class AllUserMessage extends Message {
     }
 
 }
+

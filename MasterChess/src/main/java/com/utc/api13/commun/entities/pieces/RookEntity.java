@@ -10,7 +10,6 @@ import org.springframework.util.Assert;
 
 import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
-import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.enumerations.PieceColorEnum;
 
@@ -24,38 +23,18 @@ public class RookEntity extends APieceEntity {
     private static final int MIN_MOVE = -7;
     private static final int MAX_MOVE = 7;
     private boolean hasMove = Boolean.FALSE;
-    private boolean itIsFirstMove = Boolean.FALSE;
 
     /**
      * 
      */
     private static final long serialVersionUID = 2587319077980898398L;
 
-    @Override
-    public void movePiece(final MoveEntity move, GameEntity game) {
-        super.movePiece(move, game);
-
-        if (hasMove == Boolean.FALSE && itIsFirstMove == Boolean.FALSE) {
-            hasMove = Boolean.TRUE;
-            itIsFirstMove = Boolean.TRUE;
-        } else if (itIsFirstMove = Boolean.TRUE) {
-            itIsFirstMove = Boolean.FALSE;
-        }
-
-    }
-
-    @Override
-    public void cancelLastMove(GameEntity game) {
-        super.cancelLastMove(game);
-
-        if (itIsFirstMove == Boolean.TRUE) {
-            hasMove = Boolean.FALSE;
-            itIsFirstMove = Boolean.FALSE;
-        }
-    }
-
     public boolean getHasMove() {
         return this.hasMove;
+    }
+
+    public void setHasMove(Boolean value) {
+        this.hasMove = value;
     }
 
     public RookEntity(final PieceColorEnum color, final int startColumn) {

@@ -17,13 +17,13 @@ import io.netty.handler.timeout.IdleStateEvent;
  * 
  */
 
-public class ClientHanlder extends SimpleChannelInboundHandler<Message> {
+public class ClientHandler extends SimpleChannelInboundHandler<Message> {
 
     private int ping_lost; // number of HertBeat messages lost in a row
-    private static final Logger logger = Logger.getLogger(ClientHanlder.class);
+    private static final Logger logger = Logger.getLogger(ClientHandler.class);
     private ComClientManager comClientManager = null;
 
-    public ClientHanlder(ComClientManager comClientManager) {
+    public ClientHandler(ComClientManager comClientManager) {
         this.comClientManager = comClientManager;
     }
 

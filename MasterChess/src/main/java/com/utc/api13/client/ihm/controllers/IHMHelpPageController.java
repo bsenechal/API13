@@ -1,10 +1,7 @@
 
 package com.utc.api13.client.ihm.controllers;
 
-import org.apache.log4j.Logger;
-
 import com.utc.api13.client.AppClient;
-import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 
 import javafx.event.Event;
@@ -21,10 +18,7 @@ public class IHMHelpPageController {
 
     private IHMManager IHMManager;
     private AppClient mainApp;
-    private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
-    private final Logger log = Logger.getLogger(getClass());
-
     @FXML
     BorderPane helpBorderPane;
     @FXML
@@ -62,7 +56,7 @@ public class IHMHelpPageController {
     public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
         if (ihmManager != null)
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            IHMManager.getIClientDataToIHM();
     }
 
     public Stage getCurrentStage() {

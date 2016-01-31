@@ -51,7 +51,6 @@ public class BishopEntityTest {
         final PositionEntity blackBishopPosition = new PositionEntity(3, 8);
         final PositionEntity whiteBishopPosition = new PositionEntity(3, 1);
         BishopEntity whiteBishopFirst = new BishopEntity(PieceColorEnum.WHITE, 3);
-        BishopEntity whiteBishopSecond = new BishopEntity(PieceColorEnum.WHITE, 6);
         BishopEntity blackBishopFirst = new BishopEntity(PieceColorEnum.BLACK, 6);
         BishopEntity blackBishopSecond = new BishopEntity(PieceColorEnum.BLACK, 3);
 

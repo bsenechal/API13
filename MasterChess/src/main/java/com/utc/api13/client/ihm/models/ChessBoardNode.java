@@ -21,17 +21,11 @@ import javax.swing.border.LineBorder;
 
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
-import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.pieces.BishopEntity;
-import com.utc.api13.commun.entities.pieces.KingEntity;
-import com.utc.api13.commun.entities.pieces.KnightEntity;
-import com.utc.api13.commun.entities.pieces.PawnEntity;
-import com.utc.api13.commun.entities.pieces.QueenEntity;
-import com.utc.api13.commun.entities.pieces.RookEntity;
-import com.utc.api13.commun.enumerations.PieceColorEnum;
+
+import javafx.beans.property.BooleanProperty;
 
 public class ChessBoardNode {
     private IClientDataToIHM myIClientToIHM;
@@ -43,7 +37,6 @@ public class ChessBoardNode {
     private JPanel chessBoard;
     private static final String COLS = "ABCDEFGH";
     private static final int TAILLE = 8;
-    private static final int TAILLE_CASE = 25;
     private Case[][] chessBoardSquares = new Case[TAILLE][TAILLE];
     private PositionEntity firstPosition = new PositionEntity(-1, -1);
     List<PositionEntity> positionList;
@@ -51,11 +44,17 @@ public class ChessBoardNode {
     // position pour les déplacements dans le listener
     private int selection = 1;
 
-    public ChessBoardNode(IHMManager ihmManager, GameEntity game, IClientDataToIHM myIClientToIHM2) {
+    private BooleanProperty checkProperty;
+    private BooleanProperty checkMateProperty;
+
+    public ChessBoardNode(IHMManager ihmManager, GameEntity game, IClientDataToIHM myIClientToIHM2,
+            BooleanProperty isCheck, BooleanProperty isCheckMate) {
         myIhmManager = ihmManager;
         myGame = game;
         myIClientToIHM = myIClientToIHM2;
         initializeGui();
+        checkProperty = isCheck;
+        checkMateProperty = isCheckMate;
     }
 
     public final void initializeGui() {
@@ -64,8 +63,6 @@ public class ChessBoardNode {
         int increment = 1;
         int ligne = 0;
         char couleur = 'N';
-        APieceEntity tempo = null;
-
         gui.setBorder(new EmptyBorder(5, 5, 5, 5));
         chessBoard = new JPanel(new GridLayout(0, 9));
         chessBoard.setBorder(new LineBorder(Color.BLACK));
@@ -104,7 +101,6 @@ public class ChessBoardNode {
                             }
                         }
 
-                        System.out.println("ligne " + movePosition.getLine() + " coloone " + movePosition.getColumn());
                         if (selection == 1) {
                             firstPosition.setPositionX(movePosition.getLine());
                             firstPosition.setPositionY(movePosition.getColumn());
@@ -152,6 +148,12 @@ public class ChessBoardNode {
                                         + " movePosition.getColumn() :" + movePosition.getColumn());
                                 myIClientToIHM.playMove(firstPosition.getPositionX(), firstPosition.getPositionY(),
                                         movePosition.getLine(), movePosition.getColumn());
+
+                                // sortir de la position d'echec si echec
+                                if (checkProperty.get()) {
+                                    changeCheckSituation();
+                                }
+
                                 // tout rendre unclickable
                                 for (Case i[] : chessBoardSquares) {
                                     for (Case j : i) {
@@ -200,43 +202,42 @@ public class ChessBoardNode {
         // Je place les icônes des pièces sur leur case respective
         while (increment >= -1) {
             for (int ctr = 0; ctr <= 7; ctr++) {
+                String iconePath = dossierIcone + ordrePiece[ctr] + couleur;
                 try {
-                    Image img = ImageIO.read(getClass().getResource(dossierIcone + ordrePiece[ctr] + couleur + ".gif"));
+                    Image img = ImageIO.read(getClass().getResource(iconePath + ".gif"));
                     chessBoardSquares[ctr][ligne].setIcon(new ImageIcon(img));
+                    Image img_disabled = ImageIO.read(getClass().getResource(iconePath + "_disabled.gif"));
+                    chessBoardSquares[ctr][ligne].setDisabledIcon(new ImageIcon(img_disabled));
                 } catch (IOException e) {
 
                 }
 
                 switch (ordrePiece[ctr]) {
                 case 'T':
-                    tempo = new RookEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
                     break;
 
                 case 'C':
-                    tempo = new KnightEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
                     break;
 
                 case 'F':
-                    tempo = new BishopEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
                     break;
 
                 case 'D':
-                    tempo = new QueenEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                     break;
 
                 case 'R':
-                    tempo = new KingEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE);
                     break;
                 }
-
+                String iconePathPawn = dossierIcone + 'P' + couleur;
                 try {
-                    Image img = ImageIO.read(getClass().getResource(dossierIcone + 'P' + couleur + ".gif"));
+                    Image img = ImageIO.read(getClass().getResource(iconePathPawn + ".gif"));
                     chessBoardSquares[ctr][ligne + increment].setIcon(new ImageIcon(img));
+                    Image img_disabled = ImageIO.read(getClass().getResource(iconePathPawn + "_disabled" + ".gif"));
+                    chessBoardSquares[ctr][ligne + increment].setDisabledIcon(new ImageIcon(img_disabled));
 
                 } catch (IOException e) {
 
                 }
-                tempo = new PawnEntity(ligne < 5 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE, ctr);
 
             }
             couleur = 'B';
@@ -291,4 +292,13 @@ public class ChessBoardNode {
             }
         }
     }
+
+    public void changeCheckSituation() {
+        checkProperty.set(!checkProperty.get());
+    }
+
+    public void changeCheckMateSituation() {
+        checkMateProperty.set(!checkMateProperty.get());
+    }
+
 }

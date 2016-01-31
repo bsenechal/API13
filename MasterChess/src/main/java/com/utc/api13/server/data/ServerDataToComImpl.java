@@ -4,7 +4,6 @@
 package com.utc.api13.server.data;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -17,9 +16,7 @@ import com.utc.api13.commun.entities.APieceEntity;
 //import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
-import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.commun.entities.pieces.KingEntity;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
 import com.utc.api13.server.data.interfaces.IServerDataToCom;
 
@@ -86,24 +83,13 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public boolean computerResult(UUID idPlayer, MoveEntity move) {
-        // Assert.notNull(move.getGameID(),
-        // "[ServerDataToComImpl][computerResult] gameID shouldn't be null");
-        // Assert.notNull(move.getUserID(),
-        // "[ServerDataToComImpl][computerResult] userID shouldn't be null");
-        // Assert.notNull(move.getPiece(),
-        // "[ServerDataToComImpl][computerResult] piece shouldn't be null");
-        // Assert.notNull(move.getFromPosition(),
-        // "[ServerDataToComImpl][computerResult] fromPosition shouldn't be
-        // null");
-        // Assert.notNull(move.getToPosition(),
-        // "[ServerDataToComImpl][computerResult] toPosition shouldn't be
-        // null");
-        // Assert.notNull(move.getDate(), "[ServerDataToComImpl][computerResult]
-        // date shouldn't be null");
 
-        System.out.println("computerResult : move : " + move.getFromPosition().getPositionX() + ","
-                + +move.getFromPosition().getPositionY() + ";" + move.getToPosition().getPositionX() + ","
-                + move.getToPosition().getPositionY() + ";" + move.getPiece().toString());
+        // System.out.println("computerResult : move : " +
+        // move.getFromPosition().getPositionX() + ","
+        // + +move.getFromPosition().getPositionY() + ";" +
+        // move.getToPosition().getPositionX() + ","
+        // + move.getToPosition().getPositionY() + ";" +
+        // move.getPiece().toString());
 
         GameEntity game = dataServerManager.getGameById(move.getGameID());
         // !!! Il est nécessaire de récupérer la pièce locale et non celle du
@@ -113,42 +99,11 @@ public class ServerDataToComImpl implements IServerDataToCom {
         System.out.println("isMovePossible " + result);
         if (result) {
 
-            if (move.getPiece().toString() == "King") {
-                KingEntity kingTmp = (KingEntity) move.getPiece();
-                if (kingTmp.getHasMove() == Boolean.FALSE) {
-                    if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() + 2) {
-                        // petit roque
-
-                        PositionEntity fromPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
-                                kingTmp.getPosition().getPositionX() + 3);
-                        PositionEntity toPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
-                                kingTmp.getPosition().getPositionX() + 1);
-
-                        APieceEntity piece = game.getPieceFromPosition(fromPosition);
-
-                        MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
-                        // moveTmp.getPiece().movePiece(moveTmp, game);
-                        game.movePiece(moveTmp);
-
-                    } else if (move.getToPosition().getPositionX() == kingTmp.getPosition().getPositionX() - 2) {
-                        // grand roque
-
-                        PositionEntity fromPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
-                                kingTmp.getPosition().getPositionX() - 4);
-                        PositionEntity toPosition = new PositionEntity(kingTmp.getPosition().getPositionY(),
-                                kingTmp.getPosition().getPositionX() - 1);
-
-                        APieceEntity piece = game.getPieceFromPosition(fromPosition);
-
-                        MoveEntity moveTmp = new MoveEntity(new Date(), fromPosition, toPosition, piece);
-                        // moveTmp.getPiece().movePiece(moveTmp, game);
-                        game.movePiece(moveTmp);
-                    }
-                }
-
-            }
-
             game.removePieceFromPosition(move.getToPosition());
+
+            // will transform a pawn to a queen if need be :
+            game.transformPawnToQueen(move);
+
             game.movePiece(move);
 
             System.out.println("computerResult : move : " + move.getFromPosition().getPositionX() + ","
@@ -175,20 +130,19 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
         // verify game :
         GameEntity game = dataServerManager.getGameById(idGame);
-        
-        //first : switch user to verify that he is not checked !
+
+        // first : switch user to verify that he is not checked !
         game.switchCurrentUser();
-        
-        //then verify the game status :
+
+        // then verify the game status :
         GameStatusEnum result = game.isFinished();
         System.out.println("serverdatatocomimpt : isfinished : status : " + result);
 
-        
-
-        // TODO : Ulysse : isn't it a tad brutal ?
+        // TODO : Ulysse : isn't it a tad brutal ? -> C'est plutôt à Com de le
+        // faire dans le proceed
         if (result.equals(GameStatusEnum.CHECKMATE) || result.equals(GameStatusEnum.DRAW)) {
             // Clean the serveur game-entity :
-            dataServerManager.getCurrentGames().remove(game);
+            // dataServerManager.getCurrentGames().remove(game);
         }
         return result;
     }

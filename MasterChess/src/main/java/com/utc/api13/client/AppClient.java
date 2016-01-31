@@ -45,7 +45,6 @@ public class AppClient extends Application {
         this.succeed = succeed;
     }
 
-    @SuppressWarnings("restriction")
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -63,7 +62,7 @@ public class AppClient extends Application {
         ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
         comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
 
-        this.stage = stage;
+        AppClient.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
         Pane root = (Pane) fxmlLoader.load();
         IHMConnexionPageController controller = fxmlLoader.getController();
@@ -102,7 +101,7 @@ public class AppClient extends Application {
     }
 
     public void setMainStage(Stage mainStage) {
-        this.stage = mainStage;
+        stage = mainStage;
     }
 
     public static void main(String[] args) {
@@ -116,7 +115,6 @@ public class AppClient extends Application {
         try {
             comClientManager.launchAppCom(host, port);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             succeed = false;
             displayErrorPopup(" wrong server port and server address");
             e.printStackTrace();
@@ -132,7 +130,6 @@ public class AppClient extends Application {
     }
 
     public void displayErrorPopup(String message) {
-        // TODO Auto-generated method stub
         Stage stage;
         Parent root = null;
         stage = new Stage();

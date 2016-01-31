@@ -15,6 +15,7 @@ import com.utc.api13.commun.entities.APieceEntity;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MessageEntity;
 import com.utc.api13.commun.entities.MoveEntity;
+import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
 
@@ -125,12 +126,49 @@ public class ClientDataToComImpl implements IClientDataToCom {
         APieceEntity piece = thisgame.getPieceFromPosition(move.getFromPosition());
         Assert.notNull(thisgame, "[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
 
+        // gestion des roques
+        if (piece.toString().equals("King")) {
+            if (move.getFromPosition().getPositionX() == move.getToPosition().getPositionX() - 2) {
+                PositionEntity rookPositionTmp = new PositionEntity(move.getFromPosition().getPositionX() + 3,
+                        move.getFromPosition().getPositionY());
+                PositionEntity rookPositionToGo = new PositionEntity(move.getFromPosition().getPositionX() + 1,
+                        move.getFromPosition().getPositionY());
+                APieceEntity rookTmp = thisgame.getPieceFromPosition(rookPositionTmp);
+
+                instanceDataClientManager.getIClientIHMToData().refreshChessBoard(rookPositionTmp.getPositionX(),
+                        rookPositionTmp.getPositionY(), rookPositionToGo.getPositionX(),
+                        rookPositionToGo.getPositionY(), rookTmp, thisgame);
+            }
+
+            if (move.getFromPosition().getPositionX() == move.getToPosition().getPositionX() + 2) {
+                PositionEntity rookPositionTmp = new PositionEntity(move.getFromPosition().getPositionX() - 4,
+                        move.getFromPosition().getPositionY());
+                PositionEntity rookPositionToGo = new PositionEntity(move.getFromPosition().getPositionX() - 1,
+                        move.getFromPosition().getPositionY());
+                APieceEntity rookTmp = thisgame.getPieceFromPosition(rookPositionTmp);
+
+                instanceDataClientManager.getIClientIHMToData().refreshChessBoard(rookPositionTmp.getPositionX(),
+                        rookPositionTmp.getPositionY(), rookPositionToGo.getPositionX(),
+                        rookPositionToGo.getPositionY(), rookTmp, thisgame);
+            }
+
+        }
+
         // delete the real destination piece
         thisgame.removePieceFromPosition(move.getToPosition());
+
+        // transorm a Pawn to a queen if the pawn is in the ennemy camp :
+        if (thisgame.transformPawnToQueen(move)) {
+            // you need to get the new Piece if it is now a queen
+            piece = thisgame.getPieceFromPosition(move.getFromPosition());
+        }
+        ;
+
         thisgame.movePiece(move);
 
         instanceDataClientManager.getIClientIHMToData().refreshChessBoard(fromLine, fromCol, toLine, toCol, piece,
                 thisgame);
+
         // #Data l'erreur est normale, on attend que IHM mette à jour sa méthode
 
     }
@@ -340,16 +378,6 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     @Override
     public void nextTurn(final GameStatusEnum status, final UUID nextPlayer) {
-        // Ulysse : lourd : remplacé par switchCurrentUser
-        // if (GameStatusEnum.CONTINUE.equals(status)) {
-        // instanceDataClientManager.getCurrentGame().setCurrentPlayer(
-        // (instanceDataClientManager.getCurrentGame().getBlackPlayer().getId().equals(nextPlayer))
-        // ? instanceDataClientManager.getCurrentGame().getBlackPlayer()
-        // : instanceDataClientManager.getCurrentGame().getWhitePlayer());
-        // }
-        // Assert.notNull(instanceDataClientManager.getCurrentGames(),
-        // "[ClientDataToComImpl][setFinishedStatus] currentGames shouldn't be
-        // null");
         GameEntity game = instanceDataClientManager.getCurrentGame();
 
         game.switchCurrentUser();
@@ -359,13 +387,9 @@ public class ClientDataToComImpl implements IClientDataToCom {
         // alert IHM:
         instanceDataClientManager.getIClientIHMToData().activateCases(game.getCurrentPlayer(), status);
 
-        // TODO Ulysse : virer le switch ?
-
         PrivateUserEntity localUser = instanceDataClientManager.getUserLocal();
         switch (status) {
 
-        // case CHECK:
-        // break;
         case CHECKMATE:
             if (localUser.getId().equals(game.getCurrentPlayer().getId())) {
                 localUser.setNbLost(localUser.getNbLost() + 1);
@@ -374,7 +398,9 @@ public class ClientDataToComImpl implements IClientDataToCom {
             }
         case DRAW:
             localUser.setNbPlayed(localUser.getNbPlayed() + 1);
-            instanceDataClientManager.setCurrentGame(null);
+            instanceDataClientManager.getCurrentGames()
+                    .removeIf(g -> instanceDataClientManager.getCurrentGame().getId().equals(g.getId()));
+            game = null;
             break;
 
         default:

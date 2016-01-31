@@ -15,12 +15,19 @@ import com.utc.api13.client.ihm.models.ChessBoardNode;
 import com.utc.api13.client.ihm.property.ChatProperty;
 import com.utc.api13.commun.entities.GameEntity;
 
+import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingNode;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -51,6 +58,9 @@ public class IHMGamePageController {
     StackPane chessBoardStackPane;
     @FXML
     Label timerText;
+    
+    private BooleanProperty checkProperty = new SimpleBooleanProperty(false);
+    private BooleanProperty checkMateProperty = new SimpleBooleanProperty(false);
 
     public IHMManager getIHMManager() {
         return IHMManager;
@@ -100,7 +110,6 @@ public class IHMGamePageController {
     /* exclude an observer in a game */
 
     private void openUserObservableList() throws IOException {
-        // TODO Auto-generated method stub
         Stage stage;
         Parent root;
         stage = new Stage();
@@ -136,8 +145,6 @@ public class IHMGamePageController {
     @FXML
     private void onQuitGameClicked(Event event) {
         // onGiveUpClicked();
-        String a = "slt";
-        System.out.println("test when we logout of the app");
     }
 
     public void setControllerContext(IHMManager ihmManager) {
@@ -154,14 +161,9 @@ public class IHMGamePageController {
     public void setMainApp(AppClient app) {
         this.mainApp = app;
         GameEntity game = this.myIClientToIHM.getCurrentGame();
-        cb = new ChessBoardNode(IHMManager, game, myIClientToIHM);
+        cb = new ChessBoardNode(IHMManager, game, myIClientToIHM, checkProperty, checkMateProperty);
         cb.setMyIClientToIHM(myIClientToIHM);
 
-        int nbMinutes = game.getTimerInt() / 60;
-        int nbSecondes = game.getTimerInt() % 60;
-        String myTimer = Integer.toString(nbMinutes) + " : " + Integer.toString(nbSecondes);
-
-        // this.timerText.setText(myTimer);
         final SwingNode swingNode = new SwingNode();
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -189,7 +191,69 @@ public class IHMGamePageController {
     public void setBindingsOnLoad() {
 
         chatTextArea.textProperty().bind(chat.getMessage());
+        
+        // Add change listener
+        checkProperty.addListener(new ChangeListener<Boolean>() {
 
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(newValue){
+                	displayCheckSituation();
+                }
+            }
+        });
+        
+     // Add change listener
+        checkMateProperty.addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(newValue){
+                	displayCheckMateSituation();
+                }
+            }
+        });
+
+    }
+    
+    private void displayCheckSituation(){
+    	//seulement le joueur blanc poste le message
+    	if(myIClientToIHM.getLocalUser().getId().equals(
+    			myIClientToIHM.getCurrentGame().getWhitePlayer().getId())){
+	    	myIClientToIHM.sendChatText("check on : " + 
+	    	        myIClientToIHM.getCurrentGame().getCurrentPlayer().getLogin());
+    	}
+    	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+            	Alert alert = new Alert(AlertType.INFORMATION);
+            	alert.setTitle("Check position");
+            	alert.setHeaderText("a player is cheked");
+            	alert.setContentText("check on : " + 
+    	    	        myIClientToIHM.getCurrentGame().getCurrentPlayer().getLogin());
+
+            	alert.showAndWait();
+            }
+    	});
+    }
+    
+    private void displayCheckMateSituation(){
+    	//seulement le joueur blanc poste le message
+    	if(myIClientToIHM.getCurrentGame().getCurrentPlayer().getId().equals(
+    			myIClientToIHM.getCurrentGame().getWhitePlayer().getId())){
+    	}
+    	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+            	Alert alert = new Alert(AlertType.INFORMATION);
+            	alert.setTitle("Check mate position");
+            	alert.setHeaderText("a player is check mated");
+            	alert.setContentText("check mate on : " + 
+    	    	        myIClientToIHM.getCurrentGame().getCurrentPlayer().getLogin());
+
+            	alert.showAndWait();
+            }
+		});
     }
 
     public Stage getCurrentStage() {

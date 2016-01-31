@@ -1,9 +1,9 @@
+
 package com.utc.api13.client.com;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
@@ -30,7 +30,7 @@ public class ClientInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast("idlestatehandler", new IdleStateHandler(0, 5, 0));
         pipeline.addLast("decoder", new ObjectDecoder(1024*1024*100,ClassResolvers.cacheDisabled(null)));
         pipeline.addLast("encoder", new ObjectEncoder());
-        pipeline.addLast("handler", new ClientHanlder(comClientManager));
+        pipeline.addLast("handler", new ClientHandler(comClientManager));
 
     }
 

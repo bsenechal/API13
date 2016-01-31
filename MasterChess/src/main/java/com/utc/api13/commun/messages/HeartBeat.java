@@ -3,8 +3,6 @@ package com.utc.api13.commun.messages;
 import java.net.InetAddress;
 import java.util.UUID;
 
-import org.apache.log4j.Logger;
-
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.server.com.ComServerManager;
 
@@ -15,7 +13,6 @@ public class HeartBeat extends Message {
      * 
      */
     private static final long serialVersionUID = -607617759169441509L;
-    private static final Logger logger = Logger.getLogger(HeartBeat.class);
     private InetAddress ping;
 
     /**
