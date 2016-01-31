@@ -13,8 +13,10 @@ import com.utc.api13.server.com.ComServerManager;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
+ * Message used to tranfer the list of all currently played games.
  * 
- * TODO à vérifier si la liste de games est trop lourde ou pas
+ * @author Thomas
+ *
  */
 public class AllGameMessage extends Message {
     /**
@@ -34,6 +36,10 @@ public class AllGameMessage extends Message {
         this.games = games;
     }
 
+    /**
+     * Handles the message when received on the client.
+     * Calls the 'displayAllGames' method from Data.
+     */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         if (games != null && !games.isEmpty()) {
@@ -45,6 +51,10 @@ public class AllGameMessage extends Message {
         }
     }
 
+    /**
+     * Handles the message when received on the server.
+     * Gets the list of all currently played games and is sent back to the client.
+     */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         games = comServerManager.getIServerDataToCom().getAllGames();

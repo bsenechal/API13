@@ -31,11 +31,20 @@ public class GameRequestMessage extends Message {
         this.timer = timer;
     }
 
+    /**
+     * Handles the message when received on the client.
+     * Calls the 'printProposition' method from Data.
+     */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         comClientManager.getIClientDataToCom().printProposition(getSender(), observable, chattable, timer, timerInt);
     }
 
+    /**
+     * Handles the message when received on the server.
+     * Informs the server of a new game request
+     * Is sent to the targeted client
+     */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         if (comServerManager.getIServerDataToCom().isPlaying(receiver)) {

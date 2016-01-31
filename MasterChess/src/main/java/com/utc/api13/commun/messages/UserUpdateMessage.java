@@ -40,6 +40,10 @@ public class UserUpdateMessage extends Message {
         this.usr = u;
     }
 
+    /**
+     * Handles the message when received on the client.
+     * Gives Data the updted profile.
+     */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // When received on the client, calls data to display whether the update
@@ -47,6 +51,10 @@ public class UserUpdateMessage extends Message {
         comClientManager.getIClientDataToCom().updateDistantProfile(usr);
     }
 
+    /**
+     * Handles the message when received on the server.
+     * Server registers the user profile update.
+     */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         // On the server, updates the connected users list

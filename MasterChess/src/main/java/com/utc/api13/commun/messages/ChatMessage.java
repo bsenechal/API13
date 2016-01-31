@@ -38,19 +38,26 @@ public class ChatMessage extends Message {
         this.message = message;
     }
 
+    /**
+     * Handles the message when received on the client.
+     * Calls the 'displayMessage' method from Data for the chat message to be displayed.
+     */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // Display the message received
         comClientManager.getIClientDataToCom().displayMessage(message);
     }
 
+    /**
+     * Handles the message when received on the server.
+     * Gets the list of players allowed to chat within the game and
+     * is sent to all these players.
+     */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         // Get users attending the game !
         // filter the user having allowedTchat to true;
 
-        // List<PublicUserEntity> list =
-        // comServerManager.getIServerDataToCom().getUsersByGame(partie);
         List<PublicUserEntity> list = comServerManager.getIServerDataToCom().getUsersByGame(partie).stream()
                 .filter(user -> user.isAllowedToChat() == true).collect(Collectors.toList());
 

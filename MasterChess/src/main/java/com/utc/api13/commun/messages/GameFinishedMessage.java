@@ -28,13 +28,21 @@ public class GameFinishedMessage extends Message {
 
     }
 
+    /**
+     * Handles the message when received on the client.
+     * Calls the 'sendAnswerForLeaving' method from Data.
+     * Inform the client that the game is terminated.
+     */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
-        // TODO Auto-generated method stub
         comClientManager.getIClientDataToCom().sendAnswerForLeaving(answer);
 
     }
 
+    /**
+     * Handles the message when received on the server.
+     * Informs the server and the other player that the game is terminated
+     */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
 

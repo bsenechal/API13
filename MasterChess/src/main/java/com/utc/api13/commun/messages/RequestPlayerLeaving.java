@@ -22,6 +22,10 @@ public class RequestPlayerLeaving extends Message {
 
     }
 
+    /**
+     * Handles the message when received on the client.
+     * Informt the player tht the opponent wants to leave the game.
+     */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // Informs the client of a new observer connection
@@ -32,6 +36,10 @@ public class RequestPlayerLeaving extends Message {
     	}
     }
 
+    /**
+     * Handles the message when received on the server.
+     * Server sends the message to the receiver.
+     */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
     	if (!abandon) {

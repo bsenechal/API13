@@ -3,6 +3,7 @@ package com.utc.api13.client.ihm.controllers;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 import org.apache.commons.io.FilenameUtils;
@@ -44,7 +45,7 @@ public class CreateProfileController {
     private IClientDataToIHM myIClientToIHM;
     private final Logger LOGGER = Logger.getLogger(getClass());
     private Stage currentStage;
-    private String imageProfilePath = getClass().getResource("/pictures/icone-profil.png").getPath();
+    private String imageProfilePath;
 
     @FXML
     BorderPane createProfileBorderPane;
@@ -183,20 +184,21 @@ public class CreateProfileController {
         fileChooser.setTitle("Ouvrir le document");
         fileChooser.setInitialDirectory(new File("/"));
         File f = fileChooser.showOpenDialog(new Stage());
-
-        try {
-            String extensionFile = FilenameUtils.getExtension(f.getAbsolutePath());
-            File dest = new File("src/main/resources/user/avatar_"+ UUID.randomUUID().toString() +"."+extensionFile);
-            copyFile(f, dest);
-            changeProfilePicture.setImage(new Image("file://" + dest.getAbsolutePath()));
-            imageProfilePath = dest.getAbsolutePath();
-        } catch (Exception e) {
-            try {
-                error("Error when changing your picture", false);
-            } catch (IOException e1) {
-                LOGGER.error(e1.getMessage(), e1);
-            }
-            LOGGER.error(e.getMessage(), e);
+        if (f !=null && f.exists()){
+	        try {
+	            String extensionFile = FilenameUtils.getExtension(f.getAbsolutePath());
+	            File dest = Paths.get("user/avatar_"+ UUID.randomUUID().toString() +"."+extensionFile).toFile();
+	            copyFile(f, dest);
+	            changeProfilePicture.setImage(new Image("file:///" + dest.getAbsolutePath()));
+	            imageProfilePath = dest.getAbsolutePath();
+	        } catch (Exception e) {
+	            try {
+	                error("Error when changing your picture", false);
+	            } catch (IOException e1) {
+	                LOGGER.error(e1.getMessage(), e1);
+	            }
+	            LOGGER.error(e.getMessage(), e);
+	        }
         }
 
     }
