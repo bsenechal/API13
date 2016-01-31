@@ -44,7 +44,7 @@ public class CreateProfileController {
     private IClientDataToIHM myIClientToIHM;
     private final Logger LOGGER = Logger.getLogger(getClass());
     private Stage currentStage;
-    private String imageProfilePath = getClass().getResource("/pictures/icone-profil.png").getPath();
+    private String imageProfilePath = getClass().getResource("/pictures/Icone-profil.png").getPath();
 
     @FXML
     BorderPane createProfileBorderPane;
