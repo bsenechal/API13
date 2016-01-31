@@ -127,7 +127,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
         Assert.notNull(thisgame, "[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
 
         // gestion des roques
-        if (piece.toString().equals("King")) {
+        if ("King".equals(piece.toString())) {
             if (move.getFromPosition().getPositionX() == move.getToPosition().getPositionX() - 2) {
                 PositionEntity rookPositionTmp = new PositionEntity(move.getFromPosition().getPositionX() + 3,
                         move.getFromPosition().getPositionY());

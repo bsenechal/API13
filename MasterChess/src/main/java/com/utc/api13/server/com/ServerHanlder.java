@@ -31,7 +31,7 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 
     private static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
-    private static final Logger logger = Logger.getLogger(ServerHanlder.class);
+    private static final Logger LOGGER = Logger.getLogger(ServerHanlder.class);
 
     // ping_lost_map stores ping lost count for each channel -> unique attribute
     // ping_lost may cause unexpected channel closure
@@ -93,9 +93,8 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        cause.printStackTrace();
         UUID userId = comServerManager.findUserIdFromChannelHandlerContext(ctx);
-        logger.warn("User : " + userId + " quit application, broadcast disconnection");
+        LOGGER.warn("User : " + userId + " quit application, broadcast disconnection");
         comServerManager.unlinkUserToChannelHandlerContext(userId);
         comServerManager.getIServerDataToCom().disconnect(userId);
         DisconnectMessage msg = new DisconnectMessage(userId, new UUID(0, 0), userId);

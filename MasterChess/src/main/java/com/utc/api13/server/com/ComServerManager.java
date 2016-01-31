@@ -28,7 +28,7 @@ public class ComServerManager {
         try {
             this.run();
         } catch (InterruptedException e) {
-            logger.error("[Server][COM] Erreur lors du run " + e.getMessage());
+            logger.error("[Server][COM] Erreur lors du run " + e.getMessage(), e);
         }
     }
 

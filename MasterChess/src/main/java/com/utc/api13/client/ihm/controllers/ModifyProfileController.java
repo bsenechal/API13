@@ -155,7 +155,7 @@ public class ModifyProfileController {
                 sourceFile.close();
             }
         } catch (IOException e) {
-            LOGGER.error("[ModifyProfileController][copyFile] " + e.getMessage());
+            LOGGER.error("[ModifyProfileController][copyFile] " + e.getMessage(), e);
             return false;
         }
 

@@ -14,7 +14,7 @@ public class PrivateUserEntity extends AUserEntity {
     // List of saved games by the local user
     private List<GameEntity> savedGames;
     private GameEntity game;
-    private List<Connection> connections;
+    private transient List<Connection> connections;
 
     public PrivateUserEntity() {
         super();

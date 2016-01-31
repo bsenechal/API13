@@ -63,9 +63,9 @@ public class UserUpdateMessage extends Message {
             result = comServerManager.getIServerDataToCom().saveUserData(usr);
             comServerManager.broadcastMessageExceptUser(this, usr.getId());
         } catch (TechnicalException e) {
-            LOGGER.error("[UserUpdateMessage][proceedServer] " + e.getMessage());
+            LOGGER.error("[UserUpdateMessage][proceedServer] " + e.getMessage(), e);
         } catch (FunctionalException e) {
-            LOGGER.error("[UserUpdateMessage][proceedServer] " + e.getMessage());
+            LOGGER.error("[UserUpdateMessage][proceedServer] " + e.getMessage(), e);
         } finally {
             if (result) {
                 this.result_message = UPDATE_SUCCESSFUL;

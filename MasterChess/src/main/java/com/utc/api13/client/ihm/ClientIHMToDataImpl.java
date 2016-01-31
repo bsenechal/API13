@@ -61,7 +61,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                         WritableImage img = SwingFXUtils.toFXImage(bi, null);
                         myIHMManager.getProfil().imageProperty().set(img);
                     } catch (IOException e) {
-                        LOGGER.error("[ClientIHMToDataImpl][displayProfile] " + e.getMessage());
+                        LOGGER.error("[ClientIHMToDataImpl][displayProfile] " + e.getMessage(), e);
                     }
                 }
             }
@@ -95,7 +95,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (IOException e) {
-                    LOGGER.error("[ClientIHMToDataImpl][otherPlayerLeaving] " + e.getMessage());
+                    LOGGER.error("[ClientIHMToDataImpl][otherPlayerLeaving] " + e.getMessage(), e);
                 }
             }
         });
@@ -131,7 +131,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (IOException e) {
-                    LOGGER.error("[ClientIHMToDataImpl][displayProposition] " + e.getMessage());
+                    LOGGER.error("[ClientIHMToDataImpl][displayProposition] " + e.getMessage(), e);
                 }
             }
         });
@@ -157,7 +157,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (IOException e) {
-                    LOGGER.error("[ClientIHMToDataImpl][displayAnswer] " + e.getMessage());
+                    LOGGER.error("[ClientIHMToDataImpl][displayAnswer] " + e.getMessage(), e);
                 }
             }
         });
@@ -187,7 +187,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (IOException e) {
-                    LOGGER.error("[ClientIHMToDataImpl][displayAnswer] " + e.getMessage());
+                    LOGGER.error("[ClientIHMToDataImpl][displayAnswer] " + e.getMessage(), e);
                 }
             }
         });
@@ -245,7 +245,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
             chessBoardSquares[line_to - 1][8 - col_to].setDisabledIcon(new ImageIcon(img_disabled));
 
         } catch (IOException e) {
-            LOGGER.error("[ClientIHMToDataImpl][refreshChessBoard] " + e.getMessage());
+            LOGGER.error("[ClientIHMToDataImpl][refreshChessBoard] " + e.getMessage(), e);
         }
     }
 

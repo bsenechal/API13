@@ -45,7 +45,7 @@ public class ComClientManager {
         } catch (InterruptedException e) {
             logger.error("Lost connection, check your network connection",e);
             throw (e);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             logger.error("Can't connect to server, please check your connection and server statuts",e);
             throw (e);
         }

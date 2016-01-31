@@ -61,7 +61,6 @@ public class AppClient extends Application {
         ihmManager.setIClientDataToIHM(dataClientManager.getClientDataToIHMImpl());
         comClientManager.setIClientDataToCom(dataClientManager.getClientDataToComImpl());
 
-        AppClient.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
         Pane root = (Pane) fxmlLoader.load();
         IHMConnexionPageController controller = fxmlLoader.getController();
@@ -108,7 +107,7 @@ public class AppClient extends Application {
         } catch (InterruptedException e) {
             succeed = false;
             displayErrorPopup(" wrong server port and server address");
-            LOGGER.error("[AppClient][launchAppCom] " + e.getMessage());
+            LOGGER.error("[AppClient][launchAppCom] " + e.getMessage(), e);
         }
 
         // TODO : Faire une vrai gestion d'erreur
@@ -124,7 +123,7 @@ public class AppClient extends Application {
         try {
             root = (Pane) fxmlLoader.load();
         } catch (IOException e) {
-            LOGGER.error("[AppClient][displayErrorPopup] " + e.getMessage());
+            LOGGER.error("[AppClient][displayErrorPopup] " + e.getMessage(), e);
         }
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(ihmManager);
@@ -145,7 +144,7 @@ public class AppClient extends Application {
         try {
             root = (Pane) fxmlLoader.load();
         } catch (IOException e) {
-            LOGGER.error("[AppClient][displayConfirmationPopup] " + e.getMessage());
+            LOGGER.error("[AppClient][displayConfirmationPopup] " + e.getMessage(), e);
         }
         ConfirmationController controller = fxmlLoader.getController();
         controller.setControllerContext(ihmManager);

@@ -20,7 +20,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 public class ClientHandler extends SimpleChannelInboundHandler<Message> {
 
     private int ping_lost; // number of HertBeat messages lost in a row
-    private static final Logger logger = Logger.getLogger(ClientHandler.class);
+    private static final Logger LOGGER = Logger.getLogger(ClientHandler.class);
     private ComClientManager comClientManager = null;
 
     public ClientHandler(ComClientManager comClientManager) {
@@ -39,11 +39,11 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
         if (evt instanceof IdleStateEvent) {
             IdleStateEvent e = (IdleStateEvent) evt;
             if (e.state() == IdleState.WRITER_IDLE) {
-                logger.info("No message from server, waiting ...");
+                LOGGER.info("No message from server, waiting ...");
                 ping_lost++;
                 if (ping_lost > 2) { // If x pings lost in a row, assuming that
                                      // server is down
-                    throw (new IOException("Connection timeout"));
+                    throw new IOException("Connection timeout");
                 }
             }
         }
@@ -51,8 +51,8 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        logger.error("Lost connection, check your network connection");
-        cause.printStackTrace();
+        LOGGER.error("Lost connection, check your network connection");
+        LOGGER.error(cause);
         ctx.close();
     }
 }
