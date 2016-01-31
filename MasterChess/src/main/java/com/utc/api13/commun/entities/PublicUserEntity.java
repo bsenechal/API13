@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.apache.log4j.Logger;
+
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
@@ -16,6 +18,7 @@ public class PublicUserEntity extends AUserEntity {
     private byte[] image;
     private GameEntity observedGame;
     private boolean allowedToChat;
+    private static final Logger LOGGER = Logger.getLogger(PublicUserEntity.class);
 
     public PublicUserEntity() {
         allowedToChat = false;
@@ -42,24 +45,22 @@ public class PublicUserEntity extends AUserEntity {
         setNbLost(privateUser.getNbLost());
         setNbPlayed(privateUser.getNbPlayed());
         setNbWon(privateUser.getNbWon());
-        // extract bytes from image
+
         // extract bytes from image
         BufferedImage image;
-        try {
-            image = ImageIO.read(new File(privateUser.getImagePath()));
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        if (privateUser.getImagePath() != null) {
             try {
+
+                image = ImageIO.read(new File(privateUser.getImagePath()));
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ImageIO.write(image, "png", baos);
 
-                byte[] res=baos.toByteArray();
+                byte[] res = baos.toByteArray();
                 setImage(res);
+
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                LOGGER.error("[PublicUserEntity][Constructor] " + e.getMessage());
             }
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
         }
         setAllowedToChat(false);
     }

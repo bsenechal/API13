@@ -90,16 +90,8 @@ public class IHMManageProfileController {
         fileChooser.setInitialDirectory(new File("/"));
         File f = fileChooser.showOpenDialog(new Stage());
 
-        try {
-
-            changeProfilePicture.setImage(new Image("file:///" + f.getAbsolutePath()));
-            this.myIClientToIHM.getLocalUser().setImagePath("file:///" + f.getAbsolutePath());
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
+        changeProfilePicture.setImage(new Image("file:///" + f.getAbsolutePath()));
+        this.myIClientToIHM.getLocalUser().setImagePath("file:///" + f.getAbsolutePath());
     }
 
     public IHMManageProfileController() {

@@ -42,7 +42,7 @@ public class ModifyProfileController {
     private IHMManager IHMManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
-    private final Logger LOGGER = Logger.getLogger(getClass());
+    private final static Logger LOGGER = Logger.getLogger(ModifyProfileController.class);
     private Stage currentStage;
     private Text userLabelToUpdateWelcomePage;
     
@@ -153,7 +153,7 @@ public class ModifyProfileController {
                 sourceFile.close();
             }
         } catch (IOException e){
-            e.printStackTrace();
+            LOGGER.error("[ModifyProfileController][copyFile] " + e.getMessage());
             return false; 
         }
      

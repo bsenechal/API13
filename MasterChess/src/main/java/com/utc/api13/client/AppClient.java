@@ -2,6 +2,8 @@ package com.utc.api13.client;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.client.data.DataClientManager;
 import com.utc.api13.client.ihm.IHMManager;
@@ -24,7 +26,7 @@ import javafx.stage.Stage;
 public class AppClient extends Application {
     public static Stage stage;
     private Stage currentStage;
-
+    private static final Logger LOGGER = Logger.getLogger(AppClient.class);
     private ComClientManager comClientManager;
     private IHMManager ihmManager;
     private boolean succeed = true;
@@ -48,9 +50,6 @@ public class AppClient extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        /**
-         * JAVAFX STAGE <<<<<<<<<<<<<<<<<<<<<<<
-         */
         ihmManager = new IHMManager();
         comClientManager = new ComClientManager();
         ihmManager.setMainApp(this);
@@ -76,17 +75,9 @@ public class AppClient extends Application {
         stage.setScene(scene);
         stage.show();
 
-        /**
-         * >>>>>>>>>>>>>>>>>>>>>>>
-         */
-
-        /**
-         * MAIN <<<<<<<<<<<<<<<<<<<<<<<
-         */
-
     }
 
-    // private static final Logger LOGGER = Logger.getLogger(AppClient.class);
+    
 
     public Stage getCurrentStage() {
         return currentStage;
@@ -114,15 +105,11 @@ public class AppClient extends Application {
         // comClientManager.launchAppCom(host, port);
         try {
             comClientManager.launchAppCom(host, port);
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
             succeed = false;
             displayErrorPopup(" wrong server port and server address");
-            e.printStackTrace();
-
+            LOGGER.error("[AppClient][launchAppCom] " + e.getMessage());
         }
-        /**
-         * >>>>>>>>>>>>>>>>>>>>>>>
-         */
 
         // TODO : Faire une vrai gestion d'erreur
         // comClientManager.close();
@@ -137,8 +124,7 @@ public class AppClient extends Application {
         try {
             root = (Pane) fxmlLoader.load();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error("[AppClient][displayErrorPopup] " + e.getMessage());
         }
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(ihmManager);
@@ -159,8 +145,7 @@ public class AppClient extends Application {
         try {
             root = (Pane) fxmlLoader.load();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error("[AppClient][displayConfirmationPopup] " + e.getMessage());
         }
         ConfirmationController controller = fxmlLoader.getController();
         controller.setControllerContext(ihmManager);

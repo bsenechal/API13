@@ -61,7 +61,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                         WritableImage img = SwingFXUtils.toFXImage(bi, null);
                         myIHMManager.getProfil().imageProperty().set(img);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        LOGGER.error("[ClientIHMToDataImpl][displayProfile] " + e.getMessage());
                     }
                 }
             }
