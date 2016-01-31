@@ -10,21 +10,31 @@ import io.netty.channel.ChannelHandlerContext;
 public class RequestPlayerLeaving extends Message {
 
     private static final long serialVersionUID = -4586898422959823860L;
+    boolean abandon;
 
-    public RequestPlayerLeaving(UUID sender, UUID receiver) {
+    public RequestPlayerLeaving(UUID sender, UUID receiver, boolean abandon) {
         super(sender, receiver);
+        this.abandon = abandon;
 
     }
 
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // Informs the client of a new observer connection
-        comClientManager.getIClientDataToCom().requestPlayerForLeaving(sender);
+    	if (!abandon) {
+    		comClientManager.getIClientDataToCom().requestPlayerForLeaving(sender);
+    	}else{
+    		comClientManager.getIClientDataToCom().endGameBySurrender();
+    	}
     }
 
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-        comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
+    	if (!abandon) {
+    		comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
+    	}else{
+    		comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
+    	}
     }
 
 }
