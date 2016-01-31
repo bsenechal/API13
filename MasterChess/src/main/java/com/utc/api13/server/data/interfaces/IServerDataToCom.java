@@ -60,7 +60,6 @@ public interface IServerDataToCom {
 
     /**
      * @author ulyss_000 This method is used to verify if the move is possible
-     * @param idPlayer
      * @param move
      * @return true if the move is possible, else -> false
      */
