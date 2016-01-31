@@ -55,7 +55,7 @@ public class MoveValidationMessage extends Message {
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         // STEP 1 : Validate the move
-        boolean ok = comServerManager.getIServerDataToCom().computerResult(sender, move); // Is
+        boolean ok = comServerManager.getIServerDataToCom().computerResult(move); // Is
                                                                                           // the
                                                                                           // move
                                                                                           // valid

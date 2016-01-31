@@ -60,12 +60,10 @@ public interface IServerDataToCom {
 
     /**
      * @author ulyss_000 This method is used to verify if the move is possible
-     * @param idPlayer
      * @param move
      * @return true if the move is possible, else -> false
      */
-    // TODO : Ulysse : do we need idPlayer since move as the players infos ?
-    public boolean computerResult(final UUID idPlayer, final MoveEntity move);
+    public boolean computerResult(final MoveEntity move);
 
     /**
      * This method is used to determine if the game is check/checkmate, draw or
@@ -141,7 +139,6 @@ public interface IServerDataToCom {
                                                // pour supprimer un User de la
                                                // liste des Users connectés
 
-    // TODO
     // Méthode pour créer une nouvelle partie :
     public GameEntity createGame(final UUID j1, final UUID j2, final boolean observable, final boolean chattable,
             final boolean timer, final Integer timerInt);

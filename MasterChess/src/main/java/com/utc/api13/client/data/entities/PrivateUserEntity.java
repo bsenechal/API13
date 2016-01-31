@@ -19,6 +19,7 @@ public class PrivateUserEntity extends AUserEntity {
     public PrivateUserEntity() {
         super();
         connections = new ArrayList<Connection>();
+        savedGames = new ArrayList<GameEntity>();
     }
 
     /**

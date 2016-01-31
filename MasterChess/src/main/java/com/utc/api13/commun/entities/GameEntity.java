@@ -481,8 +481,8 @@ public class GameEntity extends ADataEntity {
         }
 
         // Draw check :
-        // TODO : Ulysse : there are a lot of those...
-
+        // Here
+        
         return result;
     }
 

@@ -252,6 +252,7 @@ public class IHMGamePageController {
     	    	        myIClientToIHM.getCurrentGame().getCurrentPlayer().getLogin());
 
             	alert.showAndWait();
+            	myIClientToIHM.killCurrentGame();
             }
 		});
     }
