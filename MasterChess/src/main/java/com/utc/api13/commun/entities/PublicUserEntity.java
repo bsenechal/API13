@@ -1,8 +1,14 @@
 package com.utc.api13.commun.entities;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.commun.exceptions.TechnicalException;
-import com.utc.api13.commun.utils.ImageUtils;
 
 public class PublicUserEntity extends AUserEntity {
 
@@ -37,7 +43,24 @@ public class PublicUserEntity extends AUserEntity {
         setNbPlayed(privateUser.getNbPlayed());
         setNbWon(privateUser.getNbWon());
         // extract bytes from image
-        setImage(ImageUtils.extractBytes(privateUser.getImagePath()));
+        // extract bytes from image
+        BufferedImage image;
+        try {
+            image = ImageIO.read(new File(privateUser.getImagePath()));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            try {
+                ImageIO.write(image, "png", baos);
+
+                byte[] res=baos.toByteArray();
+                setImage(res);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
         setAllowedToChat(false);
     }
 

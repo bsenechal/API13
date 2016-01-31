@@ -2,6 +2,8 @@ package com.utc.api13.client.ihm.property;
 
 import com.utc.api13.commun.entities.PublicUserEntity;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -14,6 +16,8 @@ public class ProfilProperty {
     private StringProperty lastName;
     private ObservableList<PublicUserEntity> statPlayer;
     private StringProperty userUUID;
+    private ObjectProperty<javafx.scene.image.Image> imageProperty;
+
 
     public ObservableList<PublicUserEntity> getStatPlayer() {
         return statPlayer;
@@ -29,6 +33,7 @@ public class ProfilProperty {
         lastName = new SimpleStringProperty();
         statPlayer = FXCollections.observableArrayList();
         userUUID = new SimpleStringProperty();
+        imageProperty = new SimpleObjectProperty<>();
     }
 
     public StringProperty loginProperty() {
@@ -50,5 +55,9 @@ public class ProfilProperty {
     public ObservableList<PublicUserEntity> statPlayerProperty() {
         return statPlayer;
     }
+    public ObjectProperty<javafx.scene.image.Image> imageProperty(){
+        return imageProperty;
+    }
+
 
 }

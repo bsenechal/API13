@@ -9,15 +9,12 @@ import java.util.UUID;
 
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
-import com.utc.api13.server.com.interfaces.IServeurComToData;
 
 /**
  * @author Benoît
  *
  */
 public class DataServerManager {
-    // Interface COM
-    private IServeurComToData iServeurComToData;
 
     // Interface DATA
     private ServerDataToComImpl serverDataToComImpl;
@@ -26,26 +23,12 @@ public class DataServerManager {
 
     public DataServerManager() {
         super();
-        this.iServeurComToData = null;
         this.serverDataToComImpl = new ServerDataToComImpl(this);
         this.currentGames = new ArrayList<GameEntity>();
         this.currentUsers = new ArrayList<PublicUserEntity>();
     }
 
-    /**
-     * @return the IServeurToData
-     */
-    public IServeurComToData getIServeurComToData() {
-        return iServeurComToData;
-    }
 
-    /**
-     * @param IServeurComToData
-     *            the IServeurToData to set
-     */
-    public void setIServeurComToData(IServeurComToData IServeurComToData) {
-        this.iServeurComToData = IServeurComToData;
-    }
 
     /**
      * @return the currentUsers

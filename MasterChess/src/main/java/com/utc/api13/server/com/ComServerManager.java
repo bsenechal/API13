@@ -22,7 +22,6 @@ public class ComServerManager {
     ServerInitializer serverInitializer = null;
     private static final Logger logger = Logger.getLogger(ComServerManager.class);
     private IServerDataToCom iServerDataToCom;
-    private ServeurComToDataImpl serverToDataImpl;
     private final ConcurrentHashMap<UUID, ChannelHandlerContext> channelHandlerContextMap = new ConcurrentHashMap<UUID, ChannelHandlerContext>();
 
     public void launchAppCom() {
@@ -35,7 +34,6 @@ public class ComServerManager {
 
     public ComServerManager(int port) {
         this.port = port;
-        this.serverToDataImpl = new ServeurComToDataImpl(this);
 
     }
 
@@ -86,20 +84,6 @@ public class ComServerManager {
         this.iServerDataToCom = iServerDataToCom;
     }
 
-    /**
-     * @return the iServerToDataImpl
-     */
-    public ServeurComToDataImpl getServeurComToDataImpl() {
-        return serverToDataImpl;
-    }
-
-    /**
-     * @param iServerToDataImpl
-     *            the iServerToDataImpl to set
-     */
-    public void setServeurComToDataImpl(ServeurComToDataImpl serverToDataImpl) {
-        this.serverToDataImpl = serverToDataImpl;
-    }
 
     /**
      * 

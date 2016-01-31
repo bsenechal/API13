@@ -1,3 +1,4 @@
+
 package com.utc.api13.client.com;
 
 import io.netty.channel.ChannelInitializer;
@@ -27,7 +28,7 @@ public class ClientInitializer extends ChannelInitializer<SocketChannel> {
         ChannelPipeline pipeline = arg0.pipeline();
 
         pipeline.addLast("idlestatehandler", new IdleStateHandler(0, 5, 0));
-        pipeline.addLast("decoder", new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
+        pipeline.addLast("decoder", new ObjectDecoder(1024*1024*100,ClassResolvers.cacheDisabled(null)));
         pipeline.addLast("encoder", new ObjectEncoder());
         pipeline.addLast("handler", new ClientHandler(comClientManager));
 

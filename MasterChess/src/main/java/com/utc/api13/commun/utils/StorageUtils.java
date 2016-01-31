@@ -102,7 +102,7 @@ public class StorageUtils {
             throw new DataAccessException(
                     "Error while reading object from the file " + PATH + File.separator + fileName, iox);
         } finally {
-            if (oos != null) {
+            if (ois != null) {
                 try {
                     ois.close();
                 } catch (IOException ex) {
