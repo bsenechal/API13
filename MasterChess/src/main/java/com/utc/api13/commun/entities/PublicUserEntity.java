@@ -43,23 +43,24 @@ public class PublicUserEntity extends AUserEntity {
         setNbPlayed(privateUser.getNbPlayed());
         setNbWon(privateUser.getNbWon());
         // extract bytes from image
-        // extract bytes from image
         BufferedImage image;
-        try {
-            image = ImageIO.read(new File(privateUser.getImagePath()));
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            try {
-                ImageIO.write(image, "png", baos);
-
-                byte[] res=baos.toByteArray();
-                setImage(res);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+        if(privateUser.getImagePath()!=null){
+	        try {
+	            image = ImageIO.read(new File(privateUser.getImagePath()));
+	            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	            try {
+	                ImageIO.write(image, "png", baos);
+	
+	                byte[] res=baos.toByteArray();
+	                setImage(res);
+	            } catch (IOException e) {
+	                // TODO Auto-generated catch block
+	                e.printStackTrace();
+	            }
+	        } catch (IOException e1) {
+	            // TODO Auto-generated catch block
+	            e1.printStackTrace();
+	        }
         }
         setAllowedToChat(false);
     }
