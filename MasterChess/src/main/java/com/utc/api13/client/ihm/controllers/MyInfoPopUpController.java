@@ -1,6 +1,7 @@
 package com.utc.api13.client.ihm.controllers;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
@@ -18,6 +19,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -44,6 +47,8 @@ public class MyInfoPopUpController {
     TableColumn<PrivateUserEntity, Integer> userInfoWon, userInfoLost, userInfoPlayed;
     @FXML
     Button modifyButton;
+    @FXML
+    ImageView userInfoImage;
 
     @FXML
     public void onModifyProfileClicked() throws IOException {
@@ -84,7 +89,7 @@ public class MyInfoPopUpController {
         this.userInfoLastName.setText(u.getLastName());
         userInfoTableView.setItems(statsPlayer);
         userLabelToUpdateWelcomePage = userLabel;
-
+        Optional.ofNullable("file://"+u.getImagePath()).ifPresent(link -> userInfoImage.setImage(new Image(link)));
     }
 
     public IHMManager getIHMManager() {

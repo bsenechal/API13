@@ -1,8 +1,11 @@
 package com.utc.api13.client.ihm.controllers;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
 import com.utc.api13.client.AppClient;
@@ -41,6 +44,7 @@ public class CreateProfileController {
     private IClientDataToIHM myIClientToIHM;
     private final Logger LOGGER = Logger.getLogger(getClass());
     private Stage currentStage;
+    private String imageProfilePath = getClass().getResource("/pictures/icone-profil.png").getPath();
 
     @FXML
     BorderPane createProfileBorderPane;
@@ -86,6 +90,7 @@ public class CreateProfileController {
             user.setPassword(pw);
             user.setFirstName(firstName);
             user.setLastName(lastName);
+            user.setImagePath(imageProfilePath);
 
             Parent root;
             confirmationStage = new Stage();
@@ -137,19 +142,54 @@ public class CreateProfileController {
             saveProfil();
         }
     }
+    
+    public static boolean copyFile(File source, File dest){
+        try{
+            // Declaration et ouverture des flux
+            java.io.FileInputStream sourceFile = new java.io.FileInputStream(source);
+     
+            try{
+                java.io.FileOutputStream destinationFile = null;
+     
+                try{
+                    destinationFile = new FileOutputStream(dest);
+     
+                    // Lecture par segment de 0.5Mo 
+                    byte buffer[] = new byte[512 * 1024];
+                    int nbLecture;
+     
+                    while ((nbLecture = sourceFile.read(buffer)) != -1){
+                        destinationFile.write(buffer, 0, nbLecture);
+                    }
+                } finally {
+                    destinationFile.close();
+                }
+            } finally {
+                sourceFile.close();
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+            return false; // Erreur
+        }
+     
+        return true; // Résultat OK  
+    }
 
     @FXML
     public void onChangePictureClicked() throws IOException {
-
+    	 System.out.println(imageProfilePath);
+    	    
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Ouvrir le document");
         fileChooser.setInitialDirectory(new File("/"));
         File f = fileChooser.showOpenDialog(new Stage());
 
         try {
-            changeProfilePicture.setImage(new Image("file:///" + f.getAbsolutePath()));
-            this.myIClientToIHM.getLocalUser().setImagePath("file:///" + f.getAbsolutePath());
-
+            String extensionFile = FilenameUtils.getExtension(f.getAbsolutePath());
+            File dest = new File("src/main/resources/user/avatar_"+ UUID.randomUUID().toString() +"."+extensionFile);
+            copyFile(f, dest);
+            changeProfilePicture.setImage(new Image("file://" + dest.getAbsolutePath()));
+            imageProfilePath = dest.getAbsolutePath();
         } catch (Exception e) {
             try {
                 error("Error when changing your picture", false);

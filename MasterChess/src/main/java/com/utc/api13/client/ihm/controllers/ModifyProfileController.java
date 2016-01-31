@@ -1,8 +1,10 @@
 package com.utc.api13.client.ihm.controllers;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
@@ -35,6 +37,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import org.apache.commons.io.FilenameUtils;
+
 public class ModifyProfileController {
     private IHMManager IHMManager;
     private AppClient mainApp;
@@ -42,7 +46,7 @@ public class ModifyProfileController {
     private final Logger LOGGER = Logger.getLogger(getClass());
     private Stage currentStage;
     private Text userLabelToUpdateWelcomePage;
-
+    
     @FXML
     BorderPane createProfileBorderPane;
     @FXML
@@ -65,6 +69,7 @@ public class ModifyProfileController {
         String pw = passwordTextView.getText();
         String firstName = firstNameTextView.getText();
         String lastName = lastNameTextView.getText();
+        
 
         if (login.length() == 0 || pw.length() == 0 || firstName.length() == 0 || lastName.length() == 0) {
             try {
@@ -124,6 +129,37 @@ public class ModifyProfileController {
             }
         }
     }
+    public static boolean copyFile(File source, File dest){
+        try{
+            
+            java.io.FileInputStream sourceFile = new java.io.FileInputStream(source);
+     
+            try{
+                java.io.FileOutputStream destinationFile = null;
+     
+                try{
+                    destinationFile = new FileOutputStream(dest);
+     
+                   
+                    byte buffer[] = new byte[512 * 1024];
+                    int nbLecture;
+     
+                    while ((nbLecture = sourceFile.read(buffer)) != -1){
+                        destinationFile.write(buffer, 0, nbLecture);
+                    }
+                } finally {
+                    destinationFile.close();
+                }
+            } finally {
+                sourceFile.close();
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+            return false; 
+        }
+     
+        return true;
+    }
 
     @FXML
     public void onChangePictureClicked() throws IOException {
@@ -132,12 +168,12 @@ public class ModifyProfileController {
         fileChooser.setTitle("Ouvrir le document");
         fileChooser.setInitialDirectory(new File("/"));
         File f = fileChooser.showOpenDialog(new Stage());
-        System.out.println(" le chemin est :" + f.getAbsolutePath());
         try {
-
-            changeProfilePicture.setImage(new Image("file:///" + f.getAbsolutePath()));
-            this.myIClientToIHM.getLocalUser().setImagePath("file:///" + f.getAbsolutePath());
-
+            String extensionFile = FilenameUtils.getExtension(f.getAbsolutePath());
+            File dest = new File("src/main/resources/user/avatar_"+ UUID.randomUUID().toString() +"."+extensionFile);
+            copyFile(f, dest);
+            changeProfilePicture.setImage(new Image("file://" + dest.getAbsolutePath()));
+            dest.getAbsolutePath();
         } catch (Exception e) {
             try {
                 error("Error when changing your picture", false);
@@ -148,6 +184,7 @@ public class ModifyProfileController {
         }
 
     }
+
 
     public ModifyProfileController() {
         initialize();
@@ -165,8 +202,8 @@ public class ModifyProfileController {
         this.lastNameTextView.setText(u.getLastName());
         this.userLabelToUpdateWelcomePage = userLabel;
 
-        Optional.ofNullable(u.getImagePath()).ifPresent(link -> changeProfilePicture.setImage(new Image(link)));
-    }
+        Optional.ofNullable("file://"+u.getImagePath()).ifPresent(link -> changeProfilePicture.setImage(new Image(link)));
+        }
 
     public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;
