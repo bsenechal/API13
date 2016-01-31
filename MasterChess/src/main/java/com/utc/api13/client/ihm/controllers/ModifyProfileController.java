@@ -3,6 +3,7 @@ package com.utc.api13.client.ihm.controllers;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -170,9 +171,9 @@ public class ModifyProfileController {
         File f = fileChooser.showOpenDialog(new Stage());
         try {
             String extensionFile = FilenameUtils.getExtension(f.getAbsolutePath());
-            File dest = new File("src/main/resources/user/avatar_"+ UUID.randomUUID().toString() +"."+extensionFile);
+            File dest = Paths.get("user/avatar_"+ UUID.randomUUID().toString() +"."+extensionFile).toFile();
             copyFile(f, dest);
-            changeProfilePicture.setImage(new Image("file://" + dest.getAbsolutePath()));
+            changeProfilePicture.setImage(new Image("file:///" + dest.getAbsolutePath()));
             dest.getAbsolutePath();
         } catch (Exception e) {
             try {
@@ -202,7 +203,7 @@ public class ModifyProfileController {
         this.lastNameTextView.setText(u.getLastName());
         this.userLabelToUpdateWelcomePage = userLabel;
 
-        Optional.ofNullable("file://"+u.getImagePath()).ifPresent(link -> changeProfilePicture.setImage(new Image(link)));
+        Optional.ofNullable("file:///"+u.getImagePath()).ifPresent(link -> changeProfilePicture.setImage(new Image(link)));
         }
 
     public void setControllerContext(IHMManager ihmManager) {

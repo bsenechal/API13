@@ -3,6 +3,7 @@ package com.utc.api13.client.ihm.controllers;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 import org.apache.commons.io.FilenameUtils;
@@ -44,7 +45,7 @@ public class CreateProfileController {
     private IClientDataToIHM myIClientToIHM;
     private final Logger LOGGER = Logger.getLogger(getClass());
     private Stage currentStage;
-    private String imageProfilePath = getClass().getResource("/pictures/Icone-profil.png").getPath();
+    private String imageProfilePath;
 
     @FXML
     BorderPane createProfileBorderPane;
@@ -186,9 +187,9 @@ public class CreateProfileController {
 
         try {
             String extensionFile = FilenameUtils.getExtension(f.getAbsolutePath());
-            File dest = new File("src/main/resources/user/avatar_"+ UUID.randomUUID().toString() +"."+extensionFile);
+            File dest = Paths.get("user/avatar_"+ UUID.randomUUID().toString() +"."+extensionFile).toFile();
             copyFile(f, dest);
-            changeProfilePicture.setImage(new Image("file://" + dest.getAbsolutePath()));
+            changeProfilePicture.setImage(new Image("file:///" + dest.getAbsolutePath()));
             imageProfilePath = dest.getAbsolutePath();
         } catch (Exception e) {
             try {
