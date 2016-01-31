@@ -51,6 +51,8 @@ public class AllUserMessage extends Message {
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         users = comServerManager.getIServerDataToCom().getConnectedUsers();
+        this.receiver = this.sender;
+        this.sender = new UUID(0, 0);
         comServerManager.sendMessage(ctx.channel(), this);
     }
 
