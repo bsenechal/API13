@@ -1,3 +1,4 @@
+
 package com.utc.api13.commun.messages;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class AllUserMessage extends Message {
 
     public AllUserMessage(UUID sender, UUID receiver) {
         super(sender, receiver);
+        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -50,7 +52,10 @@ public class AllUserMessage extends Message {
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         users = comServerManager.getIServerDataToCom().getConnectedUsers();
+        this.receiver = this.sender;
+        this.sender = new UUID(0, 0);
         comServerManager.sendMessage(ctx.channel(), this);
     }
 
 }
+
