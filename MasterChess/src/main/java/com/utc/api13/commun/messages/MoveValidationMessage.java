@@ -4,6 +4,8 @@ package com.utc.api13.commun.messages;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
@@ -18,6 +20,7 @@ public class MoveValidationMessage extends Message {
      * 
      */
     private static final long serialVersionUID = 6100960055537315611L;
+    private static final Logger logger = Logger.getLogger(MoveValidationMessage.class);
     MoveEntity move;
 
     /**
@@ -88,11 +91,12 @@ public class MoveValidationMessage extends Message {
             
             if (status.equals(GameStatusEnum.CHECKMATE) || status.equals(GameStatusEnum.DRAW)) {
                 // Clean the serveur game-entity :
+            	logger.error("game is finished by" + status.name());
                 comServerManager.getIServerDataToCom().endGame(game.getId());
                 game = null;
             }
         } else {
-            // TODO : Error !
+            logger.error("move is not possible");
         }
     }
 
