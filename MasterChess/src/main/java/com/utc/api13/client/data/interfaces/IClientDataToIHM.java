@@ -271,4 +271,9 @@ public interface IClientDataToIHM {
     // answerProposition(final UUID uidSender, final UUID uidReciever, final
     // boolean observable, final boolean chattable, boolean answer); qui va
     // appeler com.answerProposition(...)
+    
+    /**
+     * Allows IHM to kill the CurrentGame to enable the launch og a new one !
+     */
+    public void killCurrentGame();
 }
