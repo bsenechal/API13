@@ -175,7 +175,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     @Override
     public void sendMessageToChat(MessageEntity message) {
-        // TODO: instanceDataClientManager.sendMessageToChat(message);
+        // TODO: a virer ?
     }
 
     @Override

@@ -140,7 +140,6 @@ public interface IServerDataToCom {
                                                // pour supprimer un User de la
                                                // liste des Users connectés
 
-    // TODO
     // Méthode pour créer une nouvelle partie :
     public GameEntity createGame(final UUID j1, final UUID j2, final boolean observable, final boolean chattable,
             final boolean timer, final Integer timerInt);

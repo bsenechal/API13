@@ -131,12 +131,6 @@ public class ServerDataToComImpl implements IServerDataToCom {
         GameStatusEnum result = game.isFinished();
         System.out.println("serverdatatocomimpt : isfinished : status : " + result);
 
-        // TODO : Ulysse : isn't it a tad brutal ? -> C'est plutôt à Com de le
-        // faire dans le proceed
-        if (result.equals(GameStatusEnum.CHECKMATE) || result.equals(GameStatusEnum.DRAW)) {
-            // Clean the serveur game-entity :
-            // dataServerManager.getCurrentGames().remove(game);
-        }
         return result;
     }
 
