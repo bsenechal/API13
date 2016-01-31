@@ -64,8 +64,7 @@ public interface IServerDataToCom {
      * @param move
      * @return true if the move is possible, else -> false
      */
-    // TODO : Ulysse : do we need idPlayer since move as the players infos ?
-    public boolean computerResult(final UUID idPlayer, final MoveEntity move);
+    public boolean computerResult(final MoveEntity move);
 
     /**
      * This method is used to determine if the game is check/checkmate, draw or

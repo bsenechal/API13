@@ -82,14 +82,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
      * com.utc.api13.commun.entities.MoveEntity)
      */
     @Override
-    public boolean computerResult(UUID idPlayer, MoveEntity move) {
-
-        // System.out.println("computerResult : move : " +
-        // move.getFromPosition().getPositionX() + ","
-        // + +move.getFromPosition().getPositionY() + ";" +
-        // move.getToPosition().getPositionX() + ","
-        // + move.getToPosition().getPositionY() + ";" +
-        // move.getPiece().toString());
+    public boolean computerResult(MoveEntity move) {
 
         GameEntity game = dataServerManager.getGameById(move.getGameID());
         // !!! Il est nécessaire de récupérer la pièce locale et non celle du
