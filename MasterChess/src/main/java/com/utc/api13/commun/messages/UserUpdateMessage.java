@@ -18,7 +18,7 @@ public class UserUpdateMessage extends Message {
      */
     private static final long serialVersionUID = 1L;
 
-    private static final Logger logger = Logger.getLogger(UserUpdateMessage.class);
+    private static final Logger LOGGER = Logger.getLogger(UserUpdateMessage.class);
     private static final String UPDATE_SUCCESSFUL = "User successfully updated on the server";
     private static final String UPDATE_FAILED = "User updated failed on the server";
 
@@ -63,14 +63,14 @@ public class UserUpdateMessage extends Message {
             result = comServerManager.getIServerDataToCom().saveUserData(usr);
             comServerManager.broadcastMessageExceptUser(this, usr.getId());
         } catch (TechnicalException e) {
-            e.printStackTrace();
+            LOGGER.error("[UserUpdateMessage][proceedServer] " + e.getMessage());
         } catch (FunctionalException e) {
-            e.printStackTrace();
+            LOGGER.error("[UserUpdateMessage][proceedServer] " + e.getMessage());
         } finally {
             if (result) {
                 this.result_message = UPDATE_SUCCESSFUL;
             } else {
-                logger.error(result_message);
+                LOGGER.error(result_message);
                 this.result_message = UPDATE_FAILED;
             }
         }
