@@ -89,15 +89,14 @@ public class ClientComToDataImpl implements IClientComToData {
     }
 
     @Override
-    public void endGameBySurrender() {
-        // TODO Auto-generated method stub
+    public void endGameBySurrender(UUID idPlayer, UUID idOtherPlayer) {
+    	comClientManagerInstance.sendMessage(new RequestPlayerLeaving(idPlayer, idOtherPlayer,true));
 
     }
 
     @Override
-    public void requestPlayerForLeaving(UUID sender, UUID receiver) {
-        // TODO Auto-generated method stub
-        comClientManagerInstance.sendMessage(new RequestPlayerLeaving(sender, receiver));
+    public void requestPlayerForLeaving(UUID idPlayer, UUID idOtherPlayer) {
+        comClientManagerInstance.sendMessage(new RequestPlayerLeaving(idPlayer, idOtherPlayer,false));
 
     }
 

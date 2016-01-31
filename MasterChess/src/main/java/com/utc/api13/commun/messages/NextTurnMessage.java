@@ -3,6 +3,8 @@ package com.utc.api13.commun.messages;
 
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import com.utc.api13.client.com.ComClientManager;
 import com.utc.api13.commun.enumerations.GameStatusEnum;
 import com.utc.api13.server.com.ComServerManager;
@@ -16,6 +18,7 @@ public class NextTurnMessage extends Message {
      */
     private static final long serialVersionUID = 8872346061808985890L;
     private GameStatusEnum isfinished;
+    private static final Logger logger = Logger.getLogger(NextTurnMessage.class);
     private UUID nexttoplay;
 
     public NextTurnMessage(UUID sender, UUID receiver, GameStatusEnum isfinished, UUID nexttoplay) {
@@ -27,6 +30,7 @@ public class NextTurnMessage extends Message {
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) throws Exception {
         comClientManager.getIClientDataToCom().nextTurn(this.isfinished, this.nexttoplay);
+        
     }
 
     @Override

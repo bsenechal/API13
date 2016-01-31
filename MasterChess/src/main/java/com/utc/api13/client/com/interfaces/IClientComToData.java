@@ -93,7 +93,7 @@ public interface IClientComToData {
     /**
      * 
      */
-    public void endGameBySurrender();
+    public void endGameBySurrender(UUID idPlayer, UUID idOtherPlayer);
 
     /**
      * Ends the game when the player exits the game window
