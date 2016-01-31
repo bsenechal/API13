@@ -3,6 +3,7 @@ package com.utc.api13.client.ihm.controllers;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -168,19 +169,21 @@ public class ModifyProfileController {
         fileChooser.setTitle("Ouvrir le document");
         fileChooser.setInitialDirectory(new File("/"));
         File f = fileChooser.showOpenDialog(new Stage());
-        try {
-            String extensionFile = FilenameUtils.getExtension(f.getAbsolutePath());
-            File dest = new File("src/main/resources/user/avatar_"+ UUID.randomUUID().toString() +"."+extensionFile);
-            copyFile(f, dest);
-            changeProfilePicture.setImage(new Image("file://" + dest.getAbsolutePath()));
-            dest.getAbsolutePath();
-        } catch (Exception e) {
-            try {
-                error("Error when changing your picture", false);
-            } catch (IOException e1) {
-                LOGGER.error(e1.getMessage(), e1);
-            }
-            LOGGER.error(e.getMessage(), e);
+        if (f !=null && f.exists()){
+	        try {
+	            String extensionFile = FilenameUtils.getExtension(f.getAbsolutePath());
+	            File dest = Paths.get("user/avatar_"+ UUID.randomUUID().toString() +"."+extensionFile).toFile();
+	            copyFile(f, dest);
+	            changeProfilePicture.setImage(new Image("file:///" + dest.getAbsolutePath()));
+	            dest.getAbsolutePath();
+	        } catch (Exception e) {
+	            try {
+	                error("Error when changing your picture", false);
+	            } catch (IOException e1) {
+	                LOGGER.error(e1.getMessage(), e1);
+	            }
+	            LOGGER.error(e.getMessage(), e);
+	        }
         }
 
     }
@@ -202,7 +205,7 @@ public class ModifyProfileController {
         this.lastNameTextView.setText(u.getLastName());
         this.userLabelToUpdateWelcomePage = userLabel;
 
-        Optional.ofNullable("file://"+u.getImagePath()).ifPresent(link -> changeProfilePicture.setImage(new Image(link)));
+        Optional.ofNullable("file:///"+u.getImagePath()).ifPresent(link -> changeProfilePicture.setImage(new Image(link)));
         }
 
     public void setControllerContext(IHMManager ihmManager) {
