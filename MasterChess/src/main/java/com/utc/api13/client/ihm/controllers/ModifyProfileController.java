@@ -46,7 +46,7 @@ public class ModifyProfileController {
     private final static Logger LOGGER = Logger.getLogger(ModifyProfileController.class);
     private Stage currentStage;
     private Text userLabelToUpdateWelcomePage;
-    
+
     @FXML
     BorderPane createProfileBorderPane;
     @FXML
@@ -69,7 +69,6 @@ public class ModifyProfileController {
         String pw = passwordTextView.getText();
         String firstName = firstNameTextView.getText();
         String lastName = lastNameTextView.getText();
-        
 
         if (login.length() == 0 || pw.length() == 0 || firstName.length() == 0 || lastName.length() == 0) {
             try {
@@ -129,35 +128,37 @@ public class ModifyProfileController {
             }
         }
     }
-    public static boolean copyFile(File source, File dest){
-        try{
-            
+
+    public static boolean copyFile(File source, File dest) {
+        try {
+
             java.io.FileInputStream sourceFile = new java.io.FileInputStream(source);
-     
-            try{
+
+            try {
                 java.io.FileOutputStream destinationFile = null;
-     
-                try{
+
+                try {
                     destinationFile = new FileOutputStream(dest);
-     
-                   
+
                     byte buffer[] = new byte[512 * 1024];
                     int nbLecture;
-     
-                    while ((nbLecture = sourceFile.read(buffer)) != -1){
+
+                    while ((nbLecture = sourceFile.read(buffer)) != -1) {
                         destinationFile.write(buffer, 0, nbLecture);
                     }
                 } finally {
-                    destinationFile.close();
+                    if (destinationFile != null) {
+                        destinationFile.close();
+                    }
                 }
             } finally {
                 sourceFile.close();
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             LOGGER.error("[ModifyProfileController][copyFile] " + e.getMessage());
-            return false; 
+            return false;
         }
-     
+
         return true;
     }
 
@@ -168,25 +169,24 @@ public class ModifyProfileController {
         fileChooser.setTitle("Ouvrir le document");
         fileChooser.setInitialDirectory(new File("/"));
         File f = fileChooser.showOpenDialog(new Stage());
-        if (f !=null && f.exists()){
-	        try {
-	            String extensionFile = FilenameUtils.getExtension(f.getAbsolutePath());
-	            File dest = Paths.get("user/avatar_"+ UUID.randomUUID().toString() +"."+extensionFile).toFile();
-	            copyFile(f, dest);
-	            changeProfilePicture.setImage(new Image("file:///"+dest.getAbsolutePath()));
-	            dest.getAbsolutePath();
-	            myIClientToIHM.getLocalUser().setImagePath(dest.getAbsolutePath());
-	        } catch (Exception e) {
-	            try {
-	                error("Error when changing your picture", false);
-	            } catch (IOException e1) {
-	                LOGGER.error(e1.getMessage(), e1);
-	            }
-	            LOGGER.error(e.getMessage(), e);
-	        }
+        if (f != null && f.exists()) {
+            try {
+                String extensionFile = FilenameUtils.getExtension(f.getAbsolutePath());
+                File dest = Paths.get("user/avatar_" + UUID.randomUUID().toString() + "." + extensionFile).toFile();
+                copyFile(f, dest);
+                changeProfilePicture.setImage(new Image("file:///" + dest.getAbsolutePath()));
+                dest.getAbsolutePath();
+                myIClientToIHM.getLocalUser().setImagePath(dest.getAbsolutePath());
+            } catch (Exception e) {
+                try {
+                    error("Error when changing your picture", false);
+                } catch (IOException e1) {
+                    LOGGER.error(e1.getMessage(), e1);
+                }
+                LOGGER.error(e.getMessage(), e);
+            }
         }
     }
-
 
     public ModifyProfileController() {
         initialize();
@@ -204,8 +204,9 @@ public class ModifyProfileController {
         this.lastNameTextView.setText(u.getLastName());
         this.userLabelToUpdateWelcomePage = userLabel;
 
-        Optional.ofNullable("file:///"+u.getImagePath()).ifPresent(link -> changeProfilePicture.setImage(new Image(link)));
-        }
+        Optional.ofNullable("file:///" + u.getImagePath())
+                .ifPresent(link -> changeProfilePicture.setImage(new Image(link)));
+    }
 
     public void setControllerContext(IHMManager ihmManager) {
         this.IHMManager = ihmManager;

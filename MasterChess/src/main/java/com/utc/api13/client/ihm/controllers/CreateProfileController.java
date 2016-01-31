@@ -163,7 +163,9 @@ public class CreateProfileController {
                         destinationFile.write(buffer, 0, nbLecture);
                     }
                 } finally {
-                    destinationFile.close();
+                    if (destinationFile != null) {
+                        destinationFile.close();
+                    }
                 }
             } finally {
                 sourceFile.close();
