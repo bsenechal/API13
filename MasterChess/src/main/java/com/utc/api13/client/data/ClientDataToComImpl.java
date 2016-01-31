@@ -185,6 +185,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
             // Add game in local user saved game (in case the local user wants
             // to
             // save the game after ending)
+        	if(instanceDataClientManager.getUserLocal().getSavedGames()==null){
+        		instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
+        	}
+        	
             instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
             // Modify the played games
             instanceDataClientManager.getUserLocal()
@@ -245,6 +249,9 @@ public class ClientDataToComImpl implements IClientDataToCom {
     public void endGameByLeaving() {
         // Add game in local user saved game (in case the local user wants to
         // save the game after ending)
+    	if(instanceDataClientManager.getUserLocal().getSavedGames()==null){
+    		instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
+    	}
         instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
         // Set the current game to null
         instanceDataClientManager.setCurrentGame(null);
@@ -345,17 +352,31 @@ public class ClientDataToComImpl implements IClientDataToCom {
      * com.utc.api13.client.data.interfaces.IClientToComm#endGameBySurrender()
      */
     @Override
-    public void endGameBySurrender() {
+    public void endGameBySurrender(UUID idPlayer) {
+    	if (idPlayer.equals(instanceDataClientManager.getUserLocal().getId())){
+	    	GameEntity game = instanceDataClientManager.getCurrentGame();
+	    	instanceDataClientManager.getIClientComToData().endGameBySurrender(instanceDataClientManager.getUserLocal().getId(),
+	                game.getWhitePlayer().getId().equals(instanceDataClientManager.getUserLocal().getId())
+                    ? game.getBlackPlayer().getId() : game.getWhitePlayer().getId(),game.getId());
+    	}
+    	if(instanceDataClientManager.getUserLocal().getSavedGames()==null){
+    		instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
+    	}
         instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
         // Modify the played games
         instanceDataClientManager.getUserLocal()
                 .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
-        // increase the amount of lost games
-        instanceDataClientManager.getUserLocal().setNbLost(instanceDataClientManager.getUserLocal().getNbLost() + 1);
+        if (idPlayer.equals(instanceDataClientManager.getUserLocal().getId())){
+	        // increase the amount of lost games
+	        instanceDataClientManager.getUserLocal().setNbLost(instanceDataClientManager.getUserLocal().getNbLost() + 1);
+        }else{
+        	instanceDataClientManager.getUserLocal().setNbWon(instanceDataClientManager.getUserLocal().getNbWon() + 1);
+        }
         // delete the current game
         instanceDataClientManager.setCurrentGame(null);
         // TODO uncomment when IHM function will be done
         // instanceDataClientManager.getIClientIHMToData().endGameBySurrend();
+
     }
 
     @Override
@@ -397,6 +418,9 @@ public class ClientDataToComImpl implements IClientDataToCom {
                 localUser.setNbWon(localUser.getNbWon() + 1);
             }
         case DRAW:
+        	if(instanceDataClientManager.getUserLocal().getSavedGames()==null){
+        		instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
+        	}
             instanceDataClientManager.getUserLocal().getSavedGames().add(game);
             localUser.setNbPlayed(localUser.getNbPlayed() + 1);
             UUID gameID = game.getId();

@@ -42,10 +42,8 @@ public class AllGameMessage extends Message {
      */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
-        if (games != null && !games.isEmpty()) {
+        if (games != null) {
             comClientManager.getIClientDataToCom().displayAllGames(games);
-        } else if (games.isEmpty()) {
-            logger.info("game list is empty");
         } else {
             logger.error("game list is null");
         }

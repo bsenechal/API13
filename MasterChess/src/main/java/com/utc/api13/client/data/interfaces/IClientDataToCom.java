@@ -145,7 +145,7 @@ public interface IClientDataToCom {
 
     public void victoryBySurrender();
 
-    public void endGameBySurrender();
+    public void endGameBySurrender(UUID idPlayer);
 
     public void displayMessage(final String message);
 

@@ -48,7 +48,7 @@ public class GameFinishedMessage extends Message {
 
         comServerManager.getIServerDataToCom().endGame(this.game);
         comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
-
+        comServerManager.broadcastMessage(new AllGameMessage(new UUID(0, 0), null, comServerManager.getIServerDataToCom().getAllGames()));
     }
 
 }

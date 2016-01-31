@@ -14,9 +14,17 @@ public class RequestPlayerLeaving extends Message {
     private static final long serialVersionUID = -4586898422959823860L;
     private static final Logger logger = Logger.getLogger(RequestPlayerLeaving.class);
 
-    boolean abandon;
+    private boolean abandon;
+    private UUID gameId;
 
-    public RequestPlayerLeaving(UUID sender, UUID receiver, boolean abandon) {
+    public RequestPlayerLeaving(UUID sender, UUID receiver,UUID gmaeId, boolean abandon) {
+        super(sender, receiver);
+        this.abandon = abandon;
+        this.gameId = gmaeId;
+
+    }
+    
+    public RequestPlayerLeaving(UUID sender, UUID receiver,boolean abandon) {
         super(sender, receiver);
         this.abandon = abandon;
 
@@ -32,7 +40,7 @@ public class RequestPlayerLeaving extends Message {
     	if (!abandon) {
     		comClientManager.getIClientDataToCom().requestPlayerForLeaving(sender);
     	}else{
-    		comClientManager.getIClientDataToCom().endGameBySurrender();
+    		comClientManager.getIClientDataToCom().endGameBySurrender(sender);
     	}
     }
 
@@ -47,7 +55,10 @@ public class RequestPlayerLeaving extends Message {
     		comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
     	}else{
     		logger.info("player abandons game");
+    		comServerManager.getIServerDataToCom().endGame(gameId);
     		comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
+            comServerManager.broadcastMessage(new AllGameMessage(new UUID(0, 0), null, comServerManager.getIServerDataToCom().getAllGames()));
+
     	}
     }
 
