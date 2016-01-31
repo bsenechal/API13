@@ -385,36 +385,44 @@ public class IHMWelcomePageController {
 
         // Demande de la liste des parties sauvegardées
         // -------------------------------
+        connectedUserTable.setOnMouseClicked(event -> {
+        	connectedUserTable.getSelectionModel().clearSelection();
+        });
         connectedUserTable.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
 
             @Override
             public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
-                Optional.ofNullable(listUserPublic.get((int) newValue))
-                        .ifPresent(user -> myIClientToIHM.getUserInfo(user.getId()));
 
-                Stage stage;
-                Parent root = null;
-                stage = new Stage();
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/userInfoPopUp.fxml"));
-                try {
-                    root = (Pane) fxmlLoader.load();
-                    UserInfoPopUpController controller = fxmlLoader.getController();
-                    controller.setControllerContext(IHMManager);
-                    mainApp.setCurrentStage(stage);
-                    controller.setMainApp(mainApp);
-                    controller.setBindings(profile);
-                    stage.setScene(new Scene(root));
-                    stage.setTitle("User Information");
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.show();
-                } catch (IOException e) {
-                    try {
-                        error("Error when loading user info : IOException");
-                    } catch (IOException e1) {
-                        LOGGER.error(e1.getMessage(), e1);
-                    }
-                    LOGGER.error(e.getMessage(), e);
-                }
+            	if(connectedUserTable.getSelectionModel().getSelectedIndex()>-1){
+	                Optional.ofNullable(listUserPublic.get((int) newValue))
+	                        .ifPresent(user -> myIClientToIHM.getUserInfo(user.getId()));
+	
+	                Stage stage;
+	                Parent root = null;
+	                stage = new Stage();
+	                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/userInfoPopUp.fxml"));
+	                try {
+	                    root = (Pane) fxmlLoader.load();
+	                    UserInfoPopUpController controller = fxmlLoader.getController();
+	                    controller.setControllerContext(IHMManager);
+	                    mainApp.setCurrentStage(stage);
+	                    controller.setMainApp(mainApp);
+	                    controller.setBindings(profile);
+	                    stage.setScene(new Scene(root));
+	                    stage.setTitle("User Information");
+	                    stage.initModality(Modality.APPLICATION_MODAL);
+	                    stage.show();
+	                } catch (IOException e) {
+	                    try {
+	                        error("Error when loading user info : IOException");
+	                    } catch (IOException e1) {
+	                        LOGGER.error(e1.getMessage(), e1);
+	                    }
+	                    LOGGER.error(e.getMessage(), e);
+	                }
+	                
+            	}
+                
             }
         });
 
