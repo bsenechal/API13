@@ -205,8 +205,8 @@ public class ChessBoardNode {
                 String iconePath = dossierIcone + ordrePiece[ctr] + couleur;
                 try {
                     Image img = ImageIO.read(getClass().getResource(iconePath + ".gif"));
-                    chessBoardSquares[ctr][ligne].setIcon(new ImageIcon(img));
                     Image img_disabled = ImageIO.read(getClass().getResource(iconePath + "_disabled.gif"));
+                    chessBoardSquares[ctr][ligne].setIcon(new ImageIcon(img));
                     chessBoardSquares[ctr][ligne].setDisabledIcon(new ImageIcon(img_disabled));
                 } catch (IOException e) {
 
@@ -231,8 +231,8 @@ public class ChessBoardNode {
                 String iconePathPawn = dossierIcone + 'P' + couleur;
                 try {
                     Image img = ImageIO.read(getClass().getResource(iconePathPawn + ".gif"));
-                    chessBoardSquares[ctr][ligne + increment].setIcon(new ImageIcon(img));
                     Image img_disabled = ImageIO.read(getClass().getResource(iconePathPawn + "_disabled" + ".gif"));
+                    chessBoardSquares[ctr][ligne + increment].setIcon(new ImageIcon(img));
                     chessBoardSquares[ctr][ligne + increment].setDisabledIcon(new ImageIcon(img_disabled));
 
                 } catch (IOException e) {

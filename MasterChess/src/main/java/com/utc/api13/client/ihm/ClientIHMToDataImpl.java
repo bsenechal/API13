@@ -236,16 +236,16 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         }
 
         // afficher la pièce sur la nouvelle case
+        String iconePath;
+        if (!game.getCurrentPlayer().getId().equals(game.getBlackPlayer().getId())) {
+            iconePath = dossierIcone + pieceType + "B";
+        } else {
+            iconePath = dossierIcone + pieceType + "N";
+        }
         try {
-            String iconePath;
-            if (!game.getCurrentPlayer().getId().equals(game.getBlackPlayer().getId())) {
-                iconePath = dossierIcone + pieceType + "B";
-            } else {
-                iconePath = dossierIcone + pieceType + "N";
-            }
             Image img = ImageIO.read(getClass().getResource(iconePath + ".gif"));
-            chessBoardSquares[lineTo - 1][8 - colTo].setIcon(new ImageIcon(img));
             Image imgDisabled = ImageIO.read(getClass().getResource(iconePath + "_disabled.gif"));
+            chessBoardSquares[lineTo - 1][8 - colTo].setIcon(new ImageIcon(img));
             chessBoardSquares[lineTo - 1][8 - colTo].setDisabledIcon(new ImageIcon(imgDisabled));
 
         } catch (IOException e) {
