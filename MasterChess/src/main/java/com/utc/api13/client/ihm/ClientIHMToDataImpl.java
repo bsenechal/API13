@@ -193,14 +193,14 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         });
     }
 
-    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, APieceEntity piece,
+    public void refreshChessBoard(int lineFrom, int colFrom, int lineTo, int colTo, APieceEntity piece,
             GameEntity game) {
         String dossierIcone = "/pictures/pieces/";
         // récupérer chessboardsquares
         Case[][] chessBoardSquares = controller.getCb().getChessBoardSquares();
 
         // effacer la pièce de l'ancienne case
-        chessBoardSquares[line_from - 1][8 - col_from].setIcon(null);
+        chessBoardSquares[lineFrom - 1][8 - colFrom].setIcon(null);
         // trouver le type de piece
         String pieceType = "";
 
@@ -240,9 +240,9 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 iconePath = dossierIcone + pieceType + "N";
             }
             Image img = ImageIO.read(getClass().getResource(iconePath + ".gif"));
-            chessBoardSquares[line_to - 1][8 - col_to].setIcon(new ImageIcon(img));
-            Image img_disabled = ImageIO.read(getClass().getResource(iconePath + "_disabled.gif"));
-            chessBoardSquares[line_to - 1][8 - col_to].setDisabledIcon(new ImageIcon(img_disabled));
+            chessBoardSquares[lineTo - 1][8 - colTo].setIcon(new ImageIcon(img));
+            Image imgDisabled = ImageIO.read(getClass().getResource(iconePath + "_disabled.gif"));
+            chessBoardSquares[lineTo - 1][8 - colTo].setDisabledIcon(new ImageIcon(imgDisabled));
 
         } catch (IOException e) {
             LOGGER.error("[ClientIHMToDataImpl][refreshChessBoard] " + e.getMessage(), e);

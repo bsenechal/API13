@@ -96,7 +96,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
      * String)
      */
     @Override
-    public void print_error(String error) {
+    public void printError(String error) {
         // instanceDataClientManager.print_error()
     }
 
@@ -162,7 +162,6 @@ public class ClientDataToComImpl implements IClientDataToCom {
             // you need to get the new Piece if it is now a queen
             piece = thisgame.getPieceFromPosition(move.getFromPosition());
         }
-        ;
 
         thisgame.movePiece(move);
 
@@ -185,10 +184,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
             // Add game in local user saved game (in case the local user wants
             // to
             // save the game after ending)
-        	if(instanceDataClientManager.getUserLocal().getSavedGames()==null){
-        		instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
-        	}
-        	
+            if (instanceDataClientManager.getUserLocal().getSavedGames() == null) {
+                instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
+            }
+
             instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
             // Modify the played games
             instanceDataClientManager.getUserLocal()
@@ -249,17 +248,17 @@ public class ClientDataToComImpl implements IClientDataToCom {
     public void endGameByLeaving() {
         // Add game in local user saved game (in case the local user wants to
         // save the game after ending)
-    	if(instanceDataClientManager.getUserLocal().getSavedGames()==null){
-    		instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
-    	}
+        if (instanceDataClientManager.getUserLocal().getSavedGames() == null) {
+            instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
+        }
         instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
         // Set the current game to null
         instanceDataClientManager.setCurrentGame(null);
     }
 
     @Override
-    public void notifyRejection(UUID uidSender, String REJECTION_MESSAGE) {
-        instanceDataClientManager.getIClientIHMToData().displayAnswer(uidSender, false, REJECTION_MESSAGE);
+    public void notifyRejection(UUID uidSender, String rejectionMessage) {
+        instanceDataClientManager.getIClientIHMToData().displayAnswer(uidSender, false, rejectionMessage);
         // Appelle la fonction displayAnswer qui n'est censé être utilisée que
         // lorsque le joueur refuse la partie
     }
@@ -353,24 +352,27 @@ public class ClientDataToComImpl implements IClientDataToCom {
      */
     @Override
     public void endGameBySurrender(UUID idPlayer) {
-    	if (idPlayer.equals(instanceDataClientManager.getUserLocal().getId())){
-	    	GameEntity game = instanceDataClientManager.getCurrentGame();
-	    	instanceDataClientManager.getIClientComToData().endGameBySurrender(instanceDataClientManager.getUserLocal().getId(),
-	                game.getWhitePlayer().getId().equals(instanceDataClientManager.getUserLocal().getId())
-                    ? game.getBlackPlayer().getId() : game.getWhitePlayer().getId(),game.getId());
-    	}
-    	if(instanceDataClientManager.getUserLocal().getSavedGames()==null){
-    		instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
-    	}
+        if (idPlayer.equals(instanceDataClientManager.getUserLocal().getId())) {
+            GameEntity game = instanceDataClientManager.getCurrentGame();
+            instanceDataClientManager.getIClientComToData().endGameBySurrender(
+                    instanceDataClientManager.getUserLocal().getId(),
+                    game.getWhitePlayer().getId().equals(instanceDataClientManager.getUserLocal().getId())
+                            ? game.getBlackPlayer().getId() : game.getWhitePlayer().getId(),
+                    game.getId());
+        }
+        if (instanceDataClientManager.getUserLocal().getSavedGames() == null) {
+            instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
+        }
         instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
         // Modify the played games
         instanceDataClientManager.getUserLocal()
                 .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
-        if (idPlayer.equals(instanceDataClientManager.getUserLocal().getId())){
-	        // increase the amount of lost games
-	        instanceDataClientManager.getUserLocal().setNbLost(instanceDataClientManager.getUserLocal().getNbLost() + 1);
-        }else{
-        	instanceDataClientManager.getUserLocal().setNbWon(instanceDataClientManager.getUserLocal().getNbWon() + 1);
+        if (idPlayer.equals(instanceDataClientManager.getUserLocal().getId())) {
+            // increase the amount of lost games
+            instanceDataClientManager.getUserLocal()
+                    .setNbLost(instanceDataClientManager.getUserLocal().getNbLost() + 1);
+        } else {
+            instanceDataClientManager.getUserLocal().setNbWon(instanceDataClientManager.getUserLocal().getNbWon() + 1);
         }
         // delete the current game
         instanceDataClientManager.setCurrentGame(null);
@@ -418,14 +420,13 @@ public class ClientDataToComImpl implements IClientDataToCom {
                 localUser.setNbWon(localUser.getNbWon() + 1);
             }
         case DRAW:
-        	if(instanceDataClientManager.getUserLocal().getSavedGames()==null){
-        		instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
-        	}
+            if (instanceDataClientManager.getUserLocal().getSavedGames() == null) {
+                instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
+            }
             instanceDataClientManager.getUserLocal().getSavedGames().add(game);
             localUser.setNbPlayed(localUser.getNbPlayed() + 1);
             UUID gameID = game.getId();
-            instanceDataClientManager.getCurrentGames()
-                    .removeIf(g -> gameID.equals(g.getId()));
+            instanceDataClientManager.getCurrentGames().removeIf(g -> gameID.equals(g.getId()));
             game = null;
             break;
 

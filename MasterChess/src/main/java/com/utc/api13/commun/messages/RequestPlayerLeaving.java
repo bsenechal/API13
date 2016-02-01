@@ -12,7 +12,7 @@ import io.netty.channel.ChannelHandlerContext;
 public class RequestPlayerLeaving extends Message {
 
     private static final long serialVersionUID = -4586898422959823860L;
-    private static final Logger logger = Logger.getLogger(RequestPlayerLeaving.class);
+    private static final Logger LOGGER = Logger.getLogger(RequestPlayerLeaving.class);
 
     private boolean abandon;
     private UUID gameId;
@@ -51,10 +51,10 @@ public class RequestPlayerLeaving extends Message {
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
     	if (!abandon) {
-    		logger.info("requeste leaving");
+    		LOGGER.info("requeste leaving");
     		comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
     	}else{
-    		logger.info("player abandons game");
+    		LOGGER.info("player abandons game");
     		comServerManager.getIServerDataToCom().endGame(gameId);
     		comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
             comServerManager.broadcastMessage(new AllGameMessage(new UUID(0, 0), null, comServerManager.getIServerDataToCom().getAllGames()));

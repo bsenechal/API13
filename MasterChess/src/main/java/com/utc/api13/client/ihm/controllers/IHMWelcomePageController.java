@@ -56,7 +56,7 @@ public class IHMWelcomePageController {
     private IClientDataToIHM myIClientToIHM;
     private ObservableList<PublicUserEntity> listUserPublic;
     private ObservableList<GameEntity> listCurrentGames;
-    private final Logger LOGGER = Logger.getLogger(getClass());
+    private static final Logger LOGGER = Logger.getLogger(IHMWelcomePageController.class);
 
     @FXML
     BorderPane mainBorderPane;
@@ -71,17 +71,19 @@ public class IHMWelcomePageController {
     @FXML
     Text userLabel;
     @FXML
-    TableView<GameEntity> currentGamesTable, savedGamesTable; 
+    TableView<GameEntity> currentGamesTable, savedGamesTable;
     @FXML
     TableView<PublicUserEntity> connectedUserTable;
     @FXML
     TableColumn<GameEntity, UUID> currentGamesId;
     @FXML
     TableColumn<GameEntity, String> currentGamesPlayer1, currentGamesPlayer2, currentGamesTime, currentGamesObs;
-//    @FXML
-//    TableColumn savedGamesId, savedGamesPlayer1, savedGamesPlayer2, savedGamesDate, savedGamesReplay;
+    // @FXML
+    // TableColumn savedGamesId, savedGamesPlayer1, savedGamesPlayer2,
+    // savedGamesDate, savedGamesReplay;
     @FXML
-    TableColumn<PublicUserEntity, String> connectedUserLogin, connectedUserStatus, connectedUserStat, connectedUserActionIcon;
+    TableColumn<PublicUserEntity, String> connectedUserLogin, connectedUserStatus, connectedUserStat,
+            connectedUserActionIcon;
     @FXML
     SplitMenuButton paramSplitMenuButton;
     @FXML
@@ -386,43 +388,43 @@ public class IHMWelcomePageController {
         // Demande de la liste des parties sauvegardées
         // -------------------------------
         connectedUserTable.setOnMouseClicked(event -> {
-        	connectedUserTable.getSelectionModel().clearSelection();
+            connectedUserTable.getSelectionModel().clearSelection();
         });
         connectedUserTable.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
 
             @Override
             public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
 
-            	if(connectedUserTable.getSelectionModel().getSelectedIndex()>-1){
-	                Optional.ofNullable(listUserPublic.get((int) newValue))
-	                        .ifPresent(user -> myIClientToIHM.getUserInfo(user.getId()));
-	
-	                Stage stage;
-	                Parent root = null;
-	                stage = new Stage();
-	                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/userInfoPopUp.fxml"));
-	                try {
-	                    root = (Pane) fxmlLoader.load();
-	                    UserInfoPopUpController controller = fxmlLoader.getController();
-	                    controller.setControllerContext(IHMManager);
-	                    mainApp.setCurrentStage(stage);
-	                    controller.setMainApp(mainApp);
-	                    controller.setBindings(profile);
-	                    stage.setScene(new Scene(root));
-	                    stage.setTitle("User Information");
-	                    stage.initModality(Modality.APPLICATION_MODAL);
-	                    stage.show();
-	                } catch (IOException e) {
-	                    try {
-	                        error("Error when loading user info : IOException");
-	                    } catch (IOException e1) {
-	                        LOGGER.error(e1.getMessage(), e1);
-	                    }
-	                    LOGGER.error(e.getMessage(), e);
-	                }
-	                
-            	}
-                
+                if (connectedUserTable.getSelectionModel().getSelectedIndex() > -1) {
+                    Optional.ofNullable(listUserPublic.get((int) newValue))
+                            .ifPresent(user -> myIClientToIHM.getUserInfo(user.getId()));
+
+                    Stage stage;
+                    Parent root = null;
+                    stage = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/userInfoPopUp.fxml"));
+                    try {
+                        root = (Pane) fxmlLoader.load();
+                        UserInfoPopUpController controller = fxmlLoader.getController();
+                        controller.setControllerContext(IHMManager);
+                        mainApp.setCurrentStage(stage);
+                        controller.setMainApp(mainApp);
+                        controller.setBindings(profile);
+                        stage.setScene(new Scene(root));
+                        stage.setTitle("User Information");
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.show();
+                    } catch (IOException e) {
+                        try {
+                            error("Error when loading user info : IOException");
+                        } catch (IOException e1) {
+                            LOGGER.error(e1.getMessage(), e1);
+                        }
+                        LOGGER.error(e.getMessage(), e);
+                    }
+
+                }
+
             }
         });
 
@@ -485,7 +487,7 @@ public class IHMWelcomePageController {
                 try {
                     onLogOutClicked();
                 } catch (IOException e) {
-                    LOGGER.error(e.getMessage());
+                    LOGGER.error(e.getMessage(), e);
                 }
             }
         });

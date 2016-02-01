@@ -20,7 +20,7 @@ public class MoveValidationMessage extends Message {
      * 
      */
     private static final long serialVersionUID = 6100960055537315611L;
-    private static final Logger logger = Logger.getLogger(MoveValidationMessage.class);
+    private static final Logger LOGGER = Logger.getLogger(MoveValidationMessage.class);
     MoveEntity move;
 
     /**
@@ -93,12 +93,12 @@ public class MoveValidationMessage extends Message {
             
             if (status.equals(GameStatusEnum.CHECKMATE) || status.equals(GameStatusEnum.DRAW)) {
                 // Clean the server game-entity :
-            	logger.error("game is finished by" + status.name());
+            	LOGGER.error("game is finished by" + status.name());
                 comServerManager.getIServerDataToCom().endGame(game.getId());
                 game = null;
             }
         } else {
-            logger.error("move is not possible");
+            LOGGER.error("move is not possible");
         }
     }
 

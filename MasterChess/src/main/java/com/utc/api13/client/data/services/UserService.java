@@ -18,7 +18,7 @@ import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 public class UserService {
-    private final static UserDAO userDAO = new UserDAO();
+    private static final UserDAO userDAO = new UserDAO();
 
     private static final boolean IS_WINDOWS = System.getProperty("os.name").contains("indow");
 
@@ -63,7 +63,7 @@ public class UserService {
      * @throws FunctionalException
      *             functional exception
      */
-    private void validateInstance(final PrivateUserEntity u) throws TechnicalException, FunctionalException {
+    private static void validateInstance(final PrivateUserEntity u) throws TechnicalException, FunctionalException {
         Assert.notNull(u, "[UserService] user shouldn't be null");
         // Check uid, login and paswword
         if (u.getId() == null || u.getLogin() == null || u.getPassword() == null) {

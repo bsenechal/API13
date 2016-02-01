@@ -14,7 +14,8 @@ import com.utc.api13.client.ihm.property.PropositionProperty;
 import javafx.stage.Stage;
 
 public class IHMManager {
-
+    
+    private ConfirmationProperty confirmation;
     private IClientDataToIHM myIClientToIHM;
     private ClientIHMToDataImpl myClientIHMToDataImpl;
     private AppClient mainApp;
@@ -27,6 +28,11 @@ public class IHMManager {
     private UUID uisender;
     private Stage currentGameStage;
 
+    public IHMManager() {
+        this.myClientIHMToDataImpl = new ClientIHMToDataImpl(this);
+
+    }
+    
     public Stage getCurrentGameStage() {
         return currentGameStage;
     }
@@ -50,8 +56,6 @@ public class IHMManager {
     public void setCurrentStage(Stage s) {
         this.currentStage = s;
     }
-
-    private ConfirmationProperty confirmation;
 
     public ProfilProperty getProfil() {
         return profil;
@@ -91,11 +95,6 @@ public class IHMManager {
 
     public void setConfirmation(ConfirmationProperty confirmation) {
         this.confirmation = confirmation;
-    }
-
-    public IHMManager() {
-        this.myClientIHMToDataImpl = new ClientIHMToDataImpl(this);
-
     }
 
     public IClientDataToIHM getIClientDataToIHM() {

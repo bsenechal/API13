@@ -27,7 +27,7 @@ public class ComClientManager {
     private ClientComToDataImpl clientComToDataImpl;
     private IClientDataToCom iClientDataToCom;
 
-    private static final Logger logger = Logger.getLogger(ComClientManager.class);
+    private static final Logger LOGGER = Logger.getLogger(ComClientManager.class);
 
     public ComClientManager() {
         this.clientComToDataImpl = new ClientComToDataImpl(this);
@@ -43,21 +43,21 @@ public class ComClientManager {
         try {
             this.channel = boostrap.connect(host, port).sync().channel();
         } catch (InterruptedException e) {
-            logger.error("Lost connection, check your network connection",e);
+            LOGGER.error("Lost connection, check your network connection",e);
             throw (e);
         } catch (Exception e) {
-            logger.error("Can't connect to server, please check your connection and server statuts",e);
+            LOGGER.error("Can't connect to server, please check your connection and server statuts",e);
             throw (e);
         }
 
-        logger.log(Level.DEBUG, "Message Manager is initialized for : " + host + ":" + port);
+        LOGGER.log(Level.DEBUG, "Message Manager is initialized for : " + host + ":" + port);
     }
 
     public void sendMessage(Message msg) throws ExceptionInInitializerError {
 
         if (channel != null) {
             channel.writeAndFlush(msg);
-            logger.debug("A " + msg.getClass().getSimpleName() + " has been sent to server :");
+            LOGGER.debug("A " + msg.getClass().getSimpleName() + " has been sent to server :");
         } else
             throw new ExceptionInInitializerError();
     }

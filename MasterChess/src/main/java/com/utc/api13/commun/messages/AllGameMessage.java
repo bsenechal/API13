@@ -23,7 +23,7 @@ public class AllGameMessage extends Message {
      * 
      */
     private static final long serialVersionUID = -5240625223458694460L;
-    private static final Logger logger = Logger.getLogger(AllGameMessage.class);
+    private static final Logger LOGGER = Logger.getLogger(AllGameMessage.class);
     List<GameEntity> games;
 
     /**
@@ -45,7 +45,7 @@ public class AllGameMessage extends Message {
         if (games != null) {
             comClientManager.getIClientDataToCom().displayAllGames(games);
         } else {
-            logger.error("game list is null");
+            LOGGER.error("game list is null");
         }
     }
 

@@ -60,7 +60,7 @@ public class PublicUserEntity extends AUserEntity {
                 setImage(res);
 
             } catch (IOException e) {
-                LOGGER.error("[PublicUserEntity][Constructor] " + e.getMessage());
+                LOGGER.error("[PublicUserEntity][Constructor] " + e.getMessage(), e);
             }
         }
         setAllowedToChat(false);

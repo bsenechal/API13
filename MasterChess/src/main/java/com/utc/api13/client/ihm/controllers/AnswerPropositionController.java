@@ -30,7 +30,7 @@ public class AnswerPropositionController {
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
-    private final Logger log = Logger.getLogger(getClass());
+    private static final Logger LOGGER = Logger.getLogger(AnswerPropositionController.class);
     private boolean answer = true;
     private boolean chattable;
     private boolean observable;
@@ -121,11 +121,11 @@ public class AnswerPropositionController {
             this.myIClientToIHM.sendResponse(answeringUser, IHMManager.getUisender(), answer, observable, chattable,
                     timer, timeInt);
         } catch (TechnicalException e) {
-            log.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             try {
                 error("Error while sending proposition answer : technical exception");
             } catch (IOException e1) {
-                log.error(e1.getMessage(), e1);
+                LOGGER.error(e1.getMessage(), e1);
             }
         }
     }

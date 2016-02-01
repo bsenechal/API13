@@ -17,7 +17,7 @@ public class AllUserMessage extends Message {
      * 
      */
     private static final long serialVersionUID = -3425696469122464793L;
-    private static final Logger logger = Logger.getLogger(AllUserMessage.class);
+    private static final Logger LOGGER = Logger.getLogger(AllUserMessage.class);
     List<PublicUserEntity> users = null;
 
     public AllUserMessage(UUID sender, UUID receiver) {
@@ -49,7 +49,7 @@ public class AllUserMessage extends Message {
         if (users != null) {
             comClientManager.getIClientDataToCom().displayUsersList(users);
         } else {
-            logger.error("users is null");
+            LOGGER.error("users is null");
         }
     }
 

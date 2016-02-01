@@ -43,7 +43,7 @@ public class CreateProfileController {
     private IHMManager IHMManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
-    private final Logger LOGGER = Logger.getLogger(getClass());
+    private static final Logger LOGGER = Logger.getLogger(CreateProfileController.class);
     private Stage currentStage;
     private String imageProfilePath;
 
@@ -63,6 +63,10 @@ public class CreateProfileController {
     AnchorPane createProfileAnchorPane;
     private Stage confirmationStage;
     private Stage errorStage;
+
+    public CreateProfileController() {
+        initialize();
+    }
 
     @FXML
     public void onSaveProfileClicked() throws IOException {
@@ -125,6 +129,7 @@ public class CreateProfileController {
                 LOGGER.error(e.getMessage(), e);
 
             } catch (FunctionalException e) {
+                LOGGER.error(e.getMessage(), e);
                 try {
                     error("Error when saving your profile : Functional Exception", true);
                 } catch (IOException e1) {
@@ -143,23 +148,23 @@ public class CreateProfileController {
             saveProfil();
         }
     }
-    
-    public static boolean copyFile(File source, File dest){
-        try{
+
+    public static boolean copyFile(File source, File dest) {
+        try {
             // Declaration et ouverture des flux
             java.io.FileInputStream sourceFile = new java.io.FileInputStream(source);
-     
-            try{
+
+            try {
                 java.io.FileOutputStream destinationFile = null;
-     
-                try{
+
+                try {
                     destinationFile = new FileOutputStream(dest);
-     
-                    // Lecture par segment de 0.5Mo 
-                    byte buffer[] = new byte[512 * 1024];
+
+                    // Lecture par segment de 0.5Mo
+                    byte[] buffer = new byte[512 * 1024];
                     int nbLecture;
-     
-                    while ((nbLecture = sourceFile.read(buffer)) != -1){
+
+                    while ((nbLecture = sourceFile.read(buffer)) != -1) {
                         destinationFile.write(buffer, 0, nbLecture);
                     }
                 } finally {
@@ -170,43 +175,39 @@ public class CreateProfileController {
             } finally {
                 sourceFile.close();
             }
-        } catch (IOException e){
-            e.printStackTrace();
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
             return false; // Erreur
         }
-     
-        return true; // Résultat OK  
+
+        return true; // Résultat OK
     }
 
     @FXML
     public void onChangePictureClicked() throws IOException {
-    	 System.out.println(imageProfilePath);
-    	    
+        System.out.println(imageProfilePath);
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Ouvrir le document");
         fileChooser.setInitialDirectory(new File("/"));
         File f = fileChooser.showOpenDialog(new Stage());
-        if (f !=null && f.exists()){
-	        try {
-	            String extensionFile = FilenameUtils.getExtension(f.getAbsolutePath());
-	            File dest = Paths.get("user/avatar_"+ UUID.randomUUID().toString() +"."+extensionFile).toFile();
-	            copyFile(f, dest);
-	            changeProfilePicture.setImage(new Image("file:///" + dest.getAbsolutePath()));
-	            imageProfilePath = dest.getAbsolutePath();
-	        } catch (Exception e) {
-	            try {
-	                error("Error when changing your picture", false);
-	            } catch (IOException e1) {
-	                LOGGER.error(e1.getMessage(), e1);
-	            }
-	            LOGGER.error(e.getMessage(), e);
-	        }
+        if (f != null && f.exists()) {
+            try {
+                String extensionFile = FilenameUtils.getExtension(f.getAbsolutePath());
+                File dest = Paths.get("user/avatar_" + UUID.randomUUID().toString() + "." + extensionFile).toFile();
+                copyFile(f, dest);
+                changeProfilePicture.setImage(new Image("file:///" + dest.getAbsolutePath()));
+                imageProfilePath = dest.getAbsolutePath();
+            } catch (Exception e) {
+                try {
+                    error("Error when changing your picture", false);
+                } catch (IOException e1) {
+                    LOGGER.error(e1.getMessage(), e1);
+                }
+                LOGGER.error(e.getMessage(), e);
+            }
         }
 
-    }
-
-    public CreateProfileController() {
-        initialize();
     }
 
     public void initialize() {
@@ -248,7 +249,7 @@ public class CreateProfileController {
         controller.setMainApp(this.mainApp, message);
         errorStage.setScene(new Scene(root));
         errorStage.setTitle("Error");
-        if (close == true) {
+        if (close == Boolean.TRUE) {
             mainApp.getCurrentStage().close();
         }
         errorStage.initModality(Modality.APPLICATION_MODAL);

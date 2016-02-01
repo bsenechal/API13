@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 public class IHMManageProfileController {
     private IHMManager IHMManager;
     private IClientDataToIHM myIClientToIHM;
-    private final Logger log = Logger.getLogger(getClass());
+    private final Logger LOGGER = Logger.getLogger(IHMManageProfileController.class);
     private boolean newProfile = false;
 
     public boolean isNewProfile() {
@@ -73,10 +73,11 @@ public class IHMManageProfileController {
                 this.myIClientToIHM.updateProfile(user);
 
         } catch (TechnicalException e) {
-            log.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         } catch (FunctionalException e) {
+            LOGGER.error(e.getMessage(), e);
             for (Erreur erreur : e.getErreurs()) {
-                log.error(((ErrorTypeEnum) erreur.getErrorType()).getCode());
+                LOGGER.error(((ErrorTypeEnum) erreur.getErrorType()).getCode());
             }
         }
 

@@ -19,6 +19,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import org.apache.log4j.Logger;
+
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.commun.entities.GameEntity;
@@ -29,7 +31,7 @@ import javafx.beans.property.BooleanProperty;
 
 public class ChessBoardNode {
     private IClientDataToIHM myIClientToIHM;
-
+    private static final Logger LOGGER = Logger.getLogger(ChessBoardNode.class);
     private GameEntity myGame;
 
     private IHMManager myIhmManager;
@@ -209,7 +211,7 @@ public class ChessBoardNode {
                     Image img_disabled = ImageIO.read(getClass().getResource(iconePath + "_disabled.gif"));
                     chessBoardSquares[ctr][ligne].setDisabledIcon(new ImageIcon(img_disabled));
                 } catch (IOException e) {
-
+                    LOGGER.error(e.getMessage(), e);
                 }
 
                 switch (ordrePiece[ctr]) {
@@ -236,7 +238,7 @@ public class ChessBoardNode {
                     chessBoardSquares[ctr][ligne + increment].setDisabledIcon(new ImageIcon(img_disabled));
 
                 } catch (IOException e) {
-
+                    LOGGER.error(e.getMessage(), e);
                 }
 
             }

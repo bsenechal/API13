@@ -20,7 +20,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 public class ComServerManager {
     private final int port;
     ServerInitializer serverInitializer = null;
-    private static final Logger logger = Logger.getLogger(ComServerManager.class);
+    private static final Logger LOGGER = Logger.getLogger(ComServerManager.class);
     private IServerDataToCom iServerDataToCom;
     private final ConcurrentHashMap<UUID, ChannelHandlerContext> channelHandlerContextMap = new ConcurrentHashMap<UUID, ChannelHandlerContext>();
 
@@ -28,7 +28,7 @@ public class ComServerManager {
         try {
             this.run();
         } catch (InterruptedException e) {
-            logger.error("[Server][COM] Erreur lors du run " + e.getMessage(), e);
+            LOGGER.error("[Server][COM] Erreur lors du run " + e.getMessage(), e);
         }
     }
 
@@ -46,8 +46,8 @@ public class ComServerManager {
             ServerBootstrap boostrap = new ServerBootstrap().group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class).childHandler(serverInitializer);
 
-            if (logger.isDebugEnabled()) {
-                logger.debug("Starting server on : " + port);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Starting server on : " + port);
             }
 
             boostrap.bind(port).sync().channel().closeFuture().sync();
@@ -55,7 +55,7 @@ public class ComServerManager {
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
-            logger.debug("Server closed");
+            LOGGER.debug("Server closed");
         }
 
     }
@@ -64,7 +64,7 @@ public class ComServerManager {
 
         if (channel != null) {
             channel.writeAndFlush(msg);
-            logger.debug("A " + msg.getClass().getSimpleName() + " has been sent to : " + msg.getReceiver());
+            LOGGER.debug("A " + msg.getClass().getSimpleName() + " has been sent to : " + msg.getReceiver());
         } else
             throw new ExceptionInInitializerError();
     }
@@ -93,7 +93,7 @@ public class ComServerManager {
             if (channelHandlerContextMap.get(idUser) == null) {
                 channelHandlerContextMap.put(idUser, ctx);
             } else {
-                logger.error("User " + idUser.toString() + " is alreay connected, please disconnect before reconnect");
+                LOGGER.error("User " + idUser.toString() + " is alreay connected, please disconnect before reconnect");
             }
         }
     }
@@ -166,7 +166,7 @@ public class ComServerManager {
                 if (channelHandlerContextMap.get(idUser) != null) {
                     sendMessage(channelHandlerContextMap.get(idUser).channel(), msg);
                 } else {
-                    logger.warn("User " + idUser.toString() + " is disconnected. ");
+                    LOGGER.warn("User " + idUser.toString() + " is disconnected. ");
                 }
             }
         }
@@ -182,7 +182,7 @@ public class ComServerManager {
                 if (channelHandlerContextMap.get(user.getId()) != null) {
                     sendMessage(channelHandlerContextMap.get(user.getId()).channel(), msg);
                 } else {
-                    logger.warn("User " + user.getId().toString() + " is disconnected. ");
+                    LOGGER.warn("User " + user.getId().toString() + " is disconnected. ");
                 }
             }
         }

@@ -50,7 +50,7 @@ public interface IClientDataToCom {
      */
     public void displayProfile(final PublicUserEntity user);
 
-    public void print_error(final String error);
+    public void printError(final String error);
 
     /**
      * Affiche (récupère pour affichege IHM) la liste des GameEntity en cours
@@ -90,7 +90,7 @@ public interface IClientDataToCom {
      */
     public void notify(final String message);
 
-    public void notifyRejection(final UUID uidSender, String REJECTION_MESSAGE);
+    public void notifyRejection(final UUID uidSender, String rejectionMessage);
 
     /**
      * La GameEntity est créé sur le serveur.<br/>

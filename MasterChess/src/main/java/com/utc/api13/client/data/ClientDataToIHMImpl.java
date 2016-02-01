@@ -166,9 +166,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
             // Add game in local user saved game (in case the local user wants
             // to
             // save the game after ending)
-        	if(dataClientManager.getUserLocal().getSavedGames()==null){
-        		dataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
-        	}
+            if (dataClientManager.getUserLocal().getSavedGames() == null) {
+                dataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
+            }
             dataClientManager.getUserLocal().getSavedGames().add(getCurrentGame());
             // if the local user said yes no it's a win for him
             dataClientManager.getUserLocal().setNbPlayed(getLocalUser().getNbPlayed() + 1);
@@ -181,7 +181,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
             // dataClientManager.getIClientComToData().endGameByLeaving(getCurrentGame().getId(),
             // getLocalUser().getId());
             // End the game
-            //dataClientManager.setCurrentGame(null);
+            // dataClientManager.setCurrentGame(null);
         }
 
         dataClientManager.getUserLocal().getSavedGames().add(getCurrentGame());
@@ -392,7 +392,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         // dataClientManager.getIClientComToData().removeUserFromChat(idUser,
         // dataClientManager.getCurrentGame().getId());
     }
-    
+
     @Override
     public void killCurrentGame() {
         dataClientManager.setCurrentGame(null);

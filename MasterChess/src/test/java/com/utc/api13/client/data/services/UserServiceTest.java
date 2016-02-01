@@ -31,7 +31,7 @@ public class UserServiceTest {
     /**
      * Class logger
      */
-    private final Logger LOG = Logger.getLogger(getClass());
+    private final Logger LOGGER = Logger.getLogger(getClass());
 
     protected PrivateUserEntity getEntityWithoutId() {
         PrivateUserEntity user = new PrivateUserEntity("login", "");
@@ -60,14 +60,14 @@ public class UserServiceTest {
             Assert.assertEquals("login", foundUser.getLogin());
             Assert.assertEquals("password", foundUser.getPassword());
         } catch (TechnicalException | FunctionalException e) {
-            LOG.error("Error", e);
+            LOGGER.error("Error", e);
             Assert.fail("test has failed. Check the logs for more information");
         } finally {
             if (foundUser != null) {
                 try {
                     userService.delete(foundUser);
                 } catch (TechnicalException e) {
-                    LOG.error("Error while deleting", e);
+                    LOGGER.error("Error while deleting", e);
                 }
             }
         }

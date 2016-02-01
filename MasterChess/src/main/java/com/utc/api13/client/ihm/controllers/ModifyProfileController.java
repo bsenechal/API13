@@ -117,6 +117,7 @@ public class ModifyProfileController {
                 LOGGER.error(e.getMessage(), e);
 
             } catch (FunctionalException e) {
+                LOGGER.error(e.getMessage(), e);
                 try {
                     error("Error when saving your profile : Functional Exception", true);
                 } catch (IOException e1) {
