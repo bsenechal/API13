@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import org.springframework.util.Assert;
 
 import com.utc.api13.commun.entities.APieceEntity;
-//import com.utc.api13.client.data.services.UserService;
 import com.utc.api13.commun.entities.GameEntity;
 import com.utc.api13.commun.entities.MoveEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -89,7 +88,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
         // move récupéré côté client -> ce n'est pas le même object
         APieceEntity mypiece = game.getPieceFromPosition(move.getFromPosition());
         Boolean result = mypiece.isMovePossible(move, game);
-        System.out.println("isMovePossible " + result);
+
         if (result) {
 
             game.removePieceFromPosition(move.getToPosition());
@@ -98,10 +97,6 @@ public class ServerDataToComImpl implements IServerDataToCom {
             game.transformPawnToQueen(move);
 
             game.movePiece(move);
-
-            System.out.println("computerResult : move : " + move.getFromPosition().getPositionX() + ","
-                    + +move.getFromPosition().getPositionY() + ";" + move.getToPosition().getPositionX() + ","
-                    + move.getToPosition().getPositionY() + ";" + move.getPiece().toString());
 
         }
 
@@ -129,7 +124,6 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
         // then verify the game status :
         GameStatusEnum result = game.isFinished();
-        System.out.println("serverdatatocomimpt : isfinished : status : " + result);
 
         return result;
     }
@@ -138,9 +132,8 @@ public class ServerDataToComImpl implements IServerDataToCom {
     public void observerLeave(final UUID idUser) {
         Assert.notNull(dataServerManager.getCurrentUsers(),
                 "[ServerDataToComImpl][observerLeave] currentUsers shouldn't be null");
-        dataServerManager.getCurrentGames().stream().forEach(game -> {
-            game.getObservers().removeIf(u -> idUser.equals(u.getId()));
-        });
+        dataServerManager.getCurrentGames().stream()
+                .forEach(game -> game.getObservers().removeIf(u -> idUser.equals(u.getId())));
 
         // TODO: dataServerManager.getIServeurComToData().sendMessageToChat()
 
@@ -210,6 +203,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
         return dataServerManager.getCurrentUsers();
     }
 
+    @Override
     public List<PublicUserEntity> getUsersByGame(final UUID idGame) {
         Assert.notNull(dataServerManager.getCurrentGames(),
                 "[ServerDataToComImpl][getUsersByGame] currentGames shouldn't be null");

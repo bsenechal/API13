@@ -21,7 +21,6 @@ import javafx.stage.Stage;
 
 public class GiveUpPopUpController {
     private IHMManager IHMManager;
-    public static Stage stageI;
     private Stage currentStage;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
@@ -34,6 +33,10 @@ public class GiveUpPopUpController {
     Label opponentLabel, messageLabel;
     @FXML
     Button yesButton, noButton;
+
+    public GiveUpPopUpController() {
+        initialize();
+    }
 
     @FXML
     public void OnYesClicked() {
@@ -61,17 +64,9 @@ public class GiveUpPopUpController {
     public void initialize() {
     }
 
-    public GiveUpPopUpController() {
-        initialize();
-    }
-
     public void setMainApp(AppClient app, String login) {
         this.mainApp = app;
-        // this.opponentUUID=string;
-        Optional.ofNullable(login).ifPresent(u -> {
-            messageLabel.setText(u + " " + messageLabel.getText());
-        });
-
+        Optional.ofNullable(login).ifPresent(u -> messageLabel.setText(u + " " + messageLabel.getText()));
     }
 
     public void setControllerContext(IHMManager ihmManager) {

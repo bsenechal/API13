@@ -58,7 +58,7 @@ public class UserDAO {
     public PrivateUserEntity getByLoginAndPassword(final String login, final String password)
             throws TechnicalException {
         File[] listOfFiles = StorageUtils.getAllFiles();
-        PrivateUserEntity user = null;
+        PrivateUserEntity user;
         for (File file : listOfFiles) {
             if (file.getName().startsWith(login + "_")) {
                 user = StorageUtils.read(file.getName());

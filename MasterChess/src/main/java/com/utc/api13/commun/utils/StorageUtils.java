@@ -23,11 +23,15 @@ import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 public class StorageUtils {
-    private static File PATH = Paths.get("user").toFile();
+    private static final File PATH = Paths.get("user").toFile();
 
     private static ObjectOutputStream oos;
     private static ObjectInputStream ois;
 
+    private StorageUtils(){
+        
+    }
+    
     /**
      * Stores a user in a file<br/>
      * If the user has not been stored yet, a new file is created and the user
@@ -134,8 +138,8 @@ public class StorageUtils {
      */
     public static File[] getAllFiles() {
         File[] listofFiles = PATH.listFiles();
-        File[] NO_FILES = {};
-        return listofFiles == null ? NO_FILES : listofFiles;
+        File[] noFiles = {};
+        return listofFiles == null ? noFiles : listofFiles;
     }
 
     /**

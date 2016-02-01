@@ -37,7 +37,7 @@ public class UserInfoPopUpController {
     private AppClient mainApp;
     public PublicUserEntity u;
     private Stage currentStage;
-    private final Logger LOGGER = Logger.getLogger(getClass());
+    private static final Logger LOGGER = Logger.getLogger(UserInfoPopUpController.class);
 
     @FXML
     BorderPane userInfoBorderPane;
@@ -54,17 +54,16 @@ public class UserInfoPopUpController {
     @FXML
     Button sendPropositionButton;
 
+    public UserInfoPopUpController() {
+        initialize();
+    }
+
     public PublicUserEntity getU() {
         return u;
     }
 
     public void setU(PublicUserEntity u) {
         this.u = u;
-    }
-
-    public UserInfoPopUpController() {
-
-        initialize();
     }
 
     public void initialize() {
@@ -117,10 +116,9 @@ public class UserInfoPopUpController {
         userInfoPlayed.setCellValueFactory(new PropertyValueFactory<PrivateUserEntity, Integer>("nbPlayed"));
         userInfoImage.imageProperty().bind(profile.imageProperty());
 
-        profile.statPlayerProperty().addListener((ListChangeListener.Change<? extends PublicUserEntity> el) -> {
-            userInfoTableView.setItems(profile.statPlayerProperty());
-        });
-
+        profile.statPlayerProperty()
+                .addListener((ListChangeListener.Change<? extends PublicUserEntity> el) -> userInfoTableView
+                        .setItems(profile.statPlayerProperty()));
     }
 
     public Stage getCurrentStage() {

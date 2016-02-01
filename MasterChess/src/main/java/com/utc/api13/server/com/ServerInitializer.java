@@ -19,7 +19,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 
 public class ServerInitializer extends ChannelInitializer<SocketChannel> {
     private ComServerManager comServerManager;
-    private ServerHanlder serverHanlder;
+    private ServerHandler serverHanlder;
 
     public ServerInitializer(ComServerManager comServerManager) {
         this.comServerManager = comServerManager;
@@ -28,7 +28,7 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel arg0) throws Exception {
         ChannelPipeline pipeline = arg0.pipeline();
-        serverHanlder = new ServerHanlder(comServerManager);
+        serverHanlder = new ServerHandler(comServerManager);
 
         pipeline.addLast("idlestatehandler", new IdleStateHandler(0, 5, 0));
         pipeline.addLast("decoder", new ObjectDecoder(1024 * 1024 * 100, ClassResolvers.cacheDisabled(null)));
@@ -55,7 +55,7 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
     /**
      * @return the serverHanlder
      */
-    public ServerHanlder getServerHanlder() {
+    public ServerHandler getServerHanlder() {
         return serverHanlder;
     }
 
@@ -63,7 +63,7 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
      * @param serverHanlder
      *            the serverHanlder to set
      */
-    public void setServerHanlder(ServerHanlder serverHanlder) {
+    public void setServerHanlder(ServerHandler serverHanlder) {
         this.serverHanlder = serverHanlder;
     }
 

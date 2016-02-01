@@ -71,8 +71,6 @@ public interface IClientComToData {
     // DEPRECATED
     public void sendProposition(PublicUserEntity player);
 
-    // public void sendAnswer(String answer, PublicUserEntity sender);
-
     /**
      * Informs the server the current player surrenders
      * 

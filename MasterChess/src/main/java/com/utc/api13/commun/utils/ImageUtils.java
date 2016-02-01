@@ -11,14 +11,19 @@ import com.utc.api13.commun.exceptions.TechnicalException;
 
 public class ImageUtils {
 
-	public final static String FilePrefix = "file:///";
+    public static final String filePrefix = "file:///";
+
+    private ImageUtils() {
+
+    }
+
     public static byte[] extractBytes(String imagePath) throws TechnicalException {
         BufferedImage bufferedImage;
         try {
             if (imagePath != null) {
-            	if(imagePath.startsWith(FilePrefix)){
-            		imagePath = imagePath.substring(FilePrefix.length()-1);
-            	}
+                if (imagePath.startsWith(filePrefix)) {
+                    imagePath = imagePath.substring(filePrefix.length() - 1);
+                }
                 bufferedImage = ImageIO.read(new File(imagePath));
                 DataBufferByte data = (DataBufferByte) bufferedImage.getRaster().getDataBuffer();
                 return data.getData();

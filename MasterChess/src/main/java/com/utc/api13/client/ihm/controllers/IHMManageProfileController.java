@@ -28,17 +28,8 @@ import javafx.stage.Stage;
 public class IHMManageProfileController {
     private IHMManager IHMManager;
     private IClientDataToIHM myIClientToIHM;
-    private final Logger LOGGER = Logger.getLogger(IHMManageProfileController.class);
+    private static final Logger LOGGER = Logger.getLogger(IHMManageProfileController.class);
     private boolean newProfile = false;
-
-    public boolean isNewProfile() {
-        return newProfile;
-    }
-
-    public void setNewProfile(boolean newProfile) {
-        this.newProfile = newProfile;
-    }
-
     @FXML
     BorderPane createProfileBorderPane;
     @FXML
@@ -52,10 +43,25 @@ public class IHMManageProfileController {
     @FXML
     AnchorPane createProfileAnchorPane;
 
+    
+    public IHMManageProfileController() {
+
+        initialize();
+    }
+    
+    public boolean isNewProfile() {
+        return newProfile;
+    }
+
+    public void setNewProfile(boolean newProfile) {
+        this.newProfile = newProfile;
+    }
+
+    
     @FXML
     public void onSaveProfileClicked() {
-
-        PrivateUserEntity user = null;
+        PrivateUserEntity user;
+       
         if (!newProfile)
             user = this.myIClientToIHM.getLocalUser();
         else
@@ -93,11 +99,6 @@ public class IHMManageProfileController {
 
         changeProfilePicture.setImage(new Image("file:///" + f.getAbsolutePath()));
         this.myIClientToIHM.getLocalUser().setImagePath("file:///" + f.getAbsolutePath());
-    }
-
-    public IHMManageProfileController() {
-
-        initialize();
     }
 
     public void initialize() {

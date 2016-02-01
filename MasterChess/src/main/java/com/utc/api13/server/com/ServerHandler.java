@@ -27,18 +27,18 @@ import io.netty.util.concurrent.GlobalEventExecutor;
  *
  */
 
-public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
+public class ServerHandler extends SimpleChannelInboundHandler<Message> {
 
     private static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
-    private static final Logger LOGGER = Logger.getLogger(ServerHanlder.class);
+    private static final Logger LOGGER = Logger.getLogger(ServerHandler.class);
 
     // ping_lost_map stores ping lost count for each channel -> unique attribute
     // ping_lost may cause unexpected channel closure
     private static final Hashtable<Channel, AtomicInteger> ping_lost_map = new Hashtable<Channel, AtomicInteger>();
     private ComServerManager comServerManager;
 
-    public ServerHanlder(ComServerManager comServerManager) {
+    public ServerHandler(ComServerManager comServerManager) {
         this.comServerManager = comServerManager;
     }
 
@@ -77,7 +77,6 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
                                              // inbound messages
             IdleStateEvent e = (IdleStateEvent) evt;
             if (e.state() == IdleState.WRITER_IDLE) {
-                // logger.info("Channel IDLE : sending Hello");
                 ctx.writeAndFlush(new HeartBeat(new UUID(0, 0), new UUID(0, 0), null));
 
                 // incrementing concerned channel's counter
@@ -85,7 +84,7 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
 
                 // If x pings lost in a row, assuming that host is down
                 if (ping_lost_map.get(ctx.channel()).get() > 2) {
-                    throw (new IOException("Connection timeout"));
+                    throw new IOException("Connection timeout");
                 }
             }
         }
@@ -147,5 +146,4 @@ public class ServerHanlder extends SimpleChannelInboundHandler<Message> {
     public static Hashtable<Channel, AtomicInteger> getPingLostMap() {
         return ping_lost_map;
     }
-
 }

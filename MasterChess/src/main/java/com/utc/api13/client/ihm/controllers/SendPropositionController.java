@@ -34,7 +34,7 @@ public class SendPropositionController {
     private static AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
-    private final Logger LOGGER = Logger.getLogger(getClass());
+    private final Logger LOGGER = Logger.getLogger(SendPropositionController.class);
     private String opponentUUID;
     private ErrorProperty error;
     boolean chattable;
@@ -53,6 +53,10 @@ public class SendPropositionController {
     @FXML
     Button sendPropositionButton, cancelButton;
 
+    public SendPropositionController() {
+        initialize();
+    }
+    
     public void onCancelClicked() {
         mainApp.getCurrentStage().close();
         // pb car le stage davant nest pas svg = pb à la déconnexion à prévoir
@@ -106,12 +110,7 @@ public class SendPropositionController {
     private int conversionTime(String time) {
         String secondsString = time.substring(3, 5);
         String minutesString = time.substring(0, 2);
-        int seconds = Integer.parseInt(secondsString) + (Integer.parseInt(minutesString) * 60);
-        return seconds;
-    }
-
-    public SendPropositionController() {
-        initialize();
+        return Integer.parseInt(secondsString) + (Integer.parseInt(minutesString) * 60);
     }
 
     public void initialize() {

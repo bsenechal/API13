@@ -50,6 +50,10 @@ public class MyInfoPopUpController {
     @FXML
     ImageView userInfoImage;
 
+    public MyInfoPopUpController() {
+        initialize();
+    }
+    
     @FXML
     public void onModifyProfileClicked() throws IOException {
         Stage stage;
@@ -67,17 +71,12 @@ public class MyInfoPopUpController {
         stage.show();
     }
 
-    public MyInfoPopUpController() {
-        initialize();
-    }
-
     public void initialize() {
     }
 
     public void setMainApp(AppClient app, Text userLabel) {
         this.mainApp = app;
 
-        // if (!newProfile) {
         PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
         ObservableList<PrivateUserEntity> statsPlayer = FXCollections.observableArrayList();
         userInfoWon.setCellValueFactory(new PropertyValueFactory<PrivateUserEntity, Integer>("nbWon"));

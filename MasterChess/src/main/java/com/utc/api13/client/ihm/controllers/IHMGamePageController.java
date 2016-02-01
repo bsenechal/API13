@@ -58,9 +58,13 @@ public class IHMGamePageController {
     StackPane chessBoardStackPane;
     @FXML
     Label timerText;
-    
+
     private BooleanProperty checkProperty = new SimpleBooleanProperty(false);
     private BooleanProperty checkMateProperty = new SimpleBooleanProperty(false);
+
+    public IHMGamePageController() {
+        initialize();
+    }
 
     public IHMManager getIHMManager() {
         return IHMManager;
@@ -68,10 +72,6 @@ public class IHMGamePageController {
 
     public void setIHMManager(IHMManager iHMManager) {
         IHMManager = iHMManager;
-    }
-
-    public IHMGamePageController() {
-        initialize();
     }
 
     public void initialize() {
@@ -167,7 +167,7 @@ public class IHMGamePageController {
         final SwingNode swingNode = new SwingNode();
 
         SwingUtilities.invokeLater(new Runnable() {
-
+            @Override
             public void run() {
                 swingNode.setContent(cb.getGui());
             }
@@ -191,70 +191,65 @@ public class IHMGamePageController {
     public void setBindingsOnLoad() {
 
         chatTextArea.textProperty().bind(chat.getMessage());
-        
+
         // Add change listener
         checkProperty.addListener(new ChangeListener<Boolean>() {
 
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(newValue){
-                	displayCheckSituation();
+                if (newValue) {
+                    displayCheckSituation();
                 }
             }
         });
-        
-     // Add change listener
+
+        // Add change listener
         checkMateProperty.addListener(new ChangeListener<Boolean>() {
 
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(newValue){
-                	displayCheckMateSituation();
+                if (newValue) {
+                    displayCheckMateSituation();
                 }
             }
         });
 
     }
-    
-    private void displayCheckSituation(){
-    	//seulement le joueur blanc poste le message
-    	if(myIClientToIHM.getLocalUser().getId().equals(
-    			myIClientToIHM.getCurrentGame().getWhitePlayer().getId())){
-	    	myIClientToIHM.sendChatText("check on : " + 
-	    	        myIClientToIHM.getCurrentGame().getCurrentPlayer().getLogin());
-    	}
-    	Platform.runLater(new Runnable() {
+
+    private void displayCheckSituation() {
+        // seulement le joueur blanc poste le message
+        if (myIClientToIHM.getLocalUser().getId().equals(myIClientToIHM.getCurrentGame().getWhitePlayer().getId())) {
+            myIClientToIHM.sendChatText("check on : " + myIClientToIHM.getCurrentGame().getCurrentPlayer().getLogin());
+        }
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
-            	Alert alert = new Alert(AlertType.INFORMATION);
-            	alert.setTitle("Check position");
-            	alert.setHeaderText("a player is cheked");
-            	alert.setContentText("check on : " + 
-    	    	        myIClientToIHM.getCurrentGame().getCurrentPlayer().getLogin());
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Check position");
+                alert.setHeaderText("a player is cheked");
+                alert.setContentText("check on : " + myIClientToIHM.getCurrentGame().getCurrentPlayer().getLogin());
 
-            	alert.showAndWait();
+                alert.showAndWait();
             }
-    	});
+        });
     }
-    
-    private void displayCheckMateSituation(){
-    	//seulement le joueur blanc poste le message
-    	if(myIClientToIHM.getCurrentGame().getCurrentPlayer().getId().equals(
-    			myIClientToIHM.getCurrentGame().getWhitePlayer().getId())){
-    	}
-    	Platform.runLater(new Runnable() {
+
+    private void displayCheckMateSituation() {
+        // seulement le joueur blanc poste le message
+
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
-            	Alert alert = new Alert(AlertType.INFORMATION);
-            	alert.setTitle("Check mate position");
-            	alert.setHeaderText("a player is check mated");
-            	alert.setContentText("check mate on : " + 
-    	    	        myIClientToIHM.getCurrentGame().getCurrentPlayer().getLogin());
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Check mate position");
+                alert.setHeaderText("a player is check mated");
+                alert.setContentText(
+                        "check mate on : " + myIClientToIHM.getCurrentGame().getCurrentPlayer().getLogin());
 
-            	alert.showAndWait();
-            	myIClientToIHM.killCurrentGame();
+                alert.showAndWait();
+                myIClientToIHM.killCurrentGame();
             }
-		});
+        });
     }
 
     public Stage getCurrentStage() {

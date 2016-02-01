@@ -30,8 +30,8 @@ public class KnightEntity extends APieceEntity {
 
     public KnightEntity(final PieceColorEnum color, final int startColumn) {
         super(color);
-        this.setPosition((color.equals(PieceColorEnum.BLACK) ? new PositionEntity(startColumn, START_LINE_BLACK_KNIGHT)
-                : new PositionEntity(startColumn, START_LINE_WHITE_KNIGHT)));
+        this.setPosition(color.equals(PieceColorEnum.BLACK) ? new PositionEntity(startColumn, START_LINE_BLACK_KNIGHT)
+                : new PositionEntity(startColumn, START_LINE_WHITE_KNIGHT));
     }
 
     @Override

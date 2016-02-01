@@ -31,7 +31,6 @@ public class HeartBeat extends Message {
      */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
-        // logger.info("Hello message received from server, answering Hello");
         ctx.writeAndFlush(new HeartBeat(receiver, sender, ping));
     }
 
@@ -49,7 +48,6 @@ public class HeartBeat extends Message {
      */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-        // logger.info("Hello message received, peer is alive !");
     }
 
 }

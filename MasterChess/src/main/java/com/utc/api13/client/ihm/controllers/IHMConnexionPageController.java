@@ -39,8 +39,8 @@ public class IHMConnexionPageController {
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
-    private final Logger LOGGER = Logger.getLogger(getClass());
-
+    private static final Logger LOGGER = Logger.getLogger(IHMConnexionPageController.class);
+    private static final String ERROR_POPUP_PATH = "/fxml/errorPopUp.fxml";
     @FXML
     BorderPane connexionBorderPane;
     @FXML
@@ -56,6 +56,10 @@ public class IHMConnexionPageController {
     @FXML
     PasswordField passwordTextView;
     private Stage errorStage;
+
+    public IHMConnexionPageController() {
+        initialize();
+    }
 
     @FXML
     private void onSignInClicked(Event event) throws IOException {
@@ -141,7 +145,7 @@ public class IHMConnexionPageController {
         Parent root;
         stage = new Stage();
         FXMLLoader fxmlLoader;
-        fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource(ERROR_POPUP_PATH));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
@@ -222,7 +226,7 @@ public class IHMConnexionPageController {
         Stage stage;
         Parent root;
         stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ERROR_POPUP_PATH));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
@@ -256,10 +260,6 @@ public class IHMConnexionPageController {
         stage.show();
     }
 
-    public IHMConnexionPageController() {
-        initialize();
-    }
-
     public void setMainApp(AppClient app) {
         this.mainApp = app;
         serverAddressTextView.setText("localhost");
@@ -286,7 +286,7 @@ public class IHMConnexionPageController {
     public void error(String message) throws IOException {
         Parent root;
         errorStage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ERROR_POPUP_PATH));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);

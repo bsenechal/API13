@@ -101,7 +101,6 @@ public class AppClient extends Application {
 
     public void launchAppCom(String host, int port) {
 
-        // comClientManager.launchAppCom(host, port);
         try {
             comClientManager.launchAppCom(host, port);
         } catch (InterruptedException e) {
@@ -109,16 +108,12 @@ public class AppClient extends Application {
             displayErrorPopup(" wrong server port and server address");
             LOGGER.error("[AppClient][launchAppCom] " + e.getMessage(), e);
         }
-
-        // TODO : Faire une vrai gestion d'erreur
-        // comClientManager.close();
-
     }
 
     public void displayErrorPopup(String message) {
-        Stage stage;
+        Stage popupStage;
         Parent root = null;
-        stage = new Stage();
+        popupStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         try {
             root = (Pane) fxmlLoader.load();
@@ -128,18 +123,18 @@ public class AppClient extends Application {
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(ihmManager);
         controller.setMainApp(this, message);
-        stage.setScene(new Scene(root));
-        stage.setTitle("error");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        popupStage.setScene(new Scene(root));
+        popupStage.setTitle("error");
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.show();
 
     }
 
     public void displayConfirmationPopup(String message) {
 
-        Stage stage;
+        Stage popupStage;
         Parent root = null;
-        stage = new Stage();
+        popupStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
         try {
             root = (Pane) fxmlLoader.load();
@@ -149,14 +144,10 @@ public class AppClient extends Application {
         ConfirmationController controller = fxmlLoader.getController();
         controller.setControllerContext(ihmManager);
         controller.setMainApp(this, message);
-        stage.setScene(new Scene(root));
-        stage.setTitle("confirmation");
+        popupStage.setScene(new Scene(root));
+        popupStage.setTitle("confirmation");
 
-        // myIHMManager.getCurrentStage().close();
-        // mainApp.getCurrentStage().close();
-        // mainApp.setCurrentStage(stage);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
-
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.show();
     }
 }

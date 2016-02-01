@@ -19,7 +19,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 
 public class ClientHandler extends SimpleChannelInboundHandler<Message> {
 
-    private int ping_lost; // number of HertBeat messages lost in a row
+    private int pingLost; // number of HertBeat messages lost in a row
     private static final Logger LOGGER = Logger.getLogger(ClientHandler.class);
     private ComClientManager comClientManager = null;
 
@@ -30,7 +30,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Message arg1) throws Exception {
         arg1.proceed(ctx, comClientManager);
-        ping_lost = 0; // message received => host is alive
+        pingLost = 0; // message received => host is alive
 
     }
 
@@ -40,8 +40,8 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
             IdleStateEvent e = (IdleStateEvent) evt;
             if (e.state() == IdleState.WRITER_IDLE) {
                 LOGGER.info("No message from server, waiting ...");
-                ping_lost++;
-                if (ping_lost > 2) { // If x pings lost in a row, assuming that
+                pingLost++;
+                if (pingLost > 2) { // If x pings lost in a row, assuming that
                                      // server is down
                     throw new IOException("Connection timeout");
                 }

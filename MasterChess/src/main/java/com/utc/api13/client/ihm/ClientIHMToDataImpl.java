@@ -54,9 +54,9 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 myIHMManager.getProfil().lastNameProperty().set(u.getLastName());
                 myIHMManager.getProfil().statPlayerProperty().setAll(u);
                 myIHMManager.getProfil().userUUID().set(u.getId().toString());
-                if(u.getImage()!=null){
+                if (u.getImage() != null) {
                     try {
-                        ByteArrayInputStream bais=  new ByteArrayInputStream(u.getImage());
+                        ByteArrayInputStream bais = new ByteArrayInputStream(u.getImage());
                         BufferedImage bi = ImageIO.read(bais);
                         WritableImage img = SwingFXUtils.toFXImage(bi, null);
                         myIHMManager.getProfil().imageProperty().set(img);
@@ -84,9 +84,9 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/giveUpPopUp.fxml"));
                 try {
                     root = (Pane) fxmlLoader.load();
-                    GiveUpPopUpController controller = fxmlLoader.getController();
-                    controller.setMainApp(myIHMManager.getMainApp(), user != null ? user.getLogin() : null);
-                    controller.setControllerContext(myIHMManager);
+                    GiveUpPopUpController giveUpPopUpController = fxmlLoader.getController();
+                    giveUpPopUpController.setMainApp(myIHMManager.getMainApp(), user != null ? user.getLogin() : null);
+                    giveUpPopUpController.setControllerContext(myIHMManager);
 
                     myIHMManager.setCurrentStage(stage);
 
@@ -120,11 +120,11 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AnswerPropositionPopUp.fxml"));
                 try {
                     root = (Pane) fxmlLoader.load();
-                    AnswerPropositionController controller = fxmlLoader.getController();
-                    controller.setControllerContext(myIHMManager);
+                    AnswerPropositionController answerPropositionController = fxmlLoader.getController();
+                    answerPropositionController.setControllerContext(myIHMManager);
                     myIHMManager.setCurrentStage(stage);
-                    controller.setMainApp(myIHMManager.getMainApp(), user.getLogin(), chattable, timer, observable,
-                            timeInt);
+                    answerPropositionController.setMainApp(myIHMManager.getMainApp(), user.getLogin(), chattable, timer,
+                            observable, timeInt);
 
                     stage.setScene(new Scene(root));
                     stage.setTitle("You've got a new game proposition!");
@@ -149,9 +149,9 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
                 try {
                     root = (Pane) fxmlLoader.load();
-                    ErrorController controller = fxmlLoader.getController();
-                    controller.setControllerContext(myIHMManager);
-                    controller.setMainApp(myIHMManager.getMainApp(), message);
+                    ErrorController errorController = fxmlLoader.getController();
+                    errorController.setControllerContext(myIHMManager);
+                    errorController.setMainApp(myIHMManager.getMainApp(), message);
                     stage.setScene(new Scene(root));
                     stage.setTitle("Proposition refused");
                     stage.initModality(Modality.APPLICATION_MODAL);
@@ -193,6 +193,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         });
     }
 
+    @Override
     public void refreshChessBoard(int lineFrom, int colFrom, int lineTo, int colTo, APieceEntity piece,
             GameEntity game) {
         String dossierIcone = "/pictures/pieces/";
@@ -202,7 +203,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         // effacer la pièce de l'ancienne case
         chessBoardSquares[lineFrom - 1][8 - colFrom].setIcon(null);
         // trouver le type de piece
-        String pieceType = "";
+        String pieceType;
 
         switch (piece.toString()) {
         case "Rook": {
@@ -228,6 +229,9 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         case "Bishop": {
             pieceType = "F";
             break;
+        }
+        default: {
+            pieceType = "";
         }
         }
 
@@ -291,6 +295,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         });
     }
 
+    @Override
     public void activateCases(PublicUserEntity currentUser, GameStatusEnum status) {
         // Check the game status
         if (status.equals(GameStatusEnum.CHECK)) {
@@ -301,12 +306,11 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
             controller.getCb().changeCheckMateSituation();
         } else {
             Case[][] cb = controller.getCb().getChessBoardSquares();
-            if (status != GameStatusEnum.CHECKMATE) {
-                if (myIHMManager.getIClientDataToIHM().getLocalUser().getId().equals(currentUser.getId())) {
-                    for (Case i[] : cb) {
-                        for (Case j : i) {
-                            j.setEnabled(true);
-                        }
+            if (status != GameStatusEnum.CHECKMATE
+                    && myIHMManager.getIClientDataToIHM().getLocalUser().getId().equals(currentUser.getId())) {
+                for (Case[] i : cb) {
+                    for (Case j : i) {
+                        j.setEnabled(true);
                     }
                 }
             }
@@ -327,8 +331,6 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                             .displayErrorPopup("the answer of the other player was NO .Therefore you lose the Game");
 
                 myIHMManager.getCurrentGameStage().close();
-                // myIHMManager.getCurrentGameStage().hide();
-
             }
         });
     }

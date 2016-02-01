@@ -38,7 +38,7 @@ public interface IServerDataToCom {
                                            // en
                                            // cours
 
-    public void notifyConnections(final PublicUserEntity Player); // Appelée par
+    public void notifyConnections(final PublicUserEntity player); // Appelée par
                                                                   // by
                                                                   // com.notifyConnections
                                                                   // (PublicUserEntity
@@ -92,14 +92,14 @@ public interface IServerDataToCom {
     /**
      * Saves or updates the given user in the list of current users
      * 
-     * @param User
+     * @param user
      *            user to save or update in
      * @throws TechnicalException
      *             technical exception
      * @throws FunctionalException
      *             functional exception
      */
-    public boolean saveUserData(final PublicUserEntity User) throws TechnicalException, FunctionalException;
+    public boolean saveUserData(final PublicUserEntity user) throws TechnicalException, FunctionalException;
 
     /**
      * Un nouvel observateur se connecte à la partie<br/>
@@ -143,7 +143,7 @@ public interface IServerDataToCom {
     public GameEntity createGame(final UUID j1, final UUID j2, final boolean observable, final boolean chattable,
             final boolean timer, final Integer timerInt);
 
-    public GameEntity getGameById(final UUID IdGame); // Renvoie une GameEntity
+    public GameEntity getGameById(final UUID idGame); // Renvoie une GameEntity
                                                       // par l'UID de la Game
 
     /**

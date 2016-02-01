@@ -14,7 +14,7 @@ import com.utc.api13.client.ihm.property.PropositionProperty;
 import javafx.stage.Stage;
 
 public class IHMManager {
-    
+
     private ConfirmationProperty confirmation;
     private IClientDataToIHM myIClientToIHM;
     private ClientIHMToDataImpl myClientIHMToDataImpl;
@@ -32,7 +32,7 @@ public class IHMManager {
         this.myClientIHMToDataImpl = new ClientIHMToDataImpl(this);
 
     }
-    
+
     public Stage getCurrentGameStage() {
         return currentGameStage;
     }
@@ -108,20 +108,6 @@ public class IHMManager {
     public ClientIHMToDataImpl getClientIHMToDataImpl() {
         return myClientIHMToDataImpl;
     }
-    // public PublicUserEntity findUserByUUID(UUID id){
-    // PublicUserEntity user =null;
-    // ObservableList<PublicUserEntity>users
-    // =this.getIClientDataToIHM().getUserList();
-    // boolean end=true;
-    // for (int i=0,len=users.size();i<len && end;i++){
-    // if (users.get(i).getId()==id){
-    // user=users.get(i);
-    // end=!end;
-    // }
-    //
-    // }
-    // return user;
-    // }
 
     public AppClient getMainApp() {
         return mainApp;
@@ -132,9 +118,7 @@ public class IHMManager {
     }
 
     public void setUIDistant(UUID uidSender) {
-        // TODO Auto-generated method stub
         this.uisender = uidSender;
-
     }
 
     public UUID getUisender() {
@@ -144,5 +128,4 @@ public class IHMManager {
     public void setUisender(UUID uisender) {
         this.uisender = uisender;
     }
-
 }

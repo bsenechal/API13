@@ -22,7 +22,7 @@ public class UserUpdateMessage extends Message {
     private static final String UPDATE_SUCCESSFUL = "User successfully updated on the server";
     private static final String UPDATE_FAILED = "User updated failed on the server";
 
-    private String result_message;
+    private String resultMessage;
     private PublicUserEntity usr;
 
     /**
@@ -47,7 +47,7 @@ public class UserUpdateMessage extends Message {
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // When received on the client, calls data to display whether the update
-        comClientManager.getIClientDataToCom().notify(result_message);
+        comClientManager.getIClientDataToCom().notify(resultMessage);
         comClientManager.getIClientDataToCom().updateDistantProfile(usr);
     }
 
@@ -68,10 +68,10 @@ public class UserUpdateMessage extends Message {
             LOGGER.error("[UserUpdateMessage][proceedServer] " + e.getMessage(), e);
         } finally {
             if (result) {
-                this.result_message = UPDATE_SUCCESSFUL;
+                this.resultMessage = UPDATE_SUCCESSFUL;
             } else {
-                LOGGER.error(result_message);
-                this.result_message = UPDATE_FAILED;
+                LOGGER.error(resultMessage);
+                this.resultMessage = UPDATE_FAILED;
             }
         }
 

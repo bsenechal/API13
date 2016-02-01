@@ -39,8 +39,8 @@ public class ClientComToDataImpl implements IClientComToData {
     }
 
     @Override
-    public void connectAsObserver(UUID game_id) {
-        comClientManagerInstance.sendMessage(new ObserverRequestMessage(null, new UUID(0, 0), game_id));
+    public void connectAsObserver(UUID gameId) {
+        comClientManagerInstance.sendMessage(new ObserverRequestMessage(null, new UUID(0, 0), gameId));
         return;
     }
 

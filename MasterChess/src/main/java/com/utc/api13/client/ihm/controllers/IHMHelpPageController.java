@@ -32,6 +32,10 @@ public class IHMHelpPageController {
     @FXML
     Hyperlink rulesHyperlink;
 
+    public IHMHelpPageController() {
+        initialize();
+    }
+    
     @FXML
     public void onBackClicked(Event event) {
         this.getCurrentStage().close();
@@ -40,10 +44,6 @@ public class IHMHelpPageController {
     @FXML
     public void onRulesClicked(Event event) {
         this.mainApp.getHostServices().showDocument("https://en.wikipedia.org/wiki/Rules_of_chess");
-    }
-
-    public IHMHelpPageController() {
-        initialize();
     }
 
     public void setMainApp(AppClient app) {

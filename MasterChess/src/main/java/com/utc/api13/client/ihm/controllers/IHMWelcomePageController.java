@@ -78,9 +78,7 @@ public class IHMWelcomePageController {
     TableColumn<GameEntity, UUID> currentGamesId;
     @FXML
     TableColumn<GameEntity, String> currentGamesPlayer1, currentGamesPlayer2, currentGamesTime, currentGamesObs;
-    // @FXML
-    // TableColumn savedGamesId, savedGamesPlayer1, savedGamesPlayer2,
-    // savedGamesDate, savedGamesReplay;
+
     @FXML
     TableColumn<PublicUserEntity, String> connectedUserLogin, connectedUserStatus, connectedUserStat,
             connectedUserActionIcon;
@@ -88,6 +86,10 @@ public class IHMWelcomePageController {
     SplitMenuButton paramSplitMenuButton;
     @FXML
     ScrollBar currentGamesScrollbar, savedGamesScrollbar, connectedUserScrollbar;
+
+    public IHMWelcomePageController() {
+        initialize();
+    }
 
     public ProfilProperty getProfile() {
         return this.profile;
@@ -276,10 +278,6 @@ public class IHMWelcomePageController {
     public void initialize() {
     }
 
-    public IHMWelcomePageController() {
-        initialize();
-    }
-
     public void setMainApp(AppClient app) {
         this.mainApp = app;
         PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
@@ -387,9 +385,7 @@ public class IHMWelcomePageController {
 
         // Demande de la liste des parties sauvegardées
         // -------------------------------
-        connectedUserTable.setOnMouseClicked(event -> {
-            connectedUserTable.getSelectionModel().clearSelection();
-        });
+        connectedUserTable.setOnMouseClicked(event -> connectedUserTable.getSelectionModel().clearSelection());
         connectedUserTable.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
 
             @Override

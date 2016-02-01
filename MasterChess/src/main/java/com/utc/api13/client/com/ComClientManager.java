@@ -44,10 +44,10 @@ public class ComClientManager {
             this.channel = boostrap.connect(host, port).sync().channel();
         } catch (InterruptedException e) {
             LOGGER.error("Lost connection, check your network connection",e);
-            throw (e);
+            throw e;
         } catch (Exception e) {
             LOGGER.error("Can't connect to server, please check your connection and server statuts",e);
-            throw (e);
+            throw e;
         }
 
         LOGGER.log(Level.DEBUG, "Message Manager is initialized for : " + host + ":" + port);

@@ -185,8 +185,6 @@ public class CreateProfileController {
 
     @FXML
     public void onChangePictureClicked() throws IOException {
-        System.out.println(imageProfilePath);
-
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Ouvrir le document");
         fileChooser.setInitialDirectory(new File("/"));

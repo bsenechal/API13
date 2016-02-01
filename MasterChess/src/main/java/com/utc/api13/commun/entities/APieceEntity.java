@@ -16,6 +16,15 @@ public abstract class APieceEntity extends ADataEntity {
     private PositionEntity position;
 
     /**
+     * @param color
+     * @param currentGame
+     */
+    public APieceEntity(PieceColorEnum color) {
+        super();
+        this.color = color;
+    }
+    
+    /**
      * get the list of positions of a specified list of pieces
      * 
      * @param List<APieceEntity>
@@ -76,15 +85,6 @@ public abstract class APieceEntity extends ADataEntity {
         pieces.removeIf(piece -> piece.getPosition().equals(position));
     }
 
-    /**
-     * @param color
-     * @param currentGame
-     */
-    public APieceEntity(PieceColorEnum color) {
-        super();
-        this.color = color;
-    }
-
     public void deleteDestinationPiece(final MoveEntity move, GameEntity game) {
         Assert.notNull(game, "[APieceEntity][move] current game shouldn't be null");
         Assert.notNull(game.getCurrentPlayer(), "[APieceEntity][move] current player shouldn't be null");
@@ -100,7 +100,7 @@ public abstract class APieceEntity extends ADataEntity {
         Assert.notNull(move, "[APieceEntity][isMovePossible] move shouldn't be null");
         Assert.notNull(game, "[APieceEntity][isMovePossible] game shouldn't be null");
 
-        return (generateAvailableMoves(game).contains(move.getToPosition())) ? true : false;
+        return generateAvailableMoves(game).contains(move.getToPosition()) ? true : false;
     }
 
     public abstract List<PositionEntity> generateAvailableMoves(GameEntity game);
@@ -213,5 +213,5 @@ public abstract class APieceEntity extends ADataEntity {
     protected boolean addPossibleSolution(final GameEntity game, final int positionX, final int positionY, int x, int y,
             List<PositionEntity> result) {
         return addPossibleSolution(game, positionX, positionY, x, y, result, Boolean.TRUE);
-    };
+    }
 }

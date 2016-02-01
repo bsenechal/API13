@@ -32,8 +32,8 @@ public class QueenEntity extends APieceEntity {
     public QueenEntity(PieceColorEnum color) {
         super(color);
         this.setPosition(
-                (color.equals(PieceColorEnum.BLACK) ? new PositionEntity(START_COLUMN_QUEEN, START_LINE_BLACK_QUEEN)
-                        : new PositionEntity(START_COLUMN_QUEEN, START_LINE_WHITE_QUEEN)));
+                color.equals(PieceColorEnum.BLACK) ? new PositionEntity(START_COLUMN_QUEEN, START_LINE_BLACK_QUEEN)
+                        : new PositionEntity(START_COLUMN_QUEEN, START_LINE_WHITE_QUEEN));
     }
 
     @Override

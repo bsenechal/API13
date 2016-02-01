@@ -8,6 +8,10 @@ import com.utc.api13.server.data.DataServerManager;
 
 public class AppServer {
 
+    private AppServer(){
+        
+    }
+    
     /**
      * @param args
      */

@@ -41,25 +41,23 @@ public class MoveValidationMessage extends Message {
         this.move = move;
     }
 
-
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // Never goes on client side.
     }
 
     /**
-     * Handles the message when received on the server.
-     * Asks the server to validate the move.
-     * Informs the other players
+     * Handles the message when received on the server. Asks the server to
+     * validate the move. Informs the other players
      */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         // STEP 1 : Validate the move
         boolean ok = comServerManager.getIServerDataToCom().computerResult(move); // Is
-                                                                                          // the
-                                                                                          // move
-                                                                                          // valid
-                                                                                          // ?
+                                                                                  // the
+                                                                                  // move
+                                                                                  // valid
+                                                                                  // ?
         if (ok) { // If yes,
             // STEP 2 : inform the other players
             GameEntity game = comServerManager.getIServerDataToCom().getGameById(move.getGameID()); // get
@@ -84,18 +82,17 @@ public class MoveValidationMessage extends Message {
                                                                      // &
                                                                      // observers!)
 
-            // STEP 3 : inform the other players of the next step 
+            // STEP 3 : inform the other players of the next step
             GameStatusEnum status = comServerManager.getIServerDataToCom().isFinished(move.getGameID());
             game = comServerManager.getIServerDataToCom().getGameById(move.getGameID());
             UUID nexttoplay = game.getCurrentPlayer().getId();
             NextTurnMessage ntm = new NextTurnMessage(new UUID(0, 0), null, status, nexttoplay);
             comServerManager.multicastMessageByUsers(list, ntm);
-            
+
             if (status.equals(GameStatusEnum.CHECKMATE) || status.equals(GameStatusEnum.DRAW)) {
                 // Clean the server game-entity :
-            	LOGGER.error("game is finished by" + status.name());
+                LOGGER.error("game is finished by" + status.name());
                 comServerManager.getIServerDataToCom().endGame(game.getId());
-                game = null;
             }
         } else {
             LOGGER.error("move is not possible");

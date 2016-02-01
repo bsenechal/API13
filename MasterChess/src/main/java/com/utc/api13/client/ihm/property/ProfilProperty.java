@@ -18,11 +18,6 @@ public class ProfilProperty {
     private StringProperty userUUID;
     private ObjectProperty<javafx.scene.image.Image> imageProperty;
 
-
-    public ObservableList<PublicUserEntity> getStatPlayer() {
-        return statPlayer;
-    }
-
     /**
      * 
      */
@@ -36,6 +31,10 @@ public class ProfilProperty {
         imageProperty = new SimpleObjectProperty<>();
     }
 
+    public ObservableList<PublicUserEntity> getStatPlayer() {
+        return statPlayer;
+    }
+    
     public StringProperty loginProperty() {
         return login;
     }
@@ -58,6 +57,4 @@ public class ProfilProperty {
     public ObjectProperty<javafx.scene.image.Image> imageProperty(){
         return imageProperty;
     }
-
-
 }

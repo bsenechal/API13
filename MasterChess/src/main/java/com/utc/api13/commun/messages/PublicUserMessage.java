@@ -40,8 +40,8 @@ public class PublicUserMessage extends Message {
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
         // Get the selected user information by calling method from data :
-        PublicUserEntity usr = comServerManager.getIServerDataToCom().getUserInfo(this.target);
-        this.setUsr(usr);
+        PublicUserEntity user = comServerManager.getIServerDataToCom().getUserInfo(this.target);
+        this.setUsr(user);
         // Send back the message to the sender
         comServerManager.sendMessage(ctx.channel(), this);
     }

@@ -1,5 +1,6 @@
 package com.utc.api13.commun;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,9 @@ import java.util.List;
  * 
  * @author Amstrong
  */
-public class Erreur {
+public class Erreur implements Serializable {
+
+    private static final long serialVersionUID = -4238069880959200047L;
 
     /**
      * type d'erreur: code fonctionnel correspindant à l'erreur
@@ -105,5 +108,5 @@ public class Erreur {
         public int getId() {
             return id;
         }
-    };
+    }
 }

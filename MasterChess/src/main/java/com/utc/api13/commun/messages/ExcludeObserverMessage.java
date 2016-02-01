@@ -21,9 +21,9 @@ public class ExcludeObserverMessage extends Message {
      * @param receiver
      */
 
-    public ExcludeObserverMessage(UUID userId, UUID game_id) {
+    public ExcludeObserverMessage(UUID userId, UUID gameId) {
         super(new UUID(0, 0), new UUID(0, 0));
-        this.game = game_id;
+        this.game = gameId;
         this.userId = sender;
     }
 

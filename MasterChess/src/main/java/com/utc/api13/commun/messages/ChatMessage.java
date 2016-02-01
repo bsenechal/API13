@@ -59,7 +59,7 @@ public class ChatMessage extends Message {
         // filter the user having allowedTchat to true;
 
         List<PublicUserEntity> list = comServerManager.getIServerDataToCom().getUsersByGame(partie).stream()
-                .filter(user -> user.isAllowedToChat() == true).collect(Collectors.toList());
+                .filter(user -> user.isAllowedToChat() == Boolean.TRUE).collect(Collectors.toList());
 
         // Send the message to all allowed listed users
         comServerManager.multicastMessageByUsers(list, this);

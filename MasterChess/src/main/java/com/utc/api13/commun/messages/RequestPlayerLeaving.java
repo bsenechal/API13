@@ -17,49 +17,52 @@ public class RequestPlayerLeaving extends Message {
     private boolean abandon;
     private UUID gameId;
 
-    public RequestPlayerLeaving(UUID sender, UUID receiver,UUID gmaeId, boolean abandon) {
+    public RequestPlayerLeaving(UUID sender, UUID receiver, UUID gmaeId, boolean abandon) {
         super(sender, receiver);
         this.abandon = abandon;
         this.gameId = gmaeId;
 
     }
-    
-    public RequestPlayerLeaving(UUID sender, UUID receiver,boolean abandon) {
+
+    public RequestPlayerLeaving(UUID sender, UUID receiver, boolean abandon) {
         super(sender, receiver);
         this.abandon = abandon;
 
     }
 
     /**
-     * Handles the message when received on the client.
-     * Informt the player tht the opponent wants to leave the game.
+     * Handles the message when received on the client. Informt the player tht
+     * the opponent wants to leave the game.
      */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // Informs the client of a new observer connection
-    	if (!abandon) {
-    		comClientManager.getIClientDataToCom().requestPlayerForLeaving(sender);
-    	}else{
-    		comClientManager.getIClientDataToCom().endGameBySurrender(sender);
-    	}
+        if (!abandon) {
+            comClientManager.getIClientDataToCom().requestPlayerForLeaving(sender);
+        } else {
+            comClientManager.getIClientDataToCom().endGameBySurrender(sender);
+        }
     }
 
     /**
-     * Handles the message when received on the server.
-     * Server sends the message to the receiver.
+     * Handles the message when received on the server. Server sends the message
+     * to the receiver.
      */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
-    	if (!abandon) {
-    		LOGGER.info("requeste leaving");
-    		comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
-    	}else{
-    		LOGGER.info("player abandons game");
-    		comServerManager.getIServerDataToCom().endGame(gameId);
-    		comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
-            comServerManager.broadcastMessage(new AllGameMessage(new UUID(0, 0), null, comServerManager.getIServerDataToCom().getAllGames()));
+        if (!abandon) {
+            LOGGER.info("requeste leaving");
+            comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(),
+                    this);
+        } else {
+            LOGGER.info("player abandons game");
+            comServerManager.getIServerDataToCom().endGame(gameId);
+            comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(),
+                    this);
+            comServerManager.broadcastMessage(
+                    new AllGameMessage(new UUID(0, 0), null, comServerManager.getIServerDataToCom().getAllGames()));
 
-    	}
+        }
     }
 
 }

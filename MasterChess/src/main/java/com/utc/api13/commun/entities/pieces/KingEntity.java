@@ -24,6 +24,16 @@ public class KingEntity extends APieceEntity {
      */
     private static final long serialVersionUID = 3721412295018328472L;
 
+    /**
+     * @param color
+     * @param currentGame
+     */
+    public KingEntity(PieceColorEnum color) {
+        super(color);
+        this.setPosition(
+                PieceColorEnum.BLACK.equals(color) ? new PositionEntity(START_COLUMN_KING, START_LINE_BLACK_KING)
+                        : new PositionEntity(START_COLUMN_KING, START_LINE_WHITE_KING));
+    }
 
     /**
      * @author Hugo
@@ -38,17 +48,6 @@ public class KingEntity extends APieceEntity {
      */
     public void setHasMove(Boolean value) {
         this.hasMove = value;
-    }
-
-    /**
-     * @param color
-     * @param currentGame
-     */
-    public KingEntity(PieceColorEnum color) {
-        super(color);
-        this.setPosition(
-                (PieceColorEnum.BLACK.equals(color) ? new PositionEntity(START_COLUMN_KING, START_LINE_BLACK_KING)
-                        : new PositionEntity(START_COLUMN_KING, START_LINE_WHITE_KING)));
     }
 
     @Override

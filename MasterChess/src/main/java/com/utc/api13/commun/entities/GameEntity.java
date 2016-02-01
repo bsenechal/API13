@@ -364,7 +364,7 @@ public class GameEntity extends ADataEntity {
         }
 
         for (APieceEntity tmpEntity : pieces) {
-            if (tmpEntity.toString().equals("King")) {
+            if ("King".equals(tmpEntity.toString())) {
                 return (KingEntity) tmpEntity;
             }
         }
@@ -465,7 +465,7 @@ public class GameEntity extends ADataEntity {
         }
 
         // Checkmate check :
-        if (check == true) {
+        if (check == Boolean.TRUE) {
             // get all availables moves of the current player, if null ->
             // checkmate :
             List<APieceEntity> currentPlayerPieces = new ArrayList<APieceEntity>();
@@ -585,8 +585,7 @@ public class GameEntity extends ADataEntity {
 
     public String getCreationDateDrawable() {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        String reportDate = df.format(creationDate);
-        return reportDate;
+        return df.format(creationDate);
     }
 
     /**
@@ -599,7 +598,7 @@ public class GameEntity extends ADataEntity {
         // Hugo : ajout pour la gestion des roques
         // A faire avant le reste sinon on ne peut plus utiliser le
         // getFromPosition
-        if (move.getPiece().toString().equals("King")) {
+        if ("King".equals(move.getPiece().toString())) {
             KingEntity tmpKing = (KingEntity) this.getPieceFromPosition(move.getFromPosition());
             tmpKing.setHasMove(Boolean.TRUE);
 
@@ -609,7 +608,7 @@ public class GameEntity extends ADataEntity {
             moveRookIfCastling(move, 2, -4, -1);
 
         }
-        if (move.getPiece().toString().equals("Rook")) {
+        if ("Rook".equals(move.getPiece().toString())) {
             RookEntity tmpRook = (RookEntity) this.getPieceFromPosition(move.getFromPosition());
             tmpRook.setHasMove(Boolean.TRUE);
         }
@@ -653,7 +652,7 @@ public class GameEntity extends ADataEntity {
     public void cancelMove(MoveEntity moveToCancel) {
 
         // check if it was a castling to undo it :
-        if (moveToCancel.getPiece().toString().equals("King")) {
+        if ("King".equals(moveToCancel.getPiece().toString())) {
             KingEntity tmpKing = (KingEntity) this.getPieceFromPosition(moveToCancel.getToPosition());
             tmpKing.setHasMove(Boolean.FALSE);
 
@@ -664,7 +663,7 @@ public class GameEntity extends ADataEntity {
 
         }
 
-        if (moveToCancel.getPiece().toString().equals("Rook")) {
+        if ("Rook".equals(moveToCancel.getPiece().toString())) {
             RookEntity tmpRook = (RookEntity) this.getPieceFromPosition(moveToCancel.getToPosition());
             tmpRook.setHasMove(Boolean.FALSE);
         }
@@ -685,16 +684,14 @@ public class GameEntity extends ADataEntity {
      * @return TRUE is the Pawn has been transformed to a queen, FALSE if not.
      */
     public boolean transformPawnToQueen(MoveEntity move) {
-        if (move.getPiece().toString().equals("Pawn")
+        if ("Pawn".equals(move.getPiece().toString())
                 && (move.getToPosition().getPositionY() == 8 || move.getToPosition().getPositionY() == 1)) {
-            System.out.println("transformPawnToQueen: yes");
             this.removePieceFromPosition(move.getFromPosition());
             QueenEntity newQueen = new QueenEntity(this.getCurrentPlayerColor());
             newQueen.setPosition(
                     new PositionEntity(move.getFromPosition().getPositionX(), move.getFromPosition().getPositionY()));
             this.addPiece(newQueen);
             return Boolean.TRUE;
-            // move.setPiece(newQueen);
         }
         return Boolean.FALSE;
     }

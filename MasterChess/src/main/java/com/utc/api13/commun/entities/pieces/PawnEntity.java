@@ -28,8 +28,8 @@ public class PawnEntity extends APieceEntity {
 
     public PawnEntity(final PieceColorEnum color, final int startColumn) {
         super(color);
-        this.setPosition((color.equals(PieceColorEnum.BLACK) ? new PositionEntity(startColumn, START_LINE_BLACK_PAWN)
-                : new PositionEntity(startColumn, START_LINE_WHITE_PAWN)));
+        this.setPosition(color.equals(PieceColorEnum.BLACK) ? new PositionEntity(startColumn, START_LINE_BLACK_PAWN)
+                : new PositionEntity(startColumn, START_LINE_WHITE_PAWN));
     }
 
     public PawnEntity(final PieceColorEnum color, final PositionEntity startPosition) {
@@ -44,7 +44,7 @@ public class PawnEntity extends APieceEntity {
 
     @Override
     public List<PositionEntity> generateAvailableMoves(GameEntity game, boolean verifyCheck) {
-        PositionEntity positionTemp = null;
+        PositionEntity positionTemp;
 
         Assert.notNull(getPosition(), "[PawnEntity][generateAvailableMoves] Position shouldn't be null");
 

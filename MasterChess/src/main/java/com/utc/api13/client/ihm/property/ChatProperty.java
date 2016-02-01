@@ -7,12 +7,8 @@ public class ChatProperty {
 
     private StringProperty message;
 
-    public StringProperty getMessage() {
-        return message;
-    }
-
-    public void setMessage(StringProperty message) {
-        this.message = message;
+    public ChatProperty() {
+        this.message = new SimpleStringProperty();
     }
 
     /**
@@ -23,8 +19,17 @@ public class ChatProperty {
         this.message = message;
     }
 
-    public ChatProperty() {
-        this.message = new SimpleStringProperty();
+    /**
+     * @return the message
+     */
+    public StringProperty getMessage() {
+        return message;
     }
 
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(StringProperty message) {
+        this.message = message;
+    }
 }

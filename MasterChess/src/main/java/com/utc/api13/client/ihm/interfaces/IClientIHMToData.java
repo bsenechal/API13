@@ -76,7 +76,7 @@ public interface IClientIHMToData {
     /**
      * After a piece is moved
      */
-    public void refreshChessBoard(int line_from, int col_from, int line_to, int col_to, APieceEntity piece,
+    public void refreshChessBoard(int lineFrom, int colFrom, int lineTo, int colTo, APieceEntity piece,
             GameEntity game);
 
     /**

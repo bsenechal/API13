@@ -32,8 +32,8 @@ public class BishopEntity extends APieceEntity {
 
     public BishopEntity(final PieceColorEnum color, final int startColumn) {
         super(color);
-        this.setPosition((color.equals(PieceColorEnum.BLACK) ? new PositionEntity(startColumn, START_LINE_BLACK_BISHOP)
-                : new PositionEntity(startColumn, START_LINE_WHITE_BISHOP)));
+        this.setPosition(color.equals(PieceColorEnum.BLACK) ? new PositionEntity(startColumn, START_LINE_BLACK_BISHOP)
+                : new PositionEntity(startColumn, START_LINE_WHITE_BISHOP));
     }
 
     @Override

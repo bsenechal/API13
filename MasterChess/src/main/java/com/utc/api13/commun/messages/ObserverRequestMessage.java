@@ -16,9 +16,9 @@ public class ObserverRequestMessage extends Message {
 
     private UUID game; // Game on which we request to observe
 
-    public ObserverRequestMessage(UUID sender, UUID receiver, UUID game_id) {
+    public ObserverRequestMessage(UUID sender, UUID receiver, UUID gameId) {
         super(sender, receiver);
-        this.game = game_id;
+        this.game = gameId;
     }
 
     @Override

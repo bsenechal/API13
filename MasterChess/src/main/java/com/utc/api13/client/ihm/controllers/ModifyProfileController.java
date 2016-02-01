@@ -43,7 +43,7 @@ public class ModifyProfileController {
     private IHMManager IHMManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
-    private final static Logger LOGGER = Logger.getLogger(ModifyProfileController.class);
+    private static final Logger LOGGER = Logger.getLogger(ModifyProfileController.class);
     private Stage currentStage;
     private Text userLabelToUpdateWelcomePage;
 
@@ -61,6 +61,10 @@ public class ModifyProfileController {
     ImageView changeProfilePicture;
     @FXML
     AnchorPane createProfileAnchorPane;
+
+    public ModifyProfileController() {
+        initialize();
+    }
 
     @FXML
     public void onSaveProfileClicked() throws IOException {
@@ -141,7 +145,7 @@ public class ModifyProfileController {
                 try {
                     destinationFile = new FileOutputStream(dest);
 
-                    byte buffer[] = new byte[512 * 1024];
+                    byte[] buffer = new byte[512 * 1024];
                     int nbLecture;
 
                     while ((nbLecture = sourceFile.read(buffer)) != -1) {
@@ -187,10 +191,6 @@ public class ModifyProfileController {
                 LOGGER.error(e.getMessage(), e);
             }
         }
-    }
-
-    public ModifyProfileController() {
-        initialize();
     }
 
     public void initialize() {
@@ -242,7 +242,7 @@ public class ModifyProfileController {
         controller.setMainApp(this.mainApp, message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
-        if (close == true) {
+        if (close == Boolean.TRUE) {
             mainApp.getCurrentStage().close();
         }
         stage.initModality(Modality.APPLICATION_MODAL);

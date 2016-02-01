@@ -48,13 +48,13 @@ public class PublicUserEntity extends AUserEntity {
         setNbWon(privateUser.getNbWon());
 
         // extract bytes from image
-        BufferedImage image;
+        BufferedImage bufferedImage;
         if (privateUser.getImagePath() != null) {
             try {
 
-                image = ImageIO.read(new File(privateUser.getImagePath()));
+                bufferedImage = ImageIO.read(new File(privateUser.getImagePath()));
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ImageIO.write(image, "png", baos);
+                ImageIO.write(bufferedImage, "png", baos);
 
                 byte[] res = baos.toByteArray();
                 setImage(res);
