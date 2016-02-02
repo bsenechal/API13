@@ -20,8 +20,6 @@ import com.utc.api13.commun.exceptions.TechnicalException;
 public class UserService {
     private static final UserDAO userDAO = new UserDAO();
 
-    private static final boolean IS_WINDOWS = System.getProperty("os.name").contains("indow");
-
     /**
      * Returns the found user or null when nothing found
      * 
