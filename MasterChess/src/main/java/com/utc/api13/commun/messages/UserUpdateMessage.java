@@ -47,7 +47,6 @@ public class UserUpdateMessage extends Message {
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
         // When received on the client, calls data to display whether the update
-        comClientManager.getIClientDataToCom().notify(resultMessage);
         comClientManager.getIClientDataToCom().updateDistantProfile(usr);
     }
 
