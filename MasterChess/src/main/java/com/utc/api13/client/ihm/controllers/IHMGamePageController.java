@@ -140,11 +140,6 @@ public class IHMGamePageController {
         myIClientToIHM.surrender();
     }
 
-    @FXML
-    private void onQuitGameClicked(Event event) {
-        // onGiveUpClicked();
-    }
-
     public void setControllerContext(IHMManager ihmManager) {
         this.ihmManager = ihmManager;
         if (ihmManager != null) {
