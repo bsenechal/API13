@@ -171,9 +171,10 @@ public class ChessBoardNode {
 
         for (int ii = 0; ii < 8; ii++) {
             for (int jj = 0; jj < 8; jj++) {
-                if (jj == 0) {
+                switch (jj) {
+                case 0:
                     chessBoard.add(new JLabel("" + (ii + 1), SwingConstants.CENTER));
-                } else {
+                default:
                     chessBoard.add(chessBoardSquares[jj][ii]);
                 }
             }
