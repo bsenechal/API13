@@ -48,7 +48,7 @@ import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 public class IHMWelcomePageController {
-    private IHMManager IHMManager;
+    private IHMManager ihmManager;
     private ProfilProperty profile;
     public static Stage stageI;
     private Stage currentStage;
@@ -100,11 +100,11 @@ public class IHMWelcomePageController {
     }
 
     public IHMManager getIHMManager() {
-        return this.IHMManager;
+        return this.ihmManager;
     }
 
     public void setIHMManager(IHMManager iHMManager) {
-        this.IHMManager = iHMManager;
+        this.ihmManager = iHMManager;
     }
 
     @FXML
@@ -116,7 +116,7 @@ public class IHMWelcomePageController {
         fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/helpPage.fxml"));
         root = (Pane) fxmlLoader.load();
         IHMHelpPageController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         controller.setCurrentStage(stage);
         controller.setMainApp(this.mainApp);
         stage.setScene(new Scene(root));
@@ -137,7 +137,7 @@ public class IHMWelcomePageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/updateProfilePage.fxml"));
         root = (Pane) fxmlLoader.load();
         ModifyProfileController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, this.userLabel);
         stage.setScene(new Scene(root));
@@ -175,7 +175,7 @@ public class IHMWelcomePageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/connexionPage.fxml"));
         root = (Pane) fxmlLoader.load();
         IHMConnexionPageController controller = fxmlLoader.getController();
-        controller.setControllerContext(IHMManager);
+        controller.setControllerContext(ihmManager);
         mainApp.getMainStage().close();
         mainApp.setCurrentStage(stage);
         controller.setMainApp(mainApp);
@@ -202,22 +202,22 @@ public class IHMWelcomePageController {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Export to ...");
         File selectedDirectory = directoryChooser.showDialog(new Stage());
-        if (selectedDirectory != null){
-	        File newFile = new File(selectedDirectory.getAbsolutePath() + File.separator + exportFile.getName());
-	        if (selectedDirectory != null) {
-	            try {
-	                Files.copy(exportFile.toPath(), newFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING,
-	                        java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
-	                exportOK(selectedDirectory.getAbsolutePath());
-	            } catch (IOException e) {
-	                try {
-	                    exportNOK();
-	                } catch (IOException e1) {
-	                    LOGGER.error(e1.getMessage(), e1);
-	                }
-	                LOGGER.error(e.getMessage(), e);
-	            }
-	        }
+        if (selectedDirectory != null) {
+            File newFile = new File(selectedDirectory.getAbsolutePath() + File.separator + exportFile.getName());
+            if (selectedDirectory != null) {
+                try {
+                    Files.copy(exportFile.toPath(), newFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING,
+                            java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
+                    exportOK();
+                } catch (IOException e) {
+                    try {
+                        exportNOK();
+                    } catch (IOException e1) {
+                        LOGGER.error(e1.getMessage(), e1);
+                    }
+                    LOGGER.error(e.getMessage(), e);
+                }
+            }
         }
     }
 
@@ -232,7 +232,7 @@ public class IHMWelcomePageController {
         try {
             root = (Pane) fxmlLoader.load();
             UserInfoPopUpController controller = fxmlLoader.getController();
-            controller.setControllerContext(this.IHMManager);
+            controller.setControllerContext(this.ihmManager);
             mainApp.setCurrentStage(stage);
             mainApp.getCurrentStage().close();
             mainApp.setCurrentStage(stage);
@@ -259,7 +259,7 @@ public class IHMWelcomePageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/myInfoPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         MyInfoPopUpController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, this.userLabel);
         stage.setScene(new Scene(root));
@@ -277,16 +277,16 @@ public class IHMWelcomePageController {
         this.userLabel.setText(u.getLogin());
     }
 
-    public void exportOK(String path) throws IOException {
+    public void exportOK() throws IOException {
         Stage stage;
         Parent root;
         stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ConfirmationController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         mainApp.setCurrentStage(stage);
-        controller.setMainApp(this.mainApp, "Successful export!");
+        controller.setMainApp("Successful export!");
         stage.setScene(new Scene(root));
         stage.setTitle("Export success");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -304,9 +304,9 @@ public class IHMWelcomePageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         mainApp.setCurrentStage(stage);
-        controller.setMainApp(this.mainApp, "Export error!");
+        controller.setText("Export error!");
         stage.setScene(new Scene(root));
         stage.setTitle("Export error");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -323,27 +323,26 @@ public class IHMWelcomePageController {
     }
 
     public void setControllerContext(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
+        this.ihmManager = ihmManager;
         if (ihmManager != null) {
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            this.myIClientToIHM = ihmManager.getIClientDataToIHM();
             profile = new ProfilProperty();
 
-            this.IHMManager.setProfil(profile);
+            this.ihmManager.setProfil(profile);
             setListenersOnLoad();
             setBindingsOnLoad();
         }
     }
 
     public void setIHMMandClient(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
+        this.ihmManager = ihmManager;
         if (ihmManager != null)
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            this.myIClientToIHM = ihmManager.getIClientDataToIHM();
     }
 
     public void setListenersOnLoad() {
         this.listUserPublic = myIClientToIHM.getUserList();
-        this.listUserPublic.addListener 
-        (new ListChangeListener<PublicUserEntity>() {
+        this.listUserPublic.addListener(new ListChangeListener<PublicUserEntity>() {
             @Override
             public void onChanged(javafx.collections.ListChangeListener.Change<? extends PublicUserEntity> c) {
                 connectedUserTable.setItems(myIClientToIHM.getUserList());
@@ -351,11 +350,10 @@ public class IHMWelcomePageController {
         });
 
         connectedUserTable.setItems(this.listUserPublic);
-        myIClientToIHM.getUsers(); 
+        myIClientToIHM.getUsers();
 
         this.listCurrentGames = myIClientToIHM.getGamesList();
-        this.listCurrentGames.addListener 
-        (new ListChangeListener<GameEntity>() {
+        this.listCurrentGames.addListener(new ListChangeListener<GameEntity>() {
 
             @Override
             public void onChanged(javafx.collections.ListChangeListener.Change<? extends GameEntity> c) {
@@ -364,7 +362,7 @@ public class IHMWelcomePageController {
         });
 
         currentGamesTable.setItems(this.listCurrentGames);
-        myIClientToIHM.getAllGames(); 
+        myIClientToIHM.getAllGames();
         connectedUserTable.setOnMouseClicked(event -> connectedUserTable.getSelectionModel().clearSelection());
         connectedUserTable.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
 
@@ -382,7 +380,7 @@ public class IHMWelcomePageController {
                     try {
                         root = (Pane) fxmlLoader.load();
                         UserInfoPopUpController controller = fxmlLoader.getController();
-                        controller.setControllerContext(IHMManager);
+                        controller.setControllerContext(ihmManager);
                         mainApp.setCurrentStage(stage);
                         controller.setMainApp(mainApp);
                         controller.setBindings(profile);
@@ -440,9 +438,9 @@ public class IHMWelcomePageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         mainApp.setCurrentStage(stage);
-        controller.setMainApp(this.mainApp, message);
+        controller.setText(message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         stage.initModality(Modality.APPLICATION_MODAL);

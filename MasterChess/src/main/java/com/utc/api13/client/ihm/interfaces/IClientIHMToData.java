@@ -17,7 +17,7 @@ public interface IClientIHMToData {
      * @param u
      *            a PublicUserEntity object containing all the public
      *            information on the user, passed in parameter
-     *@return void
+     * @return void
      */
     public void displayProfile(PublicUserEntity u);
 
@@ -57,10 +57,10 @@ public interface IClientIHMToData {
      *            The unique identifier of the distant answer who accepted or
      *            rejected the game proposition. Allows to identify which user
      *            answered.
-     * @param boolean answer
-     *            The answer of the idstant player.
-     * @param String message
-     *        	   A specific message to display.
+     * @param boolean
+     *            answer The answer of the idstant player.
+     * @param String
+     *            message A specific message to display.
      * @return void
      */
     public void displayAnswer(UUID uidSender, boolean answer, String message);
@@ -68,8 +68,9 @@ public interface IClientIHMToData {
     /**
      * Asks the HMI to display the chessboard when both user have accepted the
      * game, and the game has been created on server
+     * 
      * @param g
-     * 		  The game entity of the launched game.
+     *            The game entity of the launched game.
      * 
      * @return void
      */
@@ -77,18 +78,19 @@ public interface IClientIHMToData {
 
     /**
      * After a piece is moved
+     * 
      * @param lineFrom
-     * 		  The line that has to be refreshed 
+     *            The line that has to be refreshed
      * @param colFrom
-     *        The column that has to be refreshed
+     *            The column that has to be refreshed
      * @param lineTo
-     *        The target line
-     * @param colTo	
-     *        The target column
+     *            The target line
+     * @param colTo
+     *            The target column
      * @param piece
-     *        The piece concerned
+     *            The piece concerned
      * @param game
-     *        The related Game Entity
+     *            The related Game Entity
      * @return void
      */
     public void refreshChessBoard(int lineFrom, int colFrom, int lineTo, int colTo, APieceEntity piece,
@@ -121,31 +123,37 @@ public interface IClientIHMToData {
 
     /**
      * when a en error occurs between data and com modules
+     * 
      * @param errorMessage
-     * 		  The error message that has to be displayed.
+     *            The error message that has to be displayed.
      * @return void
      */
     void displayError(String errorMessage);
 
     /**
      * to display confirmation message that everything went ok
+     * 
      * @param errorMessage
-     * 		  The confirmation message that has to be displayed.
+     *            The confirmation message that has to be displayed.
      * @return void
      */
     void displayConfirmation(String confirmationMessage);
+
     /**
-     * to allow the cases of the current player 
+     * to allow the cases of the current player
+     * 
      * @param currentUser
-     *        the user concerned
+     *            the user concerned
      * @param status
-     *        the status of this user
+     *            the status of this user
      */
     public void activateCases(PublicUserEntity currentUser, GameStatusEnum status);
+
     /**
      * to close the game screen
+     * 
      * @param bool
-     * 		  If the game screen has to be closed or not.
+     *            If the game screen has to be closed or not.
      * @return void
      */
     public void closeGameScreen(boolean bool);

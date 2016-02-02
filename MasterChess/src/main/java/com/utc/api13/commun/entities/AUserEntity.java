@@ -23,14 +23,6 @@ public abstract class AUserEntity extends ADataEntity {
     public AUserEntity(String login) {
         super();
         this.login = login;
-    }
-
-    /**
-     * @param login
-     */
-    public AUserEntity(String login, String password) {
-        super();
-        this.login = login;
         this.setId(UUID.randomUUID());
     }
 

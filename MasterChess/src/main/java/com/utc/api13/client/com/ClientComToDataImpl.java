@@ -124,7 +124,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void disconnect(UUID pubUser) {
-        comClientManagerInstance.sendMessage(new DisconnectMessage(pubUser, new UUID(0, 0), pubUser));
+        comClientManagerInstance.sendMessage(new DisconnectMessage(pubUser, new UUID(0, 0)));
 
     }
 

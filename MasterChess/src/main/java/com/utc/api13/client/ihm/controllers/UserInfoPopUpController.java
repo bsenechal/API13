@@ -33,9 +33,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class UserInfoPopUpController {
-    private IHMManager IHMManager;
+    private IHMManager ihmManager;
     private AppClient mainApp;
-    public PublicUserEntity u;
+    private PublicUserEntity u;
     private Stage currentStage;
     private static final Logger LOGGER = Logger.getLogger(UserInfoPopUpController.class);
 
@@ -82,9 +82,9 @@ public class UserInfoPopUpController {
     }
 
     public void setIHMMandClient(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
+        this.ihmManager = ihmManager;
         if (ihmManager != null) {
-            IHMManager.getIClientDataToIHM();
+            ihmManager.getIClientDataToIHM();
 
         }
 
@@ -105,8 +105,7 @@ public class UserInfoPopUpController {
         return SwingFXUtils.toFXImage(image, null);
     }
 
-    @SuppressWarnings("restriction")
-	public void setBindings(ProfilProperty profile) {
+    public void setBindings(ProfilProperty profile) {
         userInfoLogin.textProperty().bind(profile.loginProperty());
         userInfoFirstName.textProperty().bind(profile.firstNameProperty());
         userInfoLastName.textProperty().bind(profile.lastNameProperty());
@@ -138,7 +137,7 @@ public class UserInfoPopUpController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/sendPropositionPopUp.fxml"));
             root = (Pane) fxmlLoader.load();
             SendPropositionController controller = fxmlLoader.getController();
-            controller.setControllerContext(this.IHMManager);
+            controller.setControllerContext(this.ihmManager);
             mainApp.getCurrentStage().close();
             mainApp.setCurrentStage(stage);
             controller.setMainApp(this.mainApp, userUUID, userInfoLogin);
@@ -164,10 +163,10 @@ public class UserInfoPopUpController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         mainApp.getCurrentStage().close();
         mainApp.setCurrentStage(stage);
-        controller.setMainApp(this.mainApp, message);
+        controller.setText(message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         stage.initModality(Modality.APPLICATION_MODAL);

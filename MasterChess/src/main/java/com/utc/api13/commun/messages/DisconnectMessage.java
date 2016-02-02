@@ -19,7 +19,7 @@ public class DisconnectMessage extends Message {
      * @param receiver
      * @param pubUser
      */
-    public DisconnectMessage(UUID sender, UUID receiver, UUID idPubUser) {
+    public DisconnectMessage(UUID sender, UUID receiver) {
         super(sender, receiver);
         this.idPubUser = sender;
     }

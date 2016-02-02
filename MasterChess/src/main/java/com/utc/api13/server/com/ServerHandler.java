@@ -96,7 +96,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<Message> {
         LOGGER.warn("User : " + userId + " quit application, broadcast disconnection");
         comServerManager.unlinkUserToChannelHandlerContext(userId);
         comServerManager.getIServerDataToCom().disconnect(userId);
-        DisconnectMessage msg = new DisconnectMessage(userId, new UUID(0, 0), userId);
+        DisconnectMessage msg = new DisconnectMessage(userId, new UUID(0, 0));
         comServerManager.broadcastMessage(msg);
         ctx.close();
     }

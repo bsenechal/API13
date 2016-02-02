@@ -123,9 +123,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
         game.switchCurrentUser();
 
         // then verify the game status :
-        GameStatusEnum result = game.isFinished();
-
-        return result;
+        return game.isFinished();
     }
 
     @Override

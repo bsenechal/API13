@@ -11,7 +11,7 @@ import com.utc.api13.commun.exceptions.TechnicalException;
 
 public class ImageUtils {
 
-    public static final String filePrefix = "file:///";
+    public static final String FILE_PREFIX = "file:///";
 
     private ImageUtils() {
 
@@ -21,8 +21,8 @@ public class ImageUtils {
         BufferedImage bufferedImage;
         try {
             if (imagePath != null) {
-                if (imagePath.startsWith(filePrefix)) {
-                    imagePath = imagePath.substring(filePrefix.length() - 1);
+                if (imagePath.startsWith(FILE_PREFIX)) {
+                    imagePath = imagePath.substring(FILE_PREFIX.length() - 1);
                 }
                 bufferedImage = ImageIO.read(new File(imagePath));
                 DataBufferByte data = (DataBufferByte) bufferedImage.getRaster().getDataBuffer();

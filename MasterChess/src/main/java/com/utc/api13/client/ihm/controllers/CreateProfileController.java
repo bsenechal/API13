@@ -40,7 +40,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class CreateProfileController {
-    private IHMManager IHMManager;
+    private IHMManager ihmManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private static final Logger LOGGER = Logger.getLogger(CreateProfileController.class);
@@ -107,8 +107,8 @@ public class CreateProfileController {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
                 root = (Pane) fxmlLoader.load();
                 ConfirmationController controller = fxmlLoader.getController();
-                controller.setControllerContext(this.IHMManager);
-                controller.setMainApp(this.mainApp, "Your profile has been saved!");
+                controller.setControllerContext(this.ihmManager);
+                controller.setMainApp("Your profile has been saved!");
                 confirmationStage.setScene(new Scene(root));
                 confirmationStage.setTitle("Your profile");
                 mainApp.getCurrentStage().close();
@@ -174,14 +174,13 @@ public class CreateProfileController {
             }
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            return false; 
+            return false;
         }
 
-        return true; 
+        return true;
     }
 
-    @SuppressWarnings("restriction")
-	@FXML
+    @FXML
     public void onChangePictureClicked() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Ouvrir le document");
@@ -214,9 +213,9 @@ public class CreateProfileController {
     }
 
     public void setControllerContext(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
+        this.ihmManager = ihmManager;
         if (ihmManager != null)
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            this.myIClientToIHM = ihmManager.getIClientDataToIHM();
         setListenersOnLoad();
         setBindingsOnLoad();
     }
@@ -238,11 +237,11 @@ public class CreateProfileController {
     public void error(String message, boolean close) throws IOException {
         Parent root;
         errorStage = new Stage();
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
-        controller.setMainApp(this.mainApp, message);
+        controller.setControllerContext(this.ihmManager);
+        controller.setText(message);
         errorStage.setScene(new Scene(root));
         errorStage.setTitle("Error");
         if (close == Boolean.TRUE) {
@@ -250,7 +249,7 @@ public class CreateProfileController {
         }
         errorStage.initModality(Modality.APPLICATION_MODAL);
         errorStage.show();
-		PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished(event -> errorStage.close());
         delay.play();
     }

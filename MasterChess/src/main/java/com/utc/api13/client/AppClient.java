@@ -120,7 +120,7 @@ public class AppClient extends Application {
         }
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(ihmManager);
-        controller.setMainApp(this, message);
+        controller.setText(message);
         popupStage.setScene(new Scene(root));
         popupStage.setTitle("error");
         popupStage.initModality(Modality.APPLICATION_MODAL);
@@ -141,7 +141,7 @@ public class AppClient extends Application {
         }
         ConfirmationController controller = fxmlLoader.getController();
         controller.setControllerContext(ihmManager);
-        controller.setMainApp(this, message);
+        controller.setMainApp(message);
         popupStage.setScene(new Scene(root));
         popupStage.setTitle("confirmation");
 

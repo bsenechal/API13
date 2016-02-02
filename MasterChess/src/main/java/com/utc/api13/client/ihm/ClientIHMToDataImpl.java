@@ -44,8 +44,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         myIHMManager = pIHMManager;
     }
 
-    @SuppressWarnings("restriction")
-	@Override
+    @Override
     public void displayProfile(PublicUserEntity u) {
         Platform.runLater(new Runnable() {
             @Override
@@ -69,8 +68,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         });
     }
 
-    @SuppressWarnings("restriction")
-	@Override
+    @Override
     public void otherPlayerLeaving() {
         List<Object> users = Arrays.asList(myIHMManager.getIClientDataToIHM().getUserList().toArray());
         PublicUserEntity user = (PublicUserEntity) users.stream()
@@ -103,8 +101,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         });
     }
 
-    @SuppressWarnings("restriction")
-	@Override
+    @Override
     public void displayProposition(UUID uidSender, boolean observable, boolean chattable, boolean timer,
             Integer timeInt) {
         myIHMManager.setUIDistant(uidSender);
@@ -140,8 +137,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         });
     }
 
-    @SuppressWarnings("restriction")
-	@Override
+    @Override
     public void displayAnswer(UUID uidSender, boolean answer, String message) {
         Platform.runLater(new Runnable() {
             @Override
@@ -154,7 +150,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     root = (Pane) fxmlLoader.load();
                     ErrorController errorController = fxmlLoader.getController();
                     errorController.setControllerContext(myIHMManager);
-                    errorController.setMainApp(myIHMManager.getMainApp(), message);
+                    errorController.setText(message);
                     stage.setScene(new Scene(root));
                     stage.setTitle("Proposition refused");
                     stage.initModality(Modality.APPLICATION_MODAL);
@@ -166,9 +162,8 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         });
     }
 
-    @SuppressWarnings("restriction")
-	@Override
-    public void displayChessBoard(GameEntity g) {                          
+    @Override
+    public void displayChessBoard(GameEntity g) {
         Platform.runLater(new Runnable() {
 
             @Override
@@ -204,33 +199,26 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         String pieceType;
 
         switch (piece.toString()) {
-        case "Rook": {
+        case "Rook": 
             pieceType = "T";
             break;
-        }
-        case "Knight": {
+        case "Knight": 
             pieceType = "C";
             break;
-        }
-        case "Queen": {
+        case "Queen": 
             pieceType = "D";
             break;
-        }
-        case "King": {
+        case "King": 
             pieceType = "R";
             break;
-        }
-        case "Pawn": {
+        case "Pawn": 
             pieceType = "P";
             break;
-        }
-        case "Bishop": {
+        case "Bishop": 
             pieceType = "F";
             break;
-        }
-        default: {
+        default: 
             pieceType = "";
-        }
         }
 
         String iconePath;
@@ -249,8 +237,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         }
     }
 
-    @SuppressWarnings("restriction")
-	@Override
+    @Override
     public void displayError(String errorMessage) {
         Platform.runLater(new Runnable() {
             @Override
@@ -260,8 +247,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         });
     }
 
-    @SuppressWarnings("restriction")
-	@Override
+    @Override
     public void displayConfirmation(String confirmationMessage) {
         Platform.runLater(new Runnable() {
             @Override
@@ -279,8 +265,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
     public void displayGameLiveObserver() {
     }
 
-    @SuppressWarnings("restriction")
-	@Override
+    @Override
     public void displayMessage(String newMessage) {
         Platform.runLater(new Runnable() {
             @Override
@@ -300,20 +285,11 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         if (status.equals(GameStatusEnum.CHECKMATE)) {
             controller.getCb().changeCheckMateSituation();
         } else {
-            Case[][] cb = controller.getCb().getChessBoardSquares();
-            if (status != GameStatusEnum.CHECKMATE
-                    && myIHMManager.getIClientDataToIHM().getLocalUser().getId().equals(currentUser.getId())) {
-                for (Case[] i : cb) {
-                    for (Case j : i) {
-                        j.setEnabled(true);
-                    }
-                }
-            }
+            enableCases(currentUser, status);
         }
     }
 
-    @SuppressWarnings("restriction")
-	@Override
+    @Override
     public void closeGameScreen(boolean answer) {
         Platform.runLater(new Runnable() {
             @Override
@@ -329,5 +305,17 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 myIHMManager.getCurrentGameStage().close();
             }
         });
+    }
+    
+    private void enableCases(PublicUserEntity currentUser, GameStatusEnum status) {
+        Case[][] cb = controller.getCb().getChessBoardSquares();
+        if (status != GameStatusEnum.CHECKMATE
+                && myIHMManager.getIClientDataToIHM().getLocalUser().getId().equals(currentUser.getId())) {
+            for (Case[] i : cb) {
+                for (Case j : i) {
+                    j.setEnabled(true);
+                }
+            }
+        }
     }
 }

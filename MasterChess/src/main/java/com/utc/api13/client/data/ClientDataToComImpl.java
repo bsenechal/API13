@@ -388,24 +388,13 @@ public class ClientDataToComImpl implements IClientDataToCom {
         PrivateUserEntity localUser = instanceDataClientManager.getUserLocal();
         switch (status) {
 
-        case CHECKMATE: {
-            if (localUser.getId().equals(game.getCurrentPlayer().getId())) {
-                localUser.setNbLost(localUser.getNbLost() + 1);
-            } else {
-                localUser.setNbWon(localUser.getNbWon() + 1);
-            }
+        case CHECKMATE: 
+            checkMate(localUser, game);
             break;
-        }
-        case DRAW: {
-            if (instanceDataClientManager.getUserLocal().getSavedGames() == null) {
-                instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
-            }
-            instanceDataClientManager.getUserLocal().getSavedGames().add(game);
-            localUser.setNbPlayed(localUser.getNbPlayed() + 1);
-            UUID gameID = game.getId();
-            instanceDataClientManager.getCurrentGames().removeIf(g -> gameID.equals(g.getId()));
+        
+        case DRAW: 
+            draw(instanceDataClientManager, localUser, game);
             break;
-        }
         
         default:
             // CHECK & CONTINUE
@@ -423,5 +412,29 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
         instanceDataClientManager.getCurrentUsers().removeIf(u -> u.getId().equals(userToUpdate.getId()));
         instanceDataClientManager.getCurrentUsers().add(userToUpdate);
+    }
+    
+    /*
+     * CASE : DRAW
+     */
+    private static void draw(DataClientManager instanceDataClientManager, PrivateUserEntity localUser, GameEntity game) {
+        if (instanceDataClientManager.getUserLocal().getSavedGames() == null) {
+            instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
+        }
+        instanceDataClientManager.getUserLocal().getSavedGames().add(game);
+        localUser.setNbPlayed(localUser.getNbPlayed() + 1);
+        UUID gameID = game.getId();
+        instanceDataClientManager.getCurrentGames().removeIf(g -> gameID.equals(g.getId()));
+    }
+    
+    /*
+     * CASE : CHECKMATE
+     */
+    private static void checkMate(PrivateUserEntity localUser, GameEntity game) {
+        if (localUser.getId().equals(game.getCurrentPlayer().getId())) {
+            localUser.setNbLost(localUser.getNbLost() + 1);
+        } else {
+            localUser.setNbWon(localUser.getNbWon() + 1);
+        }
     }
 }

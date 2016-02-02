@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 
-import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
@@ -26,7 +25,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class IHMManageProfileController {
-    private IHMManager IHMManager;
     private IClientDataToIHM myIClientToIHM;
     private static final Logger LOGGER = Logger.getLogger(IHMManageProfileController.class);
     private boolean newProfile = false;
@@ -105,7 +103,7 @@ public class IHMManageProfileController {
 
     }
 
-    public void setMainApp(AppClient app) {
+    public void setMainApp() {
 
         if (!newProfile) {
             PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
@@ -120,9 +118,8 @@ public class IHMManageProfileController {
     }
 
     public void setControllerContext(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
         if (ihmManager != null)
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            this.myIClientToIHM = ihmManager.getIClientDataToIHM();
         setListenersOnLoad();
         setBindingsOnLoad();
     }

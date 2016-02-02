@@ -25,8 +25,8 @@ public class PublicUserEntity extends AUserEntity {
         allowedToChat = false;
     }
 
-    public PublicUserEntity(String login, String password) {
-        super(login, password);
+    public PublicUserEntity(String login) {
+        super(login);
         allowedToChat = false;
     }
 

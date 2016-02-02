@@ -23,8 +23,7 @@ import javafx.stage.Stage;
 
 public class ExcludeGameObservateur {
 
-    private IHMManager IHMManager;
-    private AppClient mainApp;
+    private IHMManager ihmManager;
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
     private ObservableList<PublicUserEntity> gameObserver;
@@ -56,8 +55,8 @@ public class ExcludeGameObservateur {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
-        controller.setMainApp(this.mainApp, message);
+        controller.setControllerContext(this.ihmManager);
+        controller.setText(message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -65,7 +64,6 @@ public class ExcludeGameObservateur {
     }
 
     public void setMainApp(AppClient app) {
-        this.mainApp = app;
     }
 
     private void loadDataFromTable() {
@@ -74,9 +72,9 @@ public class ExcludeGameObservateur {
     }
 
     public void setControllerContext(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
+        this.ihmManager = ihmManager;
         if (ihmManager != null) {
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            this.myIClientToIHM = ihmManager.getIClientDataToIHM();
         }
         setListenersOnLoad();
         setBindingsOnLoad();
@@ -86,7 +84,6 @@ public class ExcludeGameObservateur {
 
     }
 
-    @SuppressWarnings("restriction")
 	public void setListenersOnLoad() {
 
         loadDataFromTable();
@@ -99,7 +96,6 @@ public class ExcludeGameObservateur {
                 });
     }
 
-    @SuppressWarnings("restriction")
 	public void setBindingsOnLoad() {
         observateurUserLogin.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("login"));
         observateurUserFirstName.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("firstName"));

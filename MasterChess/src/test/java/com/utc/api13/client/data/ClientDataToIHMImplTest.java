@@ -136,8 +136,8 @@ public class ClientDataToIHMImplTest {
     // Comment vérifier la svg ?
     @Test
     public void saveGameTest() {
-        PublicUserEntity whitePlayer = new PublicUserEntity("whitelogin", "whitemdp");
-        PublicUserEntity blackPlayer = new PublicUserEntity("blacklogin", "blackmdp");
+        PublicUserEntity whitePlayer = new PublicUserEntity("whitelogin");
+        PublicUserEntity blackPlayer = new PublicUserEntity("blacklogin");
 
         GameEntity newGame = new GameEntity();
         newGame.setBlackPlayer(blackPlayer);
@@ -161,8 +161,8 @@ public class ClientDataToIHMImplTest {
     @Test
     public void playMoveTest() {
 
-        PublicUserEntity whitePlayer = new PublicUserEntity("whitelogin", "whitemdp");
-        PublicUserEntity blackPlayer = new PublicUserEntity("blacklogin", "blackmdp");
+        PublicUserEntity whitePlayer = new PublicUserEntity("whitelogin");
+        PublicUserEntity blackPlayer = new PublicUserEntity("blacklogin");
 
         GameEntity newGame = new GameEntity();
         newGame.setBlackPlayer(blackPlayer);
@@ -196,9 +196,9 @@ public class ClientDataToIHMImplTest {
     @Test
     public void moveTest() {
         PrivateUserEntity whitePrivatePlayer = new PrivateUserEntity("whitelogin", "whitemdp");
-        PublicUserEntity whitePlayer = new PublicUserEntity("whitelogin", "whitemdp");
+        PublicUserEntity whitePlayer = new PublicUserEntity("whitelogin");
 
-        PublicUserEntity blackPlayer = new PublicUserEntity("blacklogin", "blackmdp");
+        PublicUserEntity blackPlayer = new PublicUserEntity("blacklogin");
 
         GameEntity newGame = new GameEntity();
         newGame.setBlackPlayer(blackPlayer);

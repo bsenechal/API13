@@ -498,7 +498,7 @@ public class GameEntity extends ADataEntity {
         return participants;
     }
 
-    private List<APieceEntity> generatePieces(final PieceColorEnum color) {
+    private static List<APieceEntity> generatePieces(final PieceColorEnum color) {
         List<APieceEntity> pieces = new ArrayList<APieceEntity>();
         pieces.add(new KingEntity(color));
         pieces.add(new QueenEntity(color));

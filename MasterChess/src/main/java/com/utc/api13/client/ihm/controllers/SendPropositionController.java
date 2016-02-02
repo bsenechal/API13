@@ -30,11 +30,11 @@ import javafx.util.Duration;
 
 public class SendPropositionController {
 
-    private static IHMManager IHMManager;
+    private IHMManager ihmManager;
     private static AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
-    private final Logger LOGGER = Logger.getLogger(SendPropositionController.class);
+    private static final Logger LOGGER = Logger.getLogger(SendPropositionController.class);
     private String opponentUUID;
     private ErrorProperty error;
     boolean chattable;
@@ -92,9 +92,9 @@ public class SendPropositionController {
         UUID enquirerUUID = u.getId();
         int timeInt = 0;
         if (timer)
-            timeInt = this.conversionTime(time);
+            timeInt = conversionTime(time);
 
-        IHMManager.setProposition(this.proposition);
+        ihmManager.setProposition(this.proposition);
         this.myIClientToIHM.createProposition(UUID.fromString(this.opponentUUID), enquirerUUID, chattable, observable,
                 timer, timeInt);
         this.onCancelClicked();
@@ -104,12 +104,6 @@ public class SendPropositionController {
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
-    }
-
-    private int conversionTime(String time) {
-        String secondsString = time.substring(3, 5);
-        String minutesString = time.substring(0, 2);
-        return Integer.parseInt(secondsString) + (Integer.parseInt(minutesString) * 60);
     }
 
     public void initialize() {
@@ -130,8 +124,8 @@ public class SendPropositionController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-        controller.setControllerContext(IHMManager);
-        controller.setMainApp(mainApp, message);
+        controller.setControllerContext(ihmManager);
+        controller.setText(message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -145,8 +139,8 @@ public class SendPropositionController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ConfirmationController controller = fxmlLoader.getController();
-        controller.setControllerContext(IHMManager);
-        controller.setMainApp(mainApp, "The game proposition has been sent!");
+        controller.setControllerContext(ihmManager);
+        controller.setMainApp("The game proposition has been sent!");
         stage.setScene(new Scene(root));
         stage.setTitle("Proposition success");
         mainApp.getCurrentStage().close();
@@ -171,15 +165,21 @@ public class SendPropositionController {
     }
 
     public void setControllerContext(IHMManager ihmManager) {
-        IHMManager = ihmManager;
+        this.ihmManager = ihmManager;
         if (ihmManager != null) {
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            this.myIClientToIHM = ihmManager.getIClientDataToIHM();
         }
         error = new ErrorProperty();
-        IHMManager.setError(error);
+        ihmManager.setError(error);
         this.setListenersOnLoad();
     }
 
+    private static int conversionTime(String time) {
+        String secondsString = time.substring(3, 5);
+        String minutesString = time.substring(0, 2);
+        return Integer.parseInt(secondsString) + (Integer.parseInt(minutesString) * 60);
+    }
+    
     private void setListenersOnLoad() {
     }
 

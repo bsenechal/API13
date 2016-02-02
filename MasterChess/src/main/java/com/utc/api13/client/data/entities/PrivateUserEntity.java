@@ -26,7 +26,7 @@ public class PrivateUserEntity extends AUserEntity {
      * @param password
      */
     public PrivateUserEntity(String login, String password) {
-        super(login, password);
+        super(login);
         this.password = password;
     }
 

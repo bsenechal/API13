@@ -19,6 +19,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import org.apache.log4j.Logger;
+
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.commun.entities.GameEntity;
@@ -41,6 +43,7 @@ public class ChessBoardNode {
     private int selection = 1;
     private BooleanProperty checkProperty;
     private BooleanProperty checkMateProperty;
+    private static final Logger LOGGER = Logger.getLogger(ChessBoardNode.class);
 
     public ChessBoardNode(IHMManager ihmManager, GameEntity game, IClientDataToIHM myIClientToIHM2,
             BooleanProperty isCheck, BooleanProperty isCheckMate) {
@@ -78,6 +81,7 @@ public class ChessBoardNode {
                 }
 
                 b.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         Case movePosition = (Case) e.getSource();
                         for (int ii = 0; ii < chessBoardSquares.length; ii++) {
@@ -107,7 +111,7 @@ public class ChessBoardNode {
                                         chessBoardSquares[ii][jj].setEnabled(false);
                                     }
                                 }
-                                
+
                                 chessBoardSquares[firstPosition.getPositionX() - 1][8 - firstPosition.getPositionY()]
                                         .setBorder(new LineBorder(Color.GREEN));
                                 chessBoardSquares[firstPosition.getPositionX() - 1][8 - firstPosition.getPositionY()]
@@ -128,10 +132,6 @@ public class ChessBoardNode {
                                     && (movePosition.getColumn() == firstPosition.getPositionY())) {
                                 activateCases(myGame.getCurrentPlayer());
                             } else {
-                                System.out.println("firstPosition.getPositionX() :" + firstPosition.getPositionX()
-                                        + "firstPosition.getPositionY() :" + firstPosition.getPositionY()
-                                        + " movePosition.getLine() :" + movePosition.getLine()
-                                        + " movePosition.getColumn() :" + movePosition.getColumn());
                                 myIClientToIHM.playMove(firstPosition.getPositionX(), firstPosition.getPositionY(),
                                         movePosition.getLine(), movePosition.getColumn());
 
@@ -171,10 +171,9 @@ public class ChessBoardNode {
 
         for (int ii = 0; ii < 8; ii++) {
             for (int jj = 0; jj < 8; jj++) {
-                switch (jj) {
-                case 0:
+                if (jj == 0) {
                     chessBoard.add(new JLabel("" + (ii + 1), SwingConstants.CENTER));
-                default:
+                } else {
                     chessBoard.add(chessBoardSquares[jj][ii]);
                 }
             }
@@ -185,38 +184,22 @@ public class ChessBoardNode {
                 String iconePath = dossierIcone + ordrePiece[ctr] + couleur;
                 try {
                     Image img = ImageIO.read(getClass().getResource(iconePath + ".gif"));
-                    Image img_disabled = ImageIO.read(getClass().getResource(iconePath + "_disabled.gif"));
+                    Image imgDisabled = ImageIO.read(getClass().getResource(iconePath + "_disabled.gif"));
                     chessBoardSquares[ctr][ligne].setIcon(new ImageIcon(img));
-                    chessBoardSquares[ctr][ligne].setDisabledIcon(new ImageIcon(img_disabled));
+                    chessBoardSquares[ctr][ligne].setDisabledIcon(new ImageIcon(imgDisabled));
                 } catch (IOException e) {
-
+                    LOGGER.error(e.getMessage(), e);
                 }
 
-                switch (ordrePiece[ctr]) {
-                case 'T':
-                    break;
-
-                case 'C':
-                    break;
-
-                case 'F':
-                    break;
-
-                case 'D':
-                    break;
-
-                case 'R':
-                    break;
-                }
                 String iconePathPawn = dossierIcone + 'P' + couleur;
                 try {
                     Image img = ImageIO.read(getClass().getResource(iconePathPawn + ".gif"));
-                    Image img_disabled = ImageIO.read(getClass().getResource(iconePathPawn + "_disabled" + ".gif"));
+                    Image imgDisabled = ImageIO.read(getClass().getResource(iconePathPawn + "_disabled" + ".gif"));
                     chessBoardSquares[ctr][ligne + increment].setIcon(new ImageIcon(img));
-                    chessBoardSquares[ctr][ligne + increment].setDisabledIcon(new ImageIcon(img_disabled));
+                    chessBoardSquares[ctr][ligne + increment].setDisabledIcon(new ImageIcon(imgDisabled));
 
                 } catch (IOException e) {
-
+                    LOGGER.error(e.getMessage(), e);
                 }
 
             }
@@ -264,7 +247,7 @@ public class ChessBoardNode {
 
     public void activateCases(PublicUserEntity currentUser) {
         if (myIClientToIHM.getLocalUser().getId().equals(currentUser.getId())) {
-            for (Case i[] : chessBoardSquares) {
+            for (Case[] i : chessBoardSquares) {
                 for (Case j : i) {
                     j.setEnabled(true);
                 }

@@ -20,7 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class GiveUpPopUpController {
-    private IHMManager IHMManager;
+    private IHMManager ihmManager;
     private Stage currentStage;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
@@ -39,26 +39,26 @@ public class GiveUpPopUpController {
     }
 
     @FXML
-    public void OnYesClicked() {
-        IHMManager.getCurrentStage().close();
-        IHMManager.getCurrentGameStage().close();
+    public void onYesClicked() {
+        ihmManager.getCurrentStage().close();
+        ihmManager.getCurrentGameStage().close();
         myIClientToIHM.sendAnswerForLeaving(true);
 
     }
 
     @FXML
-    public void OnNoClicked() {
-        IHMManager.getCurrentStage().close();
-        IHMManager.getCurrentGameStage().close();
+    public void onNoClicked() {
+        ihmManager.getCurrentStage().close();
+        ihmManager.getCurrentGameStage().close();
         myIClientToIHM.sendAnswerForLeaving(false);
     }
 
     public IHMManager getIHMManager() {
-        return this.IHMManager;
+        return this.ihmManager;
     }
 
     public void setIHMManager(IHMManager iHMManager) {
-        this.IHMManager = iHMManager;
+        this.ihmManager = iHMManager;
     }
 
     public void initialize() {
@@ -70,16 +70,16 @@ public class GiveUpPopUpController {
     }
 
     public void setControllerContext(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
+        this.ihmManager = ihmManager;
         if (ihmManager != null) {
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            this.myIClientToIHM = ihmManager.getIClientDataToIHM();
         }
     }
 
     public void setIHMMandClient(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
+        this.ihmManager = ihmManager;
         if (ihmManager != null)
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            this.myIClientToIHM = ihmManager.getIClientDataToIHM();
     }
 
     public void setListenersOnLoad() {
@@ -103,9 +103,9 @@ public class GiveUpPopUpController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         mainApp.setCurrentStage(stage);
-        controller.setMainApp(this.mainApp, message);
+        controller.setText(message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         stage.initModality(Modality.APPLICATION_MODAL);

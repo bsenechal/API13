@@ -38,7 +38,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class IHMGamePageController {
-    private IHMManager IHMManager;
+    private IHMManager ihmManager;
     private IClientDataToIHM myIClientToIHM;
     private AppClient mainApp;
     private Stage currentStage;
@@ -67,11 +67,11 @@ public class IHMGamePageController {
     }
 
     public IHMManager getIHMManager() {
-        return IHMManager;
+        return ihmManager;
     }
 
     public void setIHMManager(IHMManager iHMManager) {
-        IHMManager = iHMManager;
+        ihmManager = iHMManager;
     }
 
     public void initialize() {
@@ -114,7 +114,7 @@ public class IHMGamePageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/excludeObservateur.fxml"));
         root = (Pane) fxmlLoader.load();
         ExcludeGameObservateur controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp);
         stage.setScene(new Scene(root));
@@ -146,9 +146,9 @@ public class IHMGamePageController {
     }
 
     public void setControllerContext(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
+        this.ihmManager = ihmManager;
         if (ihmManager != null) {
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            this.myIClientToIHM = ihmManager.getIClientDataToIHM();
             chat = new ChatProperty();
             ihmManager.setChat(chat);
         }
@@ -159,7 +159,7 @@ public class IHMGamePageController {
     public void setMainApp(AppClient app) {
         this.mainApp = app;
         GameEntity game = this.myIClientToIHM.getCurrentGame();
-        cb = new ChessBoardNode(IHMManager, game, myIClientToIHM, checkProperty, checkMateProperty);
+        cb = new ChessBoardNode(ihmManager, game, myIClientToIHM, checkProperty, checkMateProperty);
         cb.setMyIClientToIHM(myIClientToIHM);
 
         final SwingNode swingNode = new SwingNode();
@@ -184,8 +184,7 @@ public class IHMGamePageController {
 
     }
 
-    @SuppressWarnings("restriction")
-	public void setBindingsOnLoad() {
+    public void setBindingsOnLoad() {
 
         chatTextArea.textProperty().bind(chat.getMessage());
         checkProperty.addListener(new ChangeListener<Boolean>() {
@@ -209,8 +208,7 @@ public class IHMGamePageController {
 
     }
 
-    @SuppressWarnings("restriction")
-	private void displayCheckSituation() {
+    private void displayCheckSituation() {
         if (myIClientToIHM.getLocalUser().getId().equals(myIClientToIHM.getCurrentGame().getWhitePlayer().getId())) {
             myIClientToIHM.sendChatText("check on : " + myIClientToIHM.getCurrentGame().getCurrentPlayer().getLogin());
         }
@@ -226,8 +224,7 @@ public class IHMGamePageController {
         });
     }
 
-    @SuppressWarnings("restriction")
-	private void displayCheckMateSituation() {
+    private void displayCheckMateSituation() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -265,9 +262,9 @@ public class IHMGamePageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         mainApp.setCurrentStage(stage);
-        controller.setMainApp(this.mainApp, message);
+        controller.setText(message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         stage.initModality(Modality.APPLICATION_MODAL);

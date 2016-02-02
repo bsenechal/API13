@@ -40,7 +40,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class ModifyProfileController {
-    private IHMManager IHMManager;
+    private IHMManager ihmManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private static final Logger LOGGER = Logger.getLogger(ModifyProfileController.class);
@@ -99,8 +99,8 @@ public class ModifyProfileController {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/confirmationPopUp.fxml"));
                 root = (Pane) fxmlLoader.load();
                 ConfirmationController controller = fxmlLoader.getController();
-                controller.setControllerContext(this.IHMManager);
-                controller.setMainApp(this.mainApp, "Your profile has been saved!");
+                controller.setControllerContext(this.ihmManager);
+                controller.setMainApp("Your profile has been saved!");
                 stage.setScene(new Scene(root));
                 stage.setTitle("Your profile");
                 mainApp.getCurrentStage().close();
@@ -210,9 +210,9 @@ public class ModifyProfileController {
     }
 
     public void setControllerContext(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
+        this.ihmManager = ihmManager;
         if (ihmManager != null)
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            this.myIClientToIHM = ihmManager.getIClientDataToIHM();
         setListenersOnLoad();
         setBindingsOnLoad();
     }
@@ -238,8 +238,8 @@ public class ModifyProfileController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
-        controller.setMainApp(this.mainApp, message);
+        controller.setControllerContext(this.ihmManager);
+        controller.setText(message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         if (close == Boolean.TRUE) {

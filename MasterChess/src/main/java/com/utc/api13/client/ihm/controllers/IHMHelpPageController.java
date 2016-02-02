@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 
 public class IHMHelpPageController {
 
-    private IHMManager IHMManager;
     private AppClient mainApp;
     private Stage currentStage;
     @FXML
@@ -54,9 +53,8 @@ public class IHMHelpPageController {
     }
 
     public void setControllerContext(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
         if (ihmManager != null)
-            IHMManager.getIClientDataToIHM();
+            ihmManager.getIClientDataToIHM();
     }
 
     public Stage getCurrentStage() {

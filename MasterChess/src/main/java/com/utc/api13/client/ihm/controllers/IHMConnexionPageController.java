@@ -35,7 +35,7 @@ import javafx.util.Duration;
 
 public class IHMConnexionPageController {
 
-    private IHMManager IHMManager;
+    private IHMManager ihmManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
@@ -107,7 +107,7 @@ public class IHMConnexionPageController {
                     fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/welcomePage.fxml"));
                     root = (Pane) fxmlLoader.load();
                     IHMWelcomePageController controllerRight = fxmlLoader.getController();
-                    controllerRight.setControllerContext(IHMManager);
+                    controllerRight.setControllerContext(ihmManager);
                     mainApp.getCurrentStage().close();
                     mainApp.setMainStage(stage);
                     controllerRight.setMainApp(mainApp);
@@ -148,9 +148,9 @@ public class IHMConnexionPageController {
         fxmlLoader = new FXMLLoader(getClass().getResource(ERROR_POPUP_PATH));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         mainApp.setCurrentStage(stage);
-        controller.setMainApp(this.mainApp, bool ? "Wrong connexion information!" : "Technical error!");
+        controller.setText(bool ? "Wrong connexion information!" : "Technical error!");
         stage.setScene(new Scene(root));
         stage.setTitle("User Information");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -209,9 +209,9 @@ public class IHMConnexionPageController {
         root = (Pane) fxmlLoader.load();
         ConfirmationController controller = fxmlLoader.getController();
 
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         mainApp.setCurrentStage(stage);
-        controller.setMainApp(this.mainApp, "Successful import!");
+        controller.setMainApp("Successful import!");
         stage.setScene(new Scene(root));
         stage.setTitle("Import success");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -229,10 +229,10 @@ public class IHMConnexionPageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ERROR_POPUP_PATH));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         mainApp.getCurrentStage().close();
         mainApp.setCurrentStage(stage);
-        controller.setMainApp(this.mainApp, message);
+        controller.setText(message);
         stage.setScene(new Scene(root));
         stage.setTitle("Import error");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -251,7 +251,7 @@ public class IHMConnexionPageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/createProfilePage.fxml"));
         root = (Pane) fxmlLoader.load();
         CreateProfileController controller = fxmlLoader.getController();
-        controller.setControllerContext(IHMManager);
+        controller.setControllerContext(ihmManager);
         mainApp.setCurrentStage(stage);
         controller.setMainApp(mainApp);
         Scene scene = new Scene(root, 800, 600);
@@ -270,9 +270,9 @@ public class IHMConnexionPageController {
     }
 
     public void setControllerContext(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
+        this.ihmManager = ihmManager;
         if (ihmManager != null)
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            this.myIClientToIHM = ihmManager.getIClientDataToIHM();
     }
 
     public Stage getCurrentStage() {
@@ -289,9 +289,9 @@ public class IHMConnexionPageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ERROR_POPUP_PATH));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         mainApp.setCurrentStage(errorStage);
-        controller.setMainApp(this.mainApp, message);
+        controller.setText(message);
         errorStage.setScene(new Scene(root));
         errorStage.setTitle("Error");
         errorStage.initModality(Modality.APPLICATION_MODAL);

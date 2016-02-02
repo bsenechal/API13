@@ -29,7 +29,7 @@ import javafx.stage.Stage;
 
 public class MyInfoPopUpController {
 
-    private IHMManager IHMManager;
+    private IHMManager ihmManager;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
@@ -62,7 +62,7 @@ public class MyInfoPopUpController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/updateProfilePage.fxml"));
         root = (Pane) fxmlLoader.load();
         ModifyProfileController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
+        controller.setControllerContext(this.ihmManager);
         mainApp.getCurrentStage().close();
         mainApp.setCurrentStage(stage);
         controller.setMainApp(this.mainApp, userLabelToUpdateWelcomePage);
@@ -92,18 +92,18 @@ public class MyInfoPopUpController {
     }
 
     public IHMManager getIHMManager() {
-        return IHMManager;
+        return ihmManager;
     }
 
     public void setIHMManager(IHMManager iHMManager) {
-        IHMManager = iHMManager;
+        ihmManager = iHMManager;
     }
 
     public void setControllerContext(IHMManager ihmManager) {
 
-        this.IHMManager = ihmManager;
+        this.ihmManager = ihmManager;
         if (ihmManager != null)
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            this.myIClientToIHM = ihmManager.getIClientDataToIHM();
         setListenersOnLoad();
         setBindingsOnLoad();
     }

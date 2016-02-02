@@ -26,8 +26,7 @@ import javafx.stage.Stage;
 
 public class AnswerPropositionController {
 
-    private IHMManager IHMManager;
-    private AppClient mainApp;
+    private IHMManager ihmManager;
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
     private static final Logger LOGGER = Logger.getLogger(AnswerPropositionController.class);
@@ -69,8 +68,8 @@ public class AnswerPropositionController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
-        controller.setControllerContext(this.IHMManager);
-        controller.setMainApp(this.mainApp, message);
+        controller.setControllerContext(this.ihmManager);
+        controller.setText(message);
         stage.setScene(new Scene(root));
         stage.setTitle("Error");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -79,7 +78,6 @@ public class AnswerPropositionController {
 
     public void setMainApp(AppClient app, String login, Boolean chattable, Boolean timer, Boolean observable,
             int time) {
-        this.mainApp = app;
         this.chattable = chattable;
         this.timer = timer;
         this.timeInt = time;
@@ -107,9 +105,9 @@ public class AnswerPropositionController {
     }
 
     public void setControllerContext(IHMManager ihmManager) {
-        this.IHMManager = ihmManager;
+        this.ihmManager = ihmManager;
         if (ihmManager != null) {
-            this.myIClientToIHM = IHMManager.getIClientDataToIHM();
+            this.myIClientToIHM = ihmManager.getIClientDataToIHM();
         }
     }
 
@@ -117,8 +115,8 @@ public class AnswerPropositionController {
         PrivateUserEntity u = this.myIClientToIHM.getLocalUser();
         UUID answeringUser = u.getId();
         try {
-            this.IHMManager.getCurrentStage().close();
-            this.myIClientToIHM.sendResponse(answeringUser, IHMManager.getUisender(), answer, observable, chattable,
+            this.ihmManager.getCurrentStage().close();
+            this.myIClientToIHM.sendResponse(answeringUser, ihmManager.getUisender(), answer, observable, chattable,
                     timer, timeInt);
         } catch (TechnicalException e) {
             LOGGER.error(e.getMessage(), e);
