@@ -66,7 +66,6 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void pushReplayToServer(PublicUserEntity user, GameEntity game) {
-        // TODO Auto-generated method stub
     }
 
     @Override
