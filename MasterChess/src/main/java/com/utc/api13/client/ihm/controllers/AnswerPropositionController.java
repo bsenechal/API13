@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
-import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.entities.PrivateUserEntity;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
@@ -51,6 +50,7 @@ public class AnswerPropositionController {
     }
 
     public void initialize() {
+        // Initialisation JavaFX
     }
 
     public Stage getCurrentStage() {
@@ -76,7 +76,7 @@ public class AnswerPropositionController {
         stage.show();
     }
 
-    public void setMainApp(AppClient app, String login, Boolean chattable, Boolean timer, Boolean observable,
+    public void setMainApp(String login, Boolean chattable, Boolean timer, Boolean observable,
             int time) {
         this.chattable = chattable;
         this.timer = timer;

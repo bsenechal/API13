@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 public class ConfigFileReader {
 
     private String configFile;
     private InputStream inputStream;
+    private static final Logger LOGGER = Logger.getLogger(ConfigFileReader.class);
+    
 
     public ConfigFileReader(String file) {
         configFile = file;
@@ -29,13 +33,14 @@ public class ConfigFileReader {
             }
             value = prop.getProperty(key);
         } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
             throw new TechnicalException(e);
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    throw new TechnicalException(e);
+                    LOGGER.error(e.getMessage(), e);
                 }
             }
         }

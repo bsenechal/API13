@@ -267,6 +267,7 @@ public class IHMConnexionPageController {
     }
 
     public void initialize() {
+     // Initialisation JavaFX
     }
 
     public void setControllerContext(IHMManager ihmManager) {

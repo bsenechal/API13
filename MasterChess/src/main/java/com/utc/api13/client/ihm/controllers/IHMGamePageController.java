@@ -75,7 +75,7 @@ public class IHMGamePageController {
     }
 
     public void initialize() {
-
+        // Initialisation JavaFX
     }
 
     @FXML
@@ -116,7 +116,6 @@ public class IHMGamePageController {
         ExcludeGameObservateur controller = fxmlLoader.getController();
         controller.setControllerContext(this.ihmManager);
         mainApp.setCurrentStage(stage);
-        controller.setMainApp(this.mainApp);
         stage.setScene(new Scene(root));
         stage.setTitle("Exclude observateur ");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -176,11 +175,11 @@ public class IHMGamePageController {
     }
 
     public void setListenersOnLoad() {
-
+        // Listeners
     }
 
     public void setBindingsOnLoad() {
-
+        // Bindings
         chatTextArea.textProperty().bind(chat.getMessage());
         checkProperty.addListener(new ChangeListener<Boolean>() {
 

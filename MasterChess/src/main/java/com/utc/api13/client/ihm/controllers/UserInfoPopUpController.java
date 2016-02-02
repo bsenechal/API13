@@ -67,7 +67,7 @@ public class UserInfoPopUpController {
     }
 
     public void initialize() {
-
+        // Initialisation JavaFX
     }
 
     public void setMainApp(AppClient app) {
@@ -76,9 +76,6 @@ public class UserInfoPopUpController {
 
     public void setControllerContext(IHMManager ihmManager) {
         setIHMMandClient(ihmManager);
-        setListenersOnLoad();
-        setBindingsOnLoad();
-
     }
 
     public void setIHMMandClient(IHMManager ihmManager) {
@@ -87,15 +84,6 @@ public class UserInfoPopUpController {
             ihmManager.getIClientDataToIHM();
 
         }
-
-    }
-
-    public void setListenersOnLoad() {
-
-    }
-
-    public void setBindingsOnLoad() {
-
     }
 
     public static javafx.scene.image.Image getJavaFXImage(byte[] bytes) throws IOException {

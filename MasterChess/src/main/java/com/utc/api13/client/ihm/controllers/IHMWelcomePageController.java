@@ -126,6 +126,7 @@ public class IHMWelcomePageController {
 
     @FXML
     private void onParamClicked(Event event) {
+        // Coming with MasterChess-2.0.0-RELEASE
     }
 
     @FXML
@@ -268,6 +269,7 @@ public class IHMWelcomePageController {
     }
 
     public void initialize() {
+        // Initialisation JavaFX
     }
 
     public void setMainApp(AppClient app) {
@@ -310,15 +312,6 @@ public class IHMWelcomePageController {
         stage.setTitle("Export error");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
-    }
-
-    public void setListConnectedUser() {
-    }
-
-    public void setListCurrentGames() {
-    }
-
-    public void setListSavedGames() {
     }
 
     public void setControllerContext(IHMManager ihmManager) {
@@ -416,10 +409,6 @@ public class IHMWelcomePageController {
         currentGamesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         savedGamesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         connectedUserTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-    }
-
-    public void displayProfile() {
-
     }
 
     public Stage getCurrentStage() {

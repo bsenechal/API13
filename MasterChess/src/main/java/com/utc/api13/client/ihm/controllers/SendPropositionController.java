@@ -107,6 +107,7 @@ public class SendPropositionController {
     }
 
     public void initialize() {
+        // Initialisation JavaFX
     }
 
     public Stage getCurrentStage() {
@@ -171,18 +172,11 @@ public class SendPropositionController {
         }
         error = new ErrorProperty();
         ihmManager.setError(error);
-        this.setListenersOnLoad();
     }
 
     private static int conversionTime(String time) {
         String secondsString = time.substring(3, 5);
         String minutesString = time.substring(0, 2);
         return Integer.parseInt(secondsString) + (Integer.parseInt(minutesString) * 60);
-    }
-    
-    private void setListenersOnLoad() {
-    }
-
-    public void displayPopup() {
     }
 }

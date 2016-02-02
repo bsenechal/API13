@@ -123,7 +123,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     AnswerPropositionController answerPropositionController = fxmlLoader.getController();
                     answerPropositionController.setControllerContext(myIHMManager);
                     myIHMManager.setCurrentStage(stage);
-                    answerPropositionController.setMainApp(myIHMManager.getMainApp(), user.getLogin(), chattable, timer,
+                    answerPropositionController.setMainApp(user.getLogin(), chattable, timer,
                             observable, timeInt);
 
                     stage.setScene(new Scene(root));
@@ -200,25 +200,25 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         String pieceType;
 
         switch (piece.toString()) {
-        case "Rook": 
+        case "Rook":
             pieceType = "T";
             break;
-        case "Knight": 
+        case "Knight":
             pieceType = "C";
             break;
-        case "Queen": 
+        case "Queen":
             pieceType = "D";
             break;
-        case "King": 
+        case "King":
             pieceType = "R";
             break;
-        case "Pawn": 
+        case "Pawn":
             pieceType = "P";
             break;
-        case "Bishop": 
+        case "Bishop":
             pieceType = "F";
             break;
-        default: 
+        default:
             pieceType = "";
         }
 
@@ -260,10 +260,12 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
 
     @Override
     public void refreshObserverList() {
+        // Coming with MasterChess-2.0.0-RELEASE
     }
 
     @Override
     public void displayGameLiveObserver() {
+        // Coming with MasterChess-2.0.0-RELEASE
     }
 
     @Override
@@ -307,7 +309,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
             }
         });
     }
-    
+
     private void enableCases(PublicUserEntity currentUser, GameStatusEnum status) {
         Case[][] cb = controller.getCb().getChessBoardSquares();
         if (status != GameStatusEnum.CHECKMATE
@@ -326,7 +328,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-        myIHMManager.getCurrentGameStage().close();
+                myIHMManager.getCurrentGameStage().close();
             }
         });
     }

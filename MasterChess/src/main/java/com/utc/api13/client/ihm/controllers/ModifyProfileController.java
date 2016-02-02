@@ -194,6 +194,7 @@ public class ModifyProfileController {
     }
 
     public void initialize() {
+        // Initialisation JavaFX
     }
 
     public void setMainApp(AppClient app, Text userLabel) {
@@ -213,14 +214,6 @@ public class ModifyProfileController {
         this.ihmManager = ihmManager;
         if (ihmManager != null)
             this.myIClientToIHM = ihmManager.getIClientDataToIHM();
-        setListenersOnLoad();
-        setBindingsOnLoad();
-    }
-
-    public void setListenersOnLoad() {
-    }
-
-    public void setBindingsOnLoad() {
     }
 
     public Stage getCurrentStage() {

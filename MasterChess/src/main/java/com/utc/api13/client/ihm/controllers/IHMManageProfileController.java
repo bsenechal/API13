@@ -41,12 +41,11 @@ public class IHMManageProfileController {
     @FXML
     AnchorPane createProfileAnchorPane;
 
-    
     public IHMManageProfileController() {
 
         initialize();
     }
-    
+
     public boolean isNewProfile() {
         return newProfile;
     }
@@ -55,11 +54,10 @@ public class IHMManageProfileController {
         this.newProfile = newProfile;
     }
 
-    
     @FXML
     public void onSaveProfileClicked() {
         PrivateUserEntity user;
-       
+
         if (!newProfile)
             user = this.myIClientToIHM.getLocalUser();
         else
@@ -100,7 +98,7 @@ public class IHMManageProfileController {
     }
 
     public void initialize() {
-
+        // Initialisation JavaFX
     }
 
     public void setMainApp() {
@@ -120,14 +118,5 @@ public class IHMManageProfileController {
     public void setControllerContext(IHMManager ihmManager) {
         if (ihmManager != null)
             this.myIClientToIHM = ihmManager.getIClientDataToIHM();
-        setListenersOnLoad();
-        setBindingsOnLoad();
     }
-
-    public void setListenersOnLoad() {
-    }
-
-    public void setBindingsOnLoad() {
-    }
-
 }

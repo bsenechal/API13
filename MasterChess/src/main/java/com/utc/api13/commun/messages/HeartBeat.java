@@ -26,8 +26,8 @@ public class HeartBeat extends Message {
     }
 
     /**
-     * Handles the message when received on the client.
-     * Request for ping -> sending ping
+     * Handles the message when received on the client. Request for ping ->
+     * sending ping
      */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
@@ -43,11 +43,12 @@ public class HeartBeat extends Message {
     }
 
     /**
-     * Handles the message when received on the server.
-     * When ping is received, assuming that client is alive
+     * Handles the message when received on the server. When ping is received,
+     * assuming that client is alive
      */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
+        // Proceed HeartBeat on server
     }
 
 }

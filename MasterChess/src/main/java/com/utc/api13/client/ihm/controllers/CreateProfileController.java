@@ -206,6 +206,7 @@ public class CreateProfileController {
     }
 
     public void initialize() {
+        // Initialisation JavaFX
     }
 
     public void setMainApp(AppClient app) {
@@ -216,14 +217,6 @@ public class CreateProfileController {
         this.ihmManager = ihmManager;
         if (ihmManager != null)
             this.myIClientToIHM = ihmManager.getIClientDataToIHM();
-        setListenersOnLoad();
-        setBindingsOnLoad();
-    }
-
-    public void setListenersOnLoad() {
-    }
-
-    public void setBindingsOnLoad() {
     }
 
     public Stage getCurrentStage() {

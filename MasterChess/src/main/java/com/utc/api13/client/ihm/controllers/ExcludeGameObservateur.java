@@ -3,7 +3,6 @@ package com.utc.api13.client.ihm.controllers;
 import java.io.IOException;
 import java.util.Optional;
 
-import com.utc.api13.client.AppClient;
 import com.utc.api13.client.data.interfaces.IClientDataToIHM;
 import com.utc.api13.client.ihm.IHMManager;
 import com.utc.api13.commun.entities.PublicUserEntity;
@@ -38,6 +37,7 @@ public class ExcludeGameObservateur {
     }
 
     public void initialize() {
+        // Initialisation JavaFX
     }
 
     public Stage getCurrentStage() {
@@ -63,9 +63,6 @@ public class ExcludeGameObservateur {
         stage.show();
     }
 
-    public void setMainApp(AppClient app) {
-    }
-
     private void loadDataFromTable() {
         gameObserver = FXCollections.observableList(myIClientToIHM.getCurrentGame().getObservers());
         observateurUserTable.setItems(gameObserver);
@@ -77,11 +74,6 @@ public class ExcludeGameObservateur {
             this.myIClientToIHM = ihmManager.getIClientDataToIHM();
         }
         setListenersOnLoad();
-        setBindingsOnLoad();
-    }
-
-    public void setBindings() {
-
     }
 
     public void setListenersOnLoad() {

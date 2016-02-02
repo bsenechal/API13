@@ -32,6 +32,7 @@ public class ConfirmationController {
     }
 
     public void initialize() {
+        // Initialisation JavaFX
     }
 
     public void setManager(IHMManager ihmManager) {
@@ -42,16 +43,6 @@ public class ConfirmationController {
     public void setControllerContext(IHMManager ihmManager) {
         if (ihmManager != null)
             ihmManager.getIClientDataToIHM();
-        setListenersOnLoad();
-        setBindingsOnLoad();
-    }
-
-    public void setListenersOnLoad() {
-
-    }
-
-    public void setBindingsOnLoad() {
-
     }
 
     public Stage getCurrentStage() {

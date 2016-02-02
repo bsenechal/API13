@@ -53,7 +53,7 @@ public class MyInfoPopUpController {
     public MyInfoPopUpController() {
         initialize();
     }
-    
+
     @FXML
     public void onModifyProfileClicked() throws IOException {
         Stage stage;
@@ -72,6 +72,7 @@ public class MyInfoPopUpController {
     }
 
     public void initialize() {
+        // Initialisation JavaFX
     }
 
     public void setMainApp(AppClient app, Text userLabel) {
@@ -88,7 +89,7 @@ public class MyInfoPopUpController {
         this.userInfoLastName.setText(u.getLastName());
         userInfoTableView.setItems(statsPlayer);
         userLabelToUpdateWelcomePage = userLabel;
-        Optional.ofNullable("file://"+u.getImagePath()).ifPresent(link -> userInfoImage.setImage(new Image(link)));
+        Optional.ofNullable("file://" + u.getImagePath()).ifPresent(link -> userInfoImage.setImage(new Image(link)));
     }
 
     public IHMManager getIHMManager() {
@@ -104,14 +105,6 @@ public class MyInfoPopUpController {
         this.ihmManager = ihmManager;
         if (ihmManager != null)
             this.myIClientToIHM = ihmManager.getIClientDataToIHM();
-        setListenersOnLoad();
-        setBindingsOnLoad();
-    }
-
-    public void setListenersOnLoad() {
-    }
-
-    public void setBindingsOnLoad() {
     }
 
     public Stage getCurrentStage() {

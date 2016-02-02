@@ -62,6 +62,7 @@ public class GiveUpPopUpController {
     }
 
     public void initialize() {
+        // Initialisation JavaFX
     }
 
     public void setMainApp(AppClient app, String login) {
@@ -83,9 +84,11 @@ public class GiveUpPopUpController {
     }
 
     public void setListenersOnLoad() {
+        // Listeners
     }
 
     public void setBindingsOnLoad() {
+        // Bindings
     }
 
     public Stage getCurrentStage() {

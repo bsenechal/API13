@@ -50,6 +50,7 @@ public class IHMHelpPageController {
     }
 
     public void initialize() {
+     // Initialisation JavaFX
     }
 
     public void setControllerContext(IHMManager ihmManager) {

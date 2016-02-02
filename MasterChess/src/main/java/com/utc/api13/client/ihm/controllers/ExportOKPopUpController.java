@@ -20,6 +20,7 @@ public class ExportOKPopUpController {
     }
 
     public void initialize() {
+     // Initialisation JavaFX
     }
 
     public void setText(String path) {
