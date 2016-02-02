@@ -97,7 +97,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
      */
     @Override
     public void printError(String error) {
-        // instanceDataClientManager.print_error()
+        // TODO Auto-generated method stub
     }
 
     @Override
@@ -388,13 +388,15 @@ public class ClientDataToComImpl implements IClientDataToCom {
         PrivateUserEntity localUser = instanceDataClientManager.getUserLocal();
         switch (status) {
 
-        case CHECKMATE:
+        case CHECKMATE: {
             if (localUser.getId().equals(game.getCurrentPlayer().getId())) {
                 localUser.setNbLost(localUser.getNbLost() + 1);
             } else {
                 localUser.setNbWon(localUser.getNbWon() + 1);
             }
-        case DRAW:
+            break;
+        }
+        case DRAW: {
             if (instanceDataClientManager.getUserLocal().getSavedGames() == null) {
                 instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
             }
@@ -403,11 +405,11 @@ public class ClientDataToComImpl implements IClientDataToCom {
             UUID gameID = game.getId();
             instanceDataClientManager.getCurrentGames().removeIf(g -> gameID.equals(g.getId()));
             break;
-
+        }
+        
         default:
             // CHECK & CONTINUE
             break;
-
         }
 
     }

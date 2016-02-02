@@ -1,7 +1,6 @@
 package com.utc.api13.client.data.services;
 
 import java.io.File;
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -132,7 +131,7 @@ public class UserService {
      *             Error while copying file to export directory
      */
     public File exportProfile(PrivateUserEntity user) throws TechnicalException {
-    	Path source =Paths.get("user/" + user.getLogin() + "_" + user.getId() + ".ser");
+        Path source = Paths.get("user/" + user.getLogin() + "_" + user.getId() + ".ser");
         String exportDirectory = System.getProperty("user.dir") + File.separator + "export" + File.separator
                 + user.getLogin() + "_" + user.getId() + ".ser";
         String sourceFile = source.toString();

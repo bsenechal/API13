@@ -67,7 +67,6 @@ public class ClientComToDataImpl implements IClientComToData {
     @Override
     public void pushReplayToServer(PublicUserEntity user, GameEntity game) {
         // TODO Auto-generated method stub
-        return;
     }
 
     @Override
@@ -79,13 +78,11 @@ public class ClientComToDataImpl implements IClientComToData {
     @Override
     public void surrender(UUID uid) {
         // TODO Auto-generated method stub
-        return;
     }
 
     @Override
     public void victoryBySurrender(UUID uid) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -118,7 +115,6 @@ public class ClientComToDataImpl implements IClientComToData {
     @Override
     public void sendLeavingMessage(UUID idPartie) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
