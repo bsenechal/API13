@@ -54,61 +54,85 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         this.gameService = new GameService();
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#getUserList()
+     */
     @Override
     public ObservableList<PublicUserEntity> getUserList() {
         return dataClientManager.getCurrentUsers();
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#getUsers()
+     */
     @Override
     public void getUsers() {
         dataClientManager.getIClientComToData().getUsers();
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#getUserInfo(java.util.UUID)
+     */
     @Override
     public void getUserInfo(final UUID idUser) {
         dataClientManager.getIClientComToData().getUserInfo(idUser);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#getAllGames()
+     */
     @Override
     public void getAllGames() {
         dataClientManager.getIClientComToData().getAllParties();
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#connect(java.lang.String, java.lang.String)
+     */
     @Override
     public void connect(final String login, final String password) throws FunctionalException, TechnicalException {
         Assert.notNull(userService, "[ClientDataToIHMImpl][connect] userService shouldn't be null");
 
-        // Check the login and password
+        // On verifie le login et le mot de passe
         PrivateUserEntity privateUser = userService.getByLoginAndPassword(login, password);
         if (privateUser == null) {
             List<Erreur> erreurs = new ArrayList<>();
             erreurs.add(new Erreur(ErrorTypeEnum.LOGIN_FAILED));
             throw new FunctionalException(erreurs);
         }
-        // Save the local user
+        // On enregistre le private user
         dataClientManager.setUserLocal(privateUser);
-        // Notify the server
+        // On notifie le serveur
         PublicUserEntity publicUser = new PublicUserEntity(privateUser);
         dataClientManager.getIClientComToData().notifyConnection(publicUser);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#disconnect()
+     */
     @Override
     public void disconnect() throws TechnicalException, FunctionalException {
         Assert.notNull(gameService, "[ClientDataToIHMImpl][disconnect] GameService shouldn't be null");
         Assert.notNull(dataClientManager.getUserLocal(),
                 "[ClientDataToIHMImpl][disconnect] UserLocal shouldn't be null");
 
-        // Leave the game
+        //Pour quitter le jeu on verifie d'abord qu'il y a un jeu en cours
         if (dataClientManager.getCurrentGame() != null) {
+            //Si l'utilisateur est un observateur alors on le retire de la liste des observeurs
             if (gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
                 observerLeave();
             } else {
+                //Sinon on demande a quitter le jeu
                 requestPlayerForLeaving();
             }
         }
-        // Ask deconnection from server
         dataClientManager.getIClientComToData().disconnect(dataClientManager.getUserLocal().getId());
-        // Set the local user to null
         dataClientManager.setUserLocal(null);
     }
 
@@ -128,17 +152,24 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         MoveEntity move = new MoveEntity(null, piece.getPosition(), position, piece, null, null);
 
         if (piece.isMovePossible(move, dataClientManager.getCurrentGame())) {
+            //On verifie que le coup soit permi
+            //On cree le cours et on le valide
             move.setDate(new Date());
             move.setUserID(dataClientManager.getUserLocal().getId());
             move.setGameID(dataClientManager.getCurrentGame().getId());
             dataClientManager.getIClientComToData().validateMove(dataClientManager.getUserLocal().getId(), move);
         } else {
+            // On renvoie l'erreur MOVE IMPOSSIBLE 
             List<Erreur> erreurs = new ArrayList<>();
             erreurs.add(new Erreur(ErrorTypeEnum.MOVE_IMPOSSIBLE));
             throw new FunctionalException(erreurs);
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#observerLeave()
+     */
     @Override
     public void observerLeave() {
         Assert.notNull(dataClientManager.getUserLocal(),
@@ -147,30 +178,38 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#requestPlayerForLeaving()
+     */
     @Override
     public void requestPlayerForLeaving() {
         Assert.notNull(dataClientManager.getUserLocal(),
                 "[ClientDataToIHMImpl][requestPlayerForLeaving] UserLocal shouldn't be null");
 
         GameEntity game = dataClientManager.getCurrentGame();
-
+        //On envoie la requete a l'adversaire
         dataClientManager.getIClientComToData().requestPlayerForLeaving(dataClientManager.getUserLocal().getId(),
                 game.getWhitePlayer().getId().equals(dataClientManager.getUserLocal().getId())
                         ? game.getBlackPlayer().getId() : game.getWhitePlayer().getId());
 
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#sendAnswerForLeaving(boolean)
+     */
     @Override
     public void sendAnswerForLeaving(boolean answer) {
+        //TODO VERIFIER CETTE FONCTION !!!!!!!!
         if (answer) {
-            // Add game in local user saved game (in case the local user wants
-            // to
-            // save the game after ending)
+            
             if (dataClientManager.getUserLocal().getSavedGames() == null) {
                 dataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
             }
+            //On sauvegarde le jeu
             dataClientManager.getUserLocal().getSavedGames().add(getCurrentGame());
-            // if the local user said yes no it's a win for him
+            // Si le joueur accepte alors il on incrémente le nombre de parties jouees mais pas les gagnees / perdues 
             dataClientManager.getUserLocal().setNbPlayed(getLocalUser().getNbPlayed() + 1);
            
             // Inform the local user that game is over with result
@@ -199,40 +238,43 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#updateProfile(com.utc.api13.client.data.entities.PrivateUserEntity)
+     */
     @Override
     public void updateProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException {
         Assert.notNull(user, "[ClientDataToIHMImpl][updateProfile] user shouldn't be null");
 
-        // delete the existing info
+        // On supprime les infos actuelles
         userService.deleteById(user.getId());
-        // Store the new one
+        // On ajoute les nouvelles
 
         userService.save(user);
         this.dataClientManager.setUserLocal(user);
-        // notify the server
+        // On notifie le serveur
         dataClientManager.getIClientComToData().sendUserUpdates(new PublicUserEntity(user));
+    }
+
+   
+
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#watchGame(java.util.UUID)
+     */
+    @Override
+    public void watchGame(UUID idGame) {
+        // A faire lorsque l'observation d'un jeu sera faite
+
     }
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.utc.api13.client.data.interfaces.IClientToIHM#notify(java.lang.
-     * String)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#chargeReplay(java.util.UUID)
      */
     @Override
-    public void notify(String message) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void watchGame(UUID idGame) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public void chargeReplay(UUID idGame) {
-        // TODO Auto-generated method stub
+        // A faire lorsque la fonctionnalite replay sera faite
 
     }
 
@@ -243,10 +285,14 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      */
     @Override
     public void beginReplay() {
-        // TODO Auto-generated method stub
+        // A faire lorsque la fonctionnalite replay sera faite
 
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#saveGame()
+     */
     @Override
     public void saveGame() throws TechnicalException, FunctionalException {
         Assert.notNull(dataClientManager.getUserLocal(), "[ClientDataToIHMImpl][saveGame] UserLocal shouldn't be null");
@@ -254,6 +300,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
                 "[ClientDataToIHMImpl][saveGame] SavedGames shouldn't be null");
 
         if (dataClientManager.getCurrentGame() != null) {
+            //On enregistre le jeu et l'etat actuel du user
             dataClientManager.getUserLocal().getSavedGames().add(dataClientManager.getCurrentGame());
             userService.save(getLocalUser());
         } else {
@@ -261,18 +308,23 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#getCurrentGame()
+     */
     @Override
     public GameEntity getCurrentGame() {
         return dataClientManager.getCurrentGame();
     }
 
-    /**
-     * Envoie la proposition sur le serveur Un paramètre en trop coté Com, à
-     * supprimer quand ils l'auront enlever
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#createProposition(java.util.UUID, java.util.UUID, boolean, boolean, boolean, java.lang.Integer)
      */
     @Override
     public void createProposition(UUID uidReciever, UUID enquirerUUID, boolean chattable, boolean observable,
             boolean timer, Integer timeInt) {
+        //Envoie la proposition sur le serveur
         dataClientManager.getIClientComToData().sendProposition(dataClientManager.getUserLocal().getId(), uidReciever,
                 chattable, observable, timer, timeInt);
     }
@@ -290,32 +342,43 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         dataClientManager.getClientDataToComImpl().endGameBySurrender(dataClientManager.getUserLocal().getId());
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#sendChatText(java.lang.String)
+     */
     @Override
     public void sendChatText(final String message) {
         Assert.notNull(dataClientManager.getCurrentGame(),
                 "[ClientDataToIHMImpl][sendChatText] current game shouldn't be null");
         MessageEntity newMessage = new MessageEntity();
         newMessage.setText(message);
+        // On ajoute le message aux messages du jeu
         dataClientManager.getCurrentGame().getMessages().add(newMessage);
+        //On envoit a Com le message
         dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#createProfile(com.utc.api13.client.data.entities.PrivateUserEntity)
+     */
     @Override
     public void createProfile(final PrivateUserEntity user) throws TechnicalException, FunctionalException {
         userService.save(user);
     }
 
-    /**
-     * @author Hugo R-L
-     * @return PrivateUserEntity LocalUser
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#getLocalUser()
      */
     @Override
     public PrivateUserEntity getLocalUser() {
         return this.dataClientManager.getUserLocal();
     }
 
-    /**
-     * Envoi la réponse vers le second client
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#sendResponse(java.util.UUID, java.util.UUID, boolean, boolean, boolean, boolean, java.lang.Integer)
      */
     @Override
     public void sendResponse(UUID uidReceiver, UUID uidEnquirer, boolean answer, boolean observable, boolean chattable,
@@ -325,27 +388,47 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#importProfile(java.io.File, boolean)
+     */
     @Override
     public void importProfile(File file, boolean force) throws FunctionalException, TechnicalException {
         userService.importProfile(file, force);
     }
-
+    
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#exportProfile()
+     */
     @Override
     public File exportProfile() throws TechnicalException {
         return userService.exportProfile(dataClientManager.getUserLocal());
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#importProfile(java.io.File)
+     */
     @Override
     public void importProfile(File file) throws FunctionalException, TechnicalException {
         this.importProfile(file, false);
 
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#getGamesList()
+     */
     @Override
     public ObservableList<GameEntity> getGamesList() {
         return dataClientManager.getCurrentGames();
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#getAvailablesMoves(int, int)
+     */
     @Override
     // A tester
     public List<PositionEntity> getAvailablesMoves(int line, int col) {
@@ -359,6 +442,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         return new ArrayList<PositionEntity>();
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#playMove(int, int, int, int)
+     */
     @Override
     public void playMove(int fromLine, int fromCol, int toLine, int toCol) {
         // On crée une position entity de la position de départ
@@ -382,6 +469,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
 
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#removeUserFromChat(java.util.UUID)
+     */
     @Override
     public void removeUserFromChat(UUID idUser) {
         Assert.notNull(idUser, "[ClientDataToIHMImpl][removeUserFromChat] current id of user shouldn't be null");
@@ -391,6 +482,10 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         // dataClientManager.getCurrentGame().getId());
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToIHM#killCurrentGame()
+     */
     @Override
     public void killCurrentGame() {
         dataClientManager.setCurrentGame(null);

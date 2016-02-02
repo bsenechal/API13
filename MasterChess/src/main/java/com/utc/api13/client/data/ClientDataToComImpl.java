@@ -73,6 +73,8 @@ public class ClientDataToComImpl implements IClientDataToCom {
                 "[ClientDataToComImpl][displayUsersList] currentUsers shouldn't be null");
         if (!connectedUserList.isEmpty()) {
             List<PublicUserEntity> connectedUserListTemp = new ArrayList<PublicUserEntity>();
+            //Creation d'une nouvelle liste qui exclut le joueur local pour ne pas que son profil
+            // s'affiche dans les joueurs connectés
             connectedUserList.forEach(u -> {
                 if (!u.getId().equals(instanceDataClientManager.getUserLocal().getId())) {
                     connectedUserListTemp.add(u);
@@ -82,7 +84,11 @@ public class ClientDataToComImpl implements IClientDataToCom {
             instanceDataClientManager.getCurrentUsers().addAll(connectedUserListTemp);
         }
     }
-
+    
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToCom#displayProfile(com.utc.api13.commun.entities.PublicUserEntity)
+     */
     @Override
     public void displayProfile(PublicUserEntity user) {
         instanceDataClientManager.getIClientIHMToData().displayProfile(user);
@@ -90,16 +96,8 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.client.data.interfaces.IClientToComm#print_error(java.lang.
-     * String)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToCom#displayAllGames(java.util.List)
      */
-    @Override
-    public void printError(String error) {
-        // TODO Auto-generated method stub
-    }
-
     @Override
     public void displayAllGames(final List<GameEntity> games) {
         Assert.notNull(instanceDataClientManager.getCurrentGames(),
@@ -117,11 +115,13 @@ public class ClientDataToComImpl implements IClientDataToCom {
      */
     @Override
     public void displayResult(UUID idPlayer, MoveEntity move) {
+        // On recupere les differentes positions (line / colonne) du move (source / destination)
         int fromLine = move.getFromPosition().getPositionX();
         int fromCol = move.getFromPosition().getPositionY();
         int toLine = move.getToPosition().getPositionX();
         int toCol = move.getToPosition().getPositionY();
 
+        //On recupere le jeu et la piece sur la position d'origine
         GameEntity thisgame = instanceDataClientManager.getCurrentGame();
         APieceEntity piece = thisgame.getPieceFromPosition(move.getFromPosition());
         Assert.notNull(thisgame, "[ClientDataToComImpl][displayResult] currentGames shouldn't be null");
@@ -154,46 +154,45 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
         }
 
-        // delete the real destination piece
+        // On suppirme la piece de la position de destination
         thisgame.removePieceFromPosition(move.getToPosition());
 
-        // transorm a Pawn to a queen if the pawn is in the ennemy camp :
+        //  On transforme un pion en reine si le pion est dans le camps ennemy
         if (thisgame.transformPawnToQueen(move)) {
-            // you need to get the new Piece if it is now a queen
+            //On récupère la piece s'il s'agit maintenant d'une raine
             piece = thisgame.getPieceFromPosition(move.getFromPosition());
         }
-
+        // On bouge la piece
         thisgame.movePiece(move);
 
         instanceDataClientManager.getIClientIHMToData().refreshChessBoard(fromLine, fromCol, toLine, toCol, piece,
                 thisgame);
 
-        // #Data l'erreur est normale, on attend que IHM mette à jour sa méthode
-
     }
 
-    @Override
-    public void sendMessageToChat(MessageEntity message) {
-        // TODO: a virer ?
-    }
-
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToCom#sendAnswerForLeaving(boolean)
+     */
     @Override
     public void sendAnswerForLeaving(boolean answer) {
 
         if (answer) {
-            // Add game in local user saved game (in case the local user wants
-            // to
-            // save the game after ending)
+            //Si le joueur  accepte de quitter la partie
+            
+            
+            // Si je joueur n'a pas encore de jeu enregistré, alors on initialise 
             if (instanceDataClientManager.getUserLocal().getSavedGames() == null) {
                 instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
             }
 
+            //On sauvegarde le jeu en cours
             instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
-            // Modify the played games
+            //on incrémente le nombre de parties jouees
             instanceDataClientManager.getUserLocal()
                     .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
 
-            // Display answer to local user
+            // On envoie la reponse a l'autre joueur
             UUID senderId = instanceDataClientManager.getUserLocal().getId()
                     .equals(instanceDataClientManager.getCurrentGame().getBlackPlayer().getId())
                             ? instanceDataClientManager.getCurrentGame().getWhitePlayer().getId()
@@ -203,9 +202,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
                     "The player has quit the game ");
             instanceDataClientManager.getIClientIHMToData()
                     .displayAnswer(instanceDataClientManager.getUserLocal().getId(), answer, "You have quit the game ");
-            // End the local game
+            // On supprime le jeu en cours
             instanceDataClientManager.setCurrentGame(null);
         } else {
+            // Si le joueur refuse de quitter la partie on envoie simplement un message pour avertir l'adversaire
             instanceDataClientManager.getIClientIHMToData()
                     .displayAnswer(instanceDataClientManager.getUserLocal()
                             .getId(), answer,
@@ -213,23 +213,35 @@ public class ClientDataToComImpl implements IClientDataToCom {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToCom#requestPlayerForLeaving(java.util.UUID)
+     */
     @Override
     public void requestPlayerForLeaving(UUID uid) {
         instanceDataClientManager.getIClientIHMToData().otherPlayerLeaving();
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToCom#endGameByLeaving()
+     */
     @Override
     public void endGameByLeaving() {
-        // Add game in local user saved game (in case the local user wants to
-        // save the game after ending)
+        // Si le joueur n'a pas de partie sauvegarde alors on initie 
         if (instanceDataClientManager.getUserLocal().getSavedGames() == null) {
             instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
         }
+        // On sauvegarde le jeu
         instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
-        // Set the current game to null
+        // On remet a nul le jeu en cours
         instanceDataClientManager.setCurrentGame(null);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToCom#notifyRejection(java.util.UUID, java.lang.String)
+     */
     @Override
     public void notifyRejection(UUID uidSender, String rejectionMessage) {
         instanceDataClientManager.getIClientIHMToData().displayAnswer(uidSender, false, rejectionMessage);
@@ -237,16 +249,15 @@ public class ClientDataToComImpl implements IClientDataToCom {
         // lorsque le joueur refuse la partie
     }
 
-    @Override
-    public void notify(String message) {
-        // Surement à virer
-    }
-
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToCom#initGame(com.utc.api13.commun.entities.GameEntity)
+     */
     @Override
     public void initGame(GameEntity game) {
-        // Set the current game
+        // On intie le jeu
         instanceDataClientManager.setCurrentGame(game);
-        // Ask the IHM module to display the Chessboard
+        // On demande a afficher le jeu
         instanceDataClientManager.getIClientIHMToData().displayChessBoard(game);
     }
 
@@ -259,19 +270,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
      */
     @Override
     public void newObserver(UUID idObserver) {
-        // TODO Auto-generated method stub
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.utc.api13.client.data.interfaces.IClientToComm#newPlayer(java.util.
-     * UUID)
-     */
-    @Override
-    public void newPlayer(UUID idPlayer) {
-        // TODO Auto-generated method stub
+        // Fonction a completer lorsque l'on ajoute la possibilite d'observer un jeu
     }
 
     /*
@@ -283,15 +282,14 @@ public class ClientDataToComImpl implements IClientDataToCom {
      */
     @Override
     public void newReplay(GameEntity game) {
-        // TODO Auto-generated method stub
+        // Fonction a completer lorsque l'on ajoute la possibilite de rejouer un jeu (streaming)
 
     }
 
-    @Override
-    public void sendProposition(UUID uidSender, UUID uidReciever, boolean observable, boolean chattable) {
-
-    }
-
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToCom#printProposition(java.util.UUID, boolean, boolean, boolean, java.lang.Integer)
+     */
     @Override
     public void printProposition(final UUID uidSender, boolean observable, boolean chattable, boolean timer,
             Integer timerInt) {
@@ -307,15 +305,15 @@ public class ClientDataToComImpl implements IClientDataToCom {
      */
     @Override
     public void victoryBySurrender() {
+        // On sauvegarde la partie
         instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
-        // Modify the played games
+        // On incremente le nombre de parties jouees
         instanceDataClientManager.getUserLocal()
                 .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
-        // increase the amount of won games
+        // On incremente le nombre de parties gagnees
         instanceDataClientManager.getUserLocal().setNbWon(instanceDataClientManager.getUserLocal().getNbWon() + 1);
-        // delete the current game
+        // On supprime le jeu en cours
         instanceDataClientManager.setCurrentGame(null);
-        // TODO uncomment when IHM function will be done
          instanceDataClientManager.getIClientIHMToData().endGameBySurrend();
     }
 
@@ -329,6 +327,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
     public void endGameBySurrender(UUID idPlayer) {
         if (idPlayer.equals(instanceDataClientManager.getUserLocal().getId())) {
             GameEntity game = instanceDataClientManager.getCurrentGame();
+            //On envoie la notification a l'autre jouueur
             instanceDataClientManager.getIClientComToData().endGameBySurrender(
                     instanceDataClientManager.getUserLocal().getId(),
                     game.getWhitePlayer().getId().equals(instanceDataClientManager.getUserLocal().getId())
@@ -338,48 +337,74 @@ public class ClientDataToComImpl implements IClientDataToCom {
         if (instanceDataClientManager.getUserLocal().getSavedGames() == null) {
             instanceDataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
         }
+        //On sauvegarde le jeu en cours
         instanceDataClientManager.getUserLocal().getSavedGames().add(instanceDataClientManager.getCurrentGame());
-        // Modify the played games
+        // On incremente le nombre de parties jouees
         instanceDataClientManager.getUserLocal()
                 .setNbPlayed(instanceDataClientManager.getUserLocal().getNbPlayed() + 1);
+        
         if (idPlayer.equals(instanceDataClientManager.getUserLocal().getId())) {
-            // increase the amount of lost games
+            // Si le demndeur est le user local alors il perd
+            // On incremente le nombre de parties perdues
             instanceDataClientManager.getUserLocal()
                     .setNbLost(instanceDataClientManager.getUserLocal().getNbLost() + 1);
         } else {
+            //sinon , l'autre joueur abandonne et je gagne
+            //On incremente le nombre de parties gagnees
             instanceDataClientManager.getUserLocal().setNbWon(instanceDataClientManager.getUserLocal().getNbWon() + 1);
         }
-        // delete the current game
+        // On supprime le jeu en cours
         instanceDataClientManager.setCurrentGame(null);
-        // TODO uncomment when IHM function will be done
          instanceDataClientManager.getIClientIHMToData().endGameBySurrend();
 
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToCom#displayMessage(java.lang.String)
+     */
     @Override
     public void displayMessage(final String message) {
+        //On cree un message et on ajoute le text envoye au message
         MessageEntity newMessage = new MessageEntity();
         newMessage.setText(message);
+        //On ajoute le message aux messages du jeu en cours
         instanceDataClientManager.getCurrentGame().getMessages().add(newMessage);
+        //IHM affiche le message
         instanceDataClientManager.getIClientIHMToData().displayMessage(message);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToCom#notifyConnection(com.utc.api13.commun.entities.PublicUserEntity)
+     */
     @Override
     public void notifyConnection(final PublicUserEntity user) {
+        //On ajoute le user a la liste des utilisateurs connectes
         instanceDataClientManager.getCurrentUsers().add(user);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToCom#notifyDisconnection(java.util.UUID)
+     */
     @Override
     public void notifyDisconnection(final UUID idUser) {
+        //On supprime de la liste des users celui qui a l'uid envoye en parametre
         instanceDataClientManager.getCurrentUsers().removeIf(u -> idUser.equals(u.getId()));
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToCom#nextTurn(com.utc.api13.commun.enumerations.GameStatusEnum, java.util.UUID)
+     */
     @Override
     public void nextTurn(final GameStatusEnum status, final UUID nextPlayer) {
         GameEntity game = instanceDataClientManager.getCurrentGame();
 
+        //C'est a l'autre joueur de jouer
         game.switchCurrentUser();
-        // set the game status :
+        // On modifie le statut du jeu
         game.setIsFinished(status);
 
         // alert IHM:
@@ -403,6 +428,10 @@ public class ClientDataToComImpl implements IClientDataToCom {
 
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.client.data.interfaces.IClientDataToCom#updateDistantProfile(com.utc.api13.commun.entities.PublicUserEntity)
+     */
     @Override
     public void updateDistantProfile(PublicUserEntity userToUpdate) {
         Assert.notNull(instanceDataClientManager.getCurrentUsers(),
@@ -410,7 +439,9 @@ public class ClientDataToComImpl implements IClientDataToCom {
         Assert.notNull(instanceDataClientManager.getCurrentUsers(),
                 "[ClientDataToComImpl][updateDistantProfile] Given user shouldn't be null");
 
+        //On supprime l'utilisateur de la liste 
         instanceDataClientManager.getCurrentUsers().removeIf(u -> u.getId().equals(userToUpdate.getId()));
+        // On ajoute la nouvelle version de cet utilisateur
         instanceDataClientManager.getCurrentUsers().add(userToUpdate);
     }
     

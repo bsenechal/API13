@@ -12,15 +12,13 @@ import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 /**
  * 
- * This interface will be given to the Communication Client module.
+ * This interface will be given to the Communication Client module. The Communication module 
+ * won't call this interface through methods  but through proceed
  * 
  * @author ulyss_000
  *
  */
 
-// Cette Interface sert à recevoir les réponses de Com
-// Com n'appelle pas les méthodes de ces interfaces à l'aide de méthodes, mais à
-// l'aide de proceed.
 
 public interface IClientDataToCom {
 
@@ -31,32 +29,21 @@ public interface IClientDataToCom {
      * 
      * @param connectedUserList
      */
-    public void displayUsersList(final List<PublicUserEntity> connectedUserList); // Affiche
-    // (récupère
-    // pour
-    // affichege
-    // IHM)
-    // la
-    // liste
-    // des
-    // PublicUserEntity
-    // connectés
+    public void displayUsersList(final List<PublicUserEntity> connectedUserList); 
 
     /**
-     * Affiche un Profil de PublicUserEntity distant
+     * Display a distant user's profile ( PublicUserEntity)
      * 
      * @param user
-     *            utilisateur à afficher
+     *            user to be display
      */
     public void displayProfile(final PublicUserEntity user);
 
-    public void printError(final String error);
-
     /**
-     * Affiche (récupère pour affichege IHM) la liste des GameEntity en cours
+     * Display the list of all pending games
      * 
      * @param games
-     *            liste des games en cours
+     *            list of all current games
      */
     public void displayAllGames(final List<GameEntity> games);
 
@@ -70,10 +57,18 @@ public interface IClientDataToCom {
      */
     public void displayResult(final UUID idPlayer, final MoveEntity move);
 
-    public void sendMessageToChat(final MessageEntity message);
-
+    /**
+     * Send the answer for the other player's request leaving
+     * @param answer
+     *          true if the user agree to end the game
+     */
     public void sendAnswerForLeaving(final boolean answer);
 
+    /**
+     * Ask the opponent to end the game
+     * @param uid
+     *          The opponent's uid
+     */
     public void requestPlayerForLeaving(final UUID uid);
 
     /**
@@ -83,74 +78,82 @@ public interface IClientDataToCom {
     public void endGameByLeaving();
 
     /**
-     * TODO: unnecessary
      * 
-     * @param message
-     *            message
+     * notify the rejection
+     * 
+     * @param uidSender
+     *          the sender's uid 
+     * @param rejectionMessage
+     *          the message display for rejection
      */
-    public void notify(final String message);
-
     public void notifyRejection(final UUID uidSender, String rejectionMessage);
 
     /**
-     * La GameEntity est créé sur le serveur.<br/>
-     * Cette méthode initialise l'instance de la GameEntity sur le client
+     * Create the GameEntity on the serveur, initialise and instantiate the game on the Client
      * 
      * @param game
      *            game créé sur le serveur
      */
     public void initGame(final GameEntity game);
 
+    /**
+     * add an observer to the observer list of a game
+     * @param idObserver
+     *              the uid of the new observer
+     */
     public void newObserver(final UUID idObserver);
 
     /**
-     * Etant donné qu'un GameEntity est créé sur le serveur avec deux users<br/>
-     * cette méthode semble inutile
-     * 
-     * @param idPlayer
+     * add a replay to the current games
+     * @param game
+     *          the game to be replayed
      */
-    public void newPlayer(final UUID idPlayer);
-
     public void newReplay(final GameEntity game);
 
-    public void sendProposition(final UUID uidSender, final UUID uidReciever, final boolean observable,
-            final boolean chattable); // A quoi sert cette méthode dans les
-                                      // méthodes utilisées par le "retour" de
-                                      // com ?
 
     /**
-     * Affiche la proposition de jeu d'un autre joueur.
-     * "Voulez vous jouer avec moi ?"
+     * Display the game proposition of the opponent
      * 
      * @param uidSender
+     *          The opponent : sending a game request
      * @param observable
+     *          true if the game is observable
      * @param chattable
+     *        true if the chat is available during the game
      * @param timer
+     *        true if a timer is set between each move
+     *@param timerInt
+     *         Timer in sec
      */
     public void printProposition(final UUID uidSender, final boolean observable, final boolean chattable,
-            final boolean timer, final Integer timerInt); // Affiche
-    // la
-    // proposition
-    // de
-    // jeu
-    // d'un
-    // autre
-    // joueur.
-    // "Voulez
-    // vous
-    // jouer
-    // avec
-    // moi
-    // ?"
+            final boolean timer, final Integer timerInt); 
 
+    /**
+     * The opponent is leaving, the payer win the game
+     */
     public void victoryBySurrender();
 
+    /**
+     * lose game by surrender
+     * @param idPlayer
+     */
     public void endGameBySurrender(UUID idPlayer);
 
+    /**
+     * Display a message 
+     * @param message
+     */
     public void displayMessage(final String message);
 
+    /**
+     * @return an instance of DataClientmanager
+     */
     public DataClientManager getInstanceDataClientManager();
 
+    /**
+     * Define the instance of DataClientManager
+     * @param instanceDataClientManager
+     */
     public void setInstanceDataClientManager(DataClientManager instanceDataClientManager);
 
     /**
