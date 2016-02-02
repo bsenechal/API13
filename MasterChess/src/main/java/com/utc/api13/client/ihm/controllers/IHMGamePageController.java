@@ -107,8 +107,6 @@ public class IHMGamePageController {
         }
     }
 
-    /* exclude an observer in a game */
-
     private void openUserObservableList() throws IOException {
         Stage stage;
         Parent root;
@@ -175,8 +173,6 @@ public class IHMGamePageController {
         chatTextArea.setDisable(true);
 
         chessBoardStackPane.getChildren().add(swingNode);
-
-        // initialisation des différents labels
         playerLoginLabel.setText(game.getWhitePlayer().getLogin());
         otherPlayerLoginLabel.setText(game.getBlackPlayer().getLogin());
 
@@ -188,11 +184,10 @@ public class IHMGamePageController {
 
     }
 
-    public void setBindingsOnLoad() {
+    @SuppressWarnings("restriction")
+	public void setBindingsOnLoad() {
 
         chatTextArea.textProperty().bind(chat.getMessage());
-
-        // Add change listener
         checkProperty.addListener(new ChangeListener<Boolean>() {
 
             @Override
@@ -202,8 +197,6 @@ public class IHMGamePageController {
                 }
             }
         });
-
-        // Add change listener
         checkMateProperty.addListener(new ChangeListener<Boolean>() {
 
             @Override
@@ -216,8 +209,8 @@ public class IHMGamePageController {
 
     }
 
-    private void displayCheckSituation() {
-        // seulement le joueur blanc poste le message
+    @SuppressWarnings("restriction")
+	private void displayCheckSituation() {
         if (myIClientToIHM.getLocalUser().getId().equals(myIClientToIHM.getCurrentGame().getWhitePlayer().getId())) {
             myIClientToIHM.sendChatText("check on : " + myIClientToIHM.getCurrentGame().getCurrentPlayer().getLogin());
         }
@@ -228,15 +221,13 @@ public class IHMGamePageController {
                 alert.setTitle("Check position");
                 alert.setHeaderText("a player is cheked");
                 alert.setContentText("check on : " + myIClientToIHM.getCurrentGame().getCurrentPlayer().getLogin());
-
                 alert.showAndWait();
             }
         });
     }
 
-    private void displayCheckMateSituation() {
-        // seulement le joueur blanc poste le message
-
+    @SuppressWarnings("restriction")
+	private void displayCheckMateSituation() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -245,7 +236,6 @@ public class IHMGamePageController {
                 alert.setHeaderText("a player is check mated");
                 alert.setContentText(
                         "check mate on : " + myIClientToIHM.getCurrentGame().getCurrentPlayer().getLogin());
-
                 alert.showAndWait();
                 myIClientToIHM.killCurrentGame();
             }

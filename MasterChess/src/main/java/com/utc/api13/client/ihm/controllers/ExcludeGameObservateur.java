@@ -64,11 +64,7 @@ public class ExcludeGameObservateur {
         stage.show();
     }
 
-    public void setMainApp(
-            AppClient app /*
-                           * , String login, Boolean chattable, Boolean timer,
-                           * Boolean observable, int time
-                           */) {
+    public void setMainApp(AppClient app) {
         this.mainApp = app;
     }
 
@@ -90,24 +86,21 @@ public class ExcludeGameObservateur {
 
     }
 
-    public void setListenersOnLoad() {
+    @SuppressWarnings("restriction")
+	public void setListenersOnLoad() {
 
         loadDataFromTable();
-        // selecting a line this user will be deleted from the Tchat
-
         observateurUserTable.getSelectionModel().selectedIndexProperty()
                 .addListener((obs, oldSelection, newSelection) -> {
                     int newValue = newSelection.intValue();
                     Optional.ofNullable(gameObserver.get(newValue))
                             .ifPresent(user -> myIClientToIHM.removeUserFromChat(((PublicUserEntity) user).getId()));
-
                     getCurrentStage().close();// closing the current Stage
-
                 });
     }
 
-    public void setBindingsOnLoad() {
-
+    @SuppressWarnings("restriction")
+	public void setBindingsOnLoad() {
         observateurUserLogin.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("login"));
         observateurUserFirstName.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("firstName"));
         observateurLastName.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("lastName"));

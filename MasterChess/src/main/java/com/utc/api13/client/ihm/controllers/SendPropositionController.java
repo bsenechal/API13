@@ -59,7 +59,6 @@ public class SendPropositionController {
     
     public void onCancelClicked() {
         mainApp.getCurrentStage().close();
-        // pb car le stage davant nest pas svg = pb à la déconnexion à prévoir
     }
 
     public void onSendPropositionClicked() {
@@ -182,10 +181,8 @@ public class SendPropositionController {
     }
 
     private void setListenersOnLoad() {
-
     }
 
     public void displayPopup() {
-
     }
 }

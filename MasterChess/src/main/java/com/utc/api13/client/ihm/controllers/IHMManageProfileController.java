@@ -128,7 +128,6 @@ public class IHMManageProfileController {
     }
 
     public void setListenersOnLoad() {
-
     }
 
     public void setBindingsOnLoad() {

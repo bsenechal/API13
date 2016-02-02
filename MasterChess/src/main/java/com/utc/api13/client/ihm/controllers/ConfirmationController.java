@@ -34,7 +34,6 @@ public class ConfirmationController {
     }
 
     public void initialize() {
-        // bindings
     }
 
     public void setManager(IHMManager ihmManager) {

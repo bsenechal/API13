@@ -109,7 +109,6 @@ public class MyInfoPopUpController {
     }
 
     public void setListenersOnLoad() {
-
     }
 
     public void setBindingsOnLoad() {

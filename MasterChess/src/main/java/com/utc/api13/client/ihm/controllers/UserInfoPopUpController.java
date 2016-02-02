@@ -105,7 +105,8 @@ public class UserInfoPopUpController {
         return SwingFXUtils.toFXImage(image, null);
     }
 
-    public void setBindings(ProfilProperty profile) {
+    @SuppressWarnings("restriction")
+	public void setBindings(ProfilProperty profile) {
         userInfoLogin.textProperty().bind(profile.loginProperty());
         userInfoFirstName.textProperty().bind(profile.firstNameProperty());
         userInfoLastName.textProperty().bind(profile.lastNameProperty());

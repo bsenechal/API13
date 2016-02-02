@@ -9,11 +9,6 @@ import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 public interface IClientIHMToData {
 
-    // ne concerne que les éléments de data retournés en asynchrone suite à
-    // echange avec le serveur
-    // le reste est synchrone et appelé par IHM dans l'interface
-    // ClientIHMToDataImpl
-
     /**
      * This method asks the HMI to display the distant profile sent in parameter
      * on screen. The HMI must have previously asked Data for this User
@@ -22,6 +17,7 @@ public interface IClientIHMToData {
      * @param u
      *            a PublicUserEntity object containing all the public
      *            information on the user, passed in parameter
+     *@return void
      */
     public void displayProfile(PublicUserEntity u);
 
@@ -61,6 +57,10 @@ public interface IClientIHMToData {
      *            The unique identifier of the distant answer who accepted or
      *            rejected the game proposition. Allows to identify which user
      *            answered.
+     * @param boolean answer
+     *            The answer of the idstant player.
+     * @param String message
+     *        	   A specific message to display.
      * @return void
      */
     public void displayAnswer(UUID uidSender, boolean answer, String message);
@@ -68,6 +68,8 @@ public interface IClientIHMToData {
     /**
      * Asks the HMI to display the chessboard when both user have accepted the
      * game, and the game has been created on server
+     * @param g
+     * 		  The game entity of the launched game.
      * 
      * @return void
      */
@@ -75,6 +77,19 @@ public interface IClientIHMToData {
 
     /**
      * After a piece is moved
+     * @param lineFrom
+     * 		  The line that has to be refreshed 
+     * @param colFrom
+     *        The column that has to be refreshed
+     * @param lineTo
+     *        The target line
+     * @param colTo	
+     *        The target column
+     * @param piece
+     *        The piece concerned
+     * @param game
+     *        The related Game Entity
+     * @return void
      */
     public void refreshChessBoard(int lineFrom, int colFrom, int lineTo, int colTo, APieceEntity piece,
             GameEntity game);
@@ -85,6 +100,7 @@ public interface IClientIHMToData {
      * 
      * @param newMessage
      *            String containing the message received from distant user
+     * @return void
      */
     public void displayMessage(String newMessage);
 
@@ -102,48 +118,35 @@ public interface IClientIHMToData {
      * @return void
      */
     public void displayGameLiveObserver();
-    /**
-     * when a user leaves before the end of the game, he needs the approbation
-     * of the other one to change the final score
-     */
-    // displayAnswerForLeaving(boolean answer)
 
     /**
      * when a en error occurs between data and com modules
+     * @param errorMessage
+     * 		  The error message that has to be displayed.
+     * @return void
      */
     void displayError(String errorMessage);
 
     /**
      * to display confirmation message that everything went ok
+     * @param errorMessage
+     * 		  The confirmation message that has to be displayed.
+     * @return void
      */
     void displayConfirmation(String confirmationMessage);
-    /*
-     * public void didReceiveBoard(); public void
-     * didReceiveEndOfGameBySurrender(); public void
-     * didReceiveEndOfGameByVictory(); public void didReceiveEndOfGameByLoss();
-     * public void didReceiveEndOfGameByTie(); public void
-     * didReceiveEndOfObservation(); public void didReceiveNewChatMessage();
-     * public void answerForLeavingIsYes(); public void answerForLeavingIsNo();
-     * public void didReceiveRequestToInterruptGame(); public void
-     * publicProfileHasBeenCorrectlyUpdated(); public void
-     * publicProfileHasFailedToBeUpdated(); public void
-     * didRefuseConnectionToServer(); public void
-     * listOfObserversHasBeenUpdated(); public void
-     * didReceiveListOfConnectedUsers(); public void moveWasAccepted(); public
-     * void moveWasDenied(); public void newMoveFromOpponent(); public void
-     * didReceiveProfileOtherUser(); public void
-     * errorReceivingProfileOtherUser(); public void
-     * didReceivePropositionOfGame(); public void propositionOfGameAccepted();
-     * public void propositionOfGameDenied(); public void
-     * didReceiveListOfOngoingAndReplayedGames(); public void
-     * didReceiveErrorInChatMessage();
+    /**
+     * to allow the cases of the current player 
+     * @param currentUser
+     *        the user concerned
+     * @param status
+     *        the status of this user
      */
-
-    // erreurs : il suffit de catcher les exceptions
-    // attention dans les fonctions à tout le temps mettre getCardGame pour
-    // récup jeu local
-
     public void activateCases(PublicUserEntity currentUser, GameStatusEnum status);
-
+    /**
+     * to close the game screen
+     * @param bool
+     * 		  If the game screen has to be closed or not.
+     * @return void
+     */
     public void closeGameScreen(boolean bool);
 }

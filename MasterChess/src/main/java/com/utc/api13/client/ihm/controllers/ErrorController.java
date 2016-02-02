@@ -34,7 +34,6 @@ public class ErrorController {
     }
 
     public void initialize() {
-        // bindings
     }
 
     public void setManager(IHMManager ihmManager) {
@@ -52,11 +51,9 @@ public class ErrorController {
     }
 
     public void setListenersOnLoad() {
-
     }
 
     public void setBindingsOnLoad() {
-
     }
 
     public Stage getCurrentStage() {

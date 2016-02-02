@@ -206,8 +206,6 @@ public class IHMWelcomePageController {
 	        File newFile = new File(selectedDirectory.getAbsolutePath() + File.separator + exportFile.getName());
 	        if (selectedDirectory != null) {
 	            try {
-	                // Attention : si la gestion d'erreur n'est pas faite,
-	                // exportFile est null et on a une belle NullPointerException
 	                Files.copy(exportFile.toPath(), newFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING,
 	                        java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
 	                exportOK(selectedDirectory.getAbsolutePath());
@@ -255,13 +253,6 @@ public class IHMWelcomePageController {
 
     @FXML
     public void onMyInfoClicked() throws IOException {
-        /*
-         * clic => appel de myIClientToIHM.getUserInfo(uuid) rien d'autre dans
-         * cette fonction dans l'interface displayProfile, appel d'une autre
-         * fonction qui fait lancement de l'écran pop up qui set les bonnes
-         * infos
-         */
-
         Stage stage;
         Parent root;
         stage = new Stage();
@@ -323,15 +314,12 @@ public class IHMWelcomePageController {
     }
 
     public void setListConnectedUser() {
-
     }
 
     public void setListCurrentGames() {
-
     }
 
     public void setListSavedGames() {
-
     }
 
     public void setControllerContext(IHMManager ihmManager) {
@@ -353,11 +341,8 @@ public class IHMWelcomePageController {
     }
 
     public void setListenersOnLoad() {
-        // Demande de la liste des users
-        // -------------------------------
         this.listUserPublic = myIClientToIHM.getUserList();
-        this.listUserPublic.addListener // add listener on observableList in
-                                        // DATA
+        this.listUserPublic.addListener 
         (new ListChangeListener<PublicUserEntity>() {
             @Override
             public void onChanged(javafx.collections.ListChangeListener.Change<? extends PublicUserEntity> c) {
@@ -366,14 +351,10 @@ public class IHMWelcomePageController {
         });
 
         connectedUserTable.setItems(this.listUserPublic);
-        myIClientToIHM.getUsers(); // ask for list of user to DATA
-
-        // Demande de la liste des jeux
-        // -------------------------------
+        myIClientToIHM.getUsers(); 
 
         this.listCurrentGames = myIClientToIHM.getGamesList();
-        this.listCurrentGames.addListener // add listener on observableList in
-                                          // DATA
+        this.listCurrentGames.addListener 
         (new ListChangeListener<GameEntity>() {
 
             @Override
@@ -383,10 +364,7 @@ public class IHMWelcomePageController {
         });
 
         currentGamesTable.setItems(this.listCurrentGames);
-        myIClientToIHM.getAllGames(); // ask for list of game to DATA
-
-        // Demande de la liste des parties sauvegardées
-        // -------------------------------
+        myIClientToIHM.getAllGames(); 
         connectedUserTable.setOnMouseClicked(event -> connectedUserTable.getSelectionModel().clearSelection());
         connectedUserTable.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
 
@@ -429,14 +407,9 @@ public class IHMWelcomePageController {
     }
 
     public void setBindingsOnLoad() {
-        // liste des users
-        // ---------------
         connectedUserLogin.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("Login"));
         connectedUserStatus.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("Status"));
         connectedUserStat.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("NbWon"));
-
-        // liste des jeux en cours
-        // ---------------
 
         currentGamesId.setCellValueFactory(new PropertyValueFactory<GameEntity, UUID>("id"));
         currentGamesPlayer1.setCellValueFactory(new PropertyValueFactory<GameEntity, String>("whitePlayerLogin"));
@@ -476,10 +449,7 @@ public class IHMWelcomePageController {
         stage.show();
     }
 
-    // Function to make people disconnect when they click the cross to close the
-    // window of Welcome Page
     public void setDisconnectUserByClosingWindow() {
-        // catch event close window
         mainApp.getMainStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
                 try {
