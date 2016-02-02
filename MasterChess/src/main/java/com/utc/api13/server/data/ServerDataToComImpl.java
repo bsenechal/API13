@@ -35,16 +35,11 @@ public class ServerDataToComImpl implements IServerDataToCom {
         this.dataServerManager = dataServerManager;
     }
 
+
     /*
      * (non-Javadoc)
-     * 
-     * @see com.utc.api13.server.data.interfaces.IServerToComm#getUsers()
+     * @see com.utc.api13.server.data.interfaces.IServerDataToCom#getUserInfo(java.util.UUID)
      */
-    @Override
-    public List<PublicUserEntity> getUsers() {
-        return null;
-    }
-
     @Override
     public PublicUserEntity getUserInfo(final UUID idUser) {
         Assert.notNull(idUser, "[ServerDataToComImpl][getUserInfo] idUser shouldn't be null");
@@ -54,6 +49,10 @@ public class ServerDataToComImpl implements IServerDataToCom {
                 .orElse(null);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.server.data.interfaces.IServerDataToCom#getAllGames()
+     */
     @Override
     public List<GameEntity> getAllGames() {
         return dataServerManager.getCurrentGames();
@@ -84,18 +83,17 @@ public class ServerDataToComImpl implements IServerDataToCom {
     public boolean computerResult(MoveEntity move) {
 
         GameEntity game = dataServerManager.getGameById(move.getGameID());
-        // !!! Il est nécessaire de récupérer la pièce locale et non celle du
-        // move récupéré côté client -> ce n'est pas le même object
+        // On récupere la piece 
         APieceEntity mypiece = game.getPieceFromPosition(move.getFromPosition());
         Boolean result = mypiece.isMovePossible(move, game);
 
         if (result) {
-
+            // Si le déplacement est possible
             game.removePieceFromPosition(move.getToPosition());
 
-            // will transform a pawn to a queen if need be :
+            // Transforme le pion en reine s'il atteint le camp ennemi
             game.transformPawnToQueen(move);
-
+            //bouge la piece
             game.movePiece(move);
 
         }
@@ -116,16 +114,19 @@ public class ServerDataToComImpl implements IServerDataToCom {
         Assert.notNull(dataServerManager.getGameById(idGame),
                 "[ServerDataToComImpl][isFinished] The specified idGame doesn't have a linked game");
 
-        // verify game :
         GameEntity game = dataServerManager.getGameById(idGame);
 
-        // first : switch user to verify that he is not checked !
+        // On echange les users
         game.switchCurrentUser();
 
-        // then verify the game status :
+        // On verifie le statut du jeu
         return game.isFinished();
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.server.data.interfaces.IServerDataToCom#observerLeave(java.util.UUID)
+     */
     @Override
     public void observerLeave(final UUID idUser) {
         Assert.notNull(dataServerManager.getCurrentUsers(),
@@ -133,8 +134,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
         dataServerManager.getCurrentGames().stream()
                 .forEach(game -> game.getObservers().removeIf(u -> idUser.equals(u.getId())));
 
-        // TODO: dataServerManager.getIServeurComToData().sendMessageToChat()
-
+        // A faire lorsque l'on implemente les observateurs
     }
 
     /*
@@ -145,10 +145,14 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public List<PublicUserEntity> getListObservers() {
-        // TODO Auto-generated method stub
+     // A faire lorsque l'on implemente les observateurs
         return null;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.server.data.interfaces.IServerDataToCom#saveUserData(com.utc.api13.commun.entities.PublicUserEntity)
+     */
     @Override
     public boolean saveUserData(final PublicUserEntity user) {
         Assert.notNull(dataServerManager.getCurrentUsers(),
@@ -169,7 +173,9 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public void newObserver(UUID idGame, UUID idUser) {
+        //On recupere le jeu
         GameEntity game = getGameById(idGame);
+        //On ajouter un observeur
         PublicUserEntity userToAdd = getUserInfo(idUser);
         if (game != null && userToAdd != null) {
             game.getObservers().add(userToAdd);
@@ -186,7 +192,7 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public void createReplay(GameEntity game, PublicUserEntity user) {
-        // TODO Auto-generated method stub
+        // A faire lorsque l'on implémente les replays
 
     }
 
@@ -201,18 +207,22 @@ public class ServerDataToComImpl implements IServerDataToCom {
         return dataServerManager.getCurrentUsers();
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.server.data.interfaces.IServerDataToCom#getUsersByGame(java.util.UUID)
+     */
     @Override
     public List<PublicUserEntity> getUsersByGame(final UUID idGame) {
         Assert.notNull(dataServerManager.getCurrentGames(),
                 "[ServerDataToComImpl][getUsersByGame] currentGames shouldn't be null");
         List<PublicUserEntity> listUsersByGame = new ArrayList<PublicUserEntity>();
 
-        // variable containing the corresponding idGame Game.
+        //On récupere le jeu
         final GameEntity gameFound = getGameById(idGame);
 
-        // If the idGame exist on the server
+        // Si le jeu existe sur le serveur
         if (gameFound != null) {
-            // Else get all observer + two players
+            // On recupere les observateurs + les joueurs
             if (gameFound.getObservers() != null) {
                 listUsersByGame.addAll(gameFound.getObservers());
             }
@@ -223,11 +233,11 @@ public class ServerDataToComImpl implements IServerDataToCom {
             if (gameFound.getWhitePlayer() != null) {
                 listUsersByGame.add(gameFound.getWhitePlayer());
             }
+            //on retourne la liste
             return listUsersByGame;
         }
 
-        // If the idGame doesn't exist on the server, the method sends back
-        // 'null'
+        // On retourne null si le jeu n'existe pas
         return null;
     }
 
@@ -240,12 +250,12 @@ public class ServerDataToComImpl implements IServerDataToCom {
      */
     @Override
     public void surrender(UUID idPlayer) {
-        // Get the game played by the user
+        // On retrouve le jeu dans lequel le player joue
         GameEntity playedGame = dataServerManager.getCurrentGames().stream()
                 .filter(game -> game.getBlackPlayer().getId().equals(idPlayer)
                         || game.getWhitePlayer().getId().equals(idPlayer))
                 .findFirst().orElse(null);
-        // Erase the game from server
+        // On finit le jeu
         endGame(playedGame.getId());
     }
 
@@ -263,16 +273,17 @@ public class ServerDataToComImpl implements IServerDataToCom {
         dataServerManager.getCurrentUsers().removeIf(user -> user.getId().equals(idUser));
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.server.data.interfaces.IServerDataToCom#createGame(java.util.UUID, java.util.UUID, boolean, boolean, boolean, java.lang.Integer)
+     */
     @Override
     public GameEntity createGame(UUID j1, UUID j2, boolean observable, boolean chattable, boolean timer,
             Integer timerInt) {
         PublicUserEntity whitePlayer;
         PublicUserEntity blackPlayer;
 
-        /*
-         * generate a random number to choose between 0 and 1 to choose who will
-         * be the white player and who will be the black player
-         */
+        //on genere un nombre aléatoire pour définir si le joueur est blanc ou noir
         Random r = new Random();
         int valeur = 0 + r.nextInt(2 - 0);
 
@@ -286,10 +297,10 @@ public class ServerDataToComImpl implements IServerDataToCom {
 
         Assert.notNull(whitePlayer, "[ServerDataToComImpl][createGame] player 1 is not online");
         Assert.notNull(blackPlayer, "[ServerDataToComImpl][createGame] player 2 is not online");
-        // Enable chat for the two players
+        // On modifie les paramètres des jeux pour chacun des jeux
         whitePlayer.setAllowedToChat(true);
         blackPlayer.setAllowedToChat(true);
-        // Create a game
+        // On crée un nouveau jeu
         GameEntity newGame = new GameEntity();
         newGame.setBlackPlayer(blackPlayer);
         newGame.setWhitePlayer(whitePlayer);
@@ -298,24 +309,37 @@ public class ServerDataToComImpl implements IServerDataToCom {
         newGame.setIsChattable(chattable);
         newGame.setTimer(timer);
         newGame.setTimerInt(timerInt);
-        // Add to the list of current games
+        // On ajoute le nouveau jeu
         dataServerManager.getCurrentGames().add(newGame);
         return newGame;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.server.data.interfaces.IServerDataToCom#getGameById(java.util.UUID)
+     */
     @Override
     public GameEntity getGameById(UUID idGame) {
         return dataServerManager.getCurrentGames().stream().filter(u -> u.getId().equals(idGame)).findFirst()
                 .orElse(null);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.server.data.interfaces.IServerDataToCom#endGame(java.util.UUID)
+     */
     @Override
     public void endGame(UUID idGame) {
         dataServerManager.getCurrentGames().removeIf(g -> idGame.equals(g.getId()));
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.server.data.interfaces.IServerDataToCom#removeUserFromChat(java.util.UUID, java.util.UUID)
+     */
     @Override
     public void removeUserFromChat(UUID idUser, UUID idGame) {
+        //On désactive le user du chat
         GameEntity game = getGameById(idGame);
         if (game != null) {
             PublicUserEntity userToRemove = getUserInfo(idUser);
@@ -325,6 +349,10 @@ public class ServerDataToComImpl implements IServerDataToCom {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.utc.api13.server.data.interfaces.IServerDataToCom#isPlaying(java.util.UUID)
+     */
     @Override
     public boolean isPlaying(UUID idUser) {
         // TODO Auto-generated method stub

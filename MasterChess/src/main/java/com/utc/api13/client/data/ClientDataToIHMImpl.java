@@ -354,7 +354,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         newMessage.setText(message);
         // On ajoute le message aux messages du jeu
         dataClientManager.getCurrentGame().getMessages().add(newMessage);
-        //On envoit a Com le message
+        //On envoit a COM
         dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
     }
 

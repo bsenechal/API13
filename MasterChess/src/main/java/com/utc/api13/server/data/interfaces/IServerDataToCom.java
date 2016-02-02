@@ -11,9 +11,7 @@ import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 public interface IServerDataToCom {
-    public List<PublicUserEntity> getUsers(); // Appelée par com.getUsers().
-                                              // Renvoie la liste des
-                                              // PublicUserEntity connectés
+    
 
     /**
      * Returns the user with the given UUID
@@ -22,44 +20,23 @@ public interface IServerDataToCom {
      *            UUID of the user
      * @return the found user or null when not founded
      */
-    public PublicUserEntity getUserInfo(final UUID idUser); // Appelée par
-                                                            // com.getUserInfo(final
-                                                            // UUID idUser).
-                                                            // Renvoie les
-                                                            // informations sur
-                                                            // un PublicUser
-
+    public PublicUserEntity getUserInfo(final UUID idUser); 
     /**
      * 
      * @return Returns the list of current games
      */
-    public List<GameEntity> getAllGames(); // Appelée par com.getUsers().
-                                           // Renvoie la liste des GameEntity
-                                           // en
-                                           // cours
-
-    public void notifyConnections(final PublicUserEntity player); // Appelée par
-                                                                  // by
-                                                                  // com.notifyConnections
-                                                                  // (PublicUserEntity
-                                                                  // Player).
-                                                                  // Préviens
-                                                                  // le
-                                                                  // serveur
-                                                                  // lorsqu'un
-                                                                  // User se
-                                                                  // connecte,
-                                                                  // de façon
-                                                                  // à
-                                                                  // mettre à
-                                                                  // jour la
-                                                                  // liste de
-                                                                  // PublicUserEntity
-                                                                  // sur le
-                                                                  // serveur
+    public List<GameEntity> getAllGames(); 
 
     /**
-     * @author ulyss_000 This method is used to verify if the move is possible
+     * Warn the server that the player gets connected to add it to current users
+     * @param player
+     *      the new player
+     */
+    public void notifyConnections(final PublicUserEntity player); 
+
+    /**
+     * @author ulyss_000 
+     * This method is used to verify if the move is possible
      * @param move
      * @return true if the move is possible, else -> false
      */
@@ -83,11 +60,13 @@ public interface IServerDataToCom {
      * @param idUser
      *            user who is leaving
      */
-    public void observerLeave(final UUID idUser); // Signaler qu'un observeur
-                                                  // quitte la partie.
+    public void observerLeave(final UUID idUser); 
 
-    public List<PublicUserEntity> getListObservers(); // Récupérer la liste des
-                                                      // observeurs
+    /**
+     * 
+     * @return the list of observers
+     */
+    public List<PublicUserEntity> getListObservers(); 
 
     /**
      * Saves or updates the given user in the list of current users
@@ -102,8 +81,8 @@ public interface IServerDataToCom {
     public boolean saveUserData(final PublicUserEntity user) throws TechnicalException, FunctionalException;
 
     /**
-     * Un nouvel observateur se connecte à la partie<br/>
-     * Mettre à jour la Liste des observateurs
+     * 
+     * Add a new observer to a game and aware others of this new connection
      * 
      * @param idGame
      *            uid game
@@ -112,39 +91,65 @@ public interface IServerDataToCom {
      */
     public void newObserver(final UUID idGame, final UUID idUser);
 
+    /**
+     * Create a replay of a saved game
+     * @param game
+     * @param user
+     */
     public void createReplay(final GameEntity game, final PublicUserEntity user);
 
-    public List<PublicUserEntity> getConnectedUsers(); // Différence avec
-                                                       // getUsers() ?
+    /**
+     * 
+     * @return the list of connected users
+     */
+    public List<PublicUserEntity> getConnectedUsers(); 
 
     /**
-     * @author ulyss_000 list of the Users (observers and players) connected to
-     *         a specified Game
+     * @author ulyss_000 
+     * list of the Users (observers and players) connected to a specified Game
      * @param idGame
      * @return the list of found users or null if the game doesn't exist or an
      *         empty List<PublicUserEntity> if there are no players
      */
-    public List<PublicUserEntity> getUsersByGame(final UUID idGame); // Liste
-                                                                     // des
-                                                                     // utilisateurs
-                                                                     // connectés
-                                                                     // à une
-                                                                     // partie
-                                                                     // spécifique
+    public List<PublicUserEntity> getUsersByGame(final UUID idGame); 
 
+    /**
+     * Surrend the game in which idplayer is playing
+     * @param idPlayer
+     */
     public void surrender(final UUID idPlayer);
 
-    public void disconnect(final UUID idUser); // Appelée par
-                                               // com.disconnect(UUID idUser)
-                                               // pour supprimer un User de la
-                                               // liste des Users connectés
-
-    // Méthode pour créer une nouvelle partie :
+    /**
+     * Delete the user in the liste of connected users
+     * @param idUser
+     *          the user who wants to be disconnected
+     */
+    public void disconnect(final UUID idUser); 
+    /**
+     * create a new game
+     * @param j1
+     *          first player
+     * @param j2
+     *          second player
+     * @param observable
+     *          true if the game is observable
+     * @param chattable
+     *          true if the game if chattable
+     * @param timer
+     *          true fi there is a timer between each moves
+     * @param timerInt
+     *          second of the timer
+     * @return
+     */
     public GameEntity createGame(final UUID j1, final UUID j2, final boolean observable, final boolean chattable,
             final boolean timer, final Integer timerInt);
 
-    public GameEntity getGameById(final UUID idGame); // Renvoie une GameEntity
-                                                      // par l'UID de la Game
+    /**
+     * Get a game by its ID
+     * @param idGame
+     * @return the game
+     */
+    public GameEntity getGameById(final UUID idGame); 
 
     /**
      * removes the game with the given id on the server
