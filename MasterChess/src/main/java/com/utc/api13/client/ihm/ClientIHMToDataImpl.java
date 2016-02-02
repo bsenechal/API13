@@ -117,7 +117,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 Stage stage;
                 Parent root = null;
                 stage = new Stage();
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AnswerPropositionPopUp.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/answerPropositionPopUp.fxml"));
                 try {
                     root = (Pane) fxmlLoader.load();
                     AnswerPropositionController answerPropositionController = fxmlLoader.getController();
