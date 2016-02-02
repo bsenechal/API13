@@ -83,11 +83,9 @@ public class GiveUpPopUpController {
     }
 
     public void setListenersOnLoad() {
-
     }
 
     public void setBindingsOnLoad() {
-
     }
 
     public Stage getCurrentStage() {

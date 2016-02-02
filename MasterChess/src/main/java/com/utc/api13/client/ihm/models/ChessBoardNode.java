@@ -29,9 +29,7 @@ import javafx.beans.property.BooleanProperty;
 
 public class ChessBoardNode {
     private IClientDataToIHM myIClientToIHM;
-
     private GameEntity myGame;
-
     private IHMManager myIhmManager;
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JPanel chessBoard;
@@ -40,10 +38,7 @@ public class ChessBoardNode {
     private Case[][] chessBoardSquares = new Case[TAILLE][TAILLE];
     private PositionEntity firstPosition = new PositionEntity(-1, -1);
     List<PositionEntity> positionList;
-    // setter une variable d'etat pour savoir si on selectionne une piece ou une
-    // position pour les déplacements dans le listener
     private int selection = 1;
-
     private BooleanProperty checkProperty;
     private BooleanProperty checkMateProperty;
 
@@ -68,8 +63,6 @@ public class ChessBoardNode {
         chessBoard.setBorder(new LineBorder(Color.BLACK));
         gui.add(chessBoard);
 
-        // création des cases de l'échiquier avec le listener pour les
-        // déplacements
         Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int ii = 0; ii < chessBoardSquares.length; ii++) {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
@@ -77,15 +70,11 @@ public class ChessBoardNode {
                 b.setEnabled(false);
 
                 if ((jj % 2 == 1 && ii % 2 == 1) || (jj % 2 == 0 && ii % 2 == 0)) {
-                    // b.setBackground(Color.GRAY);
-                    // b.setColor(Color.GRAY);
                     b.setBackground(Color.WHITE);
                     b.setColor(Color.WHITE);
                 } else {
                     b.setBackground(Color.GRAY);
                     b.setColor(Color.GRAY);
-                    // b.setBackground(Color.WHITE);
-                    // b.setColor(Color.WHITE);
                 }
 
                 b.addActionListener(new ActionListener() {
@@ -112,16 +101,13 @@ public class ChessBoardNode {
                                     firstPosition.getPositionY());
                             if (!positionList.isEmpty()) {
                                 selection = 2;
-                                // désactiver toutes les cases
                                 for (int ii = 0; ii < chessBoardSquares.length; ii++) {
                                     for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
 
                                         chessBoardSquares[ii][jj].setEnabled(false);
                                     }
                                 }
-                                // passer les cases en surbrillance et activer
-                                // uniquement celles-ci et la position de depart
-                                // !
+                                
                                 chessBoardSquares[firstPosition.getPositionX() - 1][8 - firstPosition.getPositionY()]
                                         .setBorder(new LineBorder(Color.GREEN));
                                 chessBoardSquares[firstPosition.getPositionX() - 1][8 - firstPosition.getPositionY()]
@@ -149,12 +135,10 @@ public class ChessBoardNode {
                                 myIClientToIHM.playMove(firstPosition.getPositionX(), firstPosition.getPositionY(),
                                         movePosition.getLine(), movePosition.getColumn());
 
-                                // sortir de la position d'echec si echec
                                 if (checkProperty.get()) {
                                     changeCheckSituation();
                                 }
 
-                                // tout rendre unclickable
                                 for (Case i[] : chessBoardSquares) {
                                     for (Case j : i) {
                                         j.setEnabled(false);
@@ -162,7 +146,6 @@ public class ChessBoardNode {
                                 }
                             }
                             selection = 1;
-                            // décolorer les cases
                             for (Case[] i : chessBoardSquares) {
                                 for (Case j : i) {
                                     j.setBackground(j.getColor());
@@ -181,13 +164,11 @@ public class ChessBoardNode {
 
         activateCases(myGame.getCurrentPlayer());
 
-        // fill the chess board
         chessBoard.add(new JLabel(""));
-        // fill the top row
         for (int ii = 0; ii < 8; ii++) {
             chessBoard.add(new JLabel(COLS.substring(ii, ii + 1), SwingConstants.CENTER));
         }
-        // fill the black non-pawn piece row
+
         for (int ii = 0; ii < 8; ii++) {
             for (int jj = 0; jj < 8; jj++) {
                 switch (jj) {
@@ -199,7 +180,6 @@ public class ChessBoardNode {
             }
         }
 
-        // Je place les icônes des pièces sur leur case respective
         while (increment >= -1) {
             for (int ctr = 0; ctr <= 7; ctr++) {
                 String iconePath = dossierIcone + ordrePiece[ctr] + couleur;
@@ -283,7 +263,6 @@ public class ChessBoardNode {
     }
 
     public void activateCases(PublicUserEntity currentUser) {
-        // en fonction du joueur courant
         if (myIClientToIHM.getLocalUser().getId().equals(currentUser.getId())) {
             for (Case i[] : chessBoardSquares) {
                 for (Case j : i) {

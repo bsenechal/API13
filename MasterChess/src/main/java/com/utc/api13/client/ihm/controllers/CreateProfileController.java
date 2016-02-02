@@ -151,7 +151,6 @@ public class CreateProfileController {
 
     public static boolean copyFile(File source, File dest) {
         try {
-            // Declaration et ouverture des flux
             java.io.FileInputStream sourceFile = new java.io.FileInputStream(source);
 
             try {
@@ -159,8 +158,6 @@ public class CreateProfileController {
 
                 try {
                     destinationFile = new FileOutputStream(dest);
-
-                    // Lecture par segment de 0.5Mo
                     byte[] buffer = new byte[512 * 1024];
                     int nbLecture;
 
@@ -177,13 +174,14 @@ public class CreateProfileController {
             }
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            return false; // Erreur
+            return false; 
         }
 
-        return true; // Résultat OK
+        return true; 
     }
 
-    @FXML
+    @SuppressWarnings("restriction")
+	@FXML
     public void onChangePictureClicked() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Ouvrir le document");
@@ -240,7 +238,7 @@ public class CreateProfileController {
     public void error(String message, boolean close) throws IOException {
         Parent root;
         errorStage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/errorPopUp.fxml"));
         root = (Pane) fxmlLoader.load();
         ErrorController controller = fxmlLoader.getController();
         controller.setControllerContext(this.IHMManager);
@@ -252,8 +250,7 @@ public class CreateProfileController {
         }
         errorStage.initModality(Modality.APPLICATION_MODAL);
         errorStage.show();
-
-        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+		PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished(event -> errorStage.close());
         delay.play();
     }
