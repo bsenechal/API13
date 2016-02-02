@@ -31,7 +31,7 @@ import javafx.util.Duration;
 public class SendPropositionController {
 
     private IHMManager ihmManager;
-    private static AppClient mainApp;
+    private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
     private Stage currentStage;
     private static final Logger LOGGER = Logger.getLogger(SendPropositionController.class);

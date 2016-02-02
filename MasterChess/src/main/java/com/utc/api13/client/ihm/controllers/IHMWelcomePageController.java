@@ -50,7 +50,6 @@ import javafx.util.Duration;
 public class IHMWelcomePageController {
     private IHMManager ihmManager;
     private ProfilProperty profile;
-    public static Stage stageI;
     private Stage currentStage;
     private AppClient mainApp;
     private IClientDataToIHM myIClientToIHM;
