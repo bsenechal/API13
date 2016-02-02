@@ -40,7 +40,7 @@ public class RequestPlayerLeaving extends Message {
         if (!abandon) {
             comClientManager.getIClientDataToCom().requestPlayerForLeaving(sender);
         } else {
-            comClientManager.getIClientDataToCom().endGameBySurrender(sender);
+            comClientManager.getIClientDataToCom().victoryBySurrender();
         }
     }
 

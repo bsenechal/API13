@@ -181,6 +181,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     stage.setScene(new Scene(root));
                     stage.setTitle("Game!");
                     myIHMManager.setCurrentGameStage(stage);
+                    myIHMManager.setCurrentGameStage(stage);
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (IOException e) {
@@ -317,5 +318,16 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                 }
             }
         }
+    }
+
+    @Override
+    public void endGameBySurrend() {
+        // TODO Auto-generated method stub
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+        myIHMManager.getCurrentGameStage().close();
+            }
+        });
     }
 }

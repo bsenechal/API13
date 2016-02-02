@@ -157,4 +157,6 @@ public interface IClientIHMToData {
      * @return void
      */
     public void closeGameScreen(boolean bool);
+
+    public void endGameBySurrend();
 }

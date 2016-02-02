@@ -316,7 +316,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
         // delete the current game
         instanceDataClientManager.setCurrentGame(null);
         // TODO uncomment when IHM function will be done
-        // instanceDataClientManager.getIClientIHMToData().victoryBySurrend();
+         instanceDataClientManager.getIClientIHMToData().endGameBySurrend();
     }
 
     /*
@@ -352,7 +352,7 @@ public class ClientDataToComImpl implements IClientDataToCom {
         // delete the current game
         instanceDataClientManager.setCurrentGame(null);
         // TODO uncomment when IHM function will be done
-        // instanceDataClientManager.getIClientIHMToData().endGameBySurrend();
+         instanceDataClientManager.getIClientIHMToData().endGameBySurrend();
 
     }
 
