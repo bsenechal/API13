@@ -98,16 +98,16 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public void connect(final String login, final String password) throws FunctionalException, TechnicalException {
         Assert.notNull(userService, "[ClientDataToIHMImpl][connect] userService shouldn't be null");
 
-        // Check the login and password
+        // On verifie le login et le mot de passe
         PrivateUserEntity privateUser = userService.getByLoginAndPassword(login, password);
         if (privateUser == null) {
             List<Erreur> erreurs = new ArrayList<>();
             erreurs.add(new Erreur(ErrorTypeEnum.LOGIN_FAILED));
             throw new FunctionalException(erreurs);
         }
-        // Save the local user
+        // On enregistre le private user
         dataClientManager.setUserLocal(privateUser);
-        // Notify the server
+        // On notifie le serveur
         PublicUserEntity publicUser = new PublicUserEntity(privateUser);
         dataClientManager.getIClientComToData().notifyConnection(publicUser);
     }
@@ -122,17 +122,17 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         Assert.notNull(dataClientManager.getUserLocal(),
                 "[ClientDataToIHMImpl][disconnect] UserLocal shouldn't be null");
 
-        // Leave the game
+        //Pour quitter le jeu on verifie d'abord qu'il y a un jeu en cours
         if (dataClientManager.getCurrentGame() != null) {
+            //Si l'utilisateur est un observateur alors on le retire de la liste des observeurs
             if (gameService.isObserver(dataClientManager.getCurrentGame(), dataClientManager.getUserLocal().getId())) {
                 observerLeave();
             } else {
+                //Sinon on demande a quitter le jeu
                 requestPlayerForLeaving();
             }
         }
-        // Ask deconnection from server
         dataClientManager.getIClientComToData().disconnect(dataClientManager.getUserLocal().getId());
-        // Set the local user to null
         dataClientManager.setUserLocal(null);
     }
 
@@ -152,11 +152,14 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
         MoveEntity move = new MoveEntity(null, piece.getPosition(), position, piece, null, null);
 
         if (piece.isMovePossible(move, dataClientManager.getCurrentGame())) {
+            //On verifie que le coup soit permi
+            //On cree le cours et on le valide
             move.setDate(new Date());
             move.setUserID(dataClientManager.getUserLocal().getId());
             move.setGameID(dataClientManager.getCurrentGame().getId());
             dataClientManager.getIClientComToData().validateMove(dataClientManager.getUserLocal().getId(), move);
         } else {
+            // On renvoie l'erreur MOVE IMPOSSIBLE 
             List<Erreur> erreurs = new ArrayList<>();
             erreurs.add(new Erreur(ErrorTypeEnum.MOVE_IMPOSSIBLE));
             throw new FunctionalException(erreurs);
@@ -185,7 +188,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
                 "[ClientDataToIHMImpl][requestPlayerForLeaving] UserLocal shouldn't be null");
 
         GameEntity game = dataClientManager.getCurrentGame();
-
+        //On envoie la requete a l'adversaire
         dataClientManager.getIClientComToData().requestPlayerForLeaving(dataClientManager.getUserLocal().getId(),
                 game.getWhitePlayer().getId().equals(dataClientManager.getUserLocal().getId())
                         ? game.getBlackPlayer().getId() : game.getWhitePlayer().getId());
@@ -198,15 +201,15 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
      */
     @Override
     public void sendAnswerForLeaving(boolean answer) {
+        //TODO VERIFIER CETTE FONCTION !!!!!!!!
         if (answer) {
-            // Add game in local user saved game (in case the local user wants
-            // to
-            // save the game after ending)
+            
             if (dataClientManager.getUserLocal().getSavedGames() == null) {
                 dataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
             }
+            //On sauvegarde le jeu
             dataClientManager.getUserLocal().getSavedGames().add(getCurrentGame());
-            // if the local user said yes no it's a win for him
+            // Si le joueur accepte alors il on incrémente le nombre de parties jouees mais pas les gagnees / perdues 
             dataClientManager.getUserLocal().setNbPlayed(getLocalUser().getNbPlayed() + 1);
            
             // Inform the local user that game is over with result
@@ -243,13 +246,13 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
     public void updateProfile(PrivateUserEntity user) throws TechnicalException, FunctionalException {
         Assert.notNull(user, "[ClientDataToIHMImpl][updateProfile] user shouldn't be null");
 
-        // delete the existing info
+        // On supprime les infos actuelles
         userService.deleteById(user.getId());
-        // Store the new one
+        // On ajoute les nouvelles
 
         userService.save(user);
         this.dataClientManager.setUserLocal(user);
-        // notify the server
+        // On notifie le serveur
         dataClientManager.getIClientComToData().sendUserUpdates(new PublicUserEntity(user));
     }
 
@@ -297,6 +300,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
                 "[ClientDataToIHMImpl][saveGame] SavedGames shouldn't be null");
 
         if (dataClientManager.getCurrentGame() != null) {
+            //On enregistre le jeu et l'etat actuel du user
             dataClientManager.getUserLocal().getSavedGames().add(dataClientManager.getCurrentGame());
             userService.save(getLocalUser());
         } else {
@@ -348,7 +352,9 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
                 "[ClientDataToIHMImpl][sendChatText] current game shouldn't be null");
         MessageEntity newMessage = new MessageEntity();
         newMessage.setText(message);
+        // On ajoute le message aux messages du jeu
         dataClientManager.getCurrentGame().getMessages().add(newMessage);
+        //On envoit a Com le message
         dataClientManager.getIClientComToData().sendTextChat(message, dataClientManager.getCurrentGame().getId());
     }
 
