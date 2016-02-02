@@ -172,6 +172,7 @@ public class ClientDataToIHMImpl implements IClientDataToIHM {
             dataClientManager.getUserLocal().getSavedGames().add(getCurrentGame());
             // if the local user said yes no it's a win for him
             dataClientManager.getUserLocal().setNbPlayed(getLocalUser().getNbPlayed() + 1);
+           
             // Inform the local user that game is over with result
             // TODO: à faire
             // send information to opponent player

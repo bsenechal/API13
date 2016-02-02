@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  *
  */
 public class AppClient extends Application {
-    public static Stage stage;
+    private Stage stage;
     private Stage currentStage;
     private static final Logger LOGGER = Logger.getLogger(AppClient.class);
     private ComClientManager comClientManager;
@@ -75,8 +75,6 @@ public class AppClient extends Application {
         stage.show();
 
     }
-
-    
 
     public Stage getCurrentStage() {
         return currentStage;

@@ -11,7 +11,7 @@ public interface IClientComToData {
     /**
      * to request observation connection to a replay from server
      */
-    public void connectAsObserver(UUID game_id);
+    public void connectAsObserver(UUID gameId);
 
     /**
      * to request all public users connected from server
