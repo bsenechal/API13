@@ -139,7 +139,7 @@ public class ChessBoardNode {
                                     changeCheckSituation();
                                 }
 
-                                for (Case i[] : chessBoardSquares) {
+                                for (Case[] i : chessBoardSquares) {
                                     for (Case j : i) {
                                         j.setEnabled(false);
                                     }

@@ -84,7 +84,7 @@ public class ExcludeGameObservateur {
 
     }
 
-	public void setListenersOnLoad() {
+    public void setListenersOnLoad() {
 
         loadDataFromTable();
         observateurUserTable.getSelectionModel().selectedIndexProperty()
@@ -96,7 +96,7 @@ public class ExcludeGameObservateur {
                 });
     }
 
-	public void setBindingsOnLoad() {
+    public void setBindingsOnLoad() {
         observateurUserLogin.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("login"));
         observateurUserFirstName.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("firstName"));
         observateurLastName.setCellValueFactory(new PropertyValueFactory<PublicUserEntity, String>("lastName"));
