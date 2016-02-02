@@ -65,7 +65,7 @@ public class StorageUtils {
         } catch (IOException ex) {
             throw new DataAccessException("Error while writing entity", ex);
         } finally {
-            if (ois != null) {
+            if (oos != null) {
                 try {
                     oos.flush();
                     oos.close();
