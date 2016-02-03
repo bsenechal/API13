@@ -27,27 +27,6 @@ public class QueenEntityTest {
     private PublicUserEntity blackPlayer;
     private PublicUserEntity whitePlayer;
 
-    public static void displayChessBoard(List<PositionEntity> positions) {
-        for (int x = 1; x <= 8; x++) {
-            for (int y = 1; y <= 8; y++) {
-                System.out.print("|");
-                boolean available = Boolean.TRUE;
-                for (PositionEntity pos : positions) {
-                    if (pos.equals(new PositionEntity(y, x))) {
-                        available = Boolean.FALSE;
-                    }
-
-                }
-                if (available) {
-                    System.out.print("O");
-                } else {
-                    System.out.print("X");
-                }
-            }
-            System.out.println("|");
-        }
-    }
-
     /**
      * @throws java.lang.Exception
      */
@@ -117,9 +96,6 @@ public class QueenEntityTest {
         Assert.assertTrue("There should be 21 possible positions for the black Queen",
                 availablesPositionsBlackQueen.size() == 21);
 
-        // System.out.println("White Queen + Black queen");
-        // displayChessBoard(availablesPositionsWhiteQueen);
-
         // Ajout de pièces bloquantes :
         PawnEntity whitePawn = new PawnEntity(PieceColorEnum.WHITE, 3);
         game.getWhitePieces().add(whitePawn);
@@ -127,12 +103,8 @@ public class QueenEntityTest {
         game.getBlackPieces().add(blackPawn);
 
         availablesPositionsWhiteQueen = whiteQueen.generateAvailableMoves(game);
-        // System.out.println("White Queen + Black queen + two pawn");
-        // displayChessBoard(availablesPositionsWhiteQueen);
 
         Assert.assertTrue("There should be 17 possible positions for the white Queen",
                 availablesPositionsWhiteQueen.size() == 17);
-
     }
-
 }

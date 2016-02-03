@@ -4,7 +4,6 @@
 package com.utc.api13.commun.entities.pieces;
 
 import java.util.Date;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.utc.api13.commun.entities.GameEntity;
-import com.utc.api13.commun.entities.PositionEntity;
 import com.utc.api13.commun.entities.PublicUserEntity;
 
 /**
@@ -35,27 +33,6 @@ public class PawnEntityTest {
 
         Assert.assertEquals("Error init pieces", game.getBlackPieces().size(), 16);
         Assert.assertEquals("Error init pieces", game.getWhitePieces().size(), 16);
-    }
-
-    public static void displayChessBoard(List<PositionEntity> positions) {
-        for (int x = 1; x <= 8; x++) {
-            for (int y = 1; y <= 8; y++) {
-                System.out.print("|");
-                boolean available = Boolean.TRUE;
-                for (PositionEntity pos : positions) {
-                    if (pos.equals(new PositionEntity(y, x))) {
-                        available = Boolean.FALSE;
-                    }
-
-                }
-                if (available) {
-                    System.out.print("O");
-                } else {
-                    System.out.print("X");
-                }
-            }
-            System.out.println("|");
-        }
     }
 
     /**
