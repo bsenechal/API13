@@ -28,8 +28,6 @@ public class DataServerManager {
         this.currentUsers = new ArrayList<PublicUserEntity>();
     }
 
-
-
     /**
      * @return the currentUsers
      */

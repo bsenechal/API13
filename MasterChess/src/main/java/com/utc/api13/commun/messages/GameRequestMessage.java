@@ -32,8 +32,8 @@ public class GameRequestMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the client.
-     * Calls the 'printProposition' method from Data.
+     * Handles the message when received on the client. Calls the
+     * 'printProposition' method from Data.
      */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
@@ -41,9 +41,8 @@ public class GameRequestMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the server.
-     * Informs the server of a new game request
-     * Is sent to the targeted client
+     * Handles the message when received on the server. Informs the server of a
+     * new game request Is sent to the targeted client
      */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {

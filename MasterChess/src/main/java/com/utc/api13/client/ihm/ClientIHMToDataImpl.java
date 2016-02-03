@@ -123,8 +123,7 @@ public class ClientIHMToDataImpl implements IClientIHMToData {
                     AnswerPropositionController answerPropositionController = fxmlLoader.getController();
                     answerPropositionController.setControllerContext(myIHMManager);
                     myIHMManager.setCurrentStage(stage);
-                    answerPropositionController.setMainApp(user.getLogin(), chattable, timer,
-                            observable, timeInt);
+                    answerPropositionController.setMainApp(user.getLogin(), chattable, timer, observable, timeInt);
 
                     stage.setScene(new Scene(root));
                     stage.setTitle("You've got a new game proposition!");

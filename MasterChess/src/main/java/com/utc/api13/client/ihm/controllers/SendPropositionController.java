@@ -56,7 +56,7 @@ public class SendPropositionController {
     public SendPropositionController() {
         initialize();
     }
-    
+
     public void onCancelClicked() {
         mainApp.getCurrentStage().close();
     }

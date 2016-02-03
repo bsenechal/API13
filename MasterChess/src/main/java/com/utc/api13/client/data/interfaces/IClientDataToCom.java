@@ -11,13 +11,13 @@ import com.utc.api13.commun.enumerations.GameStatusEnum;
 
 /**
  * 
- * This interface will be given to the Communication Client module. The Communication module 
- * won't call this interface through methods  but through proceed
+ * This interface will be given to the Communication Client module. The
+ * Communication module won't call this interface through methods but through
+ * proceed
  * 
  * @author ulyss_000
  *
  */
-
 
 public interface IClientDataToCom {
 
@@ -28,7 +28,7 @@ public interface IClientDataToCom {
      * 
      * @param connectedUserList
      */
-    public void displayUsersList(final List<PublicUserEntity> connectedUserList); 
+    public void displayUsersList(final List<PublicUserEntity> connectedUserList);
 
     /**
      * Display a distant user's profile ( PublicUserEntity)
@@ -58,15 +58,17 @@ public interface IClientDataToCom {
 
     /**
      * Send the answer for the other player's request leaving
+     * 
      * @param answer
-     *          true if the user agree to end the game
+     *            true if the user agree to end the game
      */
     public void sendAnswerForLeaving(final boolean answer);
 
     /**
      * Ask the opponent to end the game
+     * 
      * @param uid
-     *          The opponent's uid
+     *            The opponent's uid
      */
     public void requestPlayerForLeaving(final UUID uid);
 
@@ -81,14 +83,15 @@ public interface IClientDataToCom {
      * notify the rejection
      * 
      * @param uidSender
-     *          the sender's uid 
+     *            the sender's uid
      * @param rejectionMessage
-     *          the message display for rejection
+     *            the message display for rejection
      */
     public void notifyRejection(final UUID uidSender, String rejectionMessage);
 
     /**
-     * Create the GameEntity on the serveur, initialise and instantiate the game on the Client
+     * Create the GameEntity on the serveur, initialise and instantiate the game
+     * on the Client
      * 
      * @param game
      *            game créé sur le serveur
@@ -97,35 +100,36 @@ public interface IClientDataToCom {
 
     /**
      * add an observer to the observer list of a game
+     * 
      * @param idObserver
-     *              the uid of the new observer
+     *            the uid of the new observer
      */
     public void newObserver(final UUID idObserver);
 
     /**
      * add a replay to the current games
+     * 
      * @param game
-     *          the game to be replayed
+     *            the game to be replayed
      */
     public void newReplay(final GameEntity game);
-
 
     /**
      * Display the game proposition of the opponent
      * 
      * @param uidSender
-     *          The opponent : sending a game request
+     *            The opponent : sending a game request
      * @param observable
-     *          true if the game is observable
+     *            true if the game is observable
      * @param chattable
-     *        true if the chat is available during the game
+     *            true if the chat is available during the game
      * @param timer
-     *        true if a timer is set between each move
-     *@param timerInt
-     *         Timer in sec
+     *            true if a timer is set between each move
+     * @param timerInt
+     *            Timer in sec
      */
     public void printProposition(final UUID uidSender, final boolean observable, final boolean chattable,
-            final boolean timer, final Integer timerInt); 
+            final boolean timer, final Integer timerInt);
 
     /**
      * The opponent is leaving, the payer win the game
@@ -134,12 +138,14 @@ public interface IClientDataToCom {
 
     /**
      * lose game by surrender
+     * 
      * @param idPlayer
      */
     public void endGameBySurrender(UUID idPlayer);
 
     /**
-     * Display a message 
+     * Display a message
+     * 
      * @param message
      */
     public void displayMessage(final String message);
@@ -151,6 +157,7 @@ public interface IClientDataToCom {
 
     /**
      * Define the instance of DataClientManager
+     * 
      * @param instanceDataClientManager
      */
     public void setInstanceDataClientManager(DataClientManager instanceDataClientManager);

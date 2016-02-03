@@ -224,32 +224,27 @@ public class ClientDataToIHMImplTest {
             Assert.fail("Error : " + e.getMessage());
         }
     }
-/*
-    @Test
-    public void sendAnswerForLeavingTest() {
-        GameEntity game = new GameEntity();
-        PrivateUserEntity userPrivate = new PrivateUserEntity();
-        PublicUserEntity whiteUser = new PublicUserEntity();
-        PublicUserEntity blackUser = new PublicUserEntity();
-        final UUID idWhite = UUID.randomUUID();
-        final UUID idBlack = UUID.randomUUID();
-        userPrivate.setId(idWhite);
-        whiteUser.setId(idWhite);
-        blackUser.setId(idBlack);
-        game.setBlackPlayer(blackUser);
-        game.setWhitePlayer(whiteUser);
-        dataClientManager.setUserLocal(userPrivate);
-        dataClientManager.setCurrentGame(game);
-        Assert.assertNotNull(dataClientManager.getCurrentGame());
-
-        // If false then nothing -> game continue
-        dataClientManager.getClientDataToIHMImpl().sendAnswerForLeaving(false);
-        Assert.assertNotNull(dataClientManager.getCurrentGame());
-
-        // If true then quit game without changing stats
-        dataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
-        dataClientManager.getClientDataToIHMImpl().sendAnswerForLeaving(true);
-        Assert.assertNull(dataClientManager.getCurrentGame());
-    }
-*/
+    /*
+     * @Test public void sendAnswerForLeavingTest() { GameEntity game = new
+     * GameEntity(); PrivateUserEntity userPrivate = new PrivateUserEntity();
+     * PublicUserEntity whiteUser = new PublicUserEntity(); PublicUserEntity
+     * blackUser = new PublicUserEntity(); final UUID idWhite =
+     * UUID.randomUUID(); final UUID idBlack = UUID.randomUUID();
+     * userPrivate.setId(idWhite); whiteUser.setId(idWhite);
+     * blackUser.setId(idBlack); game.setBlackPlayer(blackUser);
+     * game.setWhitePlayer(whiteUser);
+     * dataClientManager.setUserLocal(userPrivate);
+     * dataClientManager.setCurrentGame(game);
+     * Assert.assertNotNull(dataClientManager.getCurrentGame());
+     * 
+     * // If false then nothing -> game continue
+     * dataClientManager.getClientDataToIHMImpl().sendAnswerForLeaving(false);
+     * Assert.assertNotNull(dataClientManager.getCurrentGame());
+     * 
+     * // If true then quit game without changing stats
+     * dataClientManager.getUserLocal().setSavedGames(new
+     * ArrayList<GameEntity>());
+     * dataClientManager.getClientDataToIHMImpl().sendAnswerForLeaving(true);
+     * Assert.assertNull(dataClientManager.getCurrentGame()); }
+     */
 }

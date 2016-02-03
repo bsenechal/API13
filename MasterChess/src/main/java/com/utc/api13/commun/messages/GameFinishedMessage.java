@@ -29,9 +29,9 @@ public class GameFinishedMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the client.
-     * Calls the 'sendAnswerForLeaving' method from Data.
-     * Inform the client that the game is terminated.
+     * Handles the message when received on the client. Calls the
+     * 'sendAnswerForLeaving' method from Data. Inform the client that the game
+     * is terminated.
      */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
@@ -40,15 +40,16 @@ public class GameFinishedMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the server.
-     * Informs the server and the other player that the game is terminated
+     * Handles the message when received on the server. Informs the server and
+     * the other player that the game is terminated
      */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
 
         comServerManager.getIServerDataToCom().endGame(this.game);
         comServerManager.sendMessage(comServerManager.findChannelHandlerContextFromUserId(receiver).channel(), this);
-        comServerManager.broadcastMessage(new AllGameMessage(new UUID(0, 0), null, comServerManager.getIServerDataToCom().getAllGames()));
+        comServerManager.broadcastMessage(
+                new AllGameMessage(new UUID(0, 0), null, comServerManager.getIServerDataToCom().getAllGames()));
     }
 
 }

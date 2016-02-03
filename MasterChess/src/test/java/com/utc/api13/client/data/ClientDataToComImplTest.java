@@ -190,34 +190,30 @@ public class ClientDataToComImplTest {
         Assert.assertNull(dataClientManager.getCurrentGame());
 
     }
-/*
-    @Test
-    public void endGameBySurrednerTest() {
-        GameEntity game = new GameEntity();
-        PrivateUserEntity userPrivate = new PrivateUserEntity();
-        PublicUserEntity whiteUser = new PublicUserEntity();
-        PublicUserEntity blackUser = new PublicUserEntity();
-        userPrivate.setNbLost(0);
-        userPrivate.setNbPlayed(0);
-        userPrivate.setNbWon(0);
-        game.setBlackPlayer(blackUser);
-        game.setWhitePlayer(whiteUser);
 
-        dataClientManager.setIClientIHMToData(clientIHMToDataImpl);
-        dataClientManager.setUserLocal(userPrivate);
-        dataClientManager.getUserLocal().setSavedGames(new ArrayList<GameEntity>());
-        dataClientManager.setCurrentGame(game);
-        Assert.assertNotNull(dataClientManager.getCurrentGame());
-
-        // endGameBySurrend
-        dataClientManager.getClientDataToComImpl().endGameBySurrender(userPrivate.getId());
-        Assert.assertNull(dataClientManager.getCurrentGame());
-        Assert.assertEquals(0, dataClientManager.getUserLocal().getNbWon());
-        Assert.assertEquals(1, dataClientManager.getUserLocal().getNbPlayed());
-        Assert.assertEquals(1, dataClientManager.getUserLocal().getNbLost());
-
-    }
-*/
+    /*
+     * @Test public void endGameBySurrednerTest() { GameEntity game = new
+     * GameEntity(); PrivateUserEntity userPrivate = new PrivateUserEntity();
+     * PublicUserEntity whiteUser = new PublicUserEntity(); PublicUserEntity
+     * blackUser = new PublicUserEntity(); userPrivate.setNbLost(0);
+     * userPrivate.setNbPlayed(0); userPrivate.setNbWon(0);
+     * game.setBlackPlayer(blackUser); game.setWhitePlayer(whiteUser);
+     * 
+     * dataClientManager.setIClientIHMToData(clientIHMToDataImpl);
+     * dataClientManager.setUserLocal(userPrivate);
+     * dataClientManager.getUserLocal().setSavedGames(new
+     * ArrayList<GameEntity>()); dataClientManager.setCurrentGame(game);
+     * Assert.assertNotNull(dataClientManager.getCurrentGame());
+     * 
+     * // endGameBySurrend
+     * dataClientManager.getClientDataToComImpl().endGameBySurrender(userPrivate
+     * .getId()); Assert.assertNull(dataClientManager.getCurrentGame());
+     * Assert.assertEquals(0, dataClientManager.getUserLocal().getNbWon());
+     * Assert.assertEquals(1, dataClientManager.getUserLocal().getNbPlayed());
+     * Assert.assertEquals(1, dataClientManager.getUserLocal().getNbLost());
+     * 
+     * }
+     */
     @Test
     public void victoryBySurrenderTest() {
         GameEntity game = new GameEntity();

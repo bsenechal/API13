@@ -23,8 +23,8 @@ public class PublicUserMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the client.
-     * Calls the 'displayProfile' method from Data.
+     * Handles the message when received on the client. Calls the
+     * 'displayProfile' method from Data.
      */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) throws Exception {
@@ -34,8 +34,8 @@ public class PublicUserMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the server.
-     * Gets the info and is sent back to the client.
+     * Handles the message when received on the server. Gets the info and is
+     * sent back to the client.
      */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {

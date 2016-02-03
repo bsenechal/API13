@@ -33,8 +33,8 @@ public class MoveMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the client.
-     * Asks for the client to register a move.
+     * Handles the message when received on the client. Asks for the client to
+     * register a move.
      */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {

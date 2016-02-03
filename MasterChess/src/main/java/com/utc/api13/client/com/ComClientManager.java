@@ -43,10 +43,10 @@ public class ComClientManager {
         try {
             this.channel = boostrap.connect(host, port).sync().channel();
         } catch (InterruptedException e) {
-            LOGGER.error("Lost connection, check your network connection",e);
+            LOGGER.error("Lost connection, check your network connection", e);
             throw e;
         } catch (Exception e) {
-            LOGGER.error("Can't connect to server, please check your connection and server statuts",e);
+            LOGGER.error("Can't connect to server, please check your connection and server statuts", e);
             throw e;
         }
 

@@ -23,7 +23,7 @@ public abstract class APieceEntity extends ADataEntity {
         super();
         this.color = color;
     }
-    
+
     /**
      * get the list of positions of a specified list of pieces
      * 

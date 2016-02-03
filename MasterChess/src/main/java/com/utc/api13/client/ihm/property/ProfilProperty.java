@@ -34,7 +34,7 @@ public class ProfilProperty {
     public ObservableList<PublicUserEntity> getStatPlayer() {
         return statPlayer;
     }
-    
+
     public StringProperty loginProperty() {
         return login;
     }
@@ -54,7 +54,8 @@ public class ProfilProperty {
     public ObservableList<PublicUserEntity> statPlayerProperty() {
         return statPlayer;
     }
-    public ObjectProperty<javafx.scene.image.Image> imageProperty(){
+
+    public ObjectProperty<javafx.scene.image.Image> imageProperty() {
         return imageProperty;
     }
 }

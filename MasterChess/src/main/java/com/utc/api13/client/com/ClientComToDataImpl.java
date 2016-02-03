@@ -86,7 +86,7 @@ public class ClientComToDataImpl implements IClientComToData {
 
     @Override
     public void endGameBySurrender(UUID idPlayer, UUID receiver, UUID gameId) {
-        comClientManagerInstance.sendMessage(new RequestPlayerLeaving(idPlayer, receiver,gameId, true));
+        comClientManagerInstance.sendMessage(new RequestPlayerLeaving(idPlayer, receiver, gameId, true));
 
     }
 

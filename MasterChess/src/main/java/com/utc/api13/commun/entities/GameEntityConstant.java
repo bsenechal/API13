@@ -18,9 +18,9 @@ public class GameEntityConstant {
     private static final int[] INITIAL_COLUMNS_PAWN = { 1, 2, 3, 4, 5, 6, 7, 8 };
 
     private GameEntityConstant() {
-        
+
     }
-    
+
     /**
      * @return the initialColumnsBishop
      */

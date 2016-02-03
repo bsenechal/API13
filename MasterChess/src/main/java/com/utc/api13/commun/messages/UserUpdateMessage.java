@@ -41,8 +41,8 @@ public class UserUpdateMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the client.
-     * Gives Data the updted profile.
+     * Handles the message when received on the client. Gives Data the updted
+     * profile.
      */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
@@ -51,8 +51,8 @@ public class UserUpdateMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the server.
-     * Server registers the user profile update.
+     * Handles the message when received on the server. Server registers the
+     * user profile update.
      */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {

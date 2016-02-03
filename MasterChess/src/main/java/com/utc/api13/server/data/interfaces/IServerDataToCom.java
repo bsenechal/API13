@@ -11,7 +11,6 @@ import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 public interface IServerDataToCom {
-    
 
     /**
      * Returns the user with the given UUID
@@ -20,23 +19,24 @@ public interface IServerDataToCom {
      *            UUID of the user
      * @return the found user or null when not founded
      */
-    public PublicUserEntity getUserInfo(final UUID idUser); 
+    public PublicUserEntity getUserInfo(final UUID idUser);
+
     /**
      * 
      * @return Returns the list of current games
      */
-    public List<GameEntity> getAllGames(); 
+    public List<GameEntity> getAllGames();
 
     /**
      * Warn the server that the player gets connected to add it to current users
+     * 
      * @param player
-     *      the new player
+     *            the new player
      */
-    public void notifyConnections(final PublicUserEntity player); 
+    public void notifyConnections(final PublicUserEntity player);
 
     /**
-     * @author ulyss_000 
-     * This method is used to verify if the move is possible
+     * @author ulyss_000 This method is used to verify if the move is possible
      * @param move
      * @return true if the move is possible, else -> false
      */
@@ -60,13 +60,13 @@ public interface IServerDataToCom {
      * @param idUser
      *            user who is leaving
      */
-    public void observerLeave(final UUID idUser); 
+    public void observerLeave(final UUID idUser);
 
     /**
      * 
      * @return the list of observers
      */
-    public List<PublicUserEntity> getListObservers(); 
+    public List<PublicUserEntity> getListObservers();
 
     /**
      * Saves or updates the given user in the list of current users
@@ -93,6 +93,7 @@ public interface IServerDataToCom {
 
     /**
      * Create a replay of a saved game
+     * 
      * @param game
      * @param user
      */
@@ -102,43 +103,47 @@ public interface IServerDataToCom {
      * 
      * @return the list of connected users
      */
-    public List<PublicUserEntity> getConnectedUsers(); 
+    public List<PublicUserEntity> getConnectedUsers();
 
     /**
-     * @author ulyss_000 
-     * list of the Users (observers and players) connected to a specified Game
+     * @author ulyss_000 list of the Users (observers and players) connected to
+     *         a specified Game
      * @param idGame
      * @return the list of found users or null if the game doesn't exist or an
      *         empty List<PublicUserEntity> if there are no players
      */
-    public List<PublicUserEntity> getUsersByGame(final UUID idGame); 
+    public List<PublicUserEntity> getUsersByGame(final UUID idGame);
 
     /**
      * Surrend the game in which idplayer is playing
+     * 
      * @param idPlayer
      */
     public void surrender(final UUID idPlayer);
 
     /**
      * Delete the user in the liste of connected users
+     * 
      * @param idUser
-     *          the user who wants to be disconnected
+     *            the user who wants to be disconnected
      */
-    public void disconnect(final UUID idUser); 
+    public void disconnect(final UUID idUser);
+
     /**
      * create a new game
+     * 
      * @param j1
-     *          first player
+     *            first player
      * @param j2
-     *          second player
+     *            second player
      * @param observable
-     *          true if the game is observable
+     *            true if the game is observable
      * @param chattable
-     *          true if the game if chattable
+     *            true if the game if chattable
      * @param timer
-     *          true fi there is a timer between each moves
+     *            true fi there is a timer between each moves
      * @param timerInt
-     *          second of the timer
+     *            second of the timer
      * @return
      */
     public GameEntity createGame(final UUID j1, final UUID j2, final boolean observable, final boolean chattable,
@@ -146,10 +151,11 @@ public interface IServerDataToCom {
 
     /**
      * Get a game by its ID
+     * 
      * @param idGame
      * @return the game
      */
-    public GameEntity getGameById(final UUID idGame); 
+    public GameEntity getGameById(final UUID idGame);
 
     /**
      * removes the game with the given id on the server

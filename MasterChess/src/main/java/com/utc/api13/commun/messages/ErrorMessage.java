@@ -23,7 +23,7 @@ public class ErrorMessage extends Message {
         super(sender, receiver);
         this.exception = exception;
     }
-    
+
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) throws Exception {
         throw this.exception;

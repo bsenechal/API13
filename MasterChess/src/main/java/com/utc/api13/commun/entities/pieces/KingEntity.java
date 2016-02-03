@@ -78,7 +78,7 @@ public class KingEntity extends APieceEntity {
                 addPossibleSolution(game, positionX, positionY, 2, 0, result, verifyCheck);
             }
             if (this.leftCastling(game)) {
-                addPossibleSolution(game, positionX, positionY, - 2, 0, result, verifyCheck);
+                addPossibleSolution(game, positionX, positionY, -2, 0, result, verifyCheck);
             }
         }
         return result;

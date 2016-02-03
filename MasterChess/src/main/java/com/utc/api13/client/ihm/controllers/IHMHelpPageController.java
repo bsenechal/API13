@@ -34,7 +34,7 @@ public class IHMHelpPageController {
     public IHMHelpPageController() {
         initialize();
     }
-    
+
     @FXML
     public void onBackClicked(Event event) {
         this.getCurrentStage().close();
@@ -50,7 +50,7 @@ public class IHMHelpPageController {
     }
 
     public void initialize() {
-     // Initialisation JavaFX
+        // Initialisation JavaFX
     }
 
     public void setControllerContext(IHMManager ihmManager) {

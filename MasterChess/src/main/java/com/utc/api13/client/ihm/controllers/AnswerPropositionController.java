@@ -76,8 +76,7 @@ public class AnswerPropositionController {
         stage.show();
     }
 
-    public void setMainApp(String login, Boolean chattable, Boolean timer, Boolean observable,
-            int time) {
+    public void setMainApp(String login, Boolean chattable, Boolean timer, Boolean observable, int time) {
         this.chattable = chattable;
         this.timer = timer;
         this.timeInt = time;

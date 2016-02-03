@@ -21,38 +21,47 @@ public class Case extends JButton {
         this.line = line;
         this.column = column;
     }
+
     /**
      * @return the line
      */
     public int getLine() {
         return line;
     }
+
     /**
-     * @param line the line to set
+     * @param line
+     *            the line to set
      */
     public void setLine(int line) {
         this.line = line;
     }
+
     /**
      * @return the column
      */
     public int getColumn() {
         return column;
     }
+
     /**
-     * @param column the column to set
+     * @param column
+     *            the column to set
      */
     public void setColumn(int column) {
         this.column = column;
     }
+
     /**
      * @return the color
      */
     public Color getColor() {
         return color;
     }
+
     /**
-     * @param color the color to set
+     * @param color
+     *            the color to set
      */
     public void setColor(Color color) {
         this.color = color;

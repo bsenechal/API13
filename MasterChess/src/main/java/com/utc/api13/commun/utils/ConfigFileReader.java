@@ -13,7 +13,6 @@ public class ConfigFileReader {
     private String configFile;
     private InputStream inputStream;
     private static final Logger LOGGER = Logger.getLogger(ConfigFileReader.class);
-    
 
     public ConfigFileReader(String file) {
         configFile = file;

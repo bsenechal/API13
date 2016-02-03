@@ -27,7 +27,8 @@ public class ChatProperty {
     }
 
     /**
-     * @param message the message to set
+     * @param message
+     *            the message to set
      */
     public void setMessage(StringProperty message) {
         this.message = message;

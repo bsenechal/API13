@@ -28,10 +28,10 @@ public class StorageUtils {
     private static ObjectOutputStream oos;
     private static ObjectInputStream ois;
 
-    private StorageUtils(){
-        
+    private StorageUtils() {
+
     }
-    
+
     /**
      * Stores a user in a file<br/>
      * If the user has not been stored yet, a new file is created and the user

@@ -83,7 +83,6 @@ public class ComServerManager {
         this.iServerDataToCom = iServerDataToCom;
     }
 
-
     /**
      * 
      */

@@ -482,7 +482,7 @@ public class GameEntity extends ADataEntity {
 
         // Draw check :
         // Here
-        
+
         return result;
     }
 

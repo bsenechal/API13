@@ -42,7 +42,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
                 LOGGER.info("No message from server, waiting ...");
                 pingLost++;
                 if (pingLost > 2) { // If x pings lost in a row, assuming that
-                                     // server is down
+                                    // server is down
                     throw new IOException("Connection timeout");
                 }
             }

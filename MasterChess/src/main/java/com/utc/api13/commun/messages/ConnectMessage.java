@@ -34,9 +34,9 @@ public class ConnectMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the client.
-     * Calls the 'notifyConnection' method from Data for the client to display the 
-     * newly connected user.
+     * Handles the message when received on the client. Calls the
+     * 'notifyConnection' method from Data for the client to display the newly
+     * connected user.
      */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
@@ -44,9 +44,8 @@ public class ConnectMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the server.
-     * Registers the new user's communication channel object
-     * Notifies Data of a new player connection
+     * Handles the message when received on the server. Registers the new user's
+     * communication channel object Notifies Data of a new player connection
      * Multicasts the new connection to all currently connected players
      */
     @Override

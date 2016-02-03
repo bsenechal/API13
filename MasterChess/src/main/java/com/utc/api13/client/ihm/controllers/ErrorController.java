@@ -32,7 +32,7 @@ public class ErrorController {
     }
 
     public void initialize() {
-     // Initialisation JavaFX
+        // Initialisation JavaFX
     }
 
     public void setManager(IHMManager ihmManager) {

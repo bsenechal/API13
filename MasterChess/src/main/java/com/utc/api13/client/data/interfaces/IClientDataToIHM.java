@@ -13,9 +13,11 @@ import com.utc.api13.commun.exceptions.FunctionalException;
 import com.utc.api13.commun.exceptions.TechnicalException;
 
 import javafx.collections.ObservableList;
+
 /**
  * 
- * This interface will be given to the IHM module. This will be use to call Data's methods to react on users' actions
+ * This interface will be given to the IHM module. This will be use to call
+ * Data's methods to react on users' actions
  *
  *
  */
@@ -96,7 +98,7 @@ public interface IClientDataToIHM {
      * send user's answer to leaving request from the other player
      * 
      * @param answer
-     *              true if agree, else false
+     *            true if agree, else false
      */
     void sendAnswerForLeaving(boolean answer);
 
@@ -146,8 +148,9 @@ public interface IClientDataToIHM {
     public void saveGame() throws TechnicalException, FunctionalException;
 
     /**
-     * get the current game 
-     * @return  the current game
+     * get the current game
+     * 
+     * @return the current game
      */
     public GameEntity getCurrentGame();
 
@@ -157,15 +160,15 @@ public interface IClientDataToIHM {
      * @param uidReciever
      *            opponent
      * @param enquirerUUID
-     *            the user 
+     *            the user
      * @param chattable
      *            true if the chat is allowed
      * @param observable
      *            true if observers are allowed
      * @param timer
-     *             true if user wants to add a timer to each move
+     *            true if user wants to add a timer to each move
      * @param timeInt
-     *              timer added in sec
+     *            timer added in sec
      */
     public void createProposition(UUID uidReciever, UUID enquirerUUID, boolean chattable, boolean observable,
             boolean timer, Integer timeInt);
@@ -192,8 +195,8 @@ public interface IClientDataToIHM {
     /**
      * Creates a new user
      * 
-     * @param  user
-     *              The private user to be created
+     * @param user
+     *            The private user to be created
      * @throws FunctionalException
      *             data access exception
      * @throws TechnicalException
@@ -209,14 +212,14 @@ public interface IClientDataToIHM {
      *            id of player who sent the game proposition
      * @param answer
      *            true if the proposition is accepted
-     * @param observable 
+     * @param observable
      *            true if the game may be observable by others
-     * @param chattable 
-     *             true if the chat is available during the game
+     * @param chattable
+     *            true if the chat is available during the game
      * @param time
-     *             true if user wants to add a timer to each move
+     *            true if user wants to add a timer to each move
      * @param timeInt
-     *              timer added in sec
+     *            timer added in sec
      * @throws TechnicalException
      *             exception when extracting bytes from image in local user
      *             profile
@@ -276,14 +279,15 @@ public interface IClientDataToIHM {
 
     /**
      * Play the chosen move
+     * 
      * @param fromLine
-     *              the current line of the piece
+     *            the current line of the piece
      * @param fromCol
-     *              the current column of the piece
+     *            the current column of the piece
      * @param toLine
-     *              the destination line of the piece
+     *            the destination line of the piece
      * @param toCol
-     *              the destination column of the piece
+     *            the destination column of the piece
      */
     public void playMove(int fromLine, int fromCol, int toLine, int toCol);
 
@@ -295,7 +299,6 @@ public interface IClientDataToIHM {
      */
     public void removeUserFromChat(UUID idUser);
 
-    
     /**
      * Allows IHM to kill the CurrentGame to enable the launch og a new one !
      */

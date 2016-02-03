@@ -39,10 +39,10 @@ public class RequestAnswerMessage extends Message {
         this.timer = timer;
         this.timerInt = timerInt;
     }
-    
+
     /**
-     * Handles the message when received on the client.
-     * Gives the answer to the player.
+     * Handles the message when received on the client. Gives the answer to the
+     * player.
      */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
@@ -54,9 +54,8 @@ public class RequestAnswerMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the server.
-     * Carries answer of a proposition request.
-     * Informs the server and the requesting client.
+     * Handles the message when received on the server. Carries answer of a
+     * proposition request. Informs the server and the requesting client.
      */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {

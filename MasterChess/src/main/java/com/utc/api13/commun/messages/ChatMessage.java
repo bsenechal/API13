@@ -39,8 +39,8 @@ public class ChatMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the client.
-     * Calls the 'displayMessage' method from Data for the chat message to be displayed.
+     * Handles the message when received on the client. Calls the
+     * 'displayMessage' method from Data for the chat message to be displayed.
      */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
@@ -49,9 +49,8 @@ public class ChatMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the server.
-     * Gets the list of players allowed to chat within the game and
-     * is sent to all these players.
+     * Handles the message when received on the server. Gets the list of players
+     * allowed to chat within the game and is sent to all these players.
      */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {

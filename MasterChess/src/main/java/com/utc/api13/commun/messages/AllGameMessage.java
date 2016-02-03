@@ -37,8 +37,8 @@ public class AllGameMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the client.
-     * Calls the 'displayAllGames' method from Data.
+     * Handles the message when received on the client. Calls the
+     * 'displayAllGames' method from Data.
      */
     @Override
     public void proceed(ChannelHandlerContext ctx, ComClientManager comClientManager) {
@@ -50,8 +50,8 @@ public class AllGameMessage extends Message {
     }
 
     /**
-     * Handles the message when received on the server.
-     * Gets the list of all currently played games and is sent back to the client.
+     * Handles the message when received on the server. Gets the list of all
+     * currently played games and is sent back to the client.
      */
     @Override
     public void proceedServer(ChannelHandlerContext ctx, ComServerManager comServerManager) {
